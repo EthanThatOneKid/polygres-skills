@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Generated / reproducible artifacts
+api/embed_updates.sql
+
+# OS
+.DS_Store
+Thumbs.db

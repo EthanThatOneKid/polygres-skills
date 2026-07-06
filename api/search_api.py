@@ -1,0 +1,113 @@
+from typing import Any
+
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+
+from api.embed import embed_text
+from api.search_helper import get_project, vector_search, format_results
+
+app = FastAPI(
+    title="Polygres Docs Search API",
+    description="Vector search over the Polygres documentation corpus using the Polygres SDK + Gemini embeddings.",
+    version="0.2.0",
+)
+
+
+class RawSearchRequest(BaseModel):
+    embedding: list[float] = Field(
+        ...,
+        description="Dense vector embedding. Must match the dimension of your Polygres vector index (768 for gemini-embedding-2 with output_dimensionality=768).",
+        examples=[[0.01, 0.02, 0.03]],
+    )
+    config: str | None = Field(
+        default=None,
+        description="Polygres Vector Search config name. Omit to use the project default.",
+    )
+    limit: int = Field(default=10, ge=1, le=100)
+    min_similarity: float | None = Field(default=None, ge=0.0, le=1.0)
+
+
+class TextSearchRequest(BaseModel):
+    query: str = Field(
+        ...,
+        min_length=1,
+        description="Plain-text search query. Embedded server-side via gemini-embedding-2.",
+        examples=["How do I configure vector search?"],
+    )
+    config: str | None = Field(
+        default=None,
+        description="Polygres Vector Search config name. Omit to use the project default.",
+    )
+    limit: int = Field(default=10, ge=1, le=100)
+    min_similarity: float | None = Field(default=None, ge=0.0, le=1.0)
+
+
+class SearchResultItem(BaseModel):
+    id: str
+    score: float
+    properties: dict[str, Any]
+
+
+class SearchResponse(BaseModel):
+    results: list[SearchResultItem]
+    request_id: str | None = None
+
+
+@app.post("/search", response_model=SearchResponse)
+def search_raw(body: RawSearchRequest):
+    """
+    Vector search with a pre-computed embedding.
+
+    Use this when you already have an embedding from your own client-side model.
+    """
+    return _run_search(body.embedding, body.config, body.limit, body.min_similarity)
+
+
+@app.post("/search/text", response_model=SearchResponse)
+def search_text(body: TextSearchRequest):
+    """
+    Vector search from plain text.
+
+    Embeds the query server-side using gemini-embedding-2 (768d),
+    then searches with the resulting vector.
+    """
+    embedding = embed_text(body.query)
+    return _run_search(embedding, body.config, body.limit, body.min_similarity)
+
+
+def _run_search(
+    embedding: list[float],
+    config: str | None,
+    limit: int,
+    min_similarity: float | None,
+) -> SearchResponse:
+    try:
+        page = vector_search(
+            embedding=embedding,
+            config_name=config,
+            limit=limit,
+            min_similarity=min_similarity,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=str(exc))
+
+    return SearchResponse(
+        results=format_results(page),
+        request_id=getattr(page, "request_id", None),
+    )
+
+
+@app.get("/health")
+def health() -> dict[str, Any]:
+    try:
+        readiness = get_project().readiness()
+        return {
+            "status": "ok",
+            "readiness": {
+                "graph": readiness.graph,
+                "vector": readiness.vector,
+                "hybrid": readiness.hybrid,
+            },
+        }
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=str(exc))

@@ -93,7 +93,7 @@ with tab_vec:
         with st.spinner("Embedding query & searching..."):
             try:
                 r = requests.post(
-                    f"{API_BASE}/search/text",
+                    f"{API_BASE}/search/chunks",
                     json={"query": query, "limit": limit, "min_similarity": min_sim},
                     timeout=30,
                 )
@@ -103,26 +103,38 @@ with tab_vec:
                 st.error(f"API call failed: {e}")
                 st.stop()
 
-        results = data.get("results", [])
-        if not results:
+        items = data.get("results", [])
+        if not items:
             st.info("No results found.")
         else:
-            st.success(f"Found {len(results)} result(s)")
-            for i, item in enumerate(results):
-                doc_id = item["id"]
+            grouped = defaultdict(list)
+            for item in items:
+                grouped[item["doc_id"]].append(item)
+
+            st.success(f"Found {len(items)} chunk(s) across {len(grouped)} page(s)")
+
+            rank = 0
+            for doc_id, chunks in grouped.items():
                 title = DOC_DISPLAY_NAMES.get(doc_id, doc_id)
                 cat = DOC_CATEGORIES.get(doc_id, "?")
                 url = DOC_URLS.get(doc_id, "")
 
                 with st.container(border=True):
-                    cols = st.columns([6, 1])
-                    with cols[0]:
-                        link = f"[**{i+1}. {title}**]({url})" if url else f"**{i+1}. {title}**"
-                        st.markdown(f"{link}  `{cat}`")
-                    with cols[1]:
-                        st.markdown(f"`{item['score']:.4f}`")
+                    rank += 1
+                    link = f"[**{rank}. {title}**]({url})" if url else f"**{rank}. {title}**"
+                    st.markdown(f"{link}  `{cat}`  —  {len(chunks)} matching chunk(s)")
 
-            result_ids = {item["id"] for item in results}
+                    for chunk in chunks:
+                        snippet = chunk.get("content", "")[:200]
+                        if len(chunk.get("content", "")) > 200:
+                            snippet += "..."
+                        cols = st.columns([5, 1])
+                        with cols[0]:
+                            st.markdown(f"```\n{snippet}\n```")
+                        with cols[1]:
+                            st.markdown(f"`{chunk['score']:.4f}`")
+
+            result_ids = set(grouped.keys())
             edges = []
             for src in result_ids:
                 for tgt in KNOWN_LINKS.get(src, []):

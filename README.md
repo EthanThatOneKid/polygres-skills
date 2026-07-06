@@ -11,8 +11,8 @@ npx skills add https://github.com/EthanThatOneKid/polygres-skills --skill polygr
 ## What lives here
 
 - `skills/polygres/SKILL.md` - master skill entry point
-- `references/upstream/pages/` - mirrored Polygres docs pages
-- `references/upstream/manifest.json` - scrape manifest
+- `skills/polygres/references/upstream/pages/` - mirrored Polygres docs pages
+- `skills/polygres/references/upstream/manifest.json` - scrape manifest
 - `scripts/sync_polygres_sources.py` - repeatable mirror job
 
 ## Sync

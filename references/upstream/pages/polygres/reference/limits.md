@@ -1,0 +1,294 @@
+source: https://docs.evokoa.com/polygres/reference/limits
+title: Limits | Polygres
+source_hash: 039341c2cd8b7607e01579243274f344c3205d2ff101afebd2ef287f064d5a71
+discovered_from: https://docs.evokoa.com/polygres
+
+# Limits | Polygres
+
+Limits
+
+The effective limit is the most restrictive applicable value: request validation,
+
+the project’s applied tier, a saved retrieval configuration, and the route’s rate
+
+windows can all apply at once.
+
+Use GET /tiers for current plan values. Use
+
+GET /projects/{project_id}/status for the project’s current storage measurement and
+
+read-only reason. The values below are the limits present in the current references;
+
+a deployment’s live responses are authoritative.
+
+Tier limits
+
+Project resources
+
+Limit Starter Pro Where to verify
+
+Projects 1 3 GET /tiers → limits.project_limit
+
+Enforced storage 1 GiB 5 GiB limits.storage_bytes ; compare with project status
+
+Direct database connections 10 10 limits.direct_connection_limit
+
+Concurrent imports per project 3 3 limits.import_concurrency
+
+The user-facing gateway limits and may be more restrictive. Pooled connections, statement timeouts, and temporary-file limits are not currently capped at the tier level for Starter and Pro.
+
+Graph capacity
+
+Limit Starter Pro
+
+Graph memory 512 MB 1,024 MB
+
+Graph edge buffer 500,000 500,000
+
+Graph sync batch size 125 125
+
+Node, frontier, and path count maximums are not capped for these tiers.
+
+Read effective graph settings and caps from
+
+GET /projects/{project_id}/graph/system rather than assuming every setting uses the
+
+tier maximum.
+
+Project limits
+
+Limit area Behavior
+
+Project count Project creation is checked against the effective tier’s project_limit .
+
+Storage The latest measured bytes and read_only_reason are returned by project status. The storage quota is the tier’s storage_bytes , not the provisioned volume size.
+
+Connections Direct and pooled connection counts have separate tier caps. Use pooling for ordinary application traffic.
+
+SQL resources Statement timeout and temporary-file limits are applied from the project tier.
+
+Feature availability Tier metadata contains feature flags. Check GET /tiers ; do not infer availability from the tier name.
+
+Import caps
+
+The request schema accepts a declared file size up to 5 GiB, but the effective tier
+
+upload cap is lower and is checked first for each import type.
+
+Import type Starter Pro Tier field
+
+CSV 32 MiB 32 MiB csv_upload_limit_bytes
+
+SQL 32 MiB 32 MiB sql_upload_limit_bytes
+
+pg_dump 32 MiB 32 MiB pg_dump_upload_limit_bytes
+
+Additional import constraints:
+
+Constraint Value or behavior
+
+Active jobs Current tiers allow three queued or running imports per project.
+
+Filename 1–255 characters; must start with an alphanumeric character and cannot contain / or \\ .
+
+CSV identifiers Header, schema, table, column, and mapping names must match [A-Za-z_][A-Za-z0-9_]* .
+
+CSV modes create_table or append_existing .
+
+An oversized request returns IMPORT_LIMIT_EXCEEDED . An occupied import slot returns
+
+IMPORT_CONCURRENCY_LIMIT .
+
+Retrieval and data-tool limits
+
+Input Limit
+
+Table viewer limit 1..500
+
+Retrieval request fields named limit 1..1000
+
+Graph max_depth 1..20
+
+Graph connection entities 2..10
+
+Vector dimensions 1..2000
+
+Text query length 1..2000 characters after trimming
+
+Fuzzy similarity threshold 0..1
+
+Exact-match filters Scalar values only; arrays and objects are rejected.
+
+For vector and hybrid retrieval, the selected vector configuration’s max_limit can
+
+lower the request limit. A vector request may supply max_distance or
+
+min_similarity , but not both.
+
+Tier graph-capacity values can constrain graph execution independently of request
+
+shape. Check GET /tiers and graph system settings when a valid request still exceeds
+
+runtime capacity.
+
+Vector and text configuration limits
+
+Constraint Vector Text
+
+Name length Up to 80 characters Up to 80 characters
+
+default_limit and max_limit Each 1..1000 ; default must not exceed max Each 1..1000 ; default must not exceed max
+
+Default selection At most one default vector configuration per project No explicit is_default field; project status reports one listed text configuration
+
+Index state missing , creating , ready , stale , or failed missing , creating , ready , stale , or failed
+
+Count cap No tier count cap No tier count cap
+
+List existing vector or text configurations before creating another one if you need
+
+to avoid duplicates.
+
+Route rate limits
+
+All applicable windows are enforced concurrently. For example, an API-key retrieval
+
+request can consume the API-key, project, and IP windows. — means that scope does not
+
+apply to the route. Values are written as requests per time window.
+
+Account, organization, project, and credentials
+
+Route or operation User User + project API key Project IP
+
+GET /me ; list/get projects 120/min — — — 2,000/min
+
+POST /onboarding 5/day — — — 300/hour
+
+GET /tiers — — — — 300/min
+
+POST /account/tier 10/hour — — — 300/hour
+
+List organization members or invitations 120/min — — — 2,000/min
+
+Add/invite/revoke/update/remove organization member 30/min — — — 500/min
+
+Accept organization invitation 10/min — — — 300/min
+
+Update organization settings 30/min — — — 500/min
+
+Create project 10/day — — — 300/hour
+
+Project status — 120/min — 600/min 2,000/min
+
+Project runtime — 60/min — 300/min 2,000/min
+
+Retry provisioning — 6/hour — 12/hour 300/hour
+
+Rename project — 60/min — 120/min 2,000/min
+
+Delete project 5/day 5/day — 10/day 300/hour
+
+List API keys — 60/min — 120/min 2,000/min
+
+Create or revoke API key — 20/day — 50/day 300/hour
+
+Get connection info — 120/min 120/min 600/min 3,000/min
+
+Reveal database password — 20/hour — 30/hour 300/hour
+
+Reset database password — 20/hour — 30/hour 300/hour
+
+Data, imports, and migrations
+
+Route or operation User + project Project IP
+
+List tables or read table rows 60/min 300/min 2,000/min
+
+Run SQL query 30/min 150/min 1,000/min
+
+CSV preview 20/min 100/min 1,000/min
+
+Start CSV import 10/min 40/min 1,000/min
+
+Start SQL import 5/min 20/min 1,000/min
+
+Start pg_dump import 3/min 10/min 1,000/min
+
+List or get imports 120/min 600/min 2,000/min
+
+Cancel import 20/min 60/min 1,000/min
+
+List or get migrations 120/min 600/min 2,000/min
+
+Create migration 10/min 30/min 1,000/min
+
+Apply migration 5/min 10/min 1,000/min
+
+Retrieval configuration and status
+
+Route or operation User + project Project IP
+
+Graph/vector discovery 20/min 60/min 1,000/min
+
+Read graph config/status/system 120/min 600/min 2,000/min
+
+Save graph config or graph system settings 10/min 30/min 1,000/min
+
+Build graph 3/min 6/min 300/hour
+
+Run graph maintenance 2/min 4/min 300/hour
+
+Read vector configurations 120/min 600/min 2,000/min
+
+Create or delete vector configuration 10/min 30/min 1,000/min
+
+Update vector configuration 20/min 60/min 1,000/min
+
+Reindex vector configuration 3/hour 10/hour 300/hour
+
+Read text configurations 120/min 600/min 2,000/min
+
+Create or delete text configuration 10/min 30/min 1,000/min
+
+Update text configuration 20/min 60/min 1,000/min
+
+Retrieval queries
+
+Route family User + project API key Project IP
+
+Readiness 120/min 120/min 600/min 3,000/min
+
+Graph expand, neighborhood, related 300/min 600/min 1,500/min 3,000/min
+
+Graph path or connection 120/min 240/min 600/min 2,000/min
+
+Vector search or similar-to 300/min 600/min 1,500/min 3,000/min
+
+Text tsvector or fuzzy search 300/min 600/min 1,500/min 3,000/min
+
+Hybrid graph-first, vector-first, or joint 120/min 240/min 800/min 2,000/min
+
+Authentication failures are separately limited to 20 failures in 5 minutes, followed
+
+by a 10-minute lockout. On HTTP 429 , honor Retry-After when present and use
+
+backoff; immediate parallel retries consume the same windows.
+
+Read-only behavior
+
+A project can enter read_only after storage policy enforcement.
+
+Check Expected behavior
+
+Diagnose Read status.project , last_storage_measurement.measured_bytes , checked_at , and read_only_reason from project status.
+
+Writes and imports They may fail while the project remains read-only. Do not repeatedly retry write-like routes.
+
+Retrieval It may continue if the data-plane services and required retrieval indexes are available. Check readiness before relying on it.
+
+Clear the condition Remove data where possible, change the effective tier/storage allocation, or contact support. Wait for a later storage measurement to confirm recovery.
+
+Do not infer that the block is cleared solely because one read succeeds. Confirm that
+
+the project status has left read_only .

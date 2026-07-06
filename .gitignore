@@ -14,6 +14,9 @@ build/
 # Generated / reproducible artifacts
 api/embed_updates.sql
 
+# Disk-backed embedding cache
+embedding_cache/
+
 # OS
 .DS_Store
 Thumbs.db

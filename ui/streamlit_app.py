@@ -133,16 +133,24 @@ with tab_vec:
                 if not edges:
                     st.caption("No interconnections between these results")
                 else:
-                    lines = ["flowchart LR"]
-                    seen_nodes = set()
+                    def _safe(id_: str) -> str:
+                        return id_.replace("-", "_")
+
+                    seen = set()
                     for src, tgt in edges:
-                        lines.append(f'  "{src}"["{DOC_DISPLAY_NAMES.get(src, src)}"] --> "{tgt}"["{DOC_DISPLAY_NAMES.get(tgt, tgt)}"]')
-                        seen_nodes.add(src)
-                        seen_nodes.add(tgt)
-                    for node_id in seen_nodes:
-                        url = DOC_URLS.get(node_id, "")
+                        seen.add(src)
+                        seen.add(tgt)
+
+                    lines = ["flowchart LR"]
+                    for n in seen:
+                        label = DOC_DISPLAY_NAMES.get(n, n)
+                        lines.append(f'  {_safe(n)}["{label}"]')
+                    for src, tgt in edges:
+                        lines.append(f"  {_safe(src)} --> {_safe(tgt)}")
+                    for n in seen:
+                        url = DOC_URLS.get(n, "")
                         if url:
-                            lines.append(f'  click "{node_id}" href "{url}" _blank')
+                            lines.append(f'  click {_safe(n)} href "{url}" _blank')
                     st.markdown("```mermaid\n" + "\n".join(lines) + "\n```")
 
 with tab_graph:

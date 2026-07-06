@@ -1,10 +1,11 @@
+import os
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from api.embed import embed_text
-from api.search_helper import get_project, vector_search, graph_search, format_results
+from api.search_helper import get_project, vector_search, graph_search, format_results, format_chunk_results
 
 app = FastAPI(
     title="Polygres Docs Search API",
@@ -53,26 +54,47 @@ class SearchResponse(BaseModel):
     request_id: str | None = None
 
 
+class ChunkSearchResultItem(BaseModel):
+    chunk_id: str
+    doc_id: str
+    content: str
+    score: float
+
+
+class ChunkSearchResponse(BaseModel):
+    results: list[ChunkSearchResultItem]
+    request_id: str | None = None
+
+
 @app.post("/search", response_model=SearchResponse)
 def search_raw(body: RawSearchRequest):
     """
-    Vector search with a pre-computed embedding.
+    Vector search with a pre-computed embedding (searches docs_pages).
 
     Use this when you already have an embedding from your own client-side model.
     """
     return _run_search(body.embedding, body.config, body.limit, body.min_similarity)
 
 
-@app.post("/search/text", response_model=SearchResponse)
+@app.post("/search/text", response_model=ChunkSearchResponse)
 def search_text(body: TextSearchRequest):
     """
-    Vector search from plain text.
+    Vector search from plain text against chunked doc content.
 
     Embeds the query server-side using gemini-embedding-2 (768d),
-    then searches with the resulting vector.
+    then searches doc_chunks with the resulting vector.
     """
     embedding = embed_text(body.query)
-    return _run_search(embedding, body.config, body.limit, body.min_similarity)
+    return _run_chunk_search(embedding, body.config, body.limit, body.min_similarity)
+
+
+@app.post("/search/chunks", response_model=ChunkSearchResponse)
+def search_chunks(body: TextSearchRequest):
+    """
+    Explicit chunk-level vector search from plain text.
+    """
+    embedding = embed_text(body.query)
+    return _run_chunk_search(embedding, body.config, body.limit, body.min_similarity)
 
 
 def _run_search(
@@ -93,6 +115,30 @@ def _run_search(
 
     return SearchResponse(
         results=format_results(page),
+        request_id=getattr(page, "request_id", None),
+    )
+
+
+def _run_chunk_search(
+    embedding: list[float],
+    config: str | None,
+    limit: int,
+    min_similarity: float | None,
+) -> ChunkSearchResponse:
+    if config is None:
+        config = os.getenv("POLYGRES_CHUNK_CONFIG", "doc_chunks_embedding")
+    try:
+        page = vector_search(
+            embedding=embedding,
+            config_name=config,
+            limit=limit,
+            min_similarity=min_similarity,
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=str(exc))
+
+    return ChunkSearchResponse(
+        results=format_chunk_results(page),
         request_id=getattr(page, "request_id", None),
     )
 

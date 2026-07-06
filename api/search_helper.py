@@ -72,6 +72,18 @@ def graph_search(
         return []
 
 
+def format_chunk_results(page: Page[VectorResult]) -> list[dict[str, Any]]:
+    return [
+        {
+            "chunk_id": result.id,
+            "doc_id": result.properties.get("doc_id", result.id.split("_", 2)[1] if "_" in result.id else result.id),
+            "content": result.properties.get("content", ""),
+            "score": result.score,
+        }
+        for result in page.results
+    ]
+
+
 def format_results(page: Page[VectorResult]) -> list[dict[str, Any]]:
     return [
         {

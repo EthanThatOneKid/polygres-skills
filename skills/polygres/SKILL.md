@@ -1,6 +1,6 @@
 ---
 name: polygres
-description: Master Polygres workflow skill backed by the nightly mirrored docs in references/upstream.
+description: Master Polygres workflow skill backed by the nightly mirrored docs in skills/polygres/references/upstream.
 compatibility: Created for any AI agent. No external services required.
 metadata:
   author: EthanThatOneKid
@@ -11,7 +11,7 @@ metadata:
 
 Use this skill as the entry point for Polygres work.
 
-This repository keeps a nightly mirror of the public Polygres docs under `references/upstream/`. Treat that mirror as the source of truth for the eventual subcommand map and workflow routing.
+This repository keeps a nightly mirror of the public Polygres docs under `skills/polygres/references/upstream/`. Treat that mirror as the source of truth for the eventual subcommand map and workflow routing.
 
 ## Subcommand map
 
@@ -28,8 +28,8 @@ This repository keeps a nightly mirror of the public Polygres docs under `refere
 
 ## Upstream references
 
-- `references/upstream/manifest.json`
-- `references/upstream/pages/**`
+- `skills/polygres/references/upstream/manifest.json`
+- `skills/polygres/references/upstream/pages/**`
 
 ## Routing rule
 

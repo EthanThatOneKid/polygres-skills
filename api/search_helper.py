@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from polygres import Polygres
-from polygres.models import Page, VectorResult
+from polygres.models import Page, VectorResult, GraphResult
 
 
 @dataclass
@@ -46,6 +46,30 @@ def vector_search(
         min_similarity=min_similarity,
         limit=limit,
     )
+
+
+def graph_search(
+    source_id: str,
+    config_name: str | None = None,
+    limit: int = 20,
+) -> list[dict[str, Any]]:
+    project = get_project()
+    try:
+        page = project.graph.search(
+            source_id,
+            config=config_name,
+            limit=limit,
+        )
+        return [
+            {
+                "id": r.id,
+                "score": r.score,
+                "properties": r.properties,
+            }
+            for r in page.results
+        ]
+    except AttributeError:
+        return []
 
 
 def format_results(page: Page[VectorResult]) -> list[dict[str, Any]]:

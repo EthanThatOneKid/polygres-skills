@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from api.embed import embed_text
-from api.search_helper import get_project, vector_search, format_results
+from api.search_helper import get_project, vector_search, graph_search, format_results
 
 app = FastAPI(
     title="Polygres Docs Search API",
@@ -95,6 +95,18 @@ def _run_search(
         results=format_results(page),
         request_id=getattr(page, "request_id", None),
     )
+
+
+@app.get("/graph/neighbors/{doc_id}")
+def graph_neighbors(doc_id: str, limit: int = 20):
+    """
+    Graph search: find pages connected to the given doc via doc_links.
+    """
+    try:
+        results = graph_search(doc_id, limit=limit)
+        return {"results": results}
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=str(exc))
 
 
 @app.get("/health")

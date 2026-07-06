@@ -14,8 +14,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 DEFAULT_BASE_URL = "https://docs.evokoa.com/polygres"
-DEFAULT_OUTPUT_DIR = Path(__file__).resolve().parents[1] / "references" / "upstream" / "pages"
-DEFAULT_MANIFEST = Path(__file__).resolve().parents[1] / "references" / "upstream" / "manifest.json"
+DEFAULT_OUTPUT_DIR = Path(__file__).resolve().parents[1] / "skills" / "polygres" / "references" / "upstream" / "pages"
+DEFAULT_MANIFEST = Path(__file__).resolve().parents[1] / "skills" / "polygres" / "references" / "upstream" / "manifest.json"
 USER_AGENT = "Mozilla/5.0 (compatible; polygres-skills-sync/1.0)"
 
 

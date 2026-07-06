@@ -1,21 +1,22 @@
 """
-Batch-generate Gemini embeddings for every row in docs_pages and store them.
+Batch-generate Gemini embeddings for every doc chunk and store them.
+
+Embeds the full body text of each documentation page (not just titles)
+using paragraph-based chunking for scalable vector search.
 
 Two modes:
 
-  1. SQL mode (default) — prints UPDATE statements you can run in the
-     Polygres SQL Editor.
+  1. SQL mode (default) — prints INSERT statements for the SQL Editor.
+  2. Direct mode — writes directly via PostgreSQL.
 
        python api/enrich_docs.py
-
-  2. Direct mode — connects to Polygres over PostgreSQL and writes
-     embeddings directly. Requires POLYGRES_DIRECT_URL in the environment.
-
        python api/enrich_docs.py --direct
 """
 
 import argparse
+import json
 import os
+import re
 import sys
 import textwrap
 
@@ -23,96 +24,105 @@ _PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if _PROJECT_ROOT not in sys.path:
     sys.path.insert(0, _PROJECT_ROOT)
 
-from api.embed import embed_many
+from api.chunk_docs import chunk_text  # noqa: E402
+from api.embed import embed_many  # noqa: E402
 
 
-def build_title_body(row: dict) -> str:
-    title = row.get("title", "").replace("| Polygres", "").strip()
-    return title
+def strip_frontmatter(text: str) -> str:
+    lines = text.split("\n")
+    body_start = 0
+    for i, line in enumerate(lines):
+        if line.startswith(("source:", "title:", "source_hash:", "discovered_from:", "#")) or line.strip() == "":
+            body_start = i + 1
+        else:
+            break
+    return "\n".join(lines[body_start:])
 
 
 def vector_literal(values: list[float]) -> str:
     return "[" + ",".join(str(v) for v in values) + "]"
 
 
-def sql_mode():
-    import json
+def process_all_items(sql_output: bool = True):
+    manifest_path = os.path.join(_PROJECT_ROOT, "references", "upstream", "manifest.json")
+    pages_dir = os.path.join(_PROJECT_ROOT, "references", "upstream", "pages")
 
-    manifest_path = os.path.join(
-        _PROJECT_ROOT,
-        "references",
-        "upstream",
-        "manifest.json",
-    )
     with open(manifest_path, encoding="utf-8") as f:
         manifest = json.load(f)
 
-    items = manifest["items"]
-    texts = [build_title_body(item) for item in items]
-
-    print("-- Generating embeddings with gemini-embedding-2 ...", flush=True)
-    embeddings = embed_many(texts)
-
-    print("-- Paste the following into your Polygres SQL Editor:\n")
-    for item, emb in zip(items, embeddings):
+    all_chunks: list[dict] = []
+    for item in manifest["items"]:
         doc_id = os.path.splitext(os.path.basename(item["path"]))[0]
-        lit = vector_literal(emb)
-        print(
-            textwrap.dedent(f"""\
-            UPDATE docs_pages
-               SET embedding = '{lit}'::vector
-             WHERE id = '{doc_id}'
-               AND embedding IS NULL;
-            """)
-        )
+        title = item["title"].replace(" | Polygres", "").strip()
+        md_path = os.path.join(pages_dir, item["path"])
 
+        if not os.path.exists(md_path):
+            print(f"-- WARNING: {md_path} not found, skipping", file=sys.stderr)
+            continue
 
-def direct_mode():
-    import psycopg
+        md_text = open(md_path, encoding="utf-8").read()
+        body = strip_frontmatter(md_text)
+        full_text = f"{title}\n\n{body}"
 
-    import json
+        chunks = chunk_text(full_text)
+        for idx, chunk in enumerate(chunks):
+            all_chunks.append({
+                "chunk_id": f"chunk_{doc_id}_{idx}",
+                "doc_id": doc_id,
+                "content": chunk,
+                "chunk_index": idx,
+            })
 
-    manifest_path = os.path.join(
-        _PROJECT_ROOT,
-        "references",
-        "upstream",
-        "manifest.json",
-    )
-    with open(manifest_path, encoding="utf-8") as f:
-        manifest = json.load(f)
+    if not all_chunks:
+        print("-- No chunks to embed.", file=sys.stderr)
+        return
 
-    items = manifest["items"]
-    texts = [build_title_body(item) for item in items]
-
-    print("-- Generating embeddings ...", flush=True)
+    print(f"-- {len(all_chunks)} chunks from {len(manifest['items'])} pages", flush=True)
+    texts = [c["content"] for c in all_chunks]
     embeddings = embed_many(texts)
 
-    direct_url = os.environ["POLYGRES_DIRECT_URL"]
-    with psycopg.connect(direct_url) as conn:
-        with conn.cursor() as cur:
-            for item, emb in zip(items, embeddings):
-                doc_id = os.path.splitext(os.path.basename(item["path"]))[0]
-                lit = vector_literal(emb)
-                cur.execute(
-                    "UPDATE docs_pages SET embedding = %s::vector WHERE id = %s AND embedding IS NULL",
-                    (lit, doc_id),
-                )
-        conn.commit()
+    if sql_output:
+        conn = None
+    else:
+        import psycopg
 
-    updated = sum(1 for _ in embeddings)
-    print(f"Done. {updated} rows updated.")
+        direct_url = os.environ["POLYGRES_DIRECT_URL"]
+        conn = psycopg.connect(direct_url)
+
+    for chunk, emb in zip(all_chunks, embeddings):
+        lit = vector_literal(emb)
+
+        if sql_output:
+            escaped = chunk["content"].replace("'", "''")
+            print(
+                textwrap.dedent(f"""\
+                INSERT INTO doc_chunks (id, doc_id, content, chunk_index, embedding) VALUES
+                  ('{chunk['chunk_id']}', '{chunk['doc_id']}', '{escaped}', {chunk['chunk_index']}, '{lit}'::vector)
+                ON CONFLICT (id) DO UPDATE SET embedding = EXCLUDED.embedding;
+                """)
+            )
+        else:
+            conn.cursor().execute(
+                "INSERT INTO doc_chunks (id, doc_id, content, chunk_index, embedding) "
+                "VALUES (%s, %s, %s, %s, %s::vector) "
+                "ON CONFLICT (id) DO UPDATE SET embedding = EXCLUDED.embedding",
+                (chunk["chunk_id"], chunk["doc_id"], chunk["content"], chunk["chunk_index"], lit),
+            )
+
+    if conn:
+        conn.commit()
+        conn.close()
+        print(f"Done. {len(all_chunks)} rows written.")
+
+    print(f"-- {len(all_chunks)} chunks processed")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Enrich docs_pages with Gemini embeddings.")
+    parser = argparse.ArgumentParser(description="Enrich doc sections with Gemini embeddings.")
     parser.add_argument(
         "--direct",
         action="store_true",
         help="Write directly via PostgreSQL (requires POLYGRES_DIRECT_URL).",
     )
     args = parser.parse_args()
-
-    if args.direct:
-        direct_mode()
-    else:
-        sql_mode()
+    process_all_items(sql_output=not args.direct)

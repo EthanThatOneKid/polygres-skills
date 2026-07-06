@@ -2,6 +2,8 @@ import json
 import os
 import re
 import sys
+import threading
+import time
 from collections import defaultdict
 from pathlib import Path, PurePath
 
@@ -11,7 +13,24 @@ import streamlit as st
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_PROJECT_ROOT))
 
-API_BASE = os.getenv("POLYGRES_DOCS_API", "http://127.0.0.1:8543")
+_API_PORT = 8543
+API_BASE = os.getenv("POLYGRES_DOCS_API", f"http://127.0.0.1:{_API_PORT}")
+
+if API_BASE.startswith("http://127.0.0.1"):
+    import uvicorn
+    from api.search_api import app as _fastapi_app
+
+    def _start_api():
+        uvicorn.run(_fastapi_app, host="127.0.0.1", port=_API_PORT, log_level="warning")
+
+    t = threading.Thread(target=_start_api, daemon=True)
+    t.start()
+    for _ in range(20):
+        try:
+            requests.get(f"{API_BASE}/health", timeout=1)
+            break
+        except requests.RequestException:
+            time.sleep(0.5)
 
 
 def _load_manifest():

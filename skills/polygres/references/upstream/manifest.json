@@ -2,7 +2,7 @@
   "source": {
     "base_url": "https://docs.evokoa.com/polygres"
   },
-  "output_dir": "skills/polygres/references/upstream/pages",
+  "output_dir": "/home/runner/work/polygres-skills/polygres-skills/skills/polygres/references/upstream/pages",
   "count": 22,
   "skip_count": 0,
   "items": [

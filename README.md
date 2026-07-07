@@ -14,7 +14,7 @@ Nightly-mirrored Polygres docs, a companion `polygres` agent skill, and a search
 
 - Python 3.11+
 - A [Polygres](https://docs.evokoa.com/polygres) account with a project
-- A [Gemini API key](https://aistudio.google.com/apikey)
+
 
 ## Setup
 
@@ -36,7 +36,6 @@ pip install -r requirements.txt
 ```env
 POLYGRES_RUNTIME_URL=https://{project_id}.api.db.polygres.com/v1
 POLYGRES_API_KEY=poly_live_{key}
-GEMINI_API_KEY=your_gemini_api_key
 ```
 
 4. Import the database schema:
@@ -52,7 +51,7 @@ Open the [Polygres SQL Editor](https://docs.evokoa.com/polygres) and run:
 python api/enrich_docs.py --direct
 ```
 
-This reads the mirrored markdown files, strips frontmatter, chunks by section, generates Gemini embeddings for all ~119 chunks, and writes them to your Polygres project.
+This reads the mirrored markdown files, strips frontmatter, chunks by section, generates all-MiniLM-L6-v2 embeddings (384-dim, ONNX on-device) for all ~119 chunks, and writes them to your Polygres project. The model (~23 MB) downloads automatically from HuggingFace Hub on first run.
 
 6. Configure vector search in the Polygres dashboard:
 
@@ -76,7 +75,6 @@ Opens at `http://localhost:8501`. The FastAPI server starts automatically on por
 ```toml
 POLYGRES_RUNTIME_URL = "https://{project_id}.api.db.polygres.com/v1"
 POLYGRES_API_KEY = "poly_live_{key}"
-GEMINI_API_KEY = "your_gemini_api_key"
 ```
 
 4. Set the **App location** to `ui/streamlit_app.py`.
@@ -90,7 +88,7 @@ The embedded API exposes three endpoints:
 | Endpoint | Description |
 |---|---|
 | `POST /search` | Vector search on `docs_pages` (raw embedding, backward compat) |
-| `POST /search/text` | Text search on `doc_chunks` (default, embeds via Gemini) |
+| `POST /search/text` | Text search on `doc_chunks` (default, embeds via all-MiniLM-L6-v2) |
 | `POST /search/chunks` | Explicit chunk-level text search |
 | `GET /graph/neighbors/{doc_id}` | Graph neighbors from `doc_links` |
 | `GET /health` | Polygres readiness (graph / vector / hybrid) |

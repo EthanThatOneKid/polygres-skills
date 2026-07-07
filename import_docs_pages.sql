@@ -2,8 +2,8 @@
 -- or paste into the SQL Editor.
 --
 -- Creates a table with all 22 Polygres documentation pages
--- and their metadata, including a vector(768) column for
--- Gemini embedding 2 (output_dimensionality=768).
+-- and their metadata, including a vector(384) column for
+-- all-MiniLM-L6-v2 (ONNX, on-device).
 
 CREATE TABLE IF NOT EXISTS docs_pages (
   id            text PRIMARY KEY,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS docs_pages (
   url           text NOT NULL,
   sha256        text,
   word_count    integer,
-  embedding     vector(768)
+  embedding     vector(384)
 );
 
 INSERT INTO docs_pages (id, title, category, url, sha256, word_count) VALUES

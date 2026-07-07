@@ -1,9 +1,16 @@
+import json
 import os
 from dataclasses import dataclass, field
 from typing import Any
 
 from polygres import Polygres
 from polygres.models import Page, VectorResult, GraphResult
+
+_CHUNK_INDEX_PATH = os.path.join(os.path.dirname(__file__), "chunk_index.json")
+_CHUNK_INDEX: dict[str, str] = {}
+if os.path.exists(_CHUNK_INDEX_PATH):
+    with open(_CHUNK_INDEX_PATH, encoding="utf-8") as _f:
+        _CHUNK_INDEX = json.load(_f)
 
 
 @dataclass
@@ -77,7 +84,7 @@ def format_chunk_results(page: Page[VectorResult]) -> list[dict[str, Any]]:
         {
             "chunk_id": result.id,
             "doc_id": result.properties.get("doc_id", result.id.split("_", 2)[1] if "_" in result.id else result.id),
-            "content": result.properties.get("content", ""),
+            "content": _CHUNK_INDEX.get(result.id, result.properties.get("content", "")),
             "score": result.score,
         }
         for result in page.results

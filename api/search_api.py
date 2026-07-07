@@ -9,15 +9,15 @@ from api.search_helper import get_project, vector_search, graph_search, format_r
 
 app = FastAPI(
     title="Polygres Docs Search API",
-    description="Vector search over the Polygres documentation corpus using the Polygres SDK + Gemini embeddings.",
-    version="0.2.0",
+    description="Vector search over the Polygres documentation corpus using the Polygres SDK + ONNX on-device embeddings (all-MiniLM-L6-v2).",
+    version="0.3.0",
 )
 
 
 class RawSearchRequest(BaseModel):
     embedding: list[float] = Field(
         ...,
-        description="Dense vector embedding. Must match the dimension of your Polygres vector index (768 for gemini-embedding-2 with output_dimensionality=768).",
+        description="Dense vector embedding. Must match the dimension of your Polygres vector index (384 for all-MiniLM-L6-v2).",
         examples=[[0.01, 0.02, 0.03]],
     )
     config: str | None = Field(
@@ -32,7 +32,7 @@ class TextSearchRequest(BaseModel):
     query: str = Field(
         ...,
         min_length=1,
-        description="Plain-text search query. Embedded server-side via gemini-embedding-2.",
+        description="Plain-text search query. Embedded server-side via all-MiniLM-L6-v2 (ONNX, on-device).",
         examples=["How do I configure vector search?"],
     )
     config: str | None = Field(
@@ -81,7 +81,7 @@ def search_text(body: TextSearchRequest):
     """
     Vector search from plain text against chunked doc content.
 
-    Embeds the query server-side using gemini-embedding-2 (768d),
+    Embeds the query server-side using all-MiniLM-L6-v2 (384d, ONNX),
     then searches doc_chunks with the resulting vector.
     """
     embedding = embed_text(body.query)

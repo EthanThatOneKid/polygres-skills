@@ -94,7 +94,7 @@ tab_vec, tab_graph, tab_health = st.tabs([
 
 with tab_vec:
     st.subheader("Semantic Vector Search")
-    st.markdown("Ask a question in plain text — the API embeds your query with **Gemini Embedding 2** (768d) and returns ranked results from Polygres.")
+    st.markdown("Ask a question in plain text — the API embeds your query with **all-MiniLM-L6-v2** (384d, ONNX on-device) and returns ranked results from Polygres.")
 
     query = st.text_input(
         "Search query",
@@ -285,5 +285,5 @@ st.divider()
 st.caption(
     f"API: `{API_BASE}`  ·  "
     "[Polygres Docs](https://docs.evokoa.com/polygres)  ·  "
-    "`{query}` embedded via Gemini Embedding 2"
+    "`{query}` embedded via all-MiniLM-L6-v2 (ONNX)"
 )

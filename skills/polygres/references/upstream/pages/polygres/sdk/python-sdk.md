@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/python-sdk
 title: Python SDK | Polygres
-source_hash: 6855a59569b108df93a7a7402b0d707401b8b1758bd3665273caee72852a20ce
+source_hash: 963a024da3550badcd64fec5dee82fa8dfd8658a475c5afbd851ab9587bb7e90
 discovered_from: https://docs.evokoa.com/polygres
 
 # Python SDK | Polygres
@@ -13,7 +13,7 @@ Installation
 
 Install the package via pip:
 
-pip install polygres
+pip install polygres-sdk
 
 Quick Start
 
@@ -57,7 +57,19 @@ Hybrid Retrieval ( project.hybrid.graph_first , project.hybrid.joint )
 
 Head over to Retrieval Integration Patterns to copy the Python code for your specific workflow.
 
-Direct Database Connections
+Choosing your access method
+
+Task Use
+
+Runtime retrieval queries in application code (vector, text, graph, hybrid) Python SDK
+
+Project setup, credential output, CSV imports, migrations, retrieval configuration Polygres CLI
+
+Visual project management, SQL editor, query workbench Dashboard
+
+Direct database connections for ORMs, migration tools, bulk inserts Native Postgres driver ( psycopg , SQLAlchemy, etc.)
+
+Direct database connections
 
 The Polygres Python SDK is strictly for Retrieval API queries . It does not bundle Postgres drivers like asyncpg or psycopg , and it is not meant for database migrations, bulk background inserts, or raw SQL execution.
 

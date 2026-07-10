@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/security-basics
 title: Security basics | Polygres
-source_hash: 91f7448783b54be9b6294d95489804e0dcc9ac65af2bbc8dd1b32a196582b204
+source_hash: f7a366ff009111e6f7f4e0977f2ca1363262e602556fd0f64716af5fed5bdd71
 discovered_from: https://docs.evokoa.com/polygres
 
 # Security basics | Polygres

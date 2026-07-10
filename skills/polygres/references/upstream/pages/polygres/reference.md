@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference
 title: Reference and troubleshooting | Polygres
-source_hash: 7493ba8cff16326d0bfe3761a78f4a06cd6aab6bc64c2632302b957c9183aaae
+source_hash: 51cd63771fdb759b34726748cb605eea7c3901d9d36b1cf568cf430fbd2c3dbe
 discovered_from: https://docs.evokoa.com/polygres
 
 # Reference and troubleshooting | Polygres
@@ -14,6 +14,8 @@ workflows and end-to-end examples, use the Product Guides.
 Reference map
 
 Need Page
+
+See recent user-facing changes Changelog
 
 Find a user-facing HTTP route and auth mode Routes
 

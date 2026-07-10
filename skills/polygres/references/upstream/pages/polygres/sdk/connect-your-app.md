@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/connect-your-app
 title: Connect your app | Polygres
-source_hash: 56dc8e4898639f0270f11ca73410152d4603c6ff2c05e505d19d35c9bd780aa6
+source_hash: 573240c75fffcacefecfcae03608f889d1dfdf6c28d3dd0e76deab877336ab96
 discovered_from: https://docs.evokoa.com/polygres
 
 # Connect your app | Polygres
@@ -73,6 +73,12 @@ Use API access for retrieval, not database sessions
 
 The API access tab is for Polygres retrieval calls. Those calls use a Project API Key , which you create in Settings ( /{organization}/{project_id}/settings ) under Project API Key . A Project API Key does not open a native Postgres connection, and the database password does not replace it in generated retrieval examples.
 
+You can also create a Project API Key and print connection URLs from the terminal with the Polygres CLI :
+
+polygres env # prints DATABASE_URL, DIRECT_URL, and POLYGRES_RUNTIME_URL
+
+polygres keys create my-key # creates and prints a new Runtime API key (shown once)
+
 See Security basics for the credential boundary and Query from the dashboard for generated retrieval code.
 
 TLS compatibility during beta
@@ -92,3 +98,5 @@ Migrations and bulk tools use Direct connection .
 Secrets are stored server-side and are absent from source control.
 
 The native database password and Project API Key are not confused or interchanged.
+
+Connection URLs and API keys were obtained from the dashboard or with polygres env and polygres keys create .

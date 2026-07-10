@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/load-and-manage-data
 title: Load and manage data | Polygres
-source_hash: 4a33723a1d3dd5bf0e03de0e929803876a30e6a98fabd7615cfc7130f23acbcf
+source_hash: 5b58d5f9175c33a53d5c49a035251635598157db7652264258d7360bd4c22e3a
 discovered_from: https://docs.evokoa.com/polygres
 
 # Load and manage data | Polygres
@@ -8,6 +8,8 @@ discovered_from: https://docs.evokoa.com/polygres
 Load and manage data
 
 Wait until the project is Ready before starting a write operation. If Settings > Runtime shows Read-only , browsing and read queries may still work, but imports, migrations, row edits, and schema changes can fail until the displayed cause is resolved.
+
+You can load data and apply migrations from the dashboard or from the Polygres CLI . The CLI launch surface covers CSV import and SQL migrations. SQL file import, pg_dump restore, and import cancellation remain dashboard workflows.
 
 Choose the right dashboard tool
 
@@ -20,6 +22,8 @@ Explore data or run an ad hoc statement SQL Editor ( /{organization}/{project_id
 Upload CSV, SQL, or pg_dump data Import ( /{organization}/{project_id}/import )
 
 Apply an ordered, repeatable schema change Migrations ( /{organization}/{project_id}/migrations )
+
+From a terminal, use polygres import csv and polygres migrations apply . See CSV imports and Migrations .
 
 Browse and edit tables
 
@@ -191,4 +195,4 @@ Migration fails Read the database error, correct the problem in a new or still-e
 
 Platform error has a request ID Keep the request ID and include it when contacting support.
 
-After loading data, continue with Configure retrieval .
+After loading data, continue with Configure retrieval or the Polygres CLI retrieval setup commands.

@@ -1,19 +1,21 @@
 source: https://docs.evokoa.com/polygres/platform/dashboard-api-database-access
 title: Dashboard, API, and database access | Polygres
-source_hash: d82e3fc6ba06f36c48aaacb5ef0e01e4ca5e3255c99774ae2dc8f1b3c30b27ce
+source_hash: b261bd2d88ff90dfd31f0637cf832a55be3c987e7e19c70bf5260549a39c4b34
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard, API, and database access | Polygres
 
 Dashboard, API, and database access
 
-A Polygres project can be used through three complementary surfaces. The dashboard operates the SaaS workspace, PostgreSQL connections serve application data, and the Polygres API serves retrieval to backend code.
+A Polygres project can be used through complementary surfaces. The dashboard operates the SaaS workspace, the Polygres CLI covers terminal setup workflows, PostgreSQL connections serve application data, and the Polygres API serves retrieval to backend code.
 
 Confusing these surfaces is a common setup mistake. Each one is meant for a different job, and each one has its own credential boundary.
 
 Surface Best for Access used
 
 Dashboard Organizations, members, projects, imports, SQL, migrations, retrieval setup, query testing, and credential management. Signed-in dashboard session.
+
+Polygres CLI Project selection, environment output, psql , Runtime API keys, CSV import, migrations, and retrieval configuration from a terminal. CLI login session for the authenticated user and active organization.
 
 PostgreSQL Normal application reads and writes, ORM traffic, database clients, schema tools, and bulk data work. Project connection URL plus native PostgreSQL password.
 
@@ -85,7 +87,7 @@ hybrid retrieval that combines graph and vector results.
 
 The raw key is shown only when it is created. Store it immediately and use a placeholder such as poly_live_<...> in documentation, examples, and tickets.
 
-A project API key is not a general administration credential. It does not create projects, import data, run migrations, configure retrieval, manage keys, or reveal the native database password. Those remain dashboard operations.
+A project API key is not a general administration credential. It does not create projects, import data, run migrations, configure retrieval, manage keys, or reveal the native database password. Those remain dashboard or CLI operations.
 
 Query first in the dashboard, then in code
 
@@ -119,6 +121,8 @@ Next steps
 
 Product Guides
 
+Polygres CLI
+
 Connect and credentials
 
 Connection examples
@@ -130,6 +134,8 @@ Configure and query retrieval
 Retrieval integration patterns
 
 Reference
+
+Changelog
 
 Routes
 

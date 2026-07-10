@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/roles-and-permissions
 title: Roles and permissions | Polygres
-source_hash: 1a99624d4e65fd991cd7bf8da5a4f87b06c6d945e143fcb85f7d709c892dfdcd
+source_hash: d2656610b235a8b747e886c0d10968896553e442a8fe82bd88032dc0dc30764e
 discovered_from: https://docs.evokoa.com/polygres
 
 # Roles and permissions | Polygres
@@ -81,9 +81,13 @@ graph:read Discover graph candidates, read graph status/system settings, and run
 
 graph:manage Save, build, maintain, or change graph configuration/system settings.
 
-vector:read Discover vectors and read vector or text configuration metadata.
+vector:read Discover vectors and read vector configuration metadata.
 
-vector:manage Create, update, delete, or index vector/text configurations; current dashboard-session vector, text, and hybrid query routes also request this permission.
+vector:manage Create, update, delete, or index vector configurations; current dashboard-session vector and hybrid query routes also request this permission.
+
+text:read Read text configuration metadata.
+
+text:manage Create, update, or delete text configurations.
 
 imports:read List and inspect import jobs.
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: fae3f339002cdf60870d00df30fffd6ac7e0a54cd02d52297e765d115897e217
+source_hash: fdacd8ac36a70ede7f776380fc9b783a60c0d28f3ca942ad35962923bda44908
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres

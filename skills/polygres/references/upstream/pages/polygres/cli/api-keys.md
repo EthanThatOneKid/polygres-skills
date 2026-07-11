@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/api-keys
 title: CLI API keys | Polygres
-source_hash: 9c650bfd48fa380aecda695bdab4a1a463888dfad15d76b9d97403e4f3e8a19d
+source_hash: 6b187b5d9d0268cc817521b5f8f63db925a3e8818c42d3faa33dd1d94e2af50d
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI API keys | Polygres

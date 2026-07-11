@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/connect-your-app
 title: Connect your app | Polygres
-source_hash: 573240c75fffcacefecfcae03608f889d1dfdf6c28d3dd0e76deab877336ab96
+source_hash: 624e4644fd2033e2c9d953ab2c7cb61e39b035615d468791fddec636ec5d711c
 discovered_from: https://docs.evokoa.com/polygres
 
 # Connect your app | Polygres

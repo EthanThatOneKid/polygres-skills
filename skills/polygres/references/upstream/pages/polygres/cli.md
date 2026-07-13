@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli
 title: Polygres CLI | Polygres
-source_hash: 2c04ecea2ea95c1ac0de890491123f0dd29c56791942561deb970524249fe50d
+source_hash: 278dfa33a2e3445590b9e35e280ff2fa50be37f4d5338a1d20a632bbbcba521b
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres CLI | Polygres

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/agent-skills
 title: Polygres Agent Skills | Polygres
-source_hash: d8d4ca2ef977f611f48bf55b7bfc70608a0506b7a078eccb5ccdd8cda135c1af
+source_hash: d9fe11093da498cc5ff357df1b187080d705669a62cde793659cb35d498486b6
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres Agent Skills | Polygres

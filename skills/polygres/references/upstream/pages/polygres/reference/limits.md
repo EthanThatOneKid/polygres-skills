@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/limits
 title: Limits | Polygres
-source_hash: 38b26ce71a45699fcefbbf41dd4b21cd7372e9d76091a51dae2295074f6f5089
+source_hash: c9cfde067c865c5059ff87ee248987f26fcb38ee7c661cf7774ca0021238ffc8
 discovered_from: https://docs.evokoa.com/polygres
 
 # Limits | Polygres
@@ -71,17 +71,17 @@ Feature availability Tier metadata contains feature flags. Check GET /tiers ; do
 
 Import caps
 
-The request schema accepts a declared file size up to 5 GiB, but the effective tier
+CSV file admission equals the effective active tier’s contractual
 
-upload cap is lower and is checked first for each import type.
+limits.storage_bytes . The file is still admitted by source size, independently
 
-Import type Starter Pro Tier field
+of current free space and possible database expansion. Use live GET /tiers
 
-CSV 32 MiB 32 MiB csv_upload_limit_bytes
+output for current values; this page does not duplicate them.
 
-SQL 32 MiB 32 MiB sql_upload_limit_bytes
+SQL and pg_dump retain their independent tier upload fields. Read those live
 
-pg_dump 32 MiB 32 MiB pg_dump_upload_limit_bytes
+fields from GET /tiers rather than relying on copied plan values.
 
 Additional import constraints:
 
@@ -95,9 +95,11 @@ CSV identifiers Header, schema, table, column, and mapping names must match [A-Z
 
 CSV modes create_table or append_existing .
 
-An oversized request returns IMPORT_LIMIT_EXCEEDED . An occupied import slot returns
+An oversized CSV returns HTTP 413 with IMPORT_LIMIT_EXCEEDED ; the CLI exits 2,
 
-IMPORT_CONCURRENCY_LIMIT .
+preserves the error details and request ID, and does not retry. An occupied
+
+import slot returns IMPORT_CONCURRENCY_LIMIT .
 
 Retrieval and data-tool limits
 

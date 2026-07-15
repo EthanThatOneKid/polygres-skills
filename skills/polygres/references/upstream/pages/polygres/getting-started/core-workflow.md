@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/core-workflow
 title: Core workflow | Polygres
-source_hash: f6713445753f433f0b07dab1e3c210ac33527dddcecd27cced23c09503ba6879
+source_hash: 3e433fde3341a4f4d6200b9479403f5e0477defa7fb390de4357c5d719f7d1ac
 discovered_from: https://docs.evokoa.com/polygres
 
 # Core workflow | Polygres

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/dashboard-api-database-access
 title: Dashboard, API, and database access | Polygres
-source_hash: 92cf63e7e9573e858c686a6792d9a4c5cb0a39d53b3063e0768b873c25f58142
+source_hash: 6a9ce05215a61e0e59f95bf90888fff1f0ea6081f424bae9a640f8edadbc901c
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard, API, and database access | Polygres

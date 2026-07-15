@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/configure-retrieval
 title: Configure retrieval | Polygres
-source_hash: 9534e08d0c9dec6d9d3b01cab7a21fa04fa537f06acf80786338d7a0f42e6e4a
+source_hash: 467c0a9f326db790f1ed8be46f5c683894cbc0ac8f3b15855d882809e2af7c9f
 discovered_from: https://docs.evokoa.com/polygres
 
 # Configure retrieval | Polygres

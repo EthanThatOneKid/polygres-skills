@@ -1,25 +1,39 @@
 source: https://docs.evokoa.com/polygres/agent-skills
 title: Polygres Agent Skills | Polygres
-source_hash: d9fe11093da498cc5ff357df1b187080d705669a62cde793659cb35d498486b6
+source_hash: 6cab34cca363c309e043c8ba2feb5ac2d8b3d012e8d23b6a43360feaa7b0c2dd
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres Agent Skills | Polygres
 
 Polygres Agent Skills
 
-The polygres-cli Agent Skill teaches compatible coding agents how to operate
+The Polygres plugin includes four independently triggered Agent Skills:
 
-Polygres through the public CLI. It covers browser login, project selection,
+polygres-cli operates Polygres through the public CLI, including login,
 
-database access, Runtime API keys, data imports, migrations, retrieval setup,
+project selection, imports, migrations, keys, retrieval setup, and recovery;
 
-readiness checks, and failure recovery.
+polygres-sdk builds Python application retrieval with graph, vector, text,
 
-The skill does not include the CLI. Install both components:
+hybrid, pagination, typed models, and grounded RAG workflows;
+
+polygres-retrieval-design produces a reviewable retrieval plan without
+
+changing a project;
+
+polygres-troubleshooting diagnoses failures from public read-only CLI and
+
+SDK evidence.
+
+The skills do not include the Python packages. Install the component required
+
+by the task, then install the skill repository:
 
 pipx install "polygres-cli==0.1.0"
 
-npx skills add Evokoa/polygres-skills --skill polygres-cli
+python -m pip install "polygres-sdk==0.1.0"
+
+npx skills add Evokoa/polygres-skills
 
 The public skill source is
 
@@ -33,15 +47,23 @@ Choose an installation method
 
 Compatible Agent Skills installers
 
-Install interactively into the current project:
+Install only the operational skill into the current project:
 
 npx skills add Evokoa/polygres-skills --skill polygres-cli
+
+Install only the application-development skill:
+
+npx skills add Evokoa/polygres-skills --skill polygres-sdk
+
+Install the advisory design or diagnostic skill:
+
+npx skills add Evokoa/polygres-skills --skill polygres-retrieval-design
+
+npx skills add Evokoa/polygres-skills --skill polygres-troubleshooting
 
 Install globally for Codex and Claude Code:
 
 npx skills add Evokoa/polygres-skills \
-
---skill polygres-cli \
 
 --global \
 
@@ -77,9 +99,19 @@ Inside Claude Code, run:
 
 /reload-plugins
 
-Invoke the bundled skill explicitly with:
+Compatible agents can activate the appropriate skill automatically from the
+
+request. Invoke a skill explicitly when you need to select the CLI or SDK
+
+workflow yourself:
 
 /polygres:polygres-cli
+
+/polygres:polygres-sdk
+
+/polygres:polygres-retrieval-design
+
+/polygres:polygres-troubleshooting
 
 Use the skill
 
@@ -103,9 +135,83 @@ Configure cosine vector retrieval for documents.embedding with 1536
 
 dimensions and verify readiness.
 
+Use the Polygres SDK to find semantically similar documents, expand their
+
+citations, and build deduplicated RAG context with source provenance.
+
+Design a reviewable retrieval plan for this schema without changing the
+
+project. Compare relational, graph, vector, text, and hybrid approaches.
+
+Diagnose this failed import from public read-only evidence. Preserve request
+
+and job IDs and recommend a safe corrective action.
+
 The installed polygres --help output remains authoritative if the local CLI
 
 version differs from the skill examples.
+
+Build with the Python SDK
+
+Use polygres-sdk for application retrieval, not project administration. The
+
+skill distinguishes the per-project Runtime API URL from the control-plane and
+
+Postgres URLs, keeps the API key in server-side environment configuration, and
+
+uses passwordless connection metadata.
+
+The SDK skill covers:
+
+graph.expand , graph.neighborhood , graph.related , graph.path , and
+
+graph.connection with real row IDs and bounded traversal;
+
+vector search and row similarity with dimension and threshold validation;
+
+TSVector and fuzzy text retrieval, including empty and ambiguous input;
+
+graph-first, vector-first, and joint hybrid retrieval;
+
+cursor and automatic pagination, typed results, request IDs, and SDK
+
+exceptions;
+
+anchor-first and semantic-first RAG with provenance, deduplication, and
+
+application token budgets.
+
+Filters narrow retrieval but do not replace application authorization. Use the
+
+CLI skill when retrieval resources need to be configured or rebuilt.
+
+Design retrieval before implementation
+
+Use polygres-retrieval-design when strategy or data modeling is unresolved.
+
+It maps stable row IDs, relationships, graph bounds, embedding dimensions,
+
+text configuration, hybrid stages, authorization, provenance, deduplication,
+
+token budgets, readiness, and validation into a reviewable plan. After user
+
+approval, it delegates project setup to polygres-cli and application code to
+
+polygres-sdk ; it never mutates a project directly.
+
+Diagnose with public evidence
+
+Use polygres-troubleshooting for authentication, project context,
+
+provisioning, database, pooler, Runtime API, import, migration, retrieval,
+
+pagination, timeout, and partial-failure symptoms. It uses installed CLI help,
+
+public status commands, SDK readiness and exception types, and retained
+
+request or job IDs. It does not use private endpoints or internal observability
+
+and does not perform corrective mutations during diagnosis.
 
 Import CSV, TSV, JSON, and JSONL
 
@@ -139,6 +245,12 @@ Update a skill installed with the generic installer:
 
 npx skills update polygres-cli
 
+npx skills update polygres-sdk
+
+npx skills update polygres-retrieval-design
+
+npx skills update polygres-troubleshooting
+
 Refresh the Codex marketplace:
 
 codex plugin marketplace upgrade polygres
@@ -158,6 +270,12 @@ Uninstall
 Remove a global generic installation:
 
 npx skills remove --global polygres-cli
+
+npx skills remove --global polygres-sdk
+
+npx skills remove --global polygres-retrieval-design
+
+npx skills remove --global polygres-troubleshooting
 
 For Codex, uninstall Polygres through /plugins . Remove the marketplace source
 

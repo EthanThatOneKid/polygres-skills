@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/limits
 title: Limits | Polygres
-source_hash: c9cfde067c865c5059ff87ee248987f26fcb38ee7c661cf7774ca0021238ffc8
+source_hash: b5a39188121ee0480c49b603e41cf31b317ef362abacf51e6ea0fb58461f1e8d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Limits | Polygres
@@ -25,29 +25,39 @@ Tier limits
 
 Project resources
 
-Limit Starter Pro Where to verify
+Shared and dedicated tier records can coexist. A self-service account currently starts on Shared Nano when admission capacity is available. The project’s applied tier in project status, together with GET /tiers , is authoritative.
 
-Projects 1 3 GET /tiers → limits.project_limit
+Limit Shared Nano Shared Small Starter Pro Where to verify
 
-Enforced storage 1 GiB 5 GiB limits.storage_bytes ; compare with project status
+Projects 1 1 1 3 GET /tiers → limits.project_limit
 
-Direct database connections 10 10 limits.direct_connection_limit
+Enforced storage 500 MiB 8 GiB 1 GiB 5 GiB limits.storage_bytes ; compare with project status
 
-Concurrent imports per project 3 3 limits.import_concurrency
+Direct database connections 10 10 10 10 limits.direct_connection_limit
 
-The user-facing gateway limits and may be more restrictive. Pooled connections, statement timeouts, and temporary-file limits are not currently capped at the tier level for Starter and Pro.
+Pooled database connections 10 25 50 50 limits.pooled_connection_limit
+
+Concurrent imports per project 3 3 3 3 limits.import_concurrency
+
+The user-facing gateway can be more restrictive. Statement timeouts, temporary-file limits, retrieval limits, and feature flags also vary by tier. Read them from the live tier response instead of inferring them from a display name.
 
 Graph capacity
 
-Limit Starter Pro
+Limit Shared Nano Shared Small Starter Pro
 
-Graph memory 512 MB 1,024 MB
+Graph memory 256 MB 512 MB 1,024 MB 2,048 MB
 
-Graph edge buffer 500,000 500,000
+Default maximum depth 3 5 Live tier value Live tier value
 
-Graph sync batch size 125 125
+Maximum depth 5 10 Live tier value Live tier value
 
-Node, frontier, and path count maximums are not capped for these tiers.
+Graph build batch size 1,000 5,000 Live tier value Live tier value
+
+Graph edge buffer Live tier value Live tier value 500,000 500,000
+
+Graph sync batch size Live tier value Live tier value 125 125
+
+Shared Nano caps graph nodes, frontier, and exact path count at 10,000. Shared Small caps each at 50,000. Dedicated-tier values come from the live tier response.
 
 Read effective graph settings and caps from
 
@@ -93,7 +103,7 @@ Filename 1–255 characters; must start with an alphanumeric character and canno
 
 CSV identifiers Header, schema, table, column, and mapping names must match [A-Za-z_][A-Za-z0-9_]* .
 
-CSV modes create_table or append_existing .
+CSV modes create_table , append_existing , or replace_existing . Replace mode truncates the target before loading the staged rows.
 
 An oversized CSV returns HTTP 413 with IMPORT_LIMIT_EXCEEDED ; the CLI exits 2,
 
@@ -171,11 +181,17 @@ GET /tiers — — — — 300/min
 
 POST /account/tier 10/hour — — — 300/hour
 
-List organization members or invitations 120/min — — — 2,000/min
+List organization members 120/min — — — 2,000/min
+
+List invitations for the authenticated email 120/min — — — 1,000/min
 
 Add/invite/revoke/update/remove organization member 30/min — — — 500/min
 
-Accept organization invitation 10/min — — — 300/min
+Select, accept, decline, or cancel organization invitation 20/hour — — — 300/hour
+
+Request email verification 5/hour — — — 30/hour
+
+Complete email verification 20/hour — — — 120/hour
 
 Update organization settings 30/min — — — 500/min
 

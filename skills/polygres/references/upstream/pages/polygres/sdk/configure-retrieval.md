@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/configure-retrieval
 title: Configure retrieval | Polygres
-source_hash: 467c0a9f326db790f1ed8be46f5c683894cbc0ac8f3b15855d882809e2af7c9f
+source_hash: f00c815a3bac3acc2e690f5d03acdb5591b2562f30e9e9ce9206a83edef3a1c3
 discovered_from: https://docs.evokoa.com/polygres
 
 # Configure retrieval | Polygres
@@ -72,6 +72,8 @@ Wait while the status moves through Queued or Building .
 Confirm Ready before running graph or hybrid queries.
 
 A configuration can also show Not built , Stale , or Failed . Stale means the saved setup changed after the last successful build. For a failure, review nodes and relationships, correct invalid selections, and select Rebuild Graph again.
+
+Polygres reconciles the saved dashboard configuration with the graph registration actually applied inside the database. A saved record alone does not make the graph ready. If an extension update, interrupted build, or manual database change makes the applied tables, relationships, or filters differ from the saved definition, the dashboard reports the graph as stale or drifted until a successful rebuild applies the current definition.
 
 Configure vector retrieval
 
@@ -152,6 +154,10 @@ Use the retry or Reindex action when an HNSW build fails.
 Check the populated embeddings, dimensions, row ID, and metric before retrying the same failed definition.
 
 Disabling a search configuration does not delete its database vector column or embedding values.
+
+Polygres can adopt an existing compatible HNSW index instead of rebuilding it. The index must target the configured embedding column directly, use the operator class that matches the selected metric, be valid and ready, and have a supported predicate. A non-partial index is supported. A partial index is supported only when its predicate is exactly the indexed embedding column IS NOT NULL . Expression indexes and other partial predicates are reported as unsupported rather than silently treated as ready.
+
+When an adopted physical index no longer matches the saved dimensions, metric, row ID, operator class, index kind, or index name, the configuration becomes Stale . Review the discovered definition before reindexing so Polygres does not replace an intentionally different database index.
 
 Set the project default
 

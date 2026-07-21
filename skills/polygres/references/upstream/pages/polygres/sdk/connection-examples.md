@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/connection-examples
 title: Connection examples | Polygres
-source_hash: 59ba2a5e8a60ef79bf3b65d9630d4010f4a88c48cde860a0725e411e986ea41b
+source_hash: 50e98c2929ca1b725c7a447d85a32ac80fec1831fa9f313b7ebb0165bc7e6ca1
 discovered_from: https://docs.evokoa.com/polygres
 
 # Connection examples | Polygres

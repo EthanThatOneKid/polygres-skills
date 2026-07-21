@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects-and-orgs
 title: Projects and Organizations | Polygres
-source_hash: cbba094e7bad7f5b34d5f2cee50f1364631249f1baaca65983d998ae9a4e4f27
+source_hash: 69c39f256603ce2311d7d0ae565f0f488436742fe8361ca241437ef70393fe20
 discovered_from: https://docs.evokoa.com/polygres
 
 # Projects and Organizations | Polygres
@@ -11,43 +11,45 @@ Account onboarding
 
 Create and activate your account
 
-Open Sign up and register with the email address you intend to use for Polygres.
+Open Sign up and register with the email address you intend to use for Polygres. Enter and confirm a password of at least eight characters, then accept the Terms of Service and acknowledge the Privacy Policy.
 
-Open the verification message sent to that address. Until verification is complete, the dashboard directs you to Verify email instead of project pages.
+If an organization invitation exists for that authenticated address, review the available invitation or invitations before creating a new organization.
 
-Complete Onboarding . Polygres asks for your display name, intended use cases, and planning information such as expected vector scale and graph depth. An estimated total graph size may also be requested.
+Otherwise, complete account setup by entering your organization name. A display name is optional.
 
-Submit the form. If account review is required, the dashboard shows Pending approval until the review is complete.
+Submit the form. When shared-tier capacity is available, Polygres creates the organization and opens its dashboard.
 
-When prompted, choose an available tier. The selected tier controls project and feature limits visible in the dashboard.
+If shared-tier capacity is unavailable, the dashboard shows Pending approval until capacity becomes available.
 
-After activation, the dashboard opens your organization and its projects.
-
-The onboarding questions help Polygres understand the workload you are preparing. Use the closest available ranges when exact volume is not yet known; Unsure is a valid choice for early evaluation.
+You can also choose Continue with email on the login page. Its secure link can sign in an existing account or begin a new passwordless account. If password signup detects an existing account, Polygres sends the same privacy-preserving sign-in link instead of disclosing account details.
 
 Join an organization through an invitation
 
 An invitation is tied to an email address and an organization role.
 
-Open the invitation link from your email.
+Open the invitation link from your email. The link opens Polygres signup; it does not authenticate you by itself.
 
 Sign in with the invited email address, or create an account with that same address.
 
-Complete any email-verification or onboarding prompts shown for the account.
+Review the pending organization invitations for the authenticated address. If several exist, select the one organization you intend to join.
 
-After authentication, the dashboard accepts the invitation and opens the organization associated with it.
+Select Accept invitation . If the address is not verified, use the verification message Polygres sends and finish from the link in that message.
 
-You do not need to enter an invitation code in the Members page. Acceptance is attached to the email link and completed during the signed-in dashboard flow. When an invitation does not attach to your account, first confirm that the signed-in email exactly matches the invited address and that the invitation has not expired or been revoked.
+If the email was already verified, acceptance completes immediately. Otherwise, verification activates the selected membership. In either case, Polygres closes the other pending invitations for that email and opens the selected organization.
+
+You do not need to enter an invitation code in the Members page. The dashboard resolves invitations from the authenticated email, not from the editable email shown in a signup URL. When an invitation does not appear, first confirm that the signed-in email exactly matches the invited address and that the invitation has not expired, been revoked, or been replaced.
+
+If you change your mind after selecting an invitation but before verifying, choose Cancel invitation on the verification page. This declines the pending organization invitations for that email and returns the account to normal organization setup.
 
 Understand account status pages
 
 Dashboard state What it means What to do
 
-Verify email Registration exists, but the email address is not verified. Use the newest verification email, then sign in again.
+Verify email A selected organization invitation or project-creation flow requires proof of the account email. Use the newest verification email. If an invitation is selected, you can cancel it from this page.
 
-Onboarding More account and workload information is required. Complete and submit the onboarding form.
+Onboarding Account setup still needs an organization name. Complete and submit the account-setup form.
 
-Pending approval Onboarding is complete and account review is still in progress. Keep using the same account; the project area becomes available after approval.
+Pending approval Account setup is complete, but shared-tier capacity is currently unavailable. Keep using the same account; the organization becomes available when capacity is restored.
 
 Choose tier The account is active but does not yet have an active tier. Select a tier to continue to projects.
 
@@ -107,13 +109,13 @@ You cannot invite your own signed-in email address. A new invitation appears in 
 
 Replace an existing pending invitation
 
-When the same email already has a pending invitation, the dashboard asks whether to replace it. Choose Send new invite to refresh the invitation, selected role, and expiration. This is useful when the first message was lost or the intended role changed.
+When the same email already has a pending invitation, the dashboard asks whether to replace it. Choose Send new invite to refresh the invitation, selected role, expiration, and delivery attempt. This is useful when the first message was lost, delivery failed, or the intended role changed.
 
 Accept an invitation
 
-The recipient should open the email link and sign in or register with the exact invited email address. The dashboard accepts the invitation during the authenticated account flow and opens the organization. See Account onboarding for the complete sequence.
+The recipient should open the email link and sign in or register with the exact invited email address. The invitation email opens signup and does not authenticate the recipient. After authentication, the dashboard lists every pending organization invitation for that address. The recipient chooses one, then verifies the address if prompted. Acceptance activates the membership immediately for an already verified address; otherwise verification activates it. Polygres then closes the other pending invitations for the same email. See Account onboarding for the complete sequence.
 
-An invitation may be pending , accepted , expired , or revoked . If an expired or revoked link is opened, an owner or admin must send a new invitation.
+An invitation may be pending , accepted , declined , expired , or revoked . If an expired or revoked link is opened, an owner or admin must send a new invitation.
 
 Change a member’s role
 

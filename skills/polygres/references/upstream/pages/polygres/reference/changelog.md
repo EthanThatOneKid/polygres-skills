@@ -1,66 +1,46 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: a46410658c3f40abb5b7fc296c5f8545088fb1508d4bbf079e9b308db278c6dd
+source_hash: 578e9377a80da0cfd7549e9aab4de096a8e5f330e039b76acc2d6302e6d7c35c
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
 
+2026-07-20
+
+Accounts and teams
+
+Organization invitations now have a clearer review flow. After signing in, you can choose which organization to join, verify your email if needed, or decline the invitation and create your own organization.
+
+Projects and data
+
+Project API Keys are displayed immediately after creation. Copy the secret when it appears because it cannot be shown again.
+
+Graph and vector readiness now reflects the actual database configuration more accurately, reducing false ready states after configuration or index changes.
+
+Developer tools
+
+Polygres CLI 0.1.2 increases the supported CSV upload size to the storage allowance of your project tier and improves upload reliability.
+
+polygres-skills
+
+Released an expanded polygres-skills package for Polygres operations and Python retrieval:
+
+polygres-cli operates projects, imports, migrations, credentials, and retrieval setup;
+
+polygres-sdk builds Python graph, vector, text, and hybrid retrieval.
+
+Install the package with npx skills add Evokoa/polygres-skills , or through the Polygres plugin marketplace for Codex or Claude Code.
+
 2026-07-09
 
-Polygres CLI v0.1.0
+Polygres CLI 0.1.0
 
-Features & Capabilities
+Added browser-based sign-in and commands for managing projects, connection details, Runtime API Keys, CSV imports, and migrations.
 
-Session & Organization Management
+Added graph, vector, and text-search configuration commands, plus retrieval-readiness checks.
 
-Account Control: Sign in, sign out, and verify your active session using login , logout , and whoami .
+Added JSON output, stable exit codes, and confirmation prompts for automation and destructive operations.
 
-Organization Context: The CLI automatically uses your active organization. To switch organizations, use the Polygres dashboard.
-
-Authentication Note: Browser approval is the CLI authentication flow. See the CLI authentication documentation for current availability and setup instructions.
-
-Project & Database Management
-
-Project Lifecycle: List, select, create, and monitor projects directly from the terminal. Use the global --project flag for one-off project execution.
-
-App Environment: Configure application environments using env .
-
-Direct Database Access: Inspect connection details with db info or open a native Postgres session over SSL using db psql (requires a local psql installation).
-
-Graph & Search Configurations
-
-Knowledge Graphs: Discover graph relationships, export or apply graph configurations, trigger a graph build, and track build status.
-
-Vector Search: Create, manage, and reindex vector configurations.
-
-Text Search: Build and manage TSVector and fuzzy text search configurations.
-
-Readiness Checks: Verify graph, vector, and hybrid retrieval readiness with ready , or check text search readiness using text configs list .
-
-Data & Migrations
-
-CSV Imports: Streamline data ingestion. Start imports, monitor status, or block execution until completion using --wait and --timeout .
-
-Schema Migrations: Track and apply SQL migration files.
-
-Runtime API Keys: Provision, list, and revoke Runtime API keys.
-
-Security & Automation
-
-Destructive Safeguards: All destructive commands require explicit confirmation unless bypassed with the --yes flag.
-
-Credential Masking: Runtime API key secrets are never exposed in env or keys list output. Secrets are displayed exactly once upon creation.
-
-Secure Local Storage: Credentials are saved to ~/.config/polygres/config.json with owner-only permissions on macOS and Linux. Verbose traces automatically redact sensitive secrets.
-
-CI/CD Integration:
-
-Pass the --json flag for stable, script-friendly top-level fields.
-
-Supports the global flags --no-color , --quiet , and --verbose .
-
-Distinct exit codes support streamlined handling of authentication, permission, not-found, conflict, rate-limit, service, and local dependency errors.
-
-Troubleshooting: Locate the local configuration file using config path when debugging or contacting support.
+Runtime API Key secrets are shown once when created and are excluded from later list and environment output.

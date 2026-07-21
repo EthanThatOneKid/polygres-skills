@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli
 title: Polygres CLI | Polygres
-source_hash: 09503f42ea477e4066f4dff19e829bfdf8f1855ac2feb317fdba56045bc71d19
+source_hash: 55cfe83aa65bde4582c7291c2aafbb22d5ade58207e072f1d22713f99f312fb9
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres CLI | Polygres
@@ -9,13 +9,13 @@ Polygres CLI
 
 The public CLI is shipped with PyPI package polygres-cli . Use it for project setup, migrations, imports, retrieval configuration, API keys, and connection details. Use the Python SDK for retrieval queries in application code. If you previously installed the combined polygres 0.2.x package, follow the package split migration before following the workflows below.
 
-CLI setup requires an existing approved Polygres account. Signup, organization onboarding, password management, organization switching, and project deletion remain dashboard workflows.
+CLI setup requires an existing active Polygres account. Signup, organization onboarding, email verification, password management, organization switching, and project deletion remain dashboard workflows.
 
 First project from a terminal
 
-Copy this workflow after your account has been approved. projects create waits for provisioning, but does not select the new project .
+Copy this workflow after your account is active. projects create waits for provisioning, but does not select the new project .
 
-pipx install "polygres-cli==0.1.0"
+pipx install "polygres-cli==0.1.2"
 
 polygres login
 

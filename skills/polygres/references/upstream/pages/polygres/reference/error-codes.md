@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: 2726a8025a30f0df1fe30e251909f1fbd908686f2b6ca0b692bbc3311f64e608
+source_hash: 1ca7589afe2d7a4d0d7346e36de10d54982df7a9d01bdb160b957c01b64e3d83
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
@@ -45,11 +45,25 @@ AUTH_MODE_NOT_ALLOWED 403 A Polygres API key was used on a dashboard-only route.
 
 AUTH_NOT_CONFIGURED 503 Dashboard JWT validation is unavailable or misconfigured. Retry once; contact support if it persists.
 
-APPROVAL_REQUIRED 403 The user profile is not active. Complete verification, onboarding, approval, and tier selection as applicable.
+AUTH_ACTION_INVALID / AUTH_ACTION_EXPIRED 400 An email sign-in, verification, invitation, or recovery action is malformed, already consumed, or expired. Start the flow again and use the newest email.
 
-ONBOARDING_INVALID 400 An onboarding scale, graph-size, or use-case value is unsupported. Submit one of the values offered by the current onboarding form.
+AUTH_INVALID_CREDENTIALS 401 The email or password is incorrect. Correct the credentials or use the passwordless sign-in flow.
 
-ONBOARDING_ALREADY_FINAL 409 Onboarding is already active, rejected, or suspended and can no longer be resubmitted. Follow the current account state; contact support when a review is required.
+EMAIL_NOT_VERIFIED 403 The requested account or project action requires a verified email address. Use the dashboard verification flow and the newest verification message.
+
+APPROVAL_REQUIRED 403 The user profile is not active. Follow the current dashboard account gate for verification, account setup, capacity, or tier selection.
+
+LEGAL_ACCEPTANCE_REQUIRED 422 The account has no current durable acceptance of the Terms of Service and Privacy Policy. Return to signup or the account gate and record the required acceptance.
+
+EMAIL_VERIFICATION_PROFILE_NOT_FOUND 404 Verification cannot find the account profile. Sign out and start signup or sign-in again; contact support if the account is otherwise visible.
+
+EMAIL_VERIFICATION_LINK_FAILED 503 Polygres could not create or deliver a verification link. Retry once from Resend verification email , then contact support with the request ID.
+
+EMAIL_VERIFICATION_EVIDENCE_MISMATCH 403 The verification continuation does not match the authenticated account. Sign out, use the intended account, and open a newly requested verification message.
+
+ONBOARDING_INVALID 400 Account setup or a legacy onboarding payload contains an unsupported value. Submit the organization name and other values offered by the current account-setup form.
+
+ONBOARDING_ALREADY_FINAL 409 Account setup is already active, rejected, or suspended and can no longer be resubmitted. Follow the current account state; contact support when review is required.
 
 API_KEY_INVALID — The API key is malformed, unknown, or revoked. Check the key source and project; create and deploy a replacement if needed.
 
@@ -89,11 +103,15 @@ ORG_SELF_INVITE_NOT_ALLOWED 400 The caller tried to invite their own email. Invi
 
 ORG_SELF_REMOVE_NOT_ALLOWED 400 The caller tried to remove their own membership. Have another owner or admin perform the intended membership change.
 
-ORG_INVITATION_NOT_FOUND — The invitation ID is unknown or no longer available. Open the latest invitation link or request a new invitation.
+INVITATION_NOT_FOUND / ORG_INVITATION_NOT_FOUND — The invitation ID is unknown or no longer available. Sign in with the invited email, open the latest invitation link, or request a new invitation.
 
-ORG_INVITATION_EMAIL_MISMATCH — The signed-in email does not match the invitation. Sign in with the invited email address.
+INVITATION_NOT_PENDING 409 The invitation was already accepted, declined, revoked, expired, or replaced. Refresh the invitation list; request a new invitation when access is still needed.
 
-ORG_INVITATION_EXPIRED — The invitation is past its expiry. Ask an owner or admin to send a new invitation.
+INVITATION_EMAIL_MISMATCH / ORG_INVITATION_EMAIL_MISMATCH — The signed-in email does not match the invitation. Sign in with the invited email address.
+
+INVITATION_EXPIRED / ORG_INVITATION_EXPIRED — The invitation or its email action is past its expiry. Ask an owner or admin to send a new invitation.
+
+INVITATION_DELIVERY_FAILED 503 The durable invitation exists, but email delivery failed. An owner or admin can replace or resend the pending invitation; preserve the request ID if delivery repeatedly fails.
 
 ORG_MEMBERSHIP_LIMIT_EXCEEDED — Accepting the invitation would exceed the supported membership constraint. Review current membership and tier state; contact support if no limit is visible.
 

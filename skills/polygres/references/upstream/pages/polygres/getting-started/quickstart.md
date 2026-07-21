@@ -1,21 +1,21 @@
 source: https://docs.evokoa.com/polygres/getting-started/quickstart
 title: Quickstart | Polygres
-source_hash: 4a3ebd13636c6b9b4386a71d1bf6fa461f1ceb2fd16a0c2754001703937cbb3f
+source_hash: 03ef6a346db26ff0d56a281da8710d58737345ad5659be3551b8a6716e4ad962
 discovered_from: https://docs.evokoa.com/polygres
 
 # Quickstart | Polygres
 
 Quickstart
 
-This guided outcome takes you from an approved account to a verified text-retrieval query in the Python SDK. It uses dashboard and CLI alternatives for setup, then the same SDK query.
+This guided outcome takes you from an active account to a verified text-retrieval query in the Python SDK. It uses dashboard and CLI alternatives for setup, then the same SDK query.
 
 Prerequisites
 
-An approved Polygres account. Signup and onboarding happen in the dashboard .
+An active Polygres account. Signup, organization setup, and any required email verification happen in the dashboard .
 
 Python 3.10 or newer.
 
-For the CLI path, pipx install "polygres-cli==0.1.0" . For the SDK query, install polygres-sdk==0.1.0 in your application virtual environment.
+For the CLI path, pipx install "polygres-cli==0.1.2" . For the SDK query, install polygres-sdk==0.1.0 in your application virtual environment.
 
 1. Create and select a project
 
@@ -27,7 +27,7 @@ Sign in, create Support Search from New project , and wait until the project is 
 
 CLI
 
-The CLI path begins with an existing approved account:
+The CLI path begins with an existing active account:
 
 polygres login
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/core-workflow
 title: Core workflow | Polygres
-source_hash: 3e433fde3341a4f4d6200b9479403f5e0477defa7fb390de4357c5d719f7d1ac
+source_hash: 48e1a42ead4bb5cc358882a97be1e9af74d281d15d24be92764cf42b9189c3bc
 discovered_from: https://docs.evokoa.com/polygres
 
 # Core workflow | Polygres
@@ -11,29 +11,33 @@ The Polygres customer journey starts with an account and organization, not an AP
 
 1. Create your account
 
-Create an account , verify your email, and complete the onboarding form. Polygres is currently a closed beta, so a new account remains in the onboarding flow until it is approved.
+Create an account with an email and password, or use Continue with email for a secure passwordless link. Password signup requires accepting the Terms of Service and acknowledging the Privacy Policy. Account setup then asks for the organization name; a display name is optional.
 
-After approval, sign in to continue. Your account must remain eligible for project access; suspended or rejected accounts cannot use project tools or application retrieval.
+Self-service activation uses available shared-tier capacity. When capacity is available, Polygres creates the organization and opens its dashboard. Otherwise, the account remains on Pending approval until capacity is available. Suspended or rejected accounts cannot use project tools or application retrieval.
+
+Email verification is enforced when a workflow requires verified ownership, including creating a project and joining an invited organization. Use the newest verification message, because an older or expired email link may no longer be valid.
 
 2. Join or create an organization
 
 An organization is the top-level workspace for members, roles, tier selection, and projects.
 
-After approval, use one of these paths:
+After authentication, use one of these paths:
 
-Accept an invitation to an existing organization.
+Review and accept or decline an invitation for the authenticated email address.
 
-Create an organization and become its owner.
+Create an organization and become its owner when no invitation is selected.
 
-Continue with the default organization already attached to an existing beta account.
+Continue with the active organization already attached to an existing account.
 
-In the current beta, each user can have one active organization membership. Owners can invite members as admins, developers, or viewers. The organization tier sets a shared project allowance for the whole team rather than a separate allowance for each member.
+Each user can have one active organization membership. If several invitations exist for the same email, choose one organization. Joining it automatically closes the other pending invitations after verification. You can cancel a provisional choice from the verification page and continue with normal organization setup instead. Owners can invite members as admins, developers, or viewers. The organization tier sets a shared project allowance for the whole team rather than a separate allowance for each member.
 
 Open the organization home ( /{organization} ) and Members ( /{organization}/members ) for membership management.
 
 3. Create a project
 
 Open New project ( /{organization}/new ), name the project, and submit it. Polygres creates the managed PostgreSQL environment and shows its status while setup completes.
+
+If the account email is not yet verified, project creation first sends a verification message and preserves the intended destination. Complete verification from that message, then return to the project workflow.
 
 Wait until the project reports ready before using data tools or retrieval setup. Open the project overview ( /{organization}/{projectId} ) to see its status and next actions.
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/troubleshooting
 title: CLI troubleshooting | Polygres
-source_hash: e1f11ada157c930be883ed59d8ae1ab20ef453be7e4926999f52cd22c1c62265
+source_hash: df9706a52eced2e8dde7506eaf6afe26d507a2125326b05aa5e5d850e673a204
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI troubleshooting | Polygres
@@ -9,7 +9,7 @@ CLI troubleshooting
 
 Symptom Action
 
-polygres --version is older than 0.1.0 Upgrade with pipx install "polygres-cli==0.1.0" --force , or pip install --force-reinstall "polygres-cli==0.1.0" in your app venv. See package split migration .
+polygres --version is older than 0.1.2 Upgrade with pipx install "polygres-cli==0.1.2" --force , or pip install --force-reinstall "polygres-cli==0.1.2" in your app venv. See package split migration .
 
 Exit 3 or “Run polygres login ” Run polygres login , then confirm with polygres --json whoami .
 

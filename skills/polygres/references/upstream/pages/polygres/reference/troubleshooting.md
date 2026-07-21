@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/troubleshooting
 title: Troubleshooting | Polygres
-source_hash: 8d9eecd438af3f965c56b29c76b1cc115a986fc8bcd0dce22295059a536ff1e7
+source_hash: 28354c77c4166b21d897f638be350670f96e10f24c6b86dc4e5b3921ffa02fca
 discovered_from: https://docs.evokoa.com/polygres
 
 # Troubleshooting | Polygres
@@ -22,6 +22,12 @@ Organization page or API returns ORG_NOT_FOUND Call GET /me ; verify the expecte
 Members or invitations return ORG_PERMISSION_DENIED Current member-management routes require organization role owner or admin . Use an owner/admin session. Do not retry with a project API key.
 
 Invitation says email mismatch Compare the signed-in email with the invited email. Sign out and accept with the invited account, or ask an owner/admin to issue a replacement invitation.
+
+Several invitations appear after sign-in The dashboard loads every pending, unexpired organization invitation for the authenticated email. Select the one organization to join. Verification activates that membership and closes the others.
+
+Invitation selection is waiting on verification Confirm the verification page shows the intended account email. Use the newest verification email, or choose Cancel invitation to decline the pending invitations and continue with normal organization setup.
+
+Invitation email was not delivered Confirm a pending invitation still exists and whether the dashboard offers replacement. An owner/admin can use Send new invite to refresh the role, expiry, and delivery attempt.
 
 Invitation is expired or not found Confirm the link is the latest invitation and has not been revoked or replaced. Request a new invitation.
 

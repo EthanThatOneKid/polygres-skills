@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/limits
 title: Limits | Polygres
-source_hash: b5a39188121ee0480c49b603e41cf31b317ef362abacf51e6ea0fb58461f1e8d
+source_hash: 07fb91f68966b8569f3bc1ea7f89f6794d7ebbb4cb2caa5f0b0e2372b6ed8fe1
 discovered_from: https://docs.evokoa.com/polygres
 
 # Limits | Polygres

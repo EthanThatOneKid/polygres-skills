@@ -136,7 +136,7 @@
       "url": "https://docs.evokoa.com/polygres/cli/api-keys",
       "title": "CLI API keys | Polygres",
       "path": "polygres/cli/api-keys.md",
-      "sha256": "e750c1d0f342d796a7cdc2db4f82f79579862a63d9ba9c3daf489918df2a5efd",
+      "sha256": "6a8834257614864c1dbce8e28e794a0f22b02579b3674e23accc1bf4d97a2bb6",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
@@ -234,7 +234,7 @@
       "url": "https://docs.evokoa.com/polygres/sdk/retrieval-integration-patterns",
       "title": "Retrieval integration patterns | Polygres",
       "path": "polygres/sdk/retrieval-integration-patterns.md",
-      "sha256": "a271800596904609823bc3b68e55712c68314b8b1ef2a39aa95c97816a5b1e03",
+      "sha256": "2b6015ea416ccd198f9f906c2f6e7cb07d5e472f7a6bbbee147ca86cfb9275a6",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
@@ -248,7 +248,7 @@
       "url": "https://docs.evokoa.com/polygres/reference/changelog",
       "title": "Changelog | Polygres",
       "path": "polygres/reference/changelog.md",
-      "sha256": "eed47f29459ea4d773fe37b2ae3c9581ec84d6ef604ac3ab6bd21f05998421f2",
+      "sha256": "f34cc8a5c54b457bdc6f8d408e30fa14c066806d28d213b4c794d4c875762af8",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {

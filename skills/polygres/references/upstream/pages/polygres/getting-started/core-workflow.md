@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/core-workflow
 title: Core workflow | Polygres
-source_hash: b36e63c4ab01cf1e6cafcb592b2e67e922da09730a2c9901dadf685fd5990af8
+source_hash: cb346887ff42b7daef5312236216d00bc5ddd50d5ce8f063788dad942bd4afb2
 discovered_from: https://docs.evokoa.com/polygres
 
 # Core workflow | Polygres
@@ -13,7 +13,7 @@ The Polygres customer journey starts with an account and organization, not an AP
 
 Create an account with an email and password, or use Continue with email for a secure passwordless link. Password signup requires accepting the Terms of Service and acknowledging the Privacy Policy. Account setup then asks for the organization name; a display name is optional.
 
-Self-service activation uses available shared-tier capacity. When capacity is available, Polygres creates the organization and opens its dashboard. Otherwise, the account remains on Pending approval until capacity is available. Suspended or rejected accounts cannot use project tools or application retrieval.
+When self-service admission is enabled, Polygres creates the organization and opens its dashboard. If an administrator disables self-service admission, the account remains on Pending approval until the organization is approved. Shared runtime capacity is evaluated later, when a Shared Nano project is created. Suspended or rejected accounts cannot use project tools or application retrieval.
 
 Email verification is enforced when a workflow requires verified ownership, including creating a project and joining an invited organization. Use the newest verification message, because an older or expired email link may no longer be valid.
 

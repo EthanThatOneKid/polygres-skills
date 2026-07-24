@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects-and-orgs
 title: Projects and Organizations | Polygres
-source_hash: 69c39f256603ce2311d7d0ae565f0f488436742fe8361ca241437ef70393fe20
+source_hash: 31b1f2f04f912d32c5f11145facf99ff1923e055331942cc12f07c5d819c032d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Projects and Organizations | Polygres
@@ -17,9 +17,9 @@ If an organization invitation exists for that authenticated address, review the 
 
 Otherwise, complete account setup by entering your organization name. A display name is optional.
 
-Submit the form. When shared-tier capacity is available, Polygres creates the organization and opens its dashboard.
+Submit the form. When self-service admission is enabled, Polygres creates the organization and opens its dashboard.
 
-If shared-tier capacity is unavailable, the dashboard shows Pending approval until capacity becomes available.
+If self-service admission is administratively disabled, the dashboard shows Pending approval until the organization is approved.
 
 You can also choose Continue with email on the login page. Its secure link can sign in an existing account or begin a new passwordless account. If password signup detects an existing account, Polygres sends the same privacy-preserving sign-in link instead of disclosing account details.
 
@@ -49,7 +49,7 @@ Verify email A selected organization invitation or project-creation flow require
 
 Onboarding Account setup still needs an organization name. Complete and submit the account-setup form.
 
-Pending approval Account setup is complete, but shared-tier capacity is currently unavailable. Keep using the same account; the organization becomes available when capacity is restored.
+Pending approval Account setup is complete, but self-service admission is administratively disabled or manual review is required. Keep using the same account; Polygres will email you after the organization is approved.
 
 Choose tier The account is active but does not yet have an active tier. Select a tier to continue to projects.
 

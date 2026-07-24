@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/quickstart
 title: Quickstart | Polygres
-source_hash: 1866a77b310c1e8a416de2aa643dfa7be2da5457826ba5c6abcc959c948475bd
+source_hash: 8ca66c5f3ebaca2a347b2018b6cded452d5824745292b83bc9f726713241ebbb
 discovered_from: https://docs.evokoa.com/polygres
 
 # Quickstart | Polygres

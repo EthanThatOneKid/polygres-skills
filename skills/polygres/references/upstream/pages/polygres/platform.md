@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform
 title: Platform guide | Polygres
-source_hash: ff3f17cc48ab3683e69e77a552df5a9884ba7631ee6e14f048eb631102f1c2a2
+source_hash: 4fcbaad1823e2224f45d999fdf81f7a90c50d86f42a3a79ab0f919c163759118
 discovered_from: https://docs.evokoa.com/polygres
 
 # Platform guide | Polygres

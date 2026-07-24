@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: 0c587c5f735f6a3cf6b1473881c4558f13613dd8d8bc2cb7c0faefdb5d126982
+source_hash: 9332491e5d8e792c90a54dbd59ac6540320d76267ed25c40e40934b35455c358
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
@@ -51,7 +51,7 @@ AUTH_INVALID_CREDENTIALS 401 The email or password is incorrect. Correct the cre
 
 EMAIL_NOT_VERIFIED 403 The requested account or project action requires a verified email address. Use the dashboard verification flow and the newest verification message.
 
-APPROVAL_REQUIRED 403 The user profile is not active. Follow the current dashboard account gate for verification, account setup, capacity, or tier selection.
+APPROVAL_REQUIRED 403 The user profile is not active. Follow the current dashboard account gate for verification, account setup, manual approval, or tier selection.
 
 LEGAL_ACCEPTANCE_REQUIRED 422 The account has no current durable acceptance of the Terms of Service and Privacy Policy. Return to signup or the account gate and record the required acceptance.
 

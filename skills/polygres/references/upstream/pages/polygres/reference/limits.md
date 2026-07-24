@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/limits
 title: Limits | Polygres
-source_hash: 07fb91f68966b8569f3bc1ea7f89f6794d7ebbb4cb2caa5f0b0e2372b6ed8fe1
+source_hash: 650b85f0702c637469f29bfc55f5dc59712eecde2344eace85c6fcc73331a0a0
 discovered_from: https://docs.evokoa.com/polygres
 
 # Limits | Polygres
@@ -25,7 +25,7 @@ Tier limits
 
 Project resources
 
-Shared and dedicated tier records can coexist. A self-service account currently starts on Shared Nano when admission capacity is available. The project’s applied tier in project status, together with GET /tiers , is authoritative.
+Shared and dedicated tier records can coexist. A self-service account currently starts on Shared Nano when self-service admission is enabled. Shared runtime capacity is evaluated when the project is created. The project’s applied tier in project status, together with GET /tiers , is authoritative.
 
 Limit Shared Nano Shared Small Starter Pro Where to verify
 

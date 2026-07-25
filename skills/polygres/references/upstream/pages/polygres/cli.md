@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli
 title: Polygres CLI | Polygres
-source_hash: 8719f71dd0b53f8ab8cfca584088ca4004c0c5f7fe6fff876f95e857b66636ec
+source_hash: a49ede25015c3f0060d82f6894d4dfe5a85b94612af25e046d7d1ef8fb3226c0
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres CLI | Polygres
@@ -15,7 +15,7 @@ First project from a terminal
 
 Copy this workflow after your account is active. projects create waits for provisioning, but does not select the new project .
 
-pipx install "polygres-cli==0.1.2"
+pipx install "polygres-cli==0.1.3"
 
 polygres login
 

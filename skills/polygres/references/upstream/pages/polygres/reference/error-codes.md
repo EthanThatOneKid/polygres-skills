@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: 9332491e5d8e792c90a54dbd59ac6540320d76267ed25c40e40934b35455c358
+source_hash: b1536cbfeb11aa287a78810015bd70c06fb2e107406376b1191fe1e0055394dc
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
@@ -177,7 +177,7 @@ Code Status Meaning First action
 
 GRAPH_CONFIGURATION_EMPTY 409 No graph tables are registered. Save a non-empty graph configuration.
 
-GRAPH_CONFIGURATION_INVALID 400 The graph table or ID-column definition is inconsistent. Supply exactly one id_column or non-empty id_columns per registered table.
+GRAPH_CONFIGURATION_INVALID 400 The graph table or ID-column definition is inconsistent. Supply non-empty id_columns per registered table. Legacy id_column is accepted only when id_columns is absent.
 
 GRAPH_BUILD_FAILED 400 Graph registration or build failed. Inspect invalid_reason and retry after correcting the configuration.
 

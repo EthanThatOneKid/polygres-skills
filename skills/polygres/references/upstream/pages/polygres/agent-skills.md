@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/agent-skills
 title: Polygres Agent Skills | Polygres
-source_hash: 10457eaad2920f44b18aad2f9e74fc918154d1d53af681bd2db8d7553de28864
+source_hash: f3c45685156ec3f5bddfa64d0ff17bcaf31eb71a94929063a60d2f826e78c1be
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres Agent Skills | Polygres
@@ -29,7 +29,7 @@ The skills do not include the Python packages. Install the component required
 
 by the task, then install the skill repository:
 
-pipx install "polygres-cli==0.1.3"
+pipx install "polygres-cli==0.1.2"
 
 python -m pip install "polygres-sdk==0.1.0"
 

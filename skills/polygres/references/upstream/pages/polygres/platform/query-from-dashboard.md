@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/query-from-dashboard
 title: Query from the dashboard | Polygres
-source_hash: 9ace0716d833bb4e8c50e3813354ed50c54bb624d1ba53f756a939dc33add664
+source_hash: 0476b73de6c88ff2a87302c6a5338e742fd8e6557c3aa288471709cc6e744afa
 discovered_from: https://docs.evokoa.com/polygres
 
 # Query from the dashboard | Polygres

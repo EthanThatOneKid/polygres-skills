@@ -1,31 +1,11 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 3c9495dce1e7e347bdf512bed7bc96101631bf9d0c66ece95be513f0f852a4d1
+source_hash: c177f44186130d49741942edb661edbedbc62f476f511eca4299f088e43ef271
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
-
-2026-07-24
-
-Polygres CLI 0.1.3
-
-Added vector configs set-default so a default vector configuration can be
-
-selected without using the web console.
-
-Graph status now reports activation failure reasons and concise configuration
-
-differences.
-
-Graph configuration files now use canonical id_columns table identifiers
-
-while continuing to accept legacy id_column input.
-
-Graph and vector activation verification failures now return nonzero CLI exit
-
-codes for reliable automation.
 
 2026-07-20
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/security-basics
 title: Security basics | Polygres
-source_hash: 421e3c1cf7549393ad0340fdd1f8a3f8503c566fd01605ed6a4dbef92bca37ff
+source_hash: f5199196bf67e99760da31a6f1ec247ef51cdbdd32ecfc2c2dc5f451690557bf
 discovered_from: https://docs.evokoa.com/polygres
 
 # Security basics | Polygres
@@ -119,7 +119,13 @@ Likewise, a browser application should not receive the native Postgres URL. Put 
 
 Use encrypted database transport
 
-Dashboard-generated database URLs use sslmode=require . Keep SSL enabled. During beta, the connection mode encrypts traffic but does not enable certificate hostname verification. A client that requires strict CA and hostname verification may need a supported compatibility configuration; do not resolve that error by disabling SSL.
+Polygres direct and pooled database endpoints support encrypted transport with certificate authority and hostname verification. Configure your client to use sslmode=verify-full with a trusted CA store.
+
+For libpq 16 or later, use:
+
+sslmode=verify-full&sslrootcert=system
+
+Do not resolve a TLS error by disabling SSL.
 
 Pre-deployment checklist
 

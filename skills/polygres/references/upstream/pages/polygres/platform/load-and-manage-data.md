@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/load-and-manage-data
 title: Load and manage data | Polygres
-source_hash: 05e2a6150bcb5487f166d3a725e48e7be43ca01c4101d855e0cea55abbe5e4f8
+source_hash: 54f9ce33f8cac93a268a9e7f193919b49754797402d40380fd44e7ededb0f31b
 discovered_from: https://docs.evokoa.com/polygres
 
 # Load and manage data | Polygres

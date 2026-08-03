@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/connect-your-app
 title: Connect your app | Polygres
-source_hash: 99951dfbee95146cfc587e2542c0564fb8a150d249bdc95de300acb98a3fe9dc
+source_hash: 5a3b1561f8c4049425c99fe0b5a894a456f380f96ccab8ea1d5bf394be4b608b
 discovered_from: https://docs.evokoa.com/polygres
 
 # Connect your app | Polygres
@@ -81,11 +81,13 @@ polygres keys create my-key # creates and prints a new Runtime API key (shown on
 
 See Security basics for the credential boundary and Query from the dashboard for generated retrieval code.
 
-TLS compatibility during beta
+Configure database TLS
 
-Dashboard connection strings use encrypted transport with sslmode=require . During the current beta compatibility mode, certificate hostname verification is not enabled. Clients that require CA-strict or hostname-verified TLS may reject the connection until configured for the supported mode.
+Polygres direct and pooled database endpoints support encrypted transport with certificate authority and hostname verification. Configure your client to use sslmode=verify-full with a trusted CA store. For libpq 16 or later:
 
-Keep encryption enabled. Do not work around a TLS error by disabling SSL entirely; use the dashboard-provided string and the client’s supported sslmode=require configuration.
+sslmode=verify-full&sslrootcert=system
+
+Keep TLS enabled. Do not work around a TLS error by disabling SSL.
 
 Connection checklist
 

@@ -1,19 +1,25 @@
 source: https://docs.evokoa.com/polygres/sdk/connection-examples
-title: Connection examples | Polygres
-source_hash: 11a8e7324594b07ac526862479c80b487cea0ab48904d03bb473133bf1e767fe
+title: Database client examples | Polygres
+source_hash: 59f4b9ca021d5901272c686c16100b7494f9a25a4e85968d81aaa97087070748
 discovered_from: https://docs.evokoa.com/polygres
 
-# Connection examples | Polygres
+# Database client examples | Polygres
 
-Connection examples
+Database client examples
 
 Polygres exposes a pooled PostgreSQL endpoint and a direct PostgreSQL endpoint. Both use the native PostgreSQL username and password revealed in the dashboard.
 
-DATABASE_URL=postgresql://<username>:<password>@<pooled_host>:5432/<database>?pgbouncer=true&sslmode=require
+DATABASE_URL=postgresql://<username>:<password>@<pooled_host>:5432/<database>?sslmode=verify-full&sslrootcert=system
 
-DIRECT_URL=postgresql://<username>:<password>@<direct_host>:5432/<database>?sslmode=require
+DIRECT_URL=postgresql://<username>:<password>@<direct_host>:5432/<database>?sslmode=verify-full&sslrootcert=system
 
-Store both URLs in a secret manager. Do not commit them or send them to a browser.
+Store both URLs in a secret manager and keep them in trusted server-side
+
+environments. These examples use libpq 16 system certificates. For another
+
+client or certificate store, apply that client’s equivalent CA and hostname
+
+verification settings.
 
 Choose pooled or direct
 
@@ -39,7 +45,7 @@ bulk ingestion and sustained background writes,
 
 tools that are incompatible with transaction pooling.
 
-A service can use both: pooled for runtime queries and direct for migrations or maintenance.
+A service can use both: pooled for runtime queries and direct for migrations or maintenance. Prisma is a current exception: the public direct TLS endpoint is not production-safe for Prisma migration or CLI workflows.
 
 Copy connection metadata from the dashboard
 
@@ -55,7 +61,11 @@ connection URLs in a secret manager or protected server-side environment.
 
 Prisma
 
-Use the pooled URL for application queries and the direct URL for Prisma schema operations:
+Use a Prisma-specific pooled URL with the PgBouncer hint only for application
+
+runtime queries:
+
+PRISMA_DATABASE_URL=postgresql://<username>:<password>@<pooled_host>:5432/<database>?pgbouncer=true&sslmode=verify-full&sslrootcert=system
 
 // schema.prisma
 
@@ -63,9 +73,7 @@ datasource db {
 
 provider = "postgresql"
 
-url = env ( "DATABASE_URL" )
-
-directUrl = env ( "DIRECT_URL" )
+url = env ( "PRISMA_DATABASE_URL" )
 
 }
 
@@ -77,7 +85,15 @@ provider = "prisma-client-js"
 
 npx prisma generate
 
-npx prisma migrate deploy
+Prisma runtime access may require compatibility handling. Do not run Prisma
+
+migrations or other Prisma CLI database workflows against the current public
+
+direct endpoint, and do not add directUrl = env("DIRECT_URL") as though it
+
+makes those workflows supported. Use another supported migration path until
+
+the dashboard’s Prisma limitation is removed.
 
 Application code uses the generated client normally:
 
@@ -87,13 +103,27 @@ export const prisma = new PrismaClient ();
 
 Node pg
 
-Create one process-level pool from DATABASE_URL :
+Create one process-level pool from DATABASE_URL . Remove the Prisma-only
+
+pgbouncer=true hint if the URL came from the dashboard:
 
 import { Pool } from "pg" ;
 
+const databaseUrl = process.env. DATABASE_URL ;
+
+if ( ! databaseUrl) {
+
+throw new Error ( "DATABASE_URL is required" );
+
+}
+
+const pooledUrl = new URL (databaseUrl);
+
+pooledUrl.searchParams. delete ( "pgbouncer" );
+
 export const pool = new Pool ({
 
-connectionString: process.env. DATABASE_URL ,
+connectionString: pooledUrl. toString (),
 
 max: 10 ,
 
@@ -137,9 +167,21 @@ import os
 
 from sqlalchemy import create_engine, text
 
+pooled_url = (
+
+os.environ[ "DATABASE_URL" ]
+
+.replace( "pgbouncer=true&" , "" )
+
+.replace( "&pgbouncer=true" , "" )
+
+.replace( "?pgbouncer=true" , "" )
+
+)
+
 engine = create_engine(
 
-os.environ[ "DATABASE_URL" ],
+pooled_url,
 
 pool_pre_ping = True ,
 
@@ -173,7 +215,19 @@ import os
 
 import psycopg
 
-with psycopg.connect(os.environ[ "DATABASE_URL" ]) as connection:
+pooled_url = (
+
+os.environ[ "DATABASE_URL" ]
+
+.replace( "pgbouncer=true&" , "" )
+
+.replace( "&pgbouncer=true" , "" )
+
+.replace( "?pgbouncer=true" , "" )
+
+)
+
+with psycopg.connect(pooled_url) as connection:
 
 with connection.cursor() as cursor:
 
@@ -215,7 +269,7 @@ Log database host and request context when needed, but redact passwords and full
 
 Database connections and retrieval API calls are separate. Use a native PostgreSQL
 
-password for the examples on this page and a Project API Key for generated retrieval
+password for the examples on this page and a Project API Key for Runtime retrieval
 
 examples in Query from the dashboard and
 

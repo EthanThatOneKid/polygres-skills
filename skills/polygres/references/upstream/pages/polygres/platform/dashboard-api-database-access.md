@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/dashboard-api-database-access
 title: Dashboard, API, and database access | Polygres
-source_hash: cafbccd5fcefe56db2814c99808804c3750c6e35623f72038104d4dff60fd011
+source_hash: e741afd6be8d79bc2a1f182c9635310e643c71c7cc055c76a037d22202e51fc6
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard, API, and database access | Polygres
@@ -19,17 +19,23 @@ Polygres CLI Project selection, environment output, psql , Runtime API keys, CSV
 
 PostgreSQL Normal application reads and writes, ORM traffic, database clients, schema tools, and bulk data work. Project connection URL plus native PostgreSQL password.
 
-Polygres API or SDK Graph, vector, text, and hybrid retrieval from an application. Project API key such as poly_live_<...> .
+Polygres API or SDK Graph, vector, text, hybrid, and pgContext retrieval, including backend-owned Context collection operations. Project API key such as poly_live_<...> .
 
-The three surfaces work with the same project data, but their credentials are intentionally not interchangeable.
+These four surfaces work with the same project data, with a focused access
 
-What each surface cannot do
+method for each task.
 
-A dashboard session is not an application credential for backend retrieval code.
+Match each surface to the task
 
-A PostgreSQL password does not authenticate graph, vector, text, or hybrid API calls.
+Use a dashboard session for signed-in organization and project workflows.
 
-A project API key does not create projects, run migrations, import data, or reveal the native database password.
+Use a PostgreSQL password for direct or pooled database connections.
+
+Use a project API key for application retrieval and pgContext Runtime
+
+resource management. Use the dashboard or CLI login for control-plane tasks
+
+such as projects, imports, migrations, keys, and database credentials.
 
 Choose the surface by task first, then use the credential that belongs to it.
 
@@ -47,11 +53,25 @@ New project ( /{organization}/new ) to create a project,
 
 Project overview ( /{organization}/{projectId} ) for status and navigation,
 
-Connection details ( /{organization}/{projectId}/connect ) for PostgreSQL connection details and project API keys,
+Connection details ( /{organization}/{projectId}/connect ) for PostgreSQL connection details and the Runtime API URL,
 
-Project workspace ( /{organization}/{projectId}/workspace ) for graph, vector, text, and hybrid retrieval work.
+Settings ( /{organization}/{projectId}/settings ) for Project API Key management,
 
-Use a dashboard session to import data, browse tables, run SQL, apply migrations, configure graph, vector, and text search, and test hybrid queries. Sensitive actions remain subject to the member’s organization role.
+Project workspace ( /{organization}/{projectId}/workspace ) for visual graph exploration,
+
+Graph, Vector, and Text Search pages under the project workspace for retrieval setup, and
+
+Query Helper ( /{organization}/{projectId}/workspace/query ) for graph and qualifying Legacy vector or hybrid tests.
+
+Use a dashboard session to import data, browse tables, run SQL, apply migrations, and configure graph, AI Context, Legacy vector, and text retrieval. Sensitive actions remain subject to the member’s organization role.
+
+Configure AI Context in the dashboard
+
+The Vector page has separate pgContext collections and Legacy tabs. Each pgContext collection appears separately, with one row for each named vector in that collection. Creating a collection creates its initial vector and makes that vector the collection default. Use Add vector to attach more named vectors to the same collection.
+
+Every collection has one default vector. That choice is independent of the project’s default collection: the project default chooses a collection when no collection is named, while the collection default chooses a vector when no exact vector_name is supplied. Ranked retrieval can instead select an exact vector by name.
+
+In collection setup, Existing vector column lists only native pgcontext.vector(n) columns. It does not adopt an ordinary pgvector column through that source mode. The Legacy tab shows persisted Legacy registrations that are effectively Ready ; a physical-only pgvector index is not implicitly registered or usable by Legacy retrieval.
 
 Use PostgreSQL for application data
 
@@ -73,37 +93,59 @@ For client examples and detailed connection behavior, use the Product Guide for 
 
 Use the API or SDK for application retrieval
 
-After retrieval is configured and tested in the dashboard, create a project API key in Settings ( /{organization}/{projectId}/settings ) and copy the Runtime API URL from connection details ( /{organization}/{projectId}/connect ).
+After the relevant retrieval resources are configured, create a project API key in Settings
+
+( /{organization}/{projectId}/settings ) and copy the Runtime API URL from
+
+connection details ( /{organization}/{projectId}/connect ). You can configure
+
+pgContext collections in the dashboard, or use CLI preflight and collection
+
+verification or an explicit backend-owned SDK workflow.
 
 Use the key from trusted backend code to call:
 
 graph retrieval over configured relationships,
 
-vector retrieval over an existing embedding column,
+Legacy vector retrieval over an existing eligible registration,
 
 text search through full-text or fuzzy configurations,
 
-hybrid retrieval that combines graph and vector results.
+Legacy hybrid retrieval that combines graph and vector results,
+
+pgContext collection lifecycle, point synchronization, filters, durable
+
+operations, dense and grouped search, text hybrid, graph composition, rank
+
+fusion, and Joint retrieval.
 
 The raw key is shown only when it is created. Store it immediately and use a placeholder such as poly_live_<...> in documentation, examples, and tickets.
 
-A project API key is not a general administration credential. It does not create projects, import data, run migrations, configure retrieval, manage keys, or reveal the native database password. Those remain dashboard or CLI operations.
+A project API key is scoped to one project Runtime. It supports application
+
+retrieval and pgContext collection management. Use a dashboard session or CLI
+
+login for organization and control-plane workflows such as creating projects,
+
+imports, migrations, API-key management, and database credential access.
 
 Query first in the dashboard, then in code
 
-The query workbench ( /{organization}/{projectId}/workspace/query ) is the bridge between product setup and application development.
+The Query Helper ( /{organization}/{projectId}/workspace/query ) can bridge dashboard setup and application development for graph and qualifying Legacy vector or hybrid retrieval. It does not query pgContext collections or saved text configurations.
 
 A practical workflow is:
 
-Configure the relevant graph, vector, or text search in the workspace.
+Configure the graph or inspect an existing persisted Legacy vector registration.
 
-Confirm its build or index is ready. For hybrid, confirm both graph and vector are ready.
+Confirm the graph build or persisted Legacy registration is Ready . HNSW needs its exact physical index Ready; index_kind: none can serve exact scan without HNSW. For hybrid, confirm both graph and Legacy vector readiness.
 
 Run the query in the dashboard and inspect returned records, paths, scores, and filters.
 
 Create a project API key.
 
-Reproduce the validated graph, vector, text, or hybrid query from a trusted backend using the generated examples or the documented retrieval patterns.
+Reproduce the validated graph, Legacy vector, or Legacy hybrid query from a trusted backend using the generated examples or documented retrieval patterns.
+
+For pgContext, configure the collection from the dashboard or use CLI preflight and collection setup , then query it from the API or SDK. Backend services with explicit ownership of the lifecycle can manage the same collection through project.context . For text retrieval, confirm the saved configuration in the dashboard and test it from the API or SDK.
 
 This keeps schema and retrieval decisions visible to SaaS operators while giving application code a stable retrieval interface.
 

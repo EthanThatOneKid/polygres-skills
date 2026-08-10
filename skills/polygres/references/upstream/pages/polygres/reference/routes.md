@@ -1,15 +1,21 @@
 source: https://docs.evokoa.com/polygres/reference/routes
-title: Routes | Polygres
-source_hash: 7b5960908c977c5a984bc2689a53d4695c8f8e2f91a431fc264e635b67b4b848
+title: Retrieval routes | Polygres
+source_hash: 37ca8d005bb03587ab7c2bec2f269e6008cc748d221fe09fe29cf55b69f39609
 discovered_from: https://docs.evokoa.com/polygres
 
-# Routes | Polygres
+# Retrieval routes | Polygres
 
-Routes
+Retrieval routes
 
-Dashboard and setup paths are relative to the gateway API base URL, such as
+This page covers retrieval routes, not every dashboard or control-plane route.
 
-https://api.polygres.com/v1 . Retrieval paths are relative to the project Runtime API URL copied from Connect > API access , such as https://p0123456789abcdef0123456.api.db.polygres.com/v1 .
+Gateway retrieval paths are relative to the gateway API base URL, such as
+
+https://api.polygres.com/v1 . Runtime retrieval paths are relative to the
+
+project Runtime API URL copied from Connect > API & SDK , such as
+
+https://p0123456789abcdef0123456.api.db.polygres.com/v1 .
 
 Authentication labels
 
@@ -39,6 +45,20 @@ POST /graph/connection Retrieval Find connections among two to ten entities.
 
 Vector
 
+These retrieval routes require a persisted vector configuration registered
+
+before new pgvector registration was retired. It must be effectively Ready. An
+
+HNSW configuration requires its exact physical index to be Ready; an existing
+
+index_kind: none configuration can be Ready for exact-scan retrieval without
+
+HNSW. Unregistered physical pgvector indexes are never discovered as implicit
+
+Legacy configurations. For new vector setup and retrieval, use a pgContext
+
+collection and the /context routes.
+
 Method Route Auth Purpose
 
 POST /vector/search Retrieval Search with a supplied embedding.
@@ -63,20 +83,48 @@ POST /hybrid/vector-first Retrieval Produce vector candidates, then evaluate gra
 
 POST /hybrid/joint Retrieval Combine graph and vector rankings with Reciprocal Rank Fusion.
 
+These are the pgvector-backed hybrid routes. The collection-based pgContext surface uses separate /context/hybrid/* routes. Context rank-fusion combines independent pgContext and pgGraph rankings, while Context joint couples candidate generation, graph expansion, combined-pool pgContext rescoring, and one final weighted reciprocal-rank fusion. These Context routes are distinct from the pgvector-backed /hybrid/joint route above.
+
+Legacy /hybrid/joint does not delegate through a pgContext compatibility binding. If the selected legacy vector configuration has an active pgContext binding, the route returns USE_CONTEXT_HYBRID_JOINT ; call /context/hybrid/joint with the bound Context collection instead.
+
+pgContext AI Search
+
+The pgContext Preview API exposes 40 collection-based routes. Use either the Gateway base /projects/{project_id}/context with a dashboard or CLI bearer credential, or the project Runtime base /context with a project_full Runtime API key.
+
+Area Routes
+
+Capabilities and sources GET /capabilities ; POST /discover ; POST /preflight
+
+Collections list, create, get, status, verify, diagnostics, update, delete, reindex, and add named vectors under /collections
+
+Filters and points registered column and JSONB filters; point status, scroll, upsert, delete, and reconcile
+
+Operations list, get, cancel, and retry durable operations
+
+Aggregates POST /count ; POST /facets
+
+Retrieval dense, grouped, recall, text hybrid, graph first, vector first, rank fusion, and coupled Joint; ranked routes accept an optional exact vector_name
+
+See the pgContext API reference for every method, path, permission, core request convention, and lifecycle examples.
+
 Readiness
 
 Method Route Auth Purpose
 
-GET /retrieval/readiness Retrieval Return graph, default-vector, and hybrid readiness. Text readiness is not included.
+GET /retrieval/readiness Retrieval Return graph, aggregate Legacy-vector, and hybrid readiness. Text and pgContext collection readiness are not included.
+
+Aggregate Legacy-vector readiness is true when at least one persisted
+
+configuration is effectively Ready. When several are Ready and none is the
+
+default, the response sets selection_required ; the query must name an exact
+
+configuration.
 
 Response conventions
 
-Successful and error responses include a top-level request_id . Errors also use an
+Successful and error responses include a top-level request_id . Errors also use an error object with code , message , and details .
 
-error object with code , message , and details , and return the request ID in the
+For a gateway-proxied request, X-Request-ID identifies the gateway request. The JSON body’s request_id and the optional X-Polygres-Upstream-Request-ID header identify the corresponding Runtime request. Preserve both IDs when contacting support.
 
-X-Request-ID header.
-
-Cursor-paginated retrieval responses return next_cursor and has_more . Treat cursors
-
-as opaque and send next_cursor back as cursor .
+Cursor-paginated retrieval responses return next_cursor and has_more . Treat cursors as opaque and send next_cursor back as cursor .

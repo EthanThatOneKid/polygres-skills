@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/load-and-manage-data
 title: Load and manage data | Polygres
-source_hash: 54f9ce33f8cac93a268a9e7f193919b49754797402d40380fd44e7ededb0f31b
+source_hash: 97380ba3e9e81ff769d53f68f374cbf878cc0143fb543fd209e3262df9788540
 discovered_from: https://docs.evokoa.com/polygres
 
 # Load and manage data | Polygres
@@ -31,19 +31,21 @@ Open Tables and select a schema and table from the sidebar.
 
 Browse rows
 
-Search within the displayed table and page through results.
+Filter the rows currently loaded in the browser and page through database results.
 
-Choose a page size of 50, 100, 250, or 500 rows.
+Choose a page size of 10 or 20 rows. The default is 20.
 
 Inspect a cell in detail or copy a row as JSON.
 
 For vector columns, use Load Full Vector Data when you specifically need the stored values. Vector cells are omitted initially to keep browsing responsive.
 
-Loading a full vector value requires a stable primary key so the dashboard can identify the row again.
+Loading a full vector value requires a primary key so the dashboard can identify the row again. For a composite primary key, the lookup uses every key column and its value from the loaded row.
 
 Insert, update, or delete rows
 
 Use the table actions to insert a row, edit supported cells, delete one row, or select and delete multiple rows. Updates and deletes require a primary key. When a table has no primary key, the dashboard cannot reliably target a row and blocks those actions.
+
+For inserts, generated columns and IDENTITY ALWAYS columns are disabled and omitted so PostgreSQL computes them. An IDENTITY BY DEFAULT column can accept an explicit value; leave it blank to let PostgreSQL advance the identity sequence.
 
 For production data, prefer a migration or reviewed SQL statement for broad changes. Inline editing is best for small corrections and development work.
 
@@ -105,9 +107,9 @@ Open Import ( /{organization}/{project_id}/import ) and choose CSV .
 
 Select the file. The dashboard previews sample rows and infers column names, data types, and nullability.
 
-Choose whether to create a new table or append to an existing table.
+Choose Create new table , Append to existing , or Replace existing .
 
-Select the target schema and table name, then review or adjust column mapping.
+Select the target schema and table name, then review or adjust column mapping. Replace existing empties the selected table before loading the new rows and requires destructive confirmation.
 
 Start the import and monitor it in Import history .
 
@@ -117,11 +119,11 @@ Import admission is limited by the project’s applied tier. Current tier record
 
 Import a SQL file
 
-Choose SQL when the source is a plain SQL file or SQL body.
+Choose SQL when the source is a plain .sql file.
 
-Select or paste the SQL source.
+Select the .sql file to upload.
 
-Review the file and tier upload limit.
+Review its name, size, warning, and the tier upload limit.
 
 Start the import.
 
@@ -161,9 +163,9 @@ Select New migration .
 
 Give it a descriptive name of up to 120 characters.
 
-Enter the SQL and save the migration as a draft.
+Enter and review the SQL carefully, then save the migration as a draft.
 
-Review its version and checksum.
+Review its assigned version and checksum. The saved name and SQL are immutable; if either is wrong, create a new forward migration.
 
 Apply the draft. Polygres runs migrations over the direct database connection.
 
@@ -181,7 +183,7 @@ Project not ready Wait for project, database, and pooler readiness before retryi
 
 Project is read-only Open Settings > Runtime , read the reason, and pause all write operations.
 
-Another import is active Wait for it to finish or cancel it if the job is still queued or running.
+The active import limit is reached Wait for a queued or running job to finish, or cancel an eligible job.
 
 Upload exceeds the tier limit Split or reduce the file, or use a tier with a sufficient import limit.
 
@@ -191,7 +193,7 @@ SQL import is blocked Remove unsupported statements and use dashboard-supported 
 
 pg_dump restore fails Check dump format, target compatibility, referenced roles or extensions, and the job error.
 
-Migration fails Read the database error, correct the problem in a new or still-editable draft, and do not assume a rollback occurred.
+Migration fails Read the database error and do not assume a rollback occurred. Saved migrations are immutable, so correct bad SQL in a new migration; retry the same migration only when the cause was transient.
 
 Platform error has a request ID Keep the request ID and include it when contacting support.
 

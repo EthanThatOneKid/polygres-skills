@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects-and-orgs
 title: Projects and Organizations | Polygres
-source_hash: 3c4b7bb64117763f6d0787d2f6903779d9b0d71fff170e18aee7f53c4b8b78c0
+source_hash: 3ae7f22567b3f28a1fd3dcc287c40355aae556de9dcb5cefb6220633879bd4f8
 discovered_from: https://docs.evokoa.com/polygres
 
 # Projects and Organizations | Polygres
@@ -15,11 +15,9 @@ Open Sign up and register with the email address you intend to use for Polygres.
 
 If an organization invitation exists for that authenticated address, review the available invitation or invitations before creating a new organization.
 
-Otherwise, complete account setup by entering your organization name. A display name is optional.
+Otherwise, Polygres completes the normal self-service setup automatically. It creates an organization, assigns the current self-service tier ( Shared Nano ), and opens the dashboard.
 
-Submit the form. When self-service admission is enabled, Polygres creates the organization and opens its dashboard.
-
-If self-service admission is administratively disabled, the dashboard shows Pending approval until the organization is approved.
+If the account reaches Onboarding instead of the organization dashboard, setup is incomplete. Follow the support guidance on that page rather than looking for an organization-name or tier-selection form.
 
 You can also choose Continue with email on the login page. Its secure link can sign in an existing account or begin a new passwordless account. If password signup detects an existing account, Polygres sends the same privacy-preserving sign-in link instead of disclosing account details.
 
@@ -47,11 +45,9 @@ Dashboard state What it means What to do
 
 Verify email A selected organization invitation or project-creation flow requires proof of the account email. Use the newest verification email. If an invitation is selected, you can cancel it from this page.
 
-Onboarding Account setup still needs an organization name. Complete and submit the account-setup form.
+Onboarding Automatic account or organization setup did not complete. Follow the support guidance on the page. There is no self-service organization-name form on this page.
 
-Pending approval Account setup is complete, but self-service admission is administratively disabled or manual review is required. Keep using the same account; Polygres will email you after the organization is approved.
-
-Choose tier The account is active but does not yet have an active tier. Select a tier to continue to projects.
+Pending approval The account or organization requires an administrative decision. Keep using the same account and follow the guidance shown on the page.
 
 Rejected The account was not approved. Follow the contact guidance shown on that page.
 
@@ -87,11 +83,11 @@ Owner Organization steward. Owners can administer membership. The current Member
 
 Admin Can administer members and pending invitations alongside the owner.
 
-Developer Intended for builders working with organization projects. It does not grant access to membership administration.
+Developer Intended for builders working with organization projects. Developers can list active members but cannot administer membership or invitations.
 
-Viewer Intended for teammates who need a more limited, viewing-oriented role. It does not grant access to membership administration.
+Viewer Intended for teammates who need a more limited, viewing-oriented role. Viewers can list active members but cannot administer membership or invitations.
 
-On the Members page, only Owner and Admin can view and perform membership-management actions. Project actions remain subject to the permissions attached to each role.
+Every active organization member can view the active-member list. Only Owner and Admin can view pending invitations or perform membership-management actions. Project actions remain subject to the permissions attached to each role.
 
 Invite a member
 
@@ -173,9 +169,9 @@ Enter a project name between 1 and 80 characters.
 
 Select Create project .
 
-The dashboard opens the organization-scoped project overview while Polygres provisions its dedicated Postgres runtime, database, and pooler.
+The dashboard opens the organization-scoped project overview while Polygres provisions the project’s database and connection endpoints.
 
-Project creation can be blocked when the organization’s assigned tier has reached its project limit. Delete an unused project or change the applicable tier before trying again.
+The organization’s assigned tier determines runtime placement. Shared tiers place the project in a shared runtime pool; isolated tiers provision isolated runtime placement. Each project still has its own logical database, connection endpoints, and Runtime API URL. Project creation can be blocked when the assigned tier has reached its project limit. Delete an unused project or contact Polygres about the applicable tier before trying again.
 
 Follow provisioning
 
@@ -221,11 +217,11 @@ Connect ( /{organization}/{project_id}/connect ) for database URLs, client examp
 
 Tables ( /{organization}/{project_id}/tables ), SQL Editor ( /{organization}/{project_id}/sql ), Import ( /{organization}/{project_id}/import ), and Migrations ( /{organization}/{project_id}/migrations ) for data work.
 
-Workspace ( /{organization}/{project_id}/workspace ) for the graph-centered project view.
+Workspace ( /{organization}/{project_id}/workspace ) for the visual graph-centered project view.
 
-Graph ( /{organization}/{project_id}/workspace/graph ), Vector ( /{organization}/{project_id}/workspace/vector ), and Text Search ( /{organization}/{project_id}/workspace/text-search ) for retrieval setup.
+Graph ( /{organization}/{project_id}/workspace/graph ), Vector ( /{organization}/{project_id}/workspace/vector ), and Text Search ( /{organization}/{project_id}/workspace/text-search ) for retrieval setup. The Vector page separates pgContext collections from Legacy registrations.
 
-Query Helper ( /{organization}/{project_id}/workspace/query ) for dashboard testing.
+Query Helper ( /{organization}/{project_id}/workspace/query ) for graph and eligible Legacy vector or hybrid tests.
 
 Settings ( /{organization}/{project_id}/settings ) for rename, Project API Key, Runtime, and deletion.
 
@@ -255,6 +251,22 @@ The new name appears throughout the dashboard. The project ID does not change, s
 
 Use the project ID shown under the name when you need an unambiguous support or configuration reference.
 
+Reset the database password
+
+Use the database-password reset action in Settings when rotating application credentials:
+
+Confirm that each application, migration runner, and database tool can be updated immediately after rotation.
+
+Select Reset database password , enter RESET , and confirm the reset.
+
+Select Reveal new password in the reset dialog to view the new password.
+
+Update the pooled and direct URLs in trusted secret stores.
+
+Confirm application and migration connections with the rotated credential.
+
+The new password takes effect immediately for both pooled and direct database connections. You can also reveal the current password later from Connect.
+
 Inspect Runtime
 
 Open Runtime to review the operational fields that matter before a deployment, import, or migration:
@@ -276,6 +288,8 @@ Direct host Matches the host used for migrations, bulk tools, and direct session
 Storage Shows measured usage, the tier limit when available, and when the measurement was checked.
 
 Read-only reason Explains why writes are currently restricted.
+
+Runtime versions Shows Postgres, pgGraph, pgvector, and pgContext versions. pgContext shows Not installed when the runtime has no version metadata.
 
 A healthy application path normally requires Project , Database , and Pooler to be Ready . A direct migration may not depend on the pooler in the same way, but it still requires a ready, writable database.
 
@@ -315,6 +329,16 @@ review storage usage and the exact displayed reason before retrying writes.
 
 Read-only mode protects project integrity. Repeated writes do not clear it and can obscure the original problem.
 
+Respond to scheduled platform maintenance
+
+The dashboard displays a notice before scheduled maintenance begins.
+
+During read-only maintenance , you can continue viewing project data, but imports, migrations, configuration changes, and other updates are paused.
+
+During full maintenance , the dashboard, API, and database may be temporarily unavailable.
+
+Wait for the maintenance notice to clear before resuming work. Applications should retry with backoff, reconnect after service is restored, and confirm the outcome of any interrupted transaction before submitting it again.
+
 Review runtime and extension versions
 
 The project overview can show separate Update available notices for pgGraph and pgvector . Each notice identifies the available target version and provides Review update .
@@ -335,7 +359,7 @@ An update notice does not mean the current runtime is automatically unusable. Fo
 
 Manage the Project API Key
 
-Open Project API Key to create and revoke credentials for server-side retrieval calls.
+Open Project API Key to create and revoke credentials for server-side retrieval and pgContext Runtime resource management.
 
 Select New Project API Key .
 
@@ -345,7 +369,7 @@ Select Create Project API Key .
 
 Copy the full value immediately into a secret manager. It is shown only once and cannot be retrieved again.
 
-Revoke a key when its application is retired or the value may be exposed.
+To revoke a key, select Revoke , read the immediate-impact warning, type the exact displayed key prefix, and confirm. Applications using that key lose access immediately.
 
 A Project API Key is not the database password. See Security basics before distributing either credential.
 
@@ -375,9 +399,11 @@ Import or migration will not start Read-only reason and active import jobs Resol
 
 Graph query is blocked Graph build status Correct setup and rebuild from Graph.
 
-Vector or hybrid query is blocked Default vector configuration and HNSW status Populate embeddings, select a default, or reindex.
+Query Helper vector or hybrid task is blocked Persisted Legacy vector registration and effective readiness Select a persisted enabled Legacy registration that is effectively Ready . HNSW requires its exact physical index to be Ready; index_kind: none can be Ready for exact scan without HNSW. A physical-only pgvector index is not implicitly available to Query Helper.
 
-Text query is blocked Text configuration index status Review and save the TSVector or Fuzzy configuration again.
+AI Context retrieval uses an unexpected vector Collection, exact vector name, and default badges Check the selected pgContext collection. An omitted vector name uses that collection’s default vector; this is independent of the project’s default collection.
+
+Text retrieval is blocked Text configuration index status Review the TSVector or Fuzzy configuration and test it through the supported API or SDK surface.
 
 Provisioning failed Retry availability and next-retry time Use the allowed retry or contact support with the failure details.
 

@@ -1,11 +1,11 @@
 source: https://docs.evokoa.com/polygres/sdk/configure-retrieval
-title: Configure retrieval | Polygres
-source_hash: 12e055c24131785095d521206ee38d7fdc80b92333ad341dd3b15e5c0fa1144c
+title: Dashboard retrieval setup | Polygres
+source_hash: d3521ff96cb1a3627e930a8cf4e66297caff0aba8f9a3b1122fb765437d64dd3
 discovered_from: https://docs.evokoa.com/polygres
 
-# Configure retrieval | Polygres
+# Dashboard retrieval setup | Polygres
 
-Configure retrieval
+Dashboard retrieval setup
 
 Retrieval setup does not replace data modeling. It tells Polygres which existing tables, relationships, embedding columns, and text columns should participate in retrieval. Start after your schema and initial data are present.
 
@@ -17,13 +17,15 @@ Retrieval feature Source data it needs
 
 Graph Tables with stable primary or unique identifiers and meaningful relationships between columns.
 
-Vector A vector(n) column whose rows already contain embeddings, plus a stable row ID column.
+Vector (previously registered) A vector(n) column whose rows already contain embeddings, plus a stable row ID column. New pgvector configuration registration is retired.
 
 Text search A text or existing tsvector column, plus a stable row ID column.
 
-Hybrid A ready graph build and a ready default vector configuration.
+Hybrid (Legacy) A ready graph build and at least one persisted Legacy vector registration that is effectively Ready. If no effective default exists, the request must name an exact configuration.
 
-Use Tables ( /{organization}/{project_id}/tables ) or SQL Editor ( /{organization}/{project_id}/sql ) to verify the schema and data before setup.
+pgContext AI Search A stable source key, native pgcontext.vector(n) column or reviewed column/table creation plan, and optional text, result, and filter columns.
+
+Use Tables ( /{organization}/{project_id}/tables ) or SQL editor ( /{organization}/{project_id}/sql ) to verify the schema and data before setup.
 
 Configure graph retrieval
 
@@ -31,9 +33,9 @@ Open Graph setup ( /{organization}/{project_id}/workspace/graph ).
 
 Discover and register node tables
 
-Select Auto discover to scan tables that have stable primary or unique keys and to propose relationships based on the schema. Auto discovery replaces the current node registrations and edge suggestions, so review any existing manual setup before running it.
+Select Auto discover to scan public.* tables that have stable primary or unique keys and to propose relationships based on the schema. Auto discovery replaces the current node registrations and edge suggestions, so review any existing manual setup before running it.
 
-Review the proposed tables under Nodes . Enable only tables that represent entities you want retrieval to traverse.
+Review the proposed tables under Nodes . Eligible tables from non-system custom schemas are shown by default for manual selection, even though Auto discover scans only public . Clear Include non-public tables to hide them. System and extension schemas are never shown.
 
 Confirm the identifier column for each node table.
 
@@ -61,73 +63,135 @@ See Choosing graph relationships for detailed selection patterns and examples.
 
 Save and build the graph
 
-Graph changes save automatically after a brief pause. A saved configuration is not query-ready until it has been built.
+Graph changes remain an in-page draft until you save or build them. A saved configuration is not query-ready until it has been built.
 
 Resolve any unsaved-change or invalid-configuration notice.
 
-Select Rebuild Graph .
+Select Save to persist the draft without building, or select Rebuild Graph to save pending edits and start the build.
 
 Wait while the status moves through Queued or Building .
 
 Confirm Ready before running graph or hybrid queries.
 
+One rebuild click is enough while work is queued or building; the dashboard blocks duplicate submissions.
+
 A configuration can also show Not built , Stale , or Failed . Stale means the saved setup changed after the last successful build. For a failure, review nodes and relationships, correct invalid selections, and select Rebuild Graph again.
 
-Polygres reconciles the saved dashboard configuration with the graph registration actually applied inside the database. A saved record alone does not make the graph ready. If an extension update, interrupted build, or manual database change makes the applied tables, relationships, or filters differ from the saved definition, the dashboard reports the graph as stale or drifted until a successful rebuild applies the current definition.
+Polygres reconciles the saved dashboard configuration with the graph registration actually applied inside the database. A saved record alone does not make the graph ready. Ready means the current graph definition has been built and can serve a query. If an extension update, interrupted build, or manual database change causes the database graph to differ from the saved definition, the dashboard reports it as stale or drifted until a successful rebuild applies the current setup.
+
+Tables that use FORCE ROW LEVEL SECURITY cannot be included in a graph build. Remove those tables from the graph or choose a retrieval design that keeps their access rules intact.
 
 Configure vector retrieval
 
-Open Vector setup ( /{organization}/{project_id}/workspace/vector ). Polygres scans the project for existing vector(n) columns and shows their dimensions, populated-row count, row-ID choices, search status, and whether each configuration is enabled.
+New pgvector configuration registration is retired. Open AI Context (Vector)
 
-Use an existing embedding column
+setup
 
-An existing vector column is useful only after its rows contain embeddings produced by your embedding model or pipeline. Polygres does not infer that a non-null vector is semantically correct for your application.
+( /{organization}/{project_id}/workspace/vector ) now creates and manages
 
-Find the table and vector column.
+pgContext collections. Use a collection for every new searchable vector source;
 
-Confirm that Rows populated is greater than zero and reflects the records you expect to search.
+do not try to register a new legacy vector configuration through the dashboard,
 
-Choose a stable Row ID column, normally the table’s primary key.
+CLI, API, or Python SDK.
 
-Enable the column for vector search.
+Previously registered pgvector configurations remain available for existing
 
-Review the generated search configuration and wait for its index to become Ready .
+vector and hybrid integrations. The dashboard identifies them as legacy
 
-When the column has no populated embeddings, the configuration remains pending or not ready even if the column exists.
+registered columns under the Legacy tab. The Legacy status tooltip
 
-Add an embedding column
+directs you to create a pgContext collection to replace the old configuration.
 
-Use Add embedding column when the table does not yet have a vector column.
+Only persisted enabled registrations that are effectively Ready appear in
 
-Select the table.
+this tab and remain usable by legacy retrieval. HNSW requires the registration’s
 
-Enter a column name; embedding is the default.
+exact physical index to be Ready; an existing index_kind: none registration
 
-Choose the embedding dimensions. The setup offers common sizes such as 384, 512, 768, 1024, 1536, and 2000.
+can be Ready for exact scan without HNSW. An unregistered physical pgvector
 
-Review the SQL preview and create the column.
+index is not a supported legacy source. There is no dashboard or API action to
 
-Populate that column from your application, an embedding job, an import, or SQL.
+register or re-enable one.
 
-Return to Vector setup and enable it after values exist.
+The pgContext collections tab renders each collection as a separate table.
 
-Creating the column does not generate embeddings. HNSW-indexed configurations support dimensions up to 2000 in this workflow, so choose a size that matches the model output exactly.
+The rows are the collection’s named vector columns, including their dimensions,
 
-Understand the initial configuration
+metric, index state, and default status. Every collection has one default
 
-Enabling an eligible vector column creates a search configuration with dashboard defaults:
+vector. Select Add vector to attach another existing vector column or add a
 
-a search name derived from the table and column,
+new vector column to the same source table, then wait for the durable operation
 
-the first eligible row-ID candidate,
+and, for index_kind: hnsw , its managed index. index_kind: none uses exact
 
-Cosine distance,
+scan without an HNSW index. Select Make default to change which vector
 
-an HNSW index, and
+ranked retrieval uses when vector_name is omitted.
 
-no metadata or filter columns until you add them.
+Collection and vector defaults are separate. At most one collection is the
 
-Review these values rather than assuming every embedding model uses the defaults.
+project default; every collection independently has one default vector. The
+
+first user-created collection becomes the project default automatically, and
+
+the vector supplied during collection creation becomes that collection’s
+
+default. Deleting the project default does not promote another collection, so
+
+select a replacement explicitly when default resolution is required.
+
+Select Create collection to open the configuration form. Opening the modal
+
+does not run source discovery by itself. When Existing vector column is the
+
+active source mode, the tab shows its loading state while Polygres searches for
+
+eligible native pgcontext.vector(n) columns, then renders those sources. The
+
+current dashboard picker does not offer public.vector(n) columns.
+
+Deleting an item on the Legacy tab removes only that persisted legacy
+
+registration. It does not automatically create a pgContext collection or
+
+convert the database column. To convert a compatible pgvector source in place,
+
+use an explicitly reviewed ordinary collection-creation request through the
+
+CLI or public API after resolving the legacy registration. That operation can
+
+take an ACCESS EXCLUSIVE lock, drop non-constraint indexes that depend on the
+
+column, convert it to pgcontext.vector(n) NOT NULL , and create a managed
+
+index. Actual NULL vectors, dimension mismatches, and constraint-backed
+
+dependent indexes block conversion.
+
+The dashboard’s collection Rebuild action, like the CLI reindex command,
+
+rebuilds only the collection’s current default vector index. It does not rebuild
+
+every named vector.
+
+Collection deletion follows the source ownership recorded at creation.
+
+existing and add_column preserve the source table and rows. An owned
+
+new_table source is permanently dropped with the collection after identity
+
+and exclusive-ownership checks, even though the current dashboard confirmation
+
+copy says source tables stay unchanged.
+
+Maintain a previously registered configuration
+
+The following settings and lifecycle actions apply only to configurations that
+
+were registered before creation was retired.
 
 Choose a metric
 
@@ -153,7 +217,9 @@ Use the retry or Reindex action when an HNSW build fails.
 
 Check the populated embeddings, dimensions, row ID, and metric before retrying the same failed definition.
 
-Disabling a search configuration does not delete its database vector column or embedding values.
+Deleting a legacy registration does not delete its database vector column or
+
+embedding values. Retired registrations cannot be created or re-enabled.
 
 Polygres can adopt an existing compatible HNSW index instead of rebuilding it. The index must target the configured embedding column directly, use the operator class that matches the selected metric, be valid and ready, and have a supported predicate. A non-partial index is supported. A partial index is supported only when its predicate is exactly the indexed embedding column IS NOT NULL . Expression indexes and other partial predicates are reported as unsupported rather than silently treated as ready.
 
@@ -161,13 +227,13 @@ When an adopted physical index no longer matches the saved dimensions, metric, r
 
 Set the project default
 
-Choose one enabled, ready vector configuration as the default . Polygres uses it when a vector query does not name a specific configuration. Hybrid readiness also depends on this default being ready.
+Choose one enabled, effectively Ready vector configuration as the default when requests should be able to omit config . Hybrid readiness requires graph readiness plus at least one effectively Ready persisted registration; if several are Ready and none is default, readiness reports selection_required and each request must name one exactly.
 
 Changing the default does not rewrite embeddings. It changes which configured table and vector column an unspecified query uses.
 
 Configure text search
 
-Open Text-Search Settings ( /{organization}/{project_id}/workspace/text-search ). Text search is a first-class retrieval workflow with two different configuration kinds.
+Open Text-Search setup ( /{organization}/{project_id}/workspace/text-search ). Text search is a first-class retrieval workflow with two different configuration kinds.
 
 Choose TSVector or Fuzzy
 
@@ -225,7 +291,7 @@ The configuration list shows Config Name , Kind , Table , Column , Row ID , lang
 
 A status notice can show Text Search Inactive , Text Search Index Building , or Text Search Index Failed . For a failure, review the selected column and row ID, then save the corrected configuration again to retry the index build.
 
-TSVector and Fuzzy configuration counts can each be limited by the project tier. Delete an unused configuration or change the applicable tier when no slots remain.
+List existing TSVector and Fuzzy configurations before creating another so the saved search names and source columns remain easy to identify.
 
 Confirm hybrid readiness
 
@@ -233,20 +299,84 @@ Hybrid retrieval combines graph and vector signals. It is ready only when:
 
 the graph configuration has a successful Ready build, and
 
-the selected or default vector configuration has a Ready index.
+the selected or default persisted Legacy vector registration is effectively
+
+Ready . HNSW requires its exact physical index to be Ready; index_kind: none can be Ready for exact scan without HNSW.
 
 Text-search readiness is independent; it does not substitute for graph or vector readiness in a hybrid query.
 
+Configure pgContext AI Search
+
+pgContext is the supported path for new vector setup. It uses
+
+collection-specific capabilities, preflight, verification, and durable
+
+operations. The dashboard’s Vector setup manages the same collection lifecycle.
+
+An ordinary collection-creation request through the CLI or API can migrate a
+
+compatible pgvector embedding column in place after an explicit review. The
+
+CLI’s polygres context init command guides candidate selection from eligible
+
+persisted legacy registrations, but then submits the same ordinary native
+
+collection-creation request. It is not a public same-column bridge and is not
+
+the dashboard’s collection-creation workflow.
+
+For an interactive setup:
+
+Select the intended project with the Polygres CLI .
+
+Run polygres context capabilities and discover eligible source tables.
+
+Preflight the exact source, vector, text, result-column, and filter plan.
+
+Review any proposed schema change and ownership details.
+
+Create the collection and wait for its durable operation. Its initial vector
+
+becomes the collection default.
+
+Add any additional named vectors through the dashboard, public API, or
+
+Python SDK, wait for each operation, and set the intended default vector.
+
+The current CLI has no add-vector or set-default-vector command.
+
+Verify the collection and each vector index, then inspect status,
+
+diagnostics, filters, and point mappings as the application evolves.
+
+Backend services that explicitly own collection provisioning can use project.context in the Python SDK . The application supplies embeddings with the selected vector’s dimensions. Authorize the request from trusted server-side identity before retrieval, then derive any collection filter used for result scoping; registered filters are not an authorization boundary.
+
 Readiness checklist
 
-Before testing in the dashboard, confirm:
+Before testing graph, vector, text, or Hybrid retrieval in the dashboard, confirm:
 
 Graph: saved configuration, meaningful nodes and edges, latest build Ready .
 
-Vector: embeddings populated, stable row ID, appropriate metric, HNSW Ready , default selected.
+pgContext: collection ready, intended vector index Ready , collection
+
+and vector defaults understood, and vector_name supplied when the query
+
+should not use the collection default.
+
+Legacy vector: persisted enabled registration exists, embeddings are
+
+populated, stable row ID, appropriate metric, and effective readiness. HNSW
+
+requires its exact physical index to be Ready; index_kind: none does not.
 
 Text: TSVector or Fuzzy configuration exists and its index is ready.
 
-Hybrid: both graph and default vector requirements are ready.
+Legacy Hybrid: graph is Ready and at least one persisted Legacy vector
+
+registration is effectively Ready. Supply an exact configuration when
+
+readiness reports selection_required .
 
 Continue with Query from the dashboard .
+
+For pgContext, confirm that the selected capability is available, including point scrolling when you need to inspect mappings. Confirm that the collection is ready and passes verification. Point listings respect source-table row-level security and can be empty while more visible results remain, so continue while has_more is true. Exercise the intended method through the CLI, API, or SDK, then continue with pgContext application patterns .

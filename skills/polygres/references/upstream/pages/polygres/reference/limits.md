@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/limits
 title: Limits | Polygres
-source_hash: 2bb90684bc6a69aee6d729081f4185569c167c6310285b4ac8680c3f68cd2bfb
+source_hash: d1b36495d61c97a96eacbb4e0765a4975766312b3608f721f08266142ea01f4c
 discovered_from: https://docs.evokoa.com/polygres
 
 # Limits | Polygres
@@ -143,6 +143,56 @@ shape. Check GET /tiers and graph system settings when a valid request still exc
 
 runtime capacity.
 
+pgContext limits
+
+Read GET /context/capabilities on the project Runtime API, or
+
+GET /projects/{project_id}/context/capabilities through the Gateway, for the
+
+effective Context limits. These values are authoritative because project
+
+runtime support can be more restrictive than request-shape validation.
+
+Input Contract maximum or behavior
+
+Vector dimensions 1..16000 , further limited by max_dimensions
+
+Ranked result limit 1..1000 , further limited by the collection and max_search_limit
+
+Result columns per collection 32
+
+Initial column and JSONB filters 32 of each
+
+JSONB filter path segments 16
+
+Point keys per upsert or delete 1..10000
+
+Synchronous point mutation Up to 1,000 keys; larger valid requests return a durable operation
+
+Source key after canonical conversion 1,024 bytes
+
+Relationship types per graph request 32
+
+Capabilities also report effective graph depth and candidate limits, filter
+
+bytes, depth, nodes, and value limits, reconciliation batch limits, and
+
+feature-specific blockers. Do not infer these values from the pgContext
+
+extension version.
+
+A collection is created with one initial vector and can contain multiple named
+
+vectors over the same source table. Exactly one vector is the collection
+
+default. Ranked retrieval uses that vector when vector_name is omitted; when
+
+present, vector_name must exactly match a vector in the collection. The
+
+project also has at most one default collection, independently of each
+
+collection’s default vector.
+
 Vector and text configuration limits
 
 Constraint Vector Text
@@ -153,13 +203,21 @@ default_limit and max_limit Each 1..1000 ; default must not exceed max Each 1..1
 
 Default selection At most one default vector configuration per project No explicit is_default field; project status reports one listed text configuration
 
-Index state missing , creating , ready , stale , or failed missing , creating , ready , stale , or failed
+Index state A persisted enabled registration must be effectively Ready. HNSW requires its exact physical index to be ready ; an existing index_kind: none registration can be Ready for exact scan without HNSW. missing , creating , ready , stale , or failed
 
 Count cap No tier count cap No tier count cap
 
-List existing vector or text configurations before creating another one if you need
+New vector configuration creation and re-enabling are retired. These vector
 
-to avoid duplicates.
+constraints describe previously registered configurations. A physical
+
+pgvector index without a persisted enabled registration is not usable through
+
+legacy retrieval. For new vector setup, use the pgContext collection limits
+
+above. List existing text configurations before creating another one if you
+
+need to avoid duplicates.
 
 Route rate limits
 
@@ -178,8 +236,6 @@ GET /me ; list/get projects 120/min — — — 2,000/min
 POST /onboarding 5/day — — — 300/hour
 
 GET /tiers — — — — 300/min
-
-POST /account/tier 10/hour — — — 300/hour
 
 List organization members 120/min — — — 2,000/min
 
@@ -259,7 +315,7 @@ Run graph maintenance 2/min 4/min 300/hour
 
 Read vector configurations 120/min 600/min 2,000/min
 
-Create or delete vector configuration 10/min 30/min 1,000/min
+Retired vector create route or delete vector configuration 10/min 30/min 1,000/min
 
 Update vector configuration 20/min 60/min 1,000/min
 
@@ -267,9 +323,31 @@ Reindex vector configuration 3/hour 10/hour 300/hour
 
 Read text configurations 120/min 600/min 2,000/min
 
-Create or delete text configuration 10/min 30/min 1,000/min
+Create text configuration 20/min 60/min 1,000/min
+
+Delete text configuration 10/min 30/min 1,000/min
 
 Update text configuration 20/min 60/min 1,000/min
+
+pgContext AI Search
+
+Route family User + project API key Project IP
+
+Capabilities, discovery, preflight, collection reads, verification, diagnostics, filters, and point inspection 120/min 240/min 600/min 2,000/min
+
+Search, count, facets, grouped search, recall, text hybrid, graph composition, rank fusion, and Joint 300/min 600/min 1,500/min 3,000/min
+
+Collection updates, filter registration, point batches, and cancellation 20/min 20/min 60/min 1,000/min
+
+Operation listing and polling 600/min 1,200/min 3,000/min 4,000/min
+
+Collection deletion, reindex, reconciliation, and operation retry 10/hour 3/hour 10/hour 300/hour
+
+All applicable scopes are evaluated together. Use the response’s
+
+Retry-After value as the effective retry time for the current project and
+
+route.
 
 Retrieval queries
 

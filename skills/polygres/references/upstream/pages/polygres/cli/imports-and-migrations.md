@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/imports-and-migrations
 title: CLI imports and migrations | Polygres
-source_hash: 69b6ff1067f555b608f06e5fd9e1df8f2cbb791fcd11df1ae9037d6495ebffa8
+source_hash: 8607e98706cc488fe534eccc1f93a5082493ade5a41ad6ee7aff4eb479e05e7c
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI imports and migrations | Polygres
@@ -19,13 +19,47 @@ polygres import status
 
 CSV modes are create_table , append_existing , and replace_existing . Useful options are --schema , --encoding utf-8|utf-8-sig , --delimiter , --quote-char , --escape-char , --no-header , --wait , and --timeout .
 
+create_table creates a destination table from the uploaded CSV.
+
+append_existing keeps current rows and appends the uploaded rows.
+
+replace_existing replaces every row in the selected destination table with
+
+the uploaded data. Confirm the selected project, schema, table, file shape,
+
+and backup or recovery plan before running this mode.
+
 Starting with CLI 0.1.2, the CLI requests a short-lived upload session and
 
 streams the file directly to private Azure Blob staging in bounded blocks. The
 
 file does not pass through the public API ingress. The CLI then requests a
 
-preview and confirms the staged import without resending it.
+server-side preview and starts the staged import without resending it. The
+
+preview is used to derive and validate the column mapping, but the current CLI
+
+does not display it or ask for interactive confirmation before starting the
+
+job. In particular, replace_existing has no confirmation prompt, so review
+
+the file and target before invoking the command.
+
+Without --wait , the command can return successfully while the job is still
+
+queued or running. With --wait , a timeout stops only the local poll and exits
+
+8; it does not cancel the server job. Preserve the job ID from JSON or the
+
+timeout details, then inspect that exact job before deciding whether to retry:
+
+polygres --json import status < job-uui d >
+
+Do not submit the CSV again merely because local waiting timed out. If the job
+
+ID was not retained, polygres --json import status selects the latest visible
+
+import, which is less safe when several imports are active.
 
 CSV admission follows the project’s effective tier storage allowance; use
 

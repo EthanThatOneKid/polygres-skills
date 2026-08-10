@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/automation-and-exit-codes
 title: CLI automation and exit codes | Polygres
-source_hash: 9de0f7d5bc9bd4640a480e57f2c5d33699d099c56a26720bed18f3ef1bb05db7
+source_hash: 108c40a58a2a98010eb5b62f5d2dd68529f082be37fb3119cca4890eac5fa87e
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI automation and exit codes | Polygres
@@ -39,4 +39,40 @@ Code Meaning
 
 9 Missing local dependency, such as psql
 
-Permissions are enforced by the authenticated user’s active organization role. Common required scopes are project:read , project:create , project:update , imports:manage , migrations:manage , graph:manage , vector:manage , and text:manage . See roles and permissions .
+CLI login is authorized with project permissions derived from the authenticated
+
+user’s active organization role. These are permissions, not Runtime API-key
+
+scopes. Read and mutation permissions are separate:
+
+Area Read Mutate
+
+Projects project:read project:create , project:update , project:delete , project:sql:execute , or project:retry_provisioning , depending on the command
+
+Imports imports:read imports:manage
+
+Migrations migrations:read migrations:manage
+
+Graph graph:read graph:manage
+
+Legacy vector vector:read vector:manage
+
+Text text:read text:manage
+
+pgContext context:read context:manage
+
+Runtime metadata runtime:read Not applicable
+
+Point scrolling and onboarding inspection are notable pgContext exceptions that
+
+require context:manage even though they are reads. Under the current fixed
+
+role matrix, owners and admins have all non-platform permissions, developers
+
+have the project, import, migration, graph, legacy-vector, text, and Runtime
+
+permissions listed for that role, and viewers have read-only permissions.
+
+Context permissions are not currently granted to the fixed developer or viewer
+
+roles. See roles and permissions .

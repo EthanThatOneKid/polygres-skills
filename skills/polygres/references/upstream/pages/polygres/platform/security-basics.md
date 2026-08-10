@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/security-basics
 title: Security basics | Polygres
-source_hash: f5199196bf67e99760da31a6f1ec247ef51cdbdd32ecfc2c2dc5f451690557bf
+source_hash: 50939c15e452aee441a3be328f1a8e3aa0a0f9b7ac388c7dc6c314c21a260a97
 discovered_from: https://docs.evokoa.com/polygres
 
 # Security basics | Polygres
@@ -9,7 +9,13 @@ Security basics
 
 Polygres uses three distinct access mechanisms. They are not interchangeable.
 
-The boundary is intentional: setup and administration happen in the dashboard, operational reads and writes happen through PostgreSQL, and retrieval happens through the project API key.
+Each credential has a focused role: the dashboard session supports people and
+
+control-plane workflows, PostgreSQL credentials support database traffic, and
+
+the project API key supports application retrieval plus pgContext Runtime
+
+resource management.
 
 Separate the three credentials
 
@@ -19,7 +25,7 @@ Dashboard session A person using the Polygres dashboard, including their organiz
 
 Native database password Direct or pooled Postgres access to one project database. A trusted backend, migration runner, approved database tool, or secret manager as part of a database URL. Browser-side application code, public repositories, screenshots, support chats, or retrieval API headers.
 
-Project API Key Server-side Polygres retrieval calls for a project. A backend or trusted worker secret store; generated SDK and API examples reference it through an environment variable. Native Postgres clients, frontend bundles, documentation, or a person’s dashboard login.
+Project API Key Server-side retrieval and pgContext Runtime resource management for one project. A backend or trusted worker secret store; generated SDK and API examples reference it through an environment variable. Native Postgres clients, frontend bundles, documentation, or a person’s dashboard login.
 
 An organization role controls what a signed-in person can do in the dashboard. It does not turn that person’s dashboard session into an application credential.
 
@@ -31,7 +37,7 @@ Dashboard session for people operating the SaaS workspace.
 
 Native database password for pooled or direct PostgreSQL access.
 
-Project API key for backend retrieval calls.
+Project API key for backend retrieval and explicit pgContext collection workflows.
 
 If a workflow seems to require reusing one credential for another job, that is usually a sign the wrong surface is being used.
 
@@ -109,7 +115,19 @@ Confirm successful retrieval calls, then remove stale copies from deployment sys
 
 When a database URL may be exposed
 
-Stop distributing the exposed value, remove it from logs or repositories where possible, and contact the appropriate Polygres operational channel for credential remediation. Do not attempt to compensate by using a Project API Key in the database URL.
+Open project Settings and reset the native database password.
+
+Reveal the new password from the Connect page and update each trusted
+
+application, migration runner, and database tool.
+
+Remove the previous URL from repositories, logs, tickets, and deployment
+
+systems.
+
+Confirm that applications connect with the rotated credential, then contact
+
+the Polygres operational channel if your team wants additional assistance.
 
 Keep secrets server-side
 

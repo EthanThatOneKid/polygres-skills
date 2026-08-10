@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: df0e05dfc152d5816e4ad9c8656786941d0d47561acf9b3b234caef4273bcfe7
+source_hash: da2b4d80bd8168c7b8af1d22df819324c2d3bcf36b3595c098a369f9a8fb99ad
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
@@ -25,11 +25,15 @@ Error responses use this shape:
 
 }
 
-Record request_id , the HTTP status, and safe values from details . Statuses below
+Record request_id , the HTTP status, and safe values from details . Statuses below are listed only when the referenced route fixes them explicitly; — means to use the status returned with the response.
 
-are listed only when the referenced route fixes them explicitly; — means to use the
+Platform maintenance
 
-status returned with the response.
+Code Status Meaning First action
+
+MAINTENANCE_READ_ONLY 503 Scheduled maintenance is active and the requested operation is a write. Reads remain available. Pause writes and wait for the dashboard or maintenance endpoint to report normal service.
+
+MAINTENANCE_FULL 503 Full maintenance blocks normal dashboard, API, Runtime, and PostgreSQL access. Stop immediate retries, wait for normal service, then reconnect and verify any interrupted work before resubmitting it.
 
 Authentication and access
 
@@ -51,7 +55,7 @@ AUTH_INVALID_CREDENTIALS 401 The email or password is incorrect. Correct the cre
 
 EMAIL_NOT_VERIFIED 403 The requested account or project action requires a verified email address. Use the dashboard verification flow and the newest verification message.
 
-APPROVAL_REQUIRED 403 The user profile is not active. Follow the current dashboard account gate for verification, account setup, manual approval, or tier selection.
+APPROVAL_REQUIRED 403 The user profile is not active. Follow the current dashboard account gate for verification, account setup, or manual approval.
 
 LEGAL_ACCEPTANCE_REQUIRED 422 The account has no current durable acceptance of the Terms of Service and Privacy Policy. Return to signup or the account gate and record the required acceptance.
 
@@ -60,10 +64,6 @@ EMAIL_VERIFICATION_PROFILE_NOT_FOUND 404 Verification cannot find the account pr
 EMAIL_VERIFICATION_LINK_FAILED 503 Polygres could not create or deliver a verification link. Retry once from Resend verification email , then contact support with the request ID.
 
 EMAIL_VERIFICATION_EVIDENCE_MISMATCH 403 The verification continuation does not match the authenticated account. Sign out, use the intended account, and open a newly requested verification message.
-
-ONBOARDING_INVALID 400 Account setup or a legacy onboarding payload contains an unsupported value. Submit the organization name and other values offered by the current account-setup form.
-
-ONBOARDING_ALREADY_FINAL 409 Account setup is already active, rejected, or suspended and can no longer be resubmitted. Follow the current account state; contact support when review is required.
 
 API_KEY_INVALID — The API key is malformed, unknown, or revoked. Check the key source and project; create and deploy a replacement if needed.
 
@@ -79,7 +79,7 @@ PROJECT_NOT_FOUND 404 The project does not exist, is deleted, or is not visible 
 
 PROJECT_NOT_READY 409 The route requires project status ready . Check project status and resolve provisioning, deletion, suspension, or read-only state.
 
-TIER_REQUIRED 403 No effective tier is assigned. Select or restore the organization/account tier.
+TIER_REQUIRED 403 No effective tier is assigned. Ask an administrator or Polygres support to restore the account’s tier assignment. There is no self-service tier-selection route.
 
 TIER_NOT_FOUND 404 The assigned tier is missing or inactive. Refresh tier state; contact support if the assigned tier remains unavailable.
 
@@ -97,7 +97,7 @@ Code Status Meaning First action
 
 ORG_NOT_FOUND 404 The organization is missing or the user is not an active member. Verify the organization ID and membership returned by GET /me .
 
-ORG_PERMISSION_DENIED 403 The current role cannot manage members or invitations. Use an owner or admin account for current member-management routes.
+ORG_PERMISSION_DENIED 403 The current role cannot perform the requested member or invitation action. Every active role can list active members. Use an owner or admin account for invitations and membership changes.
 
 ORG_SELF_INVITE_NOT_ALLOWED 400 The caller tried to invite their own email. Invite a different email address.
 
@@ -123,7 +123,7 @@ Code Status Meaning First action
 
 IMPORT_LIMIT_EXCEEDED 413 The declared file size exceeds the effective tier cap. Check GET /tiers ; split or reduce the file.
 
-IMPORT_CONCURRENCY_LIMIT 409 Another import is queued or running for the project. Wait for or cancel the active job.
+IMPORT_CONCURRENCY_LIMIT 409 The project has reached its active import-job limit. Wait for or cancel one of the queued or running jobs before submitting another.
 
 IMPORT_FILE_INVALID 400 The staged job or CSV metadata does not match the requested import. Recreate the preview and verify headers, types, mapping, and job ID.
 
@@ -179,7 +179,9 @@ GRAPH_CONFIGURATION_EMPTY 409 No graph tables are registered. Save a non-empty g
 
 GRAPH_CONFIGURATION_INVALID 400 The graph table or ID-column definition is inconsistent. Supply non-empty id_columns per registered table. Legacy id_column is accepted only when id_columns is absent.
 
-GRAPH_BUILD_FAILED 400 Graph registration or build failed. Inspect invalid_reason and retry after correcting the configuration.
+GRAPH_SCHEMA_NOT_ALLOWED 400 The graph configuration references a system or extension schema. Register public.* or an explicitly selected non-system schema table.
+
+GRAPH_BUILD_FAILED 400 Graph build failed. Inspect invalid_reason ; correct the configuration if indicated, then retry the build. Contact support if the error does not identify a configuration fix.
 
 GRAPH_NOT_READY 409 Graph build status is not ready . Check graph status; build or rebuild as needed.
 
@@ -191,9 +193,11 @@ Vector
 
 Code Status Meaning First action
 
-VECTOR_CONFIGURATION_NOT_FOUND 404 The named/default vector configuration does not exist. Pass a valid configuration name or create/set a default.
+VECTOR_CREATION_RETIRED 410 New pgvector configuration registration is retired. Create a pgContext collection with a native pgcontext.vector(n) column.
 
-VECTOR_NOT_READY 409 An HNSW configuration’s index is not ready . Reindex and check index_status and index_error .
+VECTOR_CONFIGURATION_NOT_FOUND 404 The named/default vector configuration does not exist. Pass a previously registered configuration name, or create and query a pgContext collection for new setup.
+
+VECTOR_NOT_READY 409 The selected persisted Legacy configuration is not effectively Ready. Check index_kind , index_status , verification differences, and index_error . Reindex a mismatched or failed HNSW configuration.
 
 VECTOR_INDEX_FAILED 400 Vector index creation, update, or reindex failed. Verify table, column, dimensions, metric, and index error; retry after correction.
 
@@ -219,11 +223,79 @@ TEXT_QUERY_EMPTY 400 The query is empty after trimming. Send a non-empty query o
 
 TEXT_FILTER_INVALID 400 A text filter key/value is invalid. Use configured filter columns and scalar exact-match values.
 
-Hybrid warning
+Hybrid ranking
 
-HYBRID_WEIGHTS_IGNORED is a warning, not a failed request. Joint ranking uses
+Hybrid Joint ranking uses weighted Reciprocal Rank Fusion. The supplied vector_weight and graph_weight values control the contribution of each ranking lane, and the response reports the applied weights.
 
-Reciprocal Rank Fusion, so supplied weights are currently ignored.
+Code Status Meaning First action
+
+HYBRID_WEIGHTS_INVALID 400 Hybrid weights contain an unsupported key or a value outside the accepted finite, non-negative shape. Send vector and graph weights as finite values of at least zero, with at least one positive value.
+
+Common pgContext errors
+
+Code Status Meaning First action
+
+CONTEXT_REQUEST_INVALID 400 The strict request body or field combination is invalid. Compare with the pgContext API and remove unknown or conflicting fields.
+
+CONTEXT_VECTOR_NULLABLE 400 The selected pgvector source contains at least one NULL vector. Populate or remove every affected row, then run preflight again. A nullable declaration alone is allowed when no stored value is NULL .
+
+CONTEXT_VECTOR_DIMENSION_INVALID 400 The selected pgvector dimensions do not match the requested collection dimensions. Use the column’s declared dimensions or choose a matching vector column.
+
+CONTEXT_INDEX_CONFLICT 409 An index that depends on the pgvector column backs a database constraint, so in-place conversion cannot drop it safely. Choose another column or redesign the constraint before retrying conversion.
+
+CONTEXT_EMBEDDING_INVALID 400 The embedding is empty, non-finite, zero for cosine, or has the wrong dimensions. Supply finite numbers matching the selected vector’s dimensions and metric requirements.
+
+CONTEXT_FILTER_INVALID 400 The filter grammar or registered filter key is invalid. Use a registered key and one supported condition per filter node.
+
+CONTEXT_DELETE_CONFIRMATION_INVALID 400 The deletion body does not repeat the collection UUID from the path. Send confirm_collection_id equal to the path UUID.
+
+CONTEXT_POINT_CURSOR_INVALID 400 The point-scrolling cursor is malformed or no longer valid. Restart point scrolling without a cursor.
+
+CONTEXT_COLLECTION_NOT_FOUND 404 The collection UUID or exact name is not visible in this project. List collections and verify the selected project.
+
+CONTEXT_VECTOR_NOT_FOUND 404 The requested exact vector_name is not registered in the selected collection. List the collection’s vectors and use an exact name. Omit vector_name only when the collection default is intended.
+
+CONTEXT_OPERATION_NOT_FOUND 404 The operation UUID is not visible in this project. List operations and verify the selected project.
+
+CONTEXT_COLLECTION_NOT_READY 409 The collection cannot serve the requested operation in its current state. Check collection status, then inspect verification or diagnostics.
+
+CONTEXT_CAPABILITY_UNAVAILABLE 409 The project capability response reports the requested feature as unavailable. Read /context/capabilities and follow its blocker message.
+
+CONTEXT_LIMIT_EXCEEDED 400 A Context request exceeds an effective size, dimension, filter, graph, or point limit. Read capabilities and split or reduce the request.
+
+CONTEXT_PREFLIGHT_BLOCKED 409 Collection creation did not pass its source and ownership checks. Run preflight and correct its blockers before creating.
+
+CONTEXT_COLLECTION_NAME_CONFLICT 409 Another collection already uses the requested name. Choose a unique name or use the existing collection.
+
+CONTEXT_OPERATION_CONFLICT 409 Conflicting durable work is already active for the collection. Poll or cancel the existing operation before retrying.
+
+CONTEXT_OPERATION_STATE_CONFLICT 409 Cancel or retry is incompatible with the operation’s current or terminal state. Refresh the operation and act on its current status; do not retry the same invalid transition.
+
+CONTEXT_OPERATION_NOT_RETRYABLE 409 The operation is outside its eligible retry state, attempt allowance, or retry window. Retry a failed or cancelled operation while attempts remain and retry_until is current.
+
+CONTEXT_IDEMPOTENCY_CONFLICT 409 An idempotency key was reused for a different canonical request. Retry with the original request or a new key, never a changed request with the old key.
+
+CONTEXT_GRAPH_NOT_READY 409 A graph-composition mode cannot use the current graph state. Check graph readiness and rebuild or correct its configuration.
+
+CONTEXT_SOURCE_KEY_ALIGNMENT_INVALID 409 Context source identities cannot align with graph candidates. Align the registered graph table and collection source key.
+
+CONTEXT_READER_ACCESS_REQUIRED 409 Polygres cannot access the source table with the permissions required for safe point listings. Correct the source-table permissions and run preflight again.
+
+CONTEXT_POINT_SCROLL_RLS_UNSAFE 409 Polygres cannot guarantee that point listings will respect the source table’s row-level security. Run verification and diagnostics, then correct the reported permission or policy issue.
+
+CONTEXT_SOURCE_UNAVAILABLE 409 The collection’s source table is missing or has been replaced. Restore the intended table or recreate the collection against the current source. Start pagination again without the old cursor.
+
+CONTEXT_SOURCE_OWNERSHIP_MISMATCH 409 Polygres cannot confirm that a managed source table still belongs only to this collection. Stop deletion and review the collection’s source table. Contact support if the ownership information is incorrect.
+
+CONTEXT_RECALL_UNAVAILABLE 409 Recall checking is unavailable for this collection or index state. Check collection status, index kind, and capabilities.
+
+CONTEXT_MEMORY_PRESSURE 409 Heavy Context work is temporarily blocked by project memory pressure. Let current work settle, then retry with backoff. Retrieval and lightweight reads can remain available.
+
+CONTEXT_INLINE_CAPACITY_EXCEEDED 429 Too many synchronous Context mutations are active. Retry with backoff.
+
+RUNTIME_CONTEXT_PROXY_FAILED 502 The Gateway could not complete its request to the project Runtime API. Check project readiness, retry once, then report the request ID if it persists.
+
+A failed collection verification or recall threshold still returns HTTP 200. Inspect verified or the recall status in the response instead of branching on HTTP status alone.
 
 Rate limits
 
@@ -231,9 +303,7 @@ Response Meaning First action
 
 HTTP 429 One of the applicable IP, user, user-project, API-key, or project windows is exhausted. Honor Retry-After when present and retry with backoff. Do not fan out immediate retries.
 
-The current references do not define a stable user-facing error-code string for every
-
-429 ; branch on the HTTP status.
+Rate-limit responses use the stable RATE_LIMITED code. Branch on HTTP 429 , retain the code and request ID for diagnostics, and follow Retry-After .
 
 Runtime and service configuration
 

@@ -1,11 +1,11 @@
 source: https://docs.evokoa.com/polygres/sdk/connect-your-app
-title: Connect your app | Polygres
-source_hash: 5a3b1561f8c4049425c99fe0b5a894a456f380f96ccab8ea1d5bf394be4b608b
+title: Dashboard connection setup | Polygres
+source_hash: 7cbb00653129dc8c77b92b4c2ec259da60b3afaaf6c09ae3a8ada8116294e254
 discovered_from: https://docs.evokoa.com/polygres
 
-# Connect your app | Polygres
+# Dashboard connection setup | Polygres
 
-Connect your app
+Dashboard connection setup
 
 Open connection details
 
@@ -13,9 +13,17 @@ Confirm that the project, database, and pooler show Ready on the project overvie
 
 Open Connect ( /{organization}/{project_id}/connect ).
 
-Use the Database , Client examples , and API access tabs according to what you are connecting.
+Choose the CLI , API & SDK , Database , or Frameworks tab.
 
-The Database tab shows the host, port, database, username, connection string, and a generated psql command. Connection strings initially contain the placeholder <password> so that opening the page does not expose the native database password.
+The Database tab contains Manual database connection and Environment
+
+variables sections. It shows the host, port, database, username, connection
+
+string, and a generated psql command. Connection strings initially contain
+
+the placeholder <password> so that opening the page does not expose the native
+
+database password.
 
 Choose pooled or direct
 
@@ -33,11 +41,33 @@ DIRECT_URL = "<direct connection string>"
 
 Use DATABASE_URL for normal application traffic and configure your migration tool to use DIRECT_URL when it supports a separate direct URL.
 
+The current public direct TLS endpoint is not production-safe for Prisma
+
+migration and Prisma CLI workflows. Prisma runtime access may work with
+
+compatibility handling on the pooled endpoint, but do not infer that
+
+DIRECT_URL makes Prisma migrations supported. Use a supported migration path
+
+or another compatible Postgres client until the dashboard removes this warning.
+
 Understand pgbouncer=true
 
-The pooled connection string includes pgbouncer=true . Prisma-style ORMs use this hint to adapt to pooled behavior. Standard command-line and database clients may reject that query parameter, so the dashboard-generated psql command removes it automatically.
+The dashboard’s pooled connection string includes pgbouncer=true for
 
-Do not remove the parameter from the pooled URL merely because a CLI rejects it. Use the direct URL or the generated psql command for that tool instead.
+Prisma-style ORMs. For psycopg, SQLAlchemy, psql , and other libpq clients,
+
+create a client-specific copy of the same pooled URL with that Prisma hint
+
+removed. This keeps application traffic on the pooled endpoint. Use the direct
+
+URL for migrations, bulk work, and workflows that need direct session behavior.
+
+The dashboard-generated Python, SQLAlchemy, and psql examples prepare the
+
+appropriate client-specific URL automatically. When copying the pooled URL into
+
+another non-Prisma client, remove the hint yourself.
 
 Reveal the native database password only when needed
 
@@ -55,9 +85,9 @@ The database password authenticates native Postgres access. It is not the same c
 
 If you reset the database password in Settings, the old password stops working for direct and pooled database connections. The reset does not email the new password or return it automatically. Reveal the new password from the dashboard only when you are ready to update trusted application secrets or database clients.
 
-Use Client examples
+Use Frameworks
 
-Open Client examples to copy language- or tool-oriented setup that mirrors the selected project connection information. The examples reference environment variables rather than embedding a secret in source code.
+Open Frameworks to copy language- or tool-oriented setup that mirrors the selected project connection information. The examples reference environment variables rather than embedding a secret in source code.
 
 Before running an example:
 
@@ -69,9 +99,19 @@ Test a small connection or read before starting a migration or large import.
 
 Check Settings > Runtime if the connection fails even though the copied values are unchanged.
 
-Use API access for retrieval, not database sessions
+Use API & SDK for retrieval, not database sessions
 
-The API access tab is for Polygres retrieval calls. Those calls use a Project API Key , which you create in Settings ( /{organization}/{project_id}/settings ) under Project API Key . A Project API Key does not open a native Postgres connection, and the database password does not replace it in generated retrieval examples.
+The API & SDK tab is for Polygres retrieval calls and shows the Project ID,
+
+Runtime API URL, key commands, and environment variables. Those calls use a
+
+Project API Key , which you create in Project Settings > Project API Key
+
+( /{organization}/{project_id}/settings?tab=api-keys ). A Project API Key does
+
+not open a native Postgres connection, and the database password does not
+
+replace it in generated retrieval examples.
 
 You can also create a Project API Key and print connection URLs from the terminal with the Polygres CLI :
 
@@ -101,4 +141,6 @@ Secrets are stored server-side and are absent from source control.
 
 The native database password and Project API Key are not confused or interchanged.
 
-Connection URLs and API keys were obtained from the dashboard or with polygres env and polygres keys create .
+Connection URLs and API keys were obtained from Connect or with polygres env and polygres keys create .
+
+Prisma direct migration and CLI workflows were not configured against the current public direct endpoint.

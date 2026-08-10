@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/api-keys
 title: CLI API keys | Polygres
-source_hash: 4aa6061b2949372b479d2dbec64302e4a68ee436ad89ef12d7c2074e1352fa8a
+source_hash: 6b389ced64aa8bb5ee5930647cdeabc9c87bb0aa6d578c3c5f82db48afc0c0ad
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI API keys | Polygres
@@ -13,7 +13,11 @@ polygres keys list
 
 polygres keys revoke 123e4567-e89b-12d3-a456-426614174000 --yes
 
-keys create prints the raw Runtime API key exactly once. Save it immediately in a secret manager or local environment, then combine it with POLYGRES_RUNTIME_URL from polygres env .
+Run keys create without --quiet so the raw Runtime API key is displayed
+
+once. Save it immediately in a secret manager or local environment, then
+
+combine it with POLYGRES_RUNTIME_URL from polygres env .
 
 export POLYGRES_API_KEY = "poly_live_..."
 

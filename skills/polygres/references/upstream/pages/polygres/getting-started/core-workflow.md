@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/core-workflow
 title: Core workflow | Polygres
-source_hash: a0cec4013d8593c85a16db9cfc1314d875f5b02b69a28c686b834f8af4bf45b6
+source_hash: 1f1a6e04918d7428985f2727aba25eb5a46a81bca2c6a382cd6ef5603549cd7d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Core workflow | Polygres
@@ -11,25 +11,37 @@ The Polygres customer journey starts with an account and organization, not an AP
 
 1. Create your account
 
-Create an account with an email and password, or use Continue with email for a secure passwordless link. Password signup requires accepting the Terms of Service and acknowledging the Privacy Policy. Account setup then asks for the organization name; a display name is optional.
+Create an account with the available sign-up
 
-When self-service admission is enabled, Polygres creates the organization and opens its dashboard. If an administrator disables self-service admission, the account remains on Pending approval until the organization is approved. Shared runtime capacity is evaluated later, when a Shared Nano project is created. Suspended or rejected accounts cannot use project tools or application retrieval.
+method and accept the current legal terms. For a normal self-service sign-up,
 
-Email verification is enforced when a workflow requires verified ownership, including creating a project and joining an invited organization. Use the newest verification message, because an older or expired email link may no longer be valid.
+Polygres generates a unique organization name, creates the organization, and
 
-2. Join or create an organization
+makes you its owner automatically. There is no organization-name, tier, or
 
-An organization is the top-level workspace for members, roles, tier selection, and projects.
+use-case questionnaire in the sign-up flow. You can rename the generated
 
-After authentication, use one of these paths:
+organization later.
 
-Review and accept or decline an invitation for the authenticated email address.
+When a workflow requires verified email ownership, use the newest verification
 
-Create an organization and become its owner when no invitation is selected.
+message. An older or expired link may no longer be valid.
 
-Continue with the active organization already attached to an existing account.
+2. Use your organization or accept an invitation
 
-Each user can have one active organization membership. If several invitations exist for the same email, choose one organization. Joining it automatically closes the other pending invitations after verification. You can cancel a provisional choice from the verification page and continue with normal organization setup instead. Owners can invite members as admins, developers, or viewers. The organization tier sets a shared project allowance for the whole team rather than a separate allowance for each member.
+An organization is the top-level workspace for members, roles, project
+
+allowances, and projects.
+
+A normal self-service sign-up opens the organization Polygres created for the
+
+account. If the authenticated email has a pending invitation, review it and
+
+explicitly accept or decline it. Each user can have one active organization
+
+membership. If several invitations exist for the same email, choose one
+
+organization. Owners can invite members as admins, developers, or viewers.
 
 Open the organization home ( /{organization} ) and Members ( /{organization}/members ) for membership management.
 
@@ -49,9 +61,11 @@ pooled and direct PostgreSQL connection URLs,
 
 data import, table, SQL, and migration tools,
 
-graph, vector, and text configuration,
+graph, Legacy vector, and text configuration plus pgContext AI Search
 
-dashboard queries and project API keys.
+collections,
+
+the dashboard Query Helper and project API keys.
 
 4. Connect or load data
 
@@ -85,7 +99,39 @@ Use Graph setup ( /{organization}/{projectId}/workspace/graph ) to review candid
 
 Vector
 
-Use Vector setup ( /{organization}/{projectId}/workspace/vector ) to select an existing fixed-dimension vector(n) embedding column, choose how it is searched, and prepare its index. Polygres does not create embeddings.
+Use Vector setup ( /{organization}/{projectId}/workspace/vector ) to create a
+
+pgContext collection over a vector source, choose its search settings, and
+
+prepare its indexes. The pgContext collections tab displays each collection
+
+as a separate table of named vectors and provides Add vector . Every
+
+collection has a default vector, independently of the project’s default
+
+collection.
+
+The Legacy tab is only for persisted pgvector registrations that are
+
+effectively Ready. An HNSW registration needs its exact physical index to be
+
+Ready. An existing index_kind: none registration can be Ready for exact-scan
+
+retrieval without HNSW. A physical pgvector index without a persisted
+
+registration is never made implicitly usable, and new registration or
+
+re-enabling through the retired Legacy API is unsupported.
+
+Polygres does not create embeddings. When an existing public.vector(n) column
+
+must be migrated, use Context discovery and preflight to review the in-place
+
+conversion and ownership effects. Deleting a Legacy registration, when one
+
+exists, is a separate explicit operation rather than automatic dashboard
+
+cleanup.
 
 Text
 
@@ -93,13 +139,37 @@ Use Text search setup ( /{organization}/{projectId}/workspace/text-search ) to c
 
 Hybrid
 
-Hybrid retrieval combines graph and vector results. It does not require a separate data copy or text configuration, but it does require the relevant graph build and vector configuration to be ready.
+Legacy Hybrid retrieval combines a ready graph build with an effectively Ready
 
-The shared retrieval-readiness check summarizes graph, vector, and hybrid. Text search is independent in the current product and is ready when its selected text configuration has a ready index.
+persisted Legacy vector registration. For new graph-and-semantic workflows, use
+
+pgContext graph-first, vector-first, rank-fusion, or Joint retrieval.
+
+The shared retrieval-readiness check summarizes graph, Legacy vector, and
+
+Legacy Hybrid. Text search is independent in the current product and is ready
+
+when its selected text configuration has a ready index.
+
+pgContext AI Search
+
+Use the Polygres CLI for an interactive collection workflow:
+
+check capabilities, discover source tables, run preflight, review the proposed
+
+schema and ownership plan, create the collection, and verify it. Backend-owned
+
+automation can use the Python SDK and the same project API
+
+key. Collection status and durable operations provide lifecycle visibility.
 
 6. Query in the dashboard
 
-Open the query workbench ( /{organization}/{projectId}/workspace/query ) to test graph, vector, text, and hybrid retrieval with your signed-in dashboard session.
+Open the Query Helper ( /{organization}/{projectId}/workspace/query ) to test
+
+graph, Legacy vector, and Legacy Hybrid retrieval with your signed-in
+
+dashboard session.
 
 Start with a human task rather than an endpoint name—for example:
 
@@ -107,17 +177,27 @@ explore records connected to a customer,
 
 find content similar to an existing row,
 
-search ticket text for an error message,
-
 find semantically similar records within related account data.
 
-The dashboard query workbench uses the same retrieval behavior available to applications, making it the best place to validate data shape, configuration, filters, and result quality before writing code.
+The Query Helper does not execute text or pgContext collection queries.
+
+Configure and inspect pgContext collections in Vector setup, then exercise their dense,
+
+text-hybrid, graph-composed, rank-fusion, or Joint methods through the CLI,
+
+public API, or Python SDK.
 
 7. Query from your application
 
 Create a project API key from Settings > Project API Key ( /{organization}/{projectId}/settings ). The raw value, such as poly_live_<...> , is shown once. Store it immediately in a secret manager or backend environment variable.
 
-Use that key from a trusted backend for graph, vector, text, and hybrid retrieval. Continue to use the PostgreSQL connection URL and native database password for normal application reads and writes. These credentials serve different jobs and should not be exchanged.
+Use that key from a trusted backend for graph, Legacy vector, text, Legacy
+
+Hybrid, and pgContext retrieval. Continue to use the PostgreSQL connection URL
+
+and native database password for normal application reads and writes. Each
+
+credential has a focused role in the application architecture.
 
 Next steps
 
@@ -132,6 +212,8 @@ Load and manage data
 Configure and query retrieval
 
 Retrieval integration patterns
+
+pgContext CLI guide
 
 Reference
 

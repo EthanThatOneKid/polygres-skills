@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference
 title: Reference and troubleshooting | Polygres
-source_hash: 1a5aa4b55fdb46b428dc239f70a9159a93118badbac0efa42249ff110f712622
+source_hash: 2fbe9b0c0e41786f4f7a0472ae354f8321c7ce64aaa371506ef5383b2b1a5c1d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Reference and troubleshooting | Polygres
@@ -17,7 +17,9 @@ Need Page
 
 See recent user-facing changes Changelog
 
-Find a user-facing HTTP route and auth mode Routes
+Find a retrieval HTTP route and auth mode Retrieval routes
+
+Configure or query AI Search over HTTP pgContext API
 
 Interpret an API or job error Error codes
 
@@ -29,7 +31,9 @@ Diagnose an issue by symptom Troubleshooting
 
 Diagnostic order
 
-Capture the response request_id or X-Request-ID header.
+Capture the response request_id and X-Request-ID header. For a
+
+gateway-proxied call, also keep X-Polygres-Upstream-Request-ID .
 
 Check the affected project, job, migration, or configuration state.
 

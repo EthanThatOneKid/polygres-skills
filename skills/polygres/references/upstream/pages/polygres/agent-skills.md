@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/agent-skills
 title: Polygres Agent Skills | Polygres
-source_hash: 6b4d3a20da7647225bbac3dfb9e0cf90d62177a4a745d2155dd94be1b012b6c1
+source_hash: fba0849e423b475ac93df9fcaf44f8c1673528977d645bd282c46189bdbdd06e
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres Agent Skills | Polygres
@@ -11,27 +11,33 @@ The Polygres plugin includes four independently triggered Agent Skills:
 
 polygres-cli operates Polygres through the public CLI, including login,
 
-project selection, imports, migrations, keys, retrieval setup, and recovery;
+project selection, imports, migrations, keys, retrieval setup, pgContext
 
-polygres-sdk builds Python application retrieval with graph, vector, text,
+collection lifecycle, and recovery;
 
-hybrid, pagination, typed models, and grounded RAG workflows;
+polygres-sdk builds Python application retrieval with pgContext, graph,
 
-polygres-retrieval-design produces a reviewable retrieval plan without
+vector, text, hybrid, pagination, typed models, and grounded RAG workflows;
 
-changing a project;
+polygres-retrieval-design decides when pgContext or another retrieval
 
-polygres-troubleshooting diagnoses failures from public read-only CLI and
+strategy is appropriate without changing a project;
 
-SDK evidence.
+polygres-troubleshooting diagnoses failures, including Context collection
+
+and operation failures, from public read-only CLI and SDK evidence.
 
 The skills do not include the Python packages. Install the component required
 
 by the task, then install the skill repository:
 
-pipx install "polygres-cli==0.1.2"
+This release set uses Polygres Agent Skills 0.3.0 with polygres-cli 0.2.0
 
-python -m pip install "polygres-sdk==0.1.0"
+and polygres-sdk 0.2.0 .
+
+pipx install "polygres-cli==0.2.0"
+
+python -m pip install "polygres-sdk==0.2.0"
 
 npx skills add Evokoa/polygres-skills
 
@@ -115,11 +121,11 @@ workflow yourself:
 
 Use the skill
 
-Describe the result you want. The agent should select the relevant CLI
+Describe the result you want. The agent should select the relevant CLI, SDK,
 
-workflow, resolve the target project, and ask before destructive or
+design, or troubleshooting workflow, resolve the target project when needed,
 
-secret-producing operations.
+and ask before destructive or secret-producing operations.
 
 Example prompts:
 
@@ -131,21 +137,33 @@ conversion choices, and ask before changing data.
 
 Review this SQL migration and ask before applying it to my selected project.
 
-Configure cosine vector retrieval for documents.embedding with 1536
+Configure a cosine pgContext collection for documents.embedding with 1536
 
-dimensions and verify readiness.
+dimensions, preflight the source, and verify readiness.
+
+Set up a pgContext collection over public.documents. Preflight it first,
+
+explain ownership and schema changes, and ask before mutating the project.
 
 Use the Polygres SDK to find semantically similar documents, expand their
 
 citations, and build deduplicated RAG context with source provenance.
 
+Use project.context.joint() to combine semantic, lexical, and graph evidence
+
+while preserving typed provenance and request IDs.
+
 Design a reviewable retrieval plan for this schema without changing the
 
-project. Compare relational, graph, vector, text, and hybrid approaches.
+project. Compare relational, graph, pgvector, text, hybrid, and pgContext
 
-Diagnose this failed import from public read-only evidence. Preserve request
+approaches.
 
-and job IDs and recommend a safe corrective action.
+Diagnose why this pgContext collection is blocked from public read-only
+
+evidence. Preserve collection, operation, and request IDs and recommend a safe
+
+corrective action.
 
 The installed polygres --help output remains authoritative if the local CLI
 
@@ -153,15 +171,23 @@ version differs from the skill examples.
 
 Build with the Python SDK
 
-Use polygres-sdk for application retrieval, not project administration. The
+Use polygres-sdk for application retrieval and explicit backend-owned
 
-skill distinguishes the per-project Runtime API URL from the control-plane and
+pgContext automation. Control-plane project administration remains a dashboard
 
-Postgres URLs, keeps the API key in server-side environment configuration, and
+or CLI workflow. The skill distinguishes the per-project Runtime API URL from
 
-uses passwordless connection metadata.
+the control-plane and Postgres URLs, keeps the API key in server-side
+
+environment configuration, and uses passwordless connection metadata.
 
 The SDK skill covers:
+
+pgContext capabilities, collection setup, point synchronization, durable
+
+operations, filters, dense and grouped retrieval, text and graph composition,
+
+recall checks, rank fusion, and coupled Joint retrieval;
 
 graph.expand , graph.neighborhood , graph.related , graph.path , and
 
@@ -181,9 +207,15 @@ anchor-first and semantic-first RAG with provenance, deduplication, and
 
 application token budgets.
 
-Filters narrow retrieval but do not replace application authorization. Use the
+Filters narrow retrieval while the application remains responsible for
 
-CLI skill when retrieval resources need to be configured or rebuilt.
+authorization. pgContext collections and pgvector configurations are distinct
+
+resources. Use the CLI skill for interactive, human-reviewed setup,
+
+reconciliation, and rebuilds. Use the SDK skill for explicit backend-owned
+
+pgContext automation and application retrieval.
 
 Design retrieval before implementation
 

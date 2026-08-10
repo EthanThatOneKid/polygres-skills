@@ -1,15 +1,29 @@
 source: https://docs.evokoa.com/polygres
 title: Polygres documentation | Polygres
-source_hash: 49ad97ec3fc914dc2d343839d816285c9df99b63aed1456b10c92c6566012734
+source_hash: 950c2c87730c59160de3f49edfe2164ba7aa5eaaf2599ee4cc000d88be1dee6f
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres documentation | Polygres
 
 Polygres documentation
 
-Polygres gives your team a managed PostgreSQL database and graph, vector, TSVector full-text, Fuzzy text, and hybrid retrieval over the same data. Use standard PostgreSQL connections for application reads, writes, migrations, and imports. Use the Polygres dashboard or API when you need connected-record exploration, semantic similarity, language-aware keyword search, typo-tolerant lookup, or graph-and-vector hybrid results.
+Polygres gives your team a managed PostgreSQL database with graph, pgvector,
 
-Polygres is designed for SaaS teams that want one operational data store instead of separate database, graph, vector, and text-search systems. PostgreSQL remains the source of truth for your application, including tsvector , pg_trgm , and pgvector -backed retrieval.
+TSVector full-text, Fuzzy text, hybrid retrieval, and pgContext AI Search over
+
+the same data. Use standard PostgreSQL connections for application reads,
+
+writes, migrations, and imports. Use the dashboard for interactive retrieval
+
+setup and testing, or use the CLI, API, and Python SDK for pgContext collection
+
+workflows and application search.
+
+Polygres is designed for SaaS teams that want one operational data store for
+
+application data and retrieval. PostgreSQL remains the source of truth,
+
+including tsvector , pg_trgm , pgvector , and native pgContext collections.
 
 Start here
 
@@ -22,6 +36,10 @@ Building a shared team workspace? Learn the Key concepts , starting with organiz
 Deciding how your team and application should connect? See Dashboard, API, and database access .
 
 Working from a terminal? Use the Polygres CLI for project setup, imports, migrations, and retrieval configuration.
+
+Building AI Search? Start with the pgContext CLI guide and
+
+pgContext API reference .
 
 Explore the overview
 
@@ -70,3 +88,5 @@ Changelog
 Routes
 
 Error codes
+
+pgContext API

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/quickstart
 title: Quickstart | Polygres
-source_hash: 4e693c7098390ead6b79deff2155ced590ae677027c52ae73bc385ef93cdd003
+source_hash: cb0186069b93d6667d5c704c9801bdedf6b3beb80d6f1d096c1b5061910787a8
 discovered_from: https://docs.evokoa.com/polygres
 
 # Quickstart | Polygres
@@ -15,7 +15,7 @@ An active Polygres account. Signup, organization setup, and any required email v
 
 Python 3.10 or newer.
 
-For the CLI path, pipx install "polygres-cli==0.1.2" . For the SDK query, install polygres-sdk==0.1.0 in your application virtual environment.
+For the CLI path, pipx install "polygres-cli==0.2.0" . For SDK calls, install polygres-sdk==0.2.0 in your application virtual environment.
 
 1. Create and select a project
 
@@ -103,7 +103,7 @@ export POLYGRES_RUNTIME_URL = "https://{project_id}.api.db.polygres.com/v1"
 
 In your application virtual environment:
 
-pip install "polygres-sdk==0.1.0"
+pip install "polygres-sdk==0.2.0"
 
 import os
 
@@ -123,4 +123,12 @@ for result in page.results:
 
 print (result.id, result.score, result.properties)
 
-You now have a project, selected project context, schema and data, ready text retrieval, a Runtime API key and URL, and a first SDK query. For real vector search, populate the vector column with embeddings from the same model used for query embeddings.
+You now have a project, selected project context, schema and data, ready text
+
+retrieval, a Runtime API key and URL, and a first SDK query. For real vector
+
+search, create a pgContext collection and
+
+populate its vector column with embeddings from the same model used for query
+
+embeddings. New legacy pgvector configuration registration is retired.

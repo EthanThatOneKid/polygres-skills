@@ -1,17 +1,23 @@
 source: https://docs.evokoa.com/polygres/reference/troubleshooting
 title: Troubleshooting | Polygres
-source_hash: fc5c62137097d9713ef7eb030caab0ce3a5e3c6159831a7911dd0ffd17d4aa63
+source_hash: 282d3177c0469cbb203ff54773a3d10f5aa4d1d1878e0bcc6fd448dddcf6c9c5
 discovered_from: https://docs.evokoa.com/polygres
 
 # Troubleshooting | Polygres
 
 Troubleshooting
 
-Start with the symptom. Capture the request_id , exact route, project ID, and a
+Start with the symptom. Capture the request_id , exact route, project ID, and a timestamp with timezone before retrying. For gateway-proxied requests, also capture X-Request-ID and X-Polygres-Upstream-Request-ID . Do not include credentials or sensitive data in diagnostic logs.
 
-timestamp with timezone before retrying. Do not include credentials or sensitive data
+Scheduled maintenance
 
-in diagnostic logs.
+Symptom Check Action
+
+Writes return MAINTENANCE_READ_ONLY Read the dashboard banner or GET /v1/maintenance ; confirm the mode and phase. Pause writes and background mutations. Reads remain available. Resume only after maintenance returns to normal.
+
+API calls return MAINTENANCE_FULL or the dashboard shows its maintenance page Check maintenance status rather than project-specific readiness. Stop immediate retries. Wait for normal service, then reconnect and retry with the original idempotency safeguards.
+
+PostgreSQL is unavailable during full maintenance Confirm the active maintenance notice. Pause new database work, let connection pools back off, and reconnect after service is restored. Verify the outcome of any interrupted transaction before retrying it.
 
 Organization, invitation, and access issues
 
@@ -19,7 +25,7 @@ Symptom Check Action
 
 Organization page or API returns ORG_NOT_FOUND Call GET /me ; verify the expected organization and an active membership. The response also hides inactive or inaccessible organizations as not found. Sign in to the correct account. Ask an owner/admin to restore membership when appropriate.
 
-Members or invitations return ORG_PERMISSION_DENIED Current member-management routes require organization role owner or admin . Use an owner/admin session. Do not retry with a project API key.
+Members or invitations return ORG_PERMISSION_DENIED All active roles can list active members. Invitation listing and membership mutations require owner or admin . Use an owner/admin session for the restricted action. Do not retry with a project API key.
 
 Invitation says email mismatch Compare the signed-in email with the invited email. Sign out and accept with the invited account, or ask an owner/admin to issue a replacement invitation.
 
@@ -33,15 +39,15 @@ Invitation is expired or not found Confirm the link is the latest invitation and
 
 Invitation cannot be generated Look for DASHBOARD_PUBLIC_BASE_URL_INVALID or DASHBOARD_PUBLIC_BASE_URL_REQUIRED . Contact support; these are service-configuration errors.
 
-Access disappeared after previously working Check membership status, organization selection, account lifecycle state, and project organization. Restore an active membership or complete verification/approval/tier selection. Escalate if GET /me is inconsistent with the dashboard.
+Access disappeared after previously working Check membership status, organization selection, account lifecycle state, and project organization. Restore an active membership or complete verification or approval. Ask an administrator or support to resolve a missing tier assignment. Escalate if GET /me is inconsistent with the dashboard.
 
-API key works for retrieval but not setup routes Check for AUTH_MODE_NOT_ALLOWED . Use a dashboard session for account, organization, project mutation, SQL, imports, migrations, configuration, key lifecycle, and password reveal.
+API key works for retrieval but not a control-plane route Check for AUTH_MODE_NOT_ALLOWED . Use the project API key for Runtime retrieval and pgContext management. Use a dashboard session or CLI login for organizations, projects, SQL, imports, migrations, key lifecycle, and database credentials.
 
 Connection issues
 
 Symptom Check Action
 
-Hostname or connection URL fails Fetch current connection metadata from Connect or GET /connection-info on the project Runtime API; compare host, port, database, username, and sslmode=require . Check project status. Replace cached connection metadata. Escalate when both current direct and pooled hosts are unreachable for a ready project.
+Hostname or connection URL fails Fetch current connection metadata from Connect or GET /connection-info on the project Runtime API; compare host, port, database, username, and sslmode=verify-full . Check project status. Refresh cached connection metadata and confirm the trusted CA configuration. Escalate when both current direct and pooled hosts remain unavailable for a ready project.
 
 Password authentication fails Confirm the credential is the native project-owner password, not a dashboard token or Polygres API key. Reveal the current password through the dashboard and update the server-side secret. Never paste it into logs or support requests.
 
@@ -91,7 +97,7 @@ Job appears stuck Compare status , progress , and updated_at across refreshes. D
 
 Cancel returns IMPORT_NOT_CANCELLABLE Refresh the job; it may already be terminal or beyond a cancellable phase. Act on the current state. Do not expect a succeeded, failed, or cancelled job to resume.
 
-Import reports runtime configuration failure Look for IMPORT_RUNTIME_NOT_CONFIGURED or a staging service error. Retry once; contact support if it persists.
+Import reports a runtime configuration error Read the returned import error and current project status. Retry once, then contact support with the job and request IDs if the message remains.
 
 Migration issues
 
@@ -117,13 +123,13 @@ Symptom Check Action
 
 GRAPH_NOT_READY GET .../graph/status : build_status , needs_rebuild , and graph configuration invalid_reason . Build or rebuild until status is exactly ready . Correct failed configuration before retrying.
 
-VECTOR_CONFIGURATION_NOT_FOUND Requested config , list of configurations, and whether a default exists. Pass a valid name or create/select the intended default.
+VECTOR_CONFIGURATION_NOT_FOUND Requested config , persisted configurations, and whether an effective default exists. Pass an existing persisted Ready registration. For a new source, create a pgContext collection; retired routes cannot register or re-enable a physical-only pgvector index.
 
-VECTOR_NOT_READY Selected config’s index_kind , index_status , and index_error . Reindex HNSW and wait for ready . Exact-scan index_kind: none does not require HNSW readiness, although aggregate vector readiness stays false.
+VECTOR_NOT_READY Selected config’s index_kind , index_status , verification differences, and index_error . For HNSW, reindex and wait for the exact physical index to become ready . An existing exact-scan index_kind: none registration can be effectively Ready without HNSW.
 
 TEXT_CONFIGURATION_NOT_READY Text configuration’s search_kind , index_status , and index_error . Correct/rebuild until status is ready . Text status is not returned by the retrieval-readiness route.
 
-Hybrid is not ready Read both graph readiness and the default vector readiness. Make graph ready and set a default vector config whose index status is ready .
+Hybrid is not ready Read graph readiness, ready_config_count , default_config , and selection_required . Make graph ready and ensure at least one persisted Legacy registration is effectively Ready. If selection is required, pass an exact configuration.
 
 Readiness says false after a change Confirm the request used the intended project and refresh the underlying config/status. Wait for active build/index work; escalate if underlying states are ready but the computed flag remains false.
 
@@ -131,7 +137,7 @@ Vector and text configuration issues
 
 Symptom Check Action
 
-Vector create/update fails validation Verify table, row ID, fixed-dimension vector(n) column, dimensions 1..2000 , metric, metadata columns, filter columns, and limits. Match the saved dimensions to the column and keep default_limit <= max_limit .
+Existing Legacy vector update fails validation Verify the persisted registration, table, row ID, fixed-dimension vector(n) column, dimensions 1..2000 , metric, metadata columns, filter columns, and limits. Correct the existing registration. Use pgContext for new vector setup; creation and re-enabling through Legacy routes are retired.
 
 Vector query rejects embedding Compare embedding length with configuration dimensions ; verify all values are finite. Generate the correct fixed-length embedding. Send either max_distance or min_similarity , not both.
 
@@ -144,6 +150,56 @@ Text configuration is invalid A tsvector config must use tsvector_column only; f
 Text query is empty Query trims to no characters or exceeds the supported shape. Send a non-empty query of at most 2,000 characters.
 
 Filter is rejected Verify the filter column is configured and values are scalar exact matches. Remove nested arrays/objects and use valid SQL identifier keys.
+
+pgContext AI Search
+
+When creation from an existing pgvector column is blocked, separate the source
+
+problem from general pgContext capability readiness:
+
+Evidence Meaning Next check
+
+CONTEXT_VECTOR_NULLABLE At least one stored vector is NULL ; the catalog’s nullable flag alone is not the cause. Count rows where the selected column IS NULL , populate or remove them, then rerun preflight.
+
+CONTEXT_VECTOR_DIMENSION_INVALID The request and the fixed-dimension pgvector column disagree. Compare the requested dimensions with the discovered column dimensions.
+
+CONTEXT_INDEX_CONFLICT A dependent index backs a database constraint and cannot be dropped during conversion. Inspect constraints and their indexes; do not remove one without explicit approval and an application-safe migration.
+
+Creation failed after explicit legacy cleanup A separately approved deletion removed the saved Legacy registration before the durable create failed. Neither dashboard creation nor direct creation performs that cleanup automatically. Confirm the original column is still public.vector(n) , then correct the blocker and rerun discovery and preflight before creating again.
+
+Ordinary collection creation converts the selected pgvector column in place.
+
+Do not diagnose it as a same-column bridge or expect the old pgvector index to
+
+remain.
+
+Symptom Check Action
+
+Collection setup is blocked Read Context capabilities and run preflight for the exact source, vector, text, result, and filter plan. Follow the capability or preflight guidance, then submit the reviewed collection definition.
+
+Collection is preparing or needs review Read collection status, verification, and diagnostics in that order. Wait for active work, then use the ordered verification checks to select the next action.
+
+A named vector is unavailable Read the collection’s vectors , default_vector_name , and the requested vector_name . Use an exact registered vector name, or omit it intentionally to use the collection default.
+
+One vector is not Ready Inspect that vector’s durable add operation and per-vector index status. Correct or retry the selected vector workflow without assuming a Ready sibling has the same failure.
+
+Retrieval mode is unavailable Check the capability matching the selected method, such as dense_search , text_hybrid , graph_first , or joint . Choose an available mode or complete the capability guidance shown by the Runtime.
+
+Results are missing expected source rows Compare the committed source-row changes with point status and the application’s synchronization record. Upsert known inserted or restored keys, delete known removed keys, or reconcile after bulk and uncertain changes.
+
+Point listings are unavailable Check the point_scroll capability, then run collection verification and diagnostics. Correct the reported source-table or permission issue and verify again.
+
+A point page is empty but has_more is true Row-level security may have hidden every row in that page. Continue with next_cursor until has_more is false.
+
+Reconciliation reports orphan_cleanup_skipped_reason: source_rls_enabled Row-level security prevents Polygres from knowing whether a hidden row was deleted. Explicitly delete keys for rows you know were removed. Keep row-level security enabled.
+
+Durable operation is active Read the operation status, stage, committed count, attempts, and retry_until . Wait with the operation UUID, or use an eligible cancel or retry action with a persisted idempotency key.
+
+Graph composition needs alignment Check graph readiness, the collection source table and source-key column, start entities, and relationship types. Use verified graph entity IDs and align the graph table identity with the Context source identity.
+
+Recall check is below its target Inspect the selected vector’s index status, exact and approximate result counts, measured recall, and request filters. Review representative embeddings and filters, then reindex or tune that vector workflow and measure again.
+
+The pgContext API reference lists every capability, collection, point, operation, aggregate, and retrieval method. Preserve the collection UUID, operation UUID, and request ID throughout diagnosis.
 
 Rate limits
 

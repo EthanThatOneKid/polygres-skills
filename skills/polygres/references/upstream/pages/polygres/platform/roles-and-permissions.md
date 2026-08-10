@@ -1,27 +1,27 @@
 source: https://docs.evokoa.com/polygres/platform/roles-and-permissions
 title: Roles and permissions | Polygres
-source_hash: 158dd642ce98c21f7c0976b96ec2db723b142cf94cfda8c0f5843ee9e8770db4
+source_hash: f675abb19d745eec1bd91638a2d202567208ad0631f882d8358c826965096e2e
 discovered_from: https://docs.evokoa.com/polygres
 
 # Roles and permissions | Polygres
 
 Roles and permissions
 
-Polygres organization roles are fixed: owner , admin , developer , and viewer .
+Polygres provides four fixed organization roles: owner , admin , developer ,
 
-The current implementation does not support custom roles, editable permission sets,
+and viewer . Each role carries a consistent permission set across the
 
-or per-member overrides.
+dashboard and API.
 
 An organization admin is not the same as a Polygres platform operator. Platform
 
 operator access is controlled separately by the user profile’s operator type.
 
-Behavior confirmed by the current routes
+Organization member management
 
 Behavior Owner Admin Developer Viewer
 
-List organization members Yes Yes No No
+List organization members Yes Yes Yes Yes
 
 List pending organization invitations Yes Yes No No
 
@@ -49,19 +49,21 @@ Direct member-add and role-update requests accept all four role values.
 
 A caller cannot invite their own email or remove their own membership.
 
-Member-management routes require an active membership. Missing or inactive
+Listing active members requires an active organization membership. Missing
 
-membership is returned as ORG_NOT_FOUND ; developer and viewer access returns
+or inactive membership is returned as ORG_NOT_FOUND .
+
+Member and invitation mutations require an owner or admin. Developer and
+
+viewer attempts to use those administrative routes return
 
 ORG_PERMISSION_DENIED .
 
 Project permissions
 
-Project routes do not authorize by comparing a role name in the route handler. They
+For each project action, Polygres resolves the active organization membership
 
-request a named permission from the backend after resolving the project’s
-
-organization and the user’s active membership.
+and checks the corresponding named permission.
 
 Permission used by current routes Representative operations
 
@@ -71,7 +73,9 @@ project:read Read project metadata/status, connection metadata, API-key metadata
 
 runtime:read Read project runtime version and visible update paths.
 
-project:update Rename a project, reveal its database password, manage API keys, and run SQL in the current route implementation.
+project:update Rename a project, reveal its database password, and manage API keys.
+
+project:sql:execute Run SQL through the project SQL surface.
 
 project:delete Delete a project.
 
@@ -83,11 +87,15 @@ graph:manage Save, build, maintain, or change graph configuration/system setting
 
 vector:read Discover vectors and read vector configuration metadata.
 
-vector:manage Create, update, delete, or index vector configurations; current dashboard-session vector and hybrid query routes also request this permission.
+vector:manage Update, delete, or index previously registered vector configurations; current dashboard-session vector and hybrid query routes also request this permission. New vector setup uses context:manage .
 
 text:read Read text configuration metadata.
 
 text:manage Create, update, or delete text configurations.
+
+context:read Read Context capabilities, sources, collections, status, diagnostics, points, operations, aggregates, and retrieval results.
+
+context:manage Create and update collections, filters, points, indexes, reconciliation jobs, and eligible operation actions.
 
 imports:read List and inspect import jobs.
 
@@ -97,13 +105,21 @@ migrations:read List and inspect migrations.
 
 migrations:manage Create and apply migrations.
 
-The supplied current-implementation references do not expose a complete
+Role permission summary
 
-role-to-named-permission matrix for project actions. Do not assume that a role has an
+Owners and admins receive every organization and project permission.
 
-action solely from its label. Use the controls shown in the dashboard or the API’s
+Developers receive day-to-day project permissions, including SQL, imports,
 
-permission result as the effective behavior for that organization and deployment.
+migrations, graph, vector, text, pgContext, and runtime access.
+
+Viewers receive read access to projects, imports, migrations, graph, vector,
+
+text, pgContext, and runtime status.
+
+The dashboard uses the backend’s effective permissions for the active member
+
+and project.
 
 Diagnosing a permission denial
 
@@ -111,7 +127,7 @@ Call GET /me and verify the expected organization and an active membership.
 
 Confirm that the project belongs to that organization.
 
-For member or invitation routes, use an owner or admin session.
+Any active member can list active organization members. For pending invitations or membership changes, use an owner or admin session.
 
 For a project route, record the route, project ID, returned error code, and request ID.
 

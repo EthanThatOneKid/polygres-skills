@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/key-concepts
 title: Key concepts | Polygres
-source_hash: b44f3004dc98fecff634710c867761d14ce0da63aa2e67ddfb83b19edd1409d4
+source_hash: 2d2ed5c1cee2abf07d1621bb05fb65ec5fe5b14eb90fea56fbebf08d15b85cfe
 discovered_from: https://docs.evokoa.com/polygres
 
 # Key concepts | Polygres
@@ -71,7 +71,7 @@ Dashboard session Manage the organization and projects, use data tools, configur
 
 Native PostgreSQL password Connect an application or database tool through the pooled or direct PostgreSQL URL.
 
-Polygres API key Call graph, vector, text, and hybrid retrieval from trusted application code. Keys look like poly_live_<...> and the raw value is shown once.
+Polygres API key Call graph, vector, text, hybrid, and pgContext retrieval, plus explicit pgContext Runtime resource management, from trusted application code. Keys look like poly_live_<...> and the raw value is shown once.
 
 A dashboard session is not an application API key. A PostgreSQL password does not authenticate retrieval calls. A Polygres API key cannot reveal the database password or perform dashboard-only setup work.
 
@@ -83,11 +83,39 @@ Your application tables remain the authoritative data. Polygres retrieval is con
 
 Graph configuration selects records and relationships that can be traversed.
 
-Vector configuration points to an existing fixed-dimension vector(n) embedding column.
+A Legacy vector configuration is a persisted registration over an existing
+
+fixed-dimension vector(n) embedding column. It is usable only while it is
+
+effectively Ready. HNSW requires its exact physical index to be Ready;
+
+index_kind: none can be Ready for exact-scan retrieval without HNSW. A
+
+physical-only pgvector index is never an implicit registration. New
+
+registration and re-enabling are retired.
 
 Text configuration points to a tsvector column for TSVector full-text search or a plain text column for Fuzzy pg_trgm matching.
 
-Hybrid retrieval combines ready graph and vector results.
+Legacy Hybrid retrieval combines a ready graph build with an effectively
+
+Ready persisted Legacy vector registration.
+
+A pgContext collection binds a source table, source-key column, native
+
+pgcontext.vector(n) columns, optional text and filter fields, and its
+
+managed point mappings. It starts with one default vector and can add more
+
+named vectors over the same source rows. Creating a collection from a
+
+compatible public.vector(n) source converts that column in place to the
+
+native pgContext type. The project default collection is independent of each
+
+collection’s default vector. Ranked retrieval uses an exact vector_name
+
+when supplied and otherwise uses that collection’s default vector.
 
 Polygres does not generate embeddings and does not require you to move the project into a separate vector or text-search database.
 
@@ -99,21 +127,49 @@ Readiness is mode-specific:
 
 Graph queries require a ready graph build.
 
-Vector queries require a usable vector configuration and, when selected, a ready index.
+Legacy vector queries require an effectively Ready persisted registration.
+
+HNSW requires a Ready matching index; exact-scan index_kind: none does not.
 
 Text search requires a ready saved TSVector or Fuzzy configuration.
 
-Hybrid queries require the graph and vector inputs for that query to be ready.
+Legacy Hybrid queries require both their graph and Legacy vector inputs to be
 
-The shared project readiness view covers graph, vector, and hybrid. Text search reports status through its own configuration.
+ready.
+
+pgContext uses its own capability, collection status, verification,
+
+diagnostics, and durable-operation views.
+
+The shared project readiness view covers graph, Legacy vector, and Legacy
+
+Hybrid. Text search reports status through its own configuration. pgContext
+
+readiness is collection-specific and begins with Context capabilities and
+
+preflight.
 
 For more details, see Configure Retrieval .
 
 Dashboard and application queries
 
-Use the dashboard query workbench ( /{organization}/{projectId}/workspace/query ) to test retrieval with your signed-in session.
+Use the dashboard Query Helper ( /{organization}/{projectId}/workspace/query )
 
-After the results look right, create a project API key and move the same graph, vector, text, or hybrid query into backend application code. The Database Access & Connections page explains the split.
+to test graph, Legacy vector, and Legacy Hybrid retrieval with your signed-in
+
+session. It does not execute text or pgContext queries.
+
+After the results look right, create a project API key and move the same graph,
+
+Legacy vector, or Legacy Hybrid query into backend application code. Exercise
+
+text retrieval through the API or SDK. For pgContext, configure collections in
+
+the dashboard or preflight them through the CLI, then query them through the
+
+CLI, public API, or SDK. The Database Access &
+
+Connections page explains the split.
 
 See also Querying from Dashboard and Integration Patterns .
 

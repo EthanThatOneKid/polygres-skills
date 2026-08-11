@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/what-is-polygres
 title: What is Polygres? | Polygres
-source_hash: 0acfe89e041a8171fa095aaa159966d01574b2956bee6cfda7e4012dbf24c534
+source_hash: 32f0299495371f0d83a7e34b2af72f549f812c885926fb23edf5835534d100a8
 discovered_from: https://docs.evokoa.com/polygres
 
 # What is Polygres? | Polygres

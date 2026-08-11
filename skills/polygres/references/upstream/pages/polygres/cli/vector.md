@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/vector
 title: CLI vector retrieval | Polygres
-source_hash: 995b004ff7b27265d562ba7a6c5ee7a68a60c5801b8aef6068eb7e7a583e02f0
+source_hash: 13d9192b0d80228acdd1a9496f1ad484026f06eef2b2893a3eb88fa77ce6d79e
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI vector retrieval | Polygres
@@ -61,21 +61,19 @@ polygres context collections create support_docs \
 
 --dimensions 768
 
-If a persisted legacy configuration still owns the selected column, remove
+If a persisted legacy configuration still owns the selected column, CLI and
 
-that registration before using ordinary Context collection creation. Neither
+API callers must inspect and delete the exact legacy configuration explicitly
 
-opening the dashboard collection form nor creating a collection automatically
+before using ordinary Context collection creation. The dashboard offers
 
-deletes a legacy registration. The dashboard currently offers only native
+compatible pgvector columns in its Existing vector column source picker.
 
-pgContext columns in its Existing vector column source picker, so use the
+When a Legacy registration owns the selected column, the dashboard asks for
 
-CLI or API for an explicitly reviewed in-place pgvector conversion. Inspect
+confirmation, creates the Context collection or additional vector, and then
 
-and delete the exact legacy configuration only after explicit approval, then
-
-create the Context collection from the same table and column.
+deletes the registration automatically.
 
 polygres context init is only a guided way to choose one eligible persisted
 

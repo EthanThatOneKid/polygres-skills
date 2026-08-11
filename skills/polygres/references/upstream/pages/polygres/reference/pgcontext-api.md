@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/pgcontext-api
 title: pgContext API | Polygres
-source_hash: 66b7b7071c61760b0454857d37d30ec24eefc8b04c3db5113b5b109782fef27a
+source_hash: 5886c9ac0883c7c69e2f0ee8acec173b7098d187d54cc709bce23ad34e4ca8d5
 discovered_from: https://docs.evokoa.com/polygres
 
 # pgContext API | Polygres
@@ -335,7 +335,7 @@ GET /collections/{collection_id}/diagnostics read Return sanitized checks and re
 
 PATCH /collections/{collection_id} manage Update logical configuration or set the default collection.
 
-DELETE /collections/{collection_id} manage Delete the collection and its managed resources after UUID confirmation. A new_table source is also deleted.
+DELETE /collections/{collection_id} manage Delete the collection and its managed resources after UUID confirmation. A new_table source is deleted only when no other collection references it.
 
 POST /collections/{collection_id}/reindex manage Rebuild the current default vector’s Polygres-owned HNSW index.
 
@@ -347,7 +347,7 @@ existing registers an existing table and native pgcontext.vector(n) NOT NULL col
 
 add_column adds a vector column to an empty existing table. Polygres does not generate embeddings.
 
-new_table creates a managed source table. Deleting the collection also deletes that table and its rows. Collections created with existing or add_column preserve their source tables.
+new_table creates a managed source table. Deleting the collection also deletes that table and its rows when no other collection references it. A shared source table is preserved and becomes user-managed. Collections created with existing or add_column preserve their source tables.
 
 Collection creation always defines one initial vector, which becomes the
 

@@ -1,11 +1,35 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 8b274c771283794ce11cd2a0553769b3b174919393b8b66503580659a15d6d91
+source_hash: 3852987a47c52dff8138384a59e90fb7f0768525580a7c75084636b84091d289
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
+
+2026-08-10
+
+A smoother pgContext experience
+
+Creating collections from existing vector columns is now more reliable. Your selected setup option stays in place while Polygres checks the project.
+
+Deleting a collection no longer removes its source table when another collection still uses it.
+
+Graph-aware search now works correctly with mixed-case schema and table names.
+
+When an older vector workflow needs to be migrated, the CLI now provides clearer upgrade instructions and the command to run.
+
+Developer tools
+
+Polygres SDK 0.2.0 now works correctly on Python 3.10.
+
+Dashboard connection guides now help you confirm that your CLI and SDK are up to date before starting an integration.
+
+Earlier client versions are being retired. Upgrade to Polygres CLI 0.2.1 and SDK 0.2.0 to avoid interrupted API access.
+
+Dashboard improvements
+
+Fixed an issue that could interrupt account setup after repeated sign-ins.
 
 2026-08-08
 
@@ -53,11 +77,13 @@ The dashboard labels retired pgvector registrations as Legacy and
 
 explains that they should be replaced with a pgContext collection.
 
-The current dashboard only offers native pgcontext.vector(n) columns in its
+The dashboard offers eligible native pgcontext.vector(n) and compatible
 
-Existing vector column picker. It does not delete a Legacy registration
+pgvector.vector(n) columns in its Existing vector column picker. After
 
-automatically.
+explicit confirmation, it creates the collection or additional vector and
+
+then deletes the conflicting Legacy registration automatically.
 
 The CLI, API, and Python SDK can submit ordinary collection creation for a
 
@@ -73,7 +99,7 @@ indexes block unsafe conversion with specific Context errors.
 
 Developer package versions
 
-Polygres CLI 0.2.0 adds the pgContext, generic API, and notice command surfaces.
+Polygres CLI 0.2.1 adds the pgContext, generic API, and notice command surfaces.
 
 Polygres SDK 0.2.0 adds the project.context namespace and version notices.
 

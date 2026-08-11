@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/dashboard-api-database-access
 title: Dashboard, API, and database access | Polygres
-source_hash: e741afd6be8d79bc2a1f182c9635310e643c71c7cc055c76a037d22202e51fc6
+source_hash: 4c294034723adaba424670d1627f4a4c88ed40251134a7a190f6a75047b8b3a1
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard, API, and database access | Polygres
@@ -71,7 +71,7 @@ The Vector page has separate pgContext collections and Legacy tabs. Each pgConte
 
 Every collection has one default vector. That choice is independent of the project’s default collection: the project default chooses a collection when no collection is named, while the collection default chooses a vector when no exact vector_name is supplied. Ranked retrieval can instead select an exact vector by name.
 
-In collection setup, Existing vector column lists only native pgcontext.vector(n) columns. It does not adopt an ordinary pgvector column through that source mode. The Legacy tab shows persisted Legacy registrations that are effectively Ready ; a physical-only pgvector index is not implicitly registered or usable by Legacy retrieval.
+In collection setup, Existing vector column lists eligible native pgcontext.vector(n) and compatible pgvector.vector(n) columns. Creating from a compatible pgvector column converts it in place. If that column has a persisted Legacy registration, the dashboard asks for confirmation and deletes the registration after the collection or additional vector is created successfully. The Legacy tab shows persisted Legacy registrations that are effectively Ready ; a physical-only pgvector index is not implicitly registered or usable by Legacy retrieval.
 
 Use PostgreSQL for application data
 

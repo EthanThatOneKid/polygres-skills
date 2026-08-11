@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/context
 title: CLI AI Search with pgContext | Polygres
-source_hash: 67e88ee7b1ef994364587c690d7e7a08848d4673d2174b90a64ac57282311bd3
+source_hash: 691bc2954035a7fb9331715c7bd7ec2317e5be0bec509beefe849594e3e43311
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI AI Search with pgContext | Polygres
@@ -265,9 +265,13 @@ and rows. Deleting an owned new_table collection permanently deletes the
 
 table and its rows after the Runtime verifies the stored table identity and
 
-exclusive ownership. Interactive use accepts y or yes ; non-interactive and
+confirms that no other collection references it. When another collection uses
 
-JSON use require --yes .
+the same table, deletion removes only the requested collection and preserves
+
+the table as user-managed. Interactive use accepts y or yes ;
+
+non-interactive and JSON use require --yes .
 
 Filter registration
 
@@ -503,7 +507,7 @@ Context uses the standard CLI codes: 0 success, 1 general failure, 2 local or AP
 
 Cleaning up synthetic resources
 
-Delete a synthetic collection with its exact UUID and --yes . The server deletion plan identifies the resources that will be removed. Deleting a new_table collection also deletes its managed table and data. existing and add_column sources are preserved. If Polygres cannot confirm ownership of a managed table, deletion stops with CONTEXT_SOURCE_OWNERSHIP_MISMATCH .
+Delete a synthetic collection with its exact UUID and --yes . The server deletion plan identifies the resources that will be removed. Deleting a new_table collection also deletes its managed table and data unless another collection references that table, in which case the table is preserved as user-managed. existing and add_column sources are preserved. If Polygres cannot confirm the stored identity of a managed table, deletion stops with CONTEXT_SOURCE_OWNERSHIP_MISMATCH .
 
 Complete command map
 

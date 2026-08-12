@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/routes
 title: Retrieval routes | Polygres
-source_hash: 2f19599958d7f9a96da6d01b17973732caa8ef77d80bf4c23a75d853343eb5b1
+source_hash: 0066509a99845b45bf48c3970fee7f944620755001afb872a3b6be2929cd52a1
 discovered_from: https://docs.evokoa.com/polygres
 
 # Retrieval routes | Polygres
@@ -67,11 +67,29 @@ POST /vector/similar-to Retrieval Search from an existing row ID.
 
 Text
 
+Text configuration and retrieval use the same route suffixes through the
+
+Gateway and project Runtime surfaces. Gateway configuration paths begin with
+
+/projects/{project_id}/text ; Runtime paths begin with /text .
+
 Method Route Auth Purpose
+
+GET , POST /text/configurations Dashboard or Retrieval List or create saved text configurations.
+
+GET , PATCH , DELETE /text/configurations/{config_id} Dashboard or Retrieval Read, update, or delete one configuration.
+
+GET /text/configurations/{config_id}/diagnostics Dashboard or Retrieval Inspect physical index health.
+
+POST /text/configurations/{config_id}/reindex Dashboard or Retrieval Rebuild and verify the text index.
 
 POST /text/tsvector Retrieval Search with a saved tsvector configuration.
 
 POST /text/fuzzy Retrieval Search with a saved fuzzy configuration.
+
+See the Text Search API reference for both base
+
+URLs, setup payloads, backwards compatibility, and query examples.
 
 Hybrid
 
@@ -83,9 +101,7 @@ POST /hybrid/vector-first Retrieval Produce vector candidates, then evaluate gra
 
 POST /hybrid/joint Retrieval Combine graph and vector rankings with Reciprocal Rank Fusion.
 
-These are the pgvector-backed hybrid routes. The collection-based pgContext surface uses separate /context/hybrid/* routes. Context rank-fusion combines independent pgContext and pgGraph rankings, while Context joint couples candidate generation, graph expansion, combined-pool pgContext rescoring, and one final weighted reciprocal-rank fusion. These Context routes are distinct from the pgvector-backed /hybrid/joint route above.
-
-Legacy /hybrid/joint does not delegate through a pgContext compatibility binding. If the selected legacy vector configuration has an active pgContext binding, the route returns USE_CONTEXT_HYBRID_JOINT ; call /context/hybrid/joint with the bound Context collection instead.
+These legacy hybrid routes use the retained pgvector plan when no pgContext compatibility binding is active. With an active binding, vector retrieval delegates through pgContext while preserving the legacy request and response contract. The collection-based pgContext surface also exposes separate /context/hybrid/* routes. Context rank-fusion combines independent pgContext and pgGraph rankings, while Context joint couples candidate generation, graph expansion, combined-pool pgContext rescoring, and one final weighted reciprocal-rank fusion.
 
 pgContext AI Search
 

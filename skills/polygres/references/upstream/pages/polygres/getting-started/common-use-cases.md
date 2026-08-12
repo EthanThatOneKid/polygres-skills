@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/common-use-cases
 title: Common use cases | Polygres
-source_hash: 6a6ffeddeed51fff625e15d83af5fe32286e4fe3f318b4bdc79a618dd4dbbc0d
+source_hash: b9d543d59195f6f614a6901654a51d8e1a8379c2e671701e2a4f1f718e2603ef
 discovered_from: https://docs.evokoa.com/polygres
 
 # Common use cases | Polygres
@@ -63,9 +63,13 @@ product_areas (id, name , slug)
 
 ALTER TABLE tickets ADD COLUMN body_embedding vector( 1536 );
 
-ALTER TABLE tickets ADD COLUMN body_tsv tsvector
+Create the TSVector configuration from tickets.body in the dashboard, with
 
-GENERATED ALWAYS AS (to_tsvector( 'english' , body)) STORED;
+the CLI, or through POST /text/configurations . Polygres can create the stored
+
+generated column and its GIN index in the same setup operation, so this feature
+
+does not require a separate migration.
 
 TSVector search finds exact error messages and policy terms; Fuzzy search catches misspelled ticket titles and labels.
 
@@ -75,7 +79,7 @@ Graph retrieval follows the customer, account, product, incident, and conversati
 
 pgContext graph-composed, rank-fusion, or Joint retrieval combines semantic results with relevant connected context.
 
-Start in the dashboard with Text search setup ( /{organization}/{projectId}/workspace/text-search ), AI Context (Vector) setup ( /{organization}/{projectId}/workspace/vector ), and Graph setup ( /{organization}/{projectId}/workspace/graph ). The Query Helper ( /{organization}/{projectId}/workspace/query ) can validate graph and existing Legacy Vector or Legacy Hybrid queries, but it does not execute text or pgContext queries. Verify text and pgContext setup, then exercise the intended method through the public API or Python SDK, or use the CLI for pgContext.
+Start in the dashboard with Text search setup ( /{organization}/{projectId}/workspace/text-search ), AI Context (Vector) setup ( /{organization}/{projectId}/workspace/vector ), and Graph setup ( /{organization}/{projectId}/workspace/graph ). Verify retrieval readiness there, then exercise the intended method through the public API or Python SDK, or use the CLI for pgContext.
 
 This pattern is the core Polygres value proposition in one workflow:
 
@@ -195,9 +199,7 @@ Choose pgContext when the feature benefits from a managed collection with
 
 semantic, lexical, filter, graph, or Joint retrieval options.
 
-Test graph, text, and existing Legacy Vector or Legacy Hybrid features in the
-
-dashboard Query Helper. For pgContext, verify the collection and exercise the
+Verify graph, text, and vector readiness in the dashboard, then exercise the
 
 intended method through the CLI, API, or SDK. Review result quality with domain
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/what-is-polygres
 title: What is Polygres? | Polygres
-source_hash: 32f0299495371f0d83a7e34b2af72f549f812c885926fb23edf5835534d100a8
+source_hash: 8fb55e504334f253ef904a3775a8e6f9c2640d6e06188b64a8772dbffdd3bd71
 discovered_from: https://docs.evokoa.com/polygres
 
 # What is Polygres? | Polygres
@@ -93,7 +93,7 @@ Data and operations teams exploring connected records without moving data into a
 
 Developers building retrieval-backed application features through Python or HTTP after product setup is complete.
 
-The dashboard is the starting point for SaaS customers. It provides organization and member management, project creation, imports, table browsing, SQL, migrations, connection details, and retrieval setup. Its Query Helper covers graph, Legacy vector, and Legacy Hybrid, but does not execute text or pgContext queries. Developers use standard PostgreSQL clients for application data and a Polygres API key for retrieval from backend code.
+The dashboard is the starting point for SaaS customers. It provides organization and member management, project creation, imports, table browsing, SQL, migrations, connection details, and retrieval setup. Developers use standard PostgreSQL clients for application data and a Polygres API key for retrieval from backend code.
 
 A concrete example
 
@@ -119,9 +119,11 @@ The same support product might also add:
 
 ALTER TABLE tickets ADD COLUMN body_embedding vector( 1536 );
 
-ALTER TABLE tickets ADD COLUMN body_tsv tsvector
+During text-search setup, Polygres can create the stored generated TSVector
 
-GENERATED ALWAYS AS (to_tsvector( 'english' , body)) STORED;
+column and its GIN index through the existing configuration endpoint. Teams
+
+that already maintain a compatible TSVector column can register it instead.
 
 With that schema in place, the application continues writing normal support data to PostgreSQL while Polygres reads from the same rows for semantic similarity, full-text search, and connected-record traversal.
 
@@ -149,9 +151,9 @@ retrieval. Start at the organization home ( /{organization} ), create a project
 
 from New project ( /{organization}/new ), and open the project overview
 
-( /{organization}/{projectId} ). Query pgContext collections through the CLI,
+( /{organization}/{projectId} ). Query retrieval features through the CLI,
 
-API, or Python SDK rather than the dashboard Query Helper.
+API, or Python SDK.
 
 Use PostgreSQL connection URLs for application reads and writes, database clients, schema tools, imports, and migrations. Open connection details ( /{organization}/{projectId}/connect ) for the project.
 

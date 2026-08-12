@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/retrieval-integration-patterns
 title: Retrieval integration patterns | Polygres
-source_hash: 04ecb45ea0dd9eedec686f4fcec19a1cfb7a2414df63a3bbb71b3582912775f0
+source_hash: a6fb62ec6ea95466f6514ec3014790c0d090f0688c0110ddf38cd11e067fea0f
 discovered_from: https://docs.evokoa.com/polygres
 
 # Retrieval integration patterns | Polygres
@@ -29,15 +29,13 @@ Search one collection with semantic, lexical, filter, graph, or Joint evidence c
 
 Generate or refresh embeddings in bulk Direct PostgreSQL background job
 
-All examples assume the project and named resources are ready. Test graph,
+All examples assume the project and named resources are ready. Confirm retrieval
 
-vector, text, and Hybrid shapes in Query from the
+readiness in the dashboard. For pgContext, verify the collection with the CLI
 
-dashboard . For pgContext, verify the collection
+workflow , then exercise the intended method through the CLI, API,
 
-with the CLI workflow , then exercise the intended method through
-
-the CLI, API, or SDK.
+or SDK.
 
 Semantic search
 
@@ -133,7 +131,15 @@ print (result.id, result.score, result.properties.get( "title" ))
 
 Full-text search is often a better fit than vector search for exact terminology, identifiers embedded in prose, product names, policy terms, and queries where tokenization and stemming are useful.
 
-The saved configuration controls the tsvector column and PostgreSQL language. The request supplies only the query, configuration, exact-match filters, limit, and optional cursor.
+The saved configuration controls the tsvector column and PostgreSQL language.
+
+The request supplies only the query, configuration, exact-match filters, limit,
+
+and optional cursor. The Python SDK is query-only for this feature. Create,
+
+update, diagnose, and rebuild text configurations through the dashboard, CLI,
+
+or Text Search API .
 
 Fuzzy lookup
 
@@ -157,7 +163,13 @@ print (result.id, result.similarity, result.properties.get( "name" ))
 
 Common uses include customer names, titles, tags, city names, product labels, and human-entered codes. The saved configuration controls the similarity threshold, so application code should rank by result.score and treat result.similarity as supporting detail.
 
-A practical lookup flow can combine exact application matching first, then fuzzy retrieval only when the exact lookup returns no result.
+A practical lookup flow can combine exact application matching first, then
+
+fuzzy retrieval only when the exact lookup returns no result. A filter value of
+
+None matches SQL NULL . For compound row keys, read result.key ; result.id
+
+remains available for existing single-key integrations.
 
 Related-record lookup
 

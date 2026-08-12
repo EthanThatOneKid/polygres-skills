@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/configure-retrieval
 title: Dashboard retrieval setup | Polygres
-source_hash: 42d271d52bc30a5c0dffedaa4bac282c8126475a2ae4ae1d1962f13d27ed6761
+source_hash: 0770f5c0ac08f2412043318f922fa8c1dd7f697255ff8bab22a3848e9fe817ae
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard retrieval setup | Polygres
@@ -257,7 +257,15 @@ Select the proposals you actually want to search.
 
 Select Set Up n Columns .
 
-For a selected plain-text column, Polygres creates a generated <column>_tsv column using the English parser and registers the text configuration. Auto Scan excludes a candidate when any checked value exceeds 1 MB.
+For each selected plain-text column, the dashboard sends one request to the
+
+existing text configuration endpoint. Polygres creates a generated
+
+<column>_tsv column using the English parser, builds and verifies its GIN
+
+index, and saves the configuration as one operation. It does not create a
+
+migration. Auto Scan excludes a candidate when any checked value exceeds 1 MB.
 
 Set up TSVector manually
 
@@ -273,7 +281,15 @@ Choose English , Simple , Spanish , or French as the Language Parser .
 
 Select Create Configuration .
 
-When the selected source is ordinary text, the dashboard creates a generated tsvector column. When it is already a tsvector , Polygres registers that column directly.
+When the selected source is ordinary text, the dashboard creates a stored
+
+generated tsvector column through POST /text/configurations . PostgreSQL
+
+keeps that generated value current when the source text changes. When the
+
+selected column is already a tsvector , Polygres registers it directly without
+
+changing the table.
 
 Set up Fuzzy manually
 
@@ -287,9 +303,31 @@ Select Create Configuration .
 
 Maintain text configurations
 
-The configuration list shows Config Name , Kind , Table , Column , Row ID , language or threshold details, and Status . You can change the table, eligible column, row ID, language, or threshold from the list, or delete a configuration that is no longer needed.
+The configuration list shows Config Name , Kind , Table , Column ,
 
-A status notice can show Text Search Inactive , Text Search Index Building , or Text Search Index Failed . For a failure, review the selected column and row ID, then save the corrected configuration again to retry the index build.
+Row ID , language or threshold details, and Status . Manual setup also
+
+accepts metadata columns, filter columns, default and maximum result limits,
+
+and compound row keys. You can edit an existing configuration, inspect index
+
+diagnostics, rebuild its index, test a query in Search Preview, or delete a
+
+configuration that is no longer needed.
+
+A status notice can show Text Search Inactive , Text Search Index
+
+Building , or Text Search Index Failed . For a failure, open diagnostics,
+
+correct the selected columns or row key, then use Rebuild . Search Preview
+
+calls /text/tsvector or /text/fuzzy for the selected ready configuration and
+
+accepts JSON exact-match filters.
+
+Deleting a configuration removes its managed index. It does not drop a stored
+
+generated TSVector column from the source table.
 
 List existing TSVector and Fuzzy configurations before creating another so the saved search names and source columns remain easy to identify.
 
@@ -377,6 +415,6 @@ registration is effectively Ready. Supply an exact configuration when
 
 readiness reports selection_required .
 
-Continue with Query from the dashboard .
+Continue with Retrieval integration patterns .
 
 For pgContext, confirm that the selected capability is available, including point scrolling when you need to inspect mappings. Confirm that the collection is ready and passes verification. Point listings respect source-table row-level security and can be empty while more visible results remain, so continue while has_more is true. Exercise the intended method through the CLI, API, or SDK, then continue with pgContext application patterns .

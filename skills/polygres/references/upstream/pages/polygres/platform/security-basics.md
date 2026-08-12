@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/security-basics
 title: Security basics | Polygres
-source_hash: 4b5b53d6ece3bdc51f3c2786a5d2e002ad679695b7630a49fe0a9d4e254acf1c
+source_hash: 68b4e232bb2d8a73da1a8e17551e13a83e9c949b7bcd38128f37a5415c4b7f7a
 discovered_from: https://docs.evokoa.com/polygres
 
 # Security basics | Polygres
@@ -131,7 +131,7 @@ the Polygres operational channel if your team wants additional assistance.
 
 Keep secrets server-side
 
-Generated code in Query Helper > Code references a Project API Key from environment variables. Follow that pattern. A frontend application should call your own backend, and the backend should call Polygres with its secret.
+Runtime API and SDK examples reference a Project API Key from environment variables. Follow that pattern. A frontend application should call your own backend, and the backend should call Polygres with its secret.
 
 Likewise, a browser application should not receive the native Postgres URL. Put database access behind a trusted server, API, or controlled data-access layer.
 

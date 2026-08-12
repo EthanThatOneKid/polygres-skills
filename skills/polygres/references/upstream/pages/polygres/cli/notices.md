@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/notices
 title: CLI notices | Polygres
-source_hash: 8836dba08b3ba99763a9f013a712305fedbf221418376fc00864cb3565156a47
+source_hash: 86222862bad594f768189e953fccdfeaa9b4ba6f08531166a5d04a89c6638667
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI notices | Polygres

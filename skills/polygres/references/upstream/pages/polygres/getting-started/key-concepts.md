@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/key-concepts
 title: Key concepts | Polygres
-source_hash: 46a4701354e3fe6bee5bf3ffddf5e8a3ef2f1fca0acbd26b7c2875fa9e837895
+source_hash: 6f3f07f8f764bd794d152835eb9a745a9a66060ece7575c907e7e42aba93ae8f
 discovered_from: https://docs.evokoa.com/polygres
 
 # Key concepts | Polygres
@@ -95,7 +95,13 @@ physical-only pgvector index is never an implicit registration. New
 
 registration and re-enabling are retired.
 
-Text configuration points to a tsvector column for TSVector full-text search or a plain text column for Fuzzy pg_trgm matching.
+Text configuration points to a tsvector column for TSVector full-text
+
+search or a plain text column for Fuzzy pg_trgm matching. Polygres can
+
+create and maintain a stored generated TSVector column during configuration,
+
+or register an existing one.
 
 Legacy Hybrid retrieval combines a ready graph build with an effectively
 
@@ -151,13 +157,11 @@ preflight.
 
 For more details, see Configure Retrieval .
 
-Dashboard and application queries
+Application queries
 
-Use the dashboard Query Helper ( /{organization}/{projectId}/workspace/query )
+Use the dashboard to configure retrieval and confirm readiness. Exercise graph,
 
-to test graph, Legacy vector, and Legacy Hybrid retrieval with your signed-in
-
-session. It does not execute text or pgContext queries.
+vector, text, hybrid, and pgContext retrieval through the CLI, public API, or SDK.
 
 After the results look right, create a project API key and move the same graph,
 
@@ -171,7 +175,7 @@ CLI, public API, or SDK. The Database Access &
 
 Connections page explains the split.
 
-See also Querying from Dashboard and Integration Patterns .
+See also Integration Patterns .
 
 Next steps
 

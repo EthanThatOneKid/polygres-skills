@@ -1,11 +1,75 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 3852987a47c52dff8138384a59e90fb7f0768525580a7c75084636b84091d289
+source_hash: 9e93147d7368705421514bddf812b184dc36038532949a9b7120bfbc62253770
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
+
+2026-08-11
+
+Text search setup is now one operation
+
+The existing POST /text/configurations endpoint can now create a stored
+
+generated TSVector column, build and verify its GIN index, and save the text
+
+configuration in one request.
+
+The additive tsvector request supports mode: "generate" for one or more
+
+text source columns and mode: "existing" for an existing TSVector column.
+
+The older flat tsvector_column create input remains supported for backwards
+
+compatibility and is now marked deprecated.
+
+Failed generated-column setup attempts automatic cleanup of the new column,
+
+index, and configuration. An explicit cleanup error is returned if that
+
+recovery is incomplete.
+
+TSVector and Fuzzy configurations now include physical-index diagnostics and
+
+reindex operations. Queries support configured default and maximum limits,
+
+compound row keys, exact NULL filters, and cursors bound to the original
+
+query while continuing to accept older cursors.
+
+Dashboard, CLI, and SDK
+
+Text Search setup now uses the configuration endpoint directly. Auto Scan and
+
+manual generated-column setup no longer create or apply a separate migration.
+
+The dashboard adds index diagnostics, rebuild actions, metadata and filter
+
+fields, compound row keys, result limits, and a TSVector or Fuzzy Search
+
+Preview.
+
+The CLI adds text configuration get , update , diagnostics , and reindex
+
+commands. Existing create-tsvector --tsvector-column scripts continue to
+
+work, while --text-column with --generated-column uses the one-call setup.
+
+The Python SDK keeps its existing query interface:
+
+project.text.tsvector(...) and project.text.fuzzy(...) . Setup remains a
+
+dashboard, API, or CLI workflow, so current SDK query code does not need to
+
+change.
+
+Polygres Agent Skills 0.3.1 updates CLI operations, SDK integration,
+
+retrieval design, and troubleshooting guidance for the completed text-search
+
+behavior. It requires Polygres CLI 0.2.1 .
 
 2026-08-10
 

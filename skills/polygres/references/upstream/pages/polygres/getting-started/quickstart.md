@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/quickstart
 title: Quickstart | Polygres
-source_hash: 50bc1febbfc4f4aaf272c466fddb03747a76579590b89da3940715557ca946ac
+source_hash: d2fe6d2e566894ed7f5433b81109eb75f537edc3417c9f7a93b019d72049836b
 discovered_from: https://docs.evokoa.com/polygres
 
 # Quickstart | Polygres
@@ -76,6 +76,10 @@ CLI
 polygres text configs create-tsvector documents_body_tsv --table documents --text-column body --generated-column body_tsv --yes
 
 polygres text configs list
+
+The first command creates the generated column, index, and configuration
+
+through one configuration API request. It does not apply a migration.
 
 Continue only when index_status is ready .
 

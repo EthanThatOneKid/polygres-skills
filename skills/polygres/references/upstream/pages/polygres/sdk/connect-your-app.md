@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/connect-your-app
 title: Dashboard connection setup | Polygres
-source_hash: c70de4c662fe9d4a63523922f70fdd4ef31ae1848e4a0c3079b4f1f98b7a3ff5
+source_hash: 46cda670e3dc3f730436743168b831f3f221b50818feeafce23322e8598ab74e
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard connection setup | Polygres
@@ -119,7 +119,7 @@ polygres env # prints DATABASE_URL, DIRECT_URL, and POLYGRES_RUNTIME_URL
 
 polygres keys create my-key # creates and prints a new Runtime API key (shown once)
 
-See Security basics for the credential boundary and Query from the dashboard for generated retrieval code.
+See Security basics for the credential boundary and Retrieval integration patterns for retrieval examples.
 
 Configure database TLS
 

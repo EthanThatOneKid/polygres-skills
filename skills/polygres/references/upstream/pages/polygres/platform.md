@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform
 title: Platform guide | Polygres
-source_hash: f01b809a3fb0ac61775ba8ab4a7961d66bd9bbccf69049afb782b0ea2c7f2c8f
+source_hash: 13709ef6de22c62060a419e1c81071b2baba2a0ccb4d6b134dee69356ebed6df
 discovered_from: https://docs.evokoa.com/polygres
 
 # Platform guide | Polygres
@@ -11,7 +11,7 @@ Use the dashboard for organization and project lifecycle workflows. Start with P
 
 Load and manage data for tables, SQL, imports, and migrations.
 
-Query from the dashboard for Query Helper’s graph and qualifying Legacy vector or hybrid tasks.
+Retrieval integration patterns for graph, vector, text, hybrid, and pgContext queries.
 
 Dashboard, API, and database access for surface and credential boundaries.
 

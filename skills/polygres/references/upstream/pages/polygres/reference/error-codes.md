@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: 9f9cffa5707b4eb9cd24d313f7f50687dcd1040add5d95a5c9f82b464bd332a7
+source_hash: 7ee5a78b08d6f324a98415de9725e0d94469693c1fc9ec3e8df5ab573cd21f05
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
@@ -215,9 +215,19 @@ TEXT_CONFIGURATION_NOT_READY 409 The text index status is not ready . Correct an
 
 TEXT_CONFIGURATION_KIND_MISMATCH 400 A fuzzy configuration was used on the tsvector route or vice versa. Call the route matching search_kind .
 
-TEXT_CONFIGURATION_INVALID 400 The configuration’s columns do not match its search kind. For tsvector , set only tsvector_column ; for fuzzy, set only text_column .
+TEXT_CONFIGURATION_INVALID 400 The configuration fields conflict or do not match its search kind. Use nested tsvector.mode: "generate" or "existing" for TSVector setup; use text_column only for fuzzy setup.
 
-TEXT_INDEX_FAILED 400 Text index creation or rebuild failed. Verify the table and selected columns, then update or recreate the configuration.
+TEXT_GENERATED_COLUMN_EXISTS 409 Generated TSVector setup would overwrite an existing column. Choose a new generated-column name, or register an existing compatible TSVector column.
+
+TEXT_GENERATION_CLEANUP_FAILED 500 Generated setup failed and automatic cleanup was incomplete. Inspect the generated column, managed index, and saved configuration before retrying.
+
+TEXT_INDEX_FAILED 400 Text index creation or rebuild failed. Verify the table and selected columns, inspect diagnostics, then retry reindexing.
+
+TEXT_INDEX_VERIFICATION_FAILED 409 The created physical index could not be verified as valid and ready. Inspect diagnostics, correct the database target, and reindex.
+
+TEXT_INDEX_DELETE_FAILED 409 The managed index could not be removed, so the configuration was retained. Correct the database problem and retry deletion.
+
+TEXT_LANGUAGE_NOT_FOUND 400 PostgreSQL does not recognize the requested text-search configuration. Use an installed language such as english or simple .
 
 TEXT_QUERY_EMPTY 400 The query is empty after trimming. Send a non-empty query of at most 2,000 characters.
 

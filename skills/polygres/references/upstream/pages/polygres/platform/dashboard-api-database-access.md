@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/dashboard-api-database-access
 title: Dashboard, API, and database access | Polygres
-source_hash: 4c294034723adaba424670d1627f4a4c88ed40251134a7a190f6a75047b8b3a1
+source_hash: 83ef877075cb2bec3683c9401ba50d95e7bb2180b15568b16865f5012c26c44b
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard, API, and database access | Polygres
@@ -59,9 +59,7 @@ Settings ( /{organization}/{projectId}/settings ) for Project API Key management
 
 Project workspace ( /{organization}/{projectId}/workspace ) for visual graph exploration,
 
-Graph, Vector, and Text Search pages under the project workspace for retrieval setup, and
-
-Query Helper ( /{organization}/{projectId}/workspace/query ) for graph and qualifying Legacy vector or hybrid tests.
+Graph, Vector, and Text Search pages under the project workspace for retrieval setup.
 
 Use a dashboard session to import data, browse tables, run SQL, apply migrations, and configure graph, AI Context, Legacy vector, and text retrieval. Sensitive actions remain subject to the member’s organization role.
 
@@ -129,9 +127,7 @@ login for organization and control-plane workflows such as creating projects,
 
 imports, migrations, API-key management, and database credential access.
 
-Query first in the dashboard, then in code
-
-The Query Helper ( /{organization}/{projectId}/workspace/query ) can bridge dashboard setup and application development for graph and qualifying Legacy vector or hybrid retrieval. It does not query pgContext collections or saved text configurations.
+Configure in the dashboard, then query from code
 
 A practical workflow is:
 
@@ -139,11 +135,9 @@ Configure the graph or inspect an existing persisted Legacy vector registration.
 
 Confirm the graph build or persisted Legacy registration is Ready . HNSW needs its exact physical index Ready; index_kind: none can serve exact scan without HNSW. For hybrid, confirm both graph and Legacy vector readiness.
 
-Run the query in the dashboard and inspect returned records, paths, scores, and filters.
-
 Create a project API key.
 
-Reproduce the validated graph, Legacy vector, or Legacy hybrid query from a trusted backend using the generated examples or documented retrieval patterns.
+Exercise the query from a trusted backend using the documented retrieval patterns and inspect returned records, paths, scores, and filters.
 
 For pgContext, configure the collection from the dashboard or use CLI preflight and collection setup , then query it from the API or SDK. Backend services with explicit ownership of the lifecycle can manage the same collection through project.context . For text retrieval, confirm the saved configuration in the dashboard and test it from the API or SDK.
 
@@ -157,7 +151,7 @@ DATABASE_URL and the native PostgreSQL password for transactional product data.
 
 POLYGRES_API_KEY=poly_live_<...> and POLYGRES_RUNTIME_URL=https://{project_id}.api.db.polygres.com/v1 for retrieval features.
 
-The browser talks to your application backend. It should not receive either secret. Team members use their own dashboard sessions for Polygres administration and query testing.
+The browser talks to your application backend. It should not receive either secret. Team members use their own dashboard sessions for Polygres administration and retrieval setup.
 
 Next steps
 

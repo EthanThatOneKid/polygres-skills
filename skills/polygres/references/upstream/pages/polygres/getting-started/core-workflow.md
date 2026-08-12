@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/core-workflow
 title: Core workflow | Polygres
-source_hash: c2bc25b2eeeb1410a815a76afecb178796763f6e3898c6ca4f8c530b40fc8464
+source_hash: 0f3016eeab89d6a599439b0936af548557b8faf7d6a7198c9a4415a7e583f9e5
 discovered_from: https://docs.evokoa.com/polygres
 
 # Core workflow | Polygres
@@ -65,7 +65,7 @@ graph, Legacy vector, and text configuration plus pgContext AI Search
 
 collections,
 
-the dashboard Query Helper and project API keys.
+project API keys for Runtime retrieval.
 
 4. Connect or load data
 
@@ -163,13 +163,11 @@ automation can use the Python SDK and the same project API
 
 key. Collection status and durable operations provide lifecycle visibility.
 
-6. Query in the dashboard
+6. Query through the Runtime API or SDK
 
-Open the Query Helper ( /{organization}/{projectId}/workspace/query ) to test
+After confirming retrieval readiness in the dashboard, exercise graph, vector,
 
-graph, Legacy vector, and Legacy Hybrid retrieval with your signed-in
-
-dashboard session.
+text, hybrid, and pgContext queries through the Runtime API, CLI, or Python SDK.
 
 Start with a human task rather than an endpoint name—for example:
 
@@ -178,8 +176,6 @@ explore records connected to a customer,
 find content similar to an existing row,
 
 find semantically similar records within related account data.
-
-The Query Helper does not execute text or pgContext collection queries.
 
 Configure and inspect pgContext collections in Vector setup, then exercise their dense,
 

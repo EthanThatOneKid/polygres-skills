@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/text
 title: CLI text retrieval | Polygres
-source_hash: f863aa19a5d80e8ce34b40661597cd25ad9708e5148fe5346f53adeec342fe39
+source_hash: 0d690d12572821faba3c0ead0576c1c602f80b2d956af15f2560fea6be68f328
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI text retrieval | Polygres
@@ -9,12 +9,56 @@ Text retrieval
 
 polygres text configs list
 
+polygres text configs get docs_body
+
 polygres text configs create-tsvector docs_body --table documents --tsvector-column body_tsv
 
 polygres text configs create-tsvector docs_body --table documents --text-column body --generated-column body_tsv --yes
 
 polygres text configs create-fuzzy docs_body_fuzzy --table documents --text-column body --similarity-threshold 0.3
 
+polygres text configs update docs_body --metadata-column title --filter-column status
+
+polygres text configs diagnostics docs_body
+
+polygres text configs reindex docs_body
+
 polygres text configs delete 123e4567-e89b-12d3-a456-426614174000 --yes
 
-Use exactly one of --tsvector-column , or --text-column with --generated-column . Generated-column mode applies a migration and needs --yes for non-interactive use. If its migration succeeds but registration fails, rerun using --tsvector-column body_tsv . There is no text reindex command; query readiness from text configs list when index_status is ready .
+Use exactly one setup mode:
+
+--tsvector-column registers an existing compatible TSVector column.
+
+--text-column with --generated-column asks the existing configuration
+
+endpoint to create the stored TSVector column, its GIN index, and the saved
+
+configuration in one operation.
+
+Generated-column mode changes the table, so interactive use asks for
+
+confirmation. Pass --yes only after reviewing the table and column names. It
+
+does not create or apply a migration. If setup fails, Polygres automatically
+
+tries to remove the new generated column, index, and configuration.
+
+Repeat --row-id-column for a compound row key. Repeat --metadata-column to
+
+return additional properties and --filter-column to allow exact-match query
+
+filters. Use diagnostics to compare saved and physical index state, then use
+
+reindex after correcting a failed or stale target. Continue only when
+
+index_status is ready .
+
+The CLI calls POST /projects/{project_id}/text/configurations for both
+
+existing-column and generated-column setup. Existing scripts that use
+
+--tsvector-column keep the same behavior. See the Text Search API
+
+reference for the request payloads and complete
+
+endpoint list.

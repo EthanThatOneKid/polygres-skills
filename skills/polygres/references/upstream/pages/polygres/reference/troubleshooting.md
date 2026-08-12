@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/troubleshooting
 title: Troubleshooting | Polygres
-source_hash: 7b69b23b52d5bb5782b425a596c556fc8c0141d53950091c01dddda225859175
+source_hash: 8fb04a85a9b3b961ca0ac337d38d1ed8333f50180909564081e5bcb7d3715c5e
 discovered_from: https://docs.evokoa.com/polygres
 
 # Troubleshooting | Polygres
@@ -145,7 +145,13 @@ Vector index is failed or stale Read index_error ; inspect recent target, metric
 
 Text route reports kind mismatch Compare route with search_kind . Use /text/tsvector for tsvector configs and /text/fuzzy for fuzzy configs.
 
-Text configuration is invalid A tsvector config must use tsvector_column only; fuzzy must use text_column only. Correct or recreate the configuration.
+Generated TSVector setup is rejected Check the source columns, generated-column name, language, stable row key, metadata columns, and filter columns. The generated name must not already exist. Correct the one-call tsvector.mode: "generate" request and retry. A separate migration is not required.
+
+Existing TSVector registration is invalid The selected column must exist and have type tsvector . Use tsvector.mode: "existing" , or keep the deprecated flat tsvector_column input in an existing integration.
+
+TEXT_GENERATION_CLEANUP_FAILED Setup failed after changing the table and automatic cleanup was incomplete. Inspect the generated column, managed index, and saved configuration before retrying. Do not create a second column blindly.
+
+Text index is missing or invalid Open configuration diagnostics and compare index_found , index_valid , index_ready , and saved status. Correct the target, then call the reindex endpoint or use Rebuild in the dashboard.
 
 Text query is empty Query trims to no characters or exceeds the supported shape. Send a non-empty query of at most 2,000 characters.
 

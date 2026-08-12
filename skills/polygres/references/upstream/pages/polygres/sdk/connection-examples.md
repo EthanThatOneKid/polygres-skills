@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/connection-examples
 title: Database client examples | Polygres
-source_hash: 432f666be663a63ac6b5b3a8190188efb55844f4152ebca71766393c583d41b5
+source_hash: f13dcc1bace8c0b15504fddbac9a8960b114292101cb57c8fd1e712a39c8191b
 discovered_from: https://docs.evokoa.com/polygres
 
 # Database client examples | Polygres
@@ -271,6 +271,4 @@ Database connections and retrieval API calls are separate. Use a native PostgreS
 
 password for the examples on this page and a Project API Key for Runtime retrieval
 
-examples in Query from the dashboard and
-
-Retrieval integration patterns .
+examples in Retrieval integration patterns .

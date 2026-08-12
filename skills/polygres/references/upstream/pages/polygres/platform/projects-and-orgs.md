@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects-and-orgs
 title: Projects and Organizations | Polygres
-source_hash: a9f683af8092d0449bbd129aa3b8ade87918c9d25bb0623ca4ff15453aba653d
+source_hash: 60553e267b4d0634cf162a2ecbb5f9ddf74b51660358b0e46473d885034c9359
 discovered_from: https://docs.evokoa.com/polygres
 
 # Projects and Organizations | Polygres
@@ -221,8 +221,6 @@ Workspace ( /{organization}/{project_id}/workspace ) for the visual graph-center
 
 Graph ( /{organization}/{project_id}/workspace/graph ), Vector ( /{organization}/{project_id}/workspace/vector ), and Text Search ( /{organization}/{project_id}/workspace/text-search ) for retrieval setup. The Vector page separates pgContext collections from Legacy registrations.
 
-Query Helper ( /{organization}/{project_id}/workspace/query ) for graph and eligible Legacy vector or hybrid tests.
-
 Settings ( /{organization}/{project_id}/settings ) for rename, Project API Key, Runtime, and deletion.
 
 Review runtime and version status
@@ -399,7 +397,7 @@ Import or migration will not start Read-only reason and active import jobs Resol
 
 Graph query is blocked Graph build status Correct setup and rebuild from Graph.
 
-Query Helper vector or hybrid task is blocked Persisted Legacy vector registration and effective readiness Select a persisted enabled Legacy registration that is effectively Ready . HNSW requires its exact physical index to be Ready; index_kind: none can be Ready for exact scan without HNSW. A physical-only pgvector index is not implicitly available to Query Helper.
+Legacy vector or hybrid retrieval is blocked Persisted Legacy vector registration and effective readiness Select a persisted enabled Legacy registration that is effectively Ready . HNSW requires its exact physical index to be Ready; index_kind: none can be Ready for exact scan without HNSW.
 
 AI Context retrieval uses an unexpected vector Collection, exact vector name, and default badges Check the selected pgContext collection. An omitted vector name uses that collection’s default vector; this is independent of the project’s default collection.
 

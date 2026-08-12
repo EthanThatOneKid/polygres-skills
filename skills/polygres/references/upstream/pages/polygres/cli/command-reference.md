@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/command-reference
 title: CLI command reference | Polygres
-source_hash: 280af5cc3a3cf4190bd4b15d152b476b029949731815e301fa89d37fa813e0db
+source_hash: 833561ac48c85cdd4e3de97f413d4862ad341d5ddf309ffec83c61a555b8f7f7
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI command reference | Polygres
@@ -25,7 +25,7 @@ Graph graph discover , graph config export , graph config apply , graph build , 
 
 Vector vector configs list , vector configs create , vector configs set-default , vector configs delete , vector reindex
 
-Text text configs list , text configs create-tsvector , text configs create-fuzzy , text configs delete
+Text text configs list , text configs get , text configs create-tsvector , text configs create-fuzzy , text configs update , text configs diagnostics , text configs reindex , text configs delete
 
 Context inspection and onboarding context capabilities , context init , context sources discover , context sources preflight
 

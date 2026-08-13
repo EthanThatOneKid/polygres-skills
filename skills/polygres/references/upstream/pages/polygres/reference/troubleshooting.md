@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/troubleshooting
 title: Troubleshooting | Polygres
-source_hash: 8fb04a85a9b3b961ca0ac337d38d1ed8333f50180909564081e5bcb7d3715c5e
+source_hash: 7e80a64cb5b992e6a9d0575068c82492213ed6b504cfdd3ea1dcd147e9795533
 discovered_from: https://docs.evokoa.com/polygres
 
 # Troubleshooting | Polygres
@@ -103,13 +103,13 @@ Migration issues
 
 Symptom Check Action
 
-Draft cannot be created or applied Inspect MIGRATION_SQL_BLOCKED or request validation details. Migration names must be valid SQL identifiers and at most 120 characters. Rewrite the denied SQL or name; do not bypass the safety response.
+Draft cannot be created or applied Inspect MIGRATION_SQL_BLOCKED or request validation details. Migration names must be valid SQL identifiers and at most 120 characters. Top-level transaction commands are not allowed because Polygres manages the transaction. Rewrite the denied SQL or name; do not bypass the safety response. Transaction keywords inside a dollar-quoted function, procedure, or DO body remain valid.
 
-Apply returns MIGRATION_LOCK_BUSY Check for another migration in applying . Wait for the active operation before retrying.
+Apply returns MIGRATION_LOCK_BUSY Another migration is already running. Your migration is unchanged. Wait for the active migration to finish, then retry.
 
 Apply returns checksum mismatch MIGRATION_SQL_CHECKSUM_MISMATCH means stored SQL and checksum disagree. Stop retrying and contact support; do not alter or bypass the record.
 
-Migration becomes failed Read error_message and inspect the database error context. Correct with a new forward migration, or retry only when the stored SQL remains intended and the cause was transient.
+Migration becomes failed PostgreSQL executed the migration and returned an error. Changes made earlier in that migration were rolled back. Read error_message and inspect the database error context. Correct the problem with a new forward migration, or retry only when the stored SQL remains intended and the cause was transient.
 
 Migration remains applying Refresh the detail and check the last update time. Avoid concurrent apply calls; escalate when it does not transition and no active operation is visible.
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/routes
 title: Retrieval routes | Polygres
-source_hash: 0066509a99845b45bf48c3970fee7f944620755001afb872a3b6be2929cd52a1
+source_hash: d8e13b2567c17f4f756048c9cc2413e8603b02fcd8ef731a405331c5d75afe5d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Retrieval routes | Polygres

@@ -1,11 +1,51 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 9e93147d7368705421514bddf812b184dc36038532949a9b7120bfbc62253770
+source_hash: 1368ac3936248e04018e4c906ea61dd698f165f7d5bc5e60c73e6c70f89f90e0
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
+
+2026-08-12
+
+Safer database migrations
+
+Failed migrations now roll back changes made by earlier statements in the
+
+same migration. You will not be left with a partially applied schema change.
+
+Polygres now prevents migration files from ending the managed transaction
+
+early. Remove top-level commands such as BEGIN , COMMIT , END ,
+
+ROLLBACK , ABORT , and PREPARE TRANSACTION from migration files. These
+
+words still work normally inside functions, procedures, and DO blocks.
+
+If another migration is already running, Polygres leaves your migration
+
+unchanged and asks you to retry after the active migration finishes.
+
+Existing dashboard workflows, API routes, and CLI commands continue to work
+
+without changes.
+
+CLI and Python SDK
+
+Polygres CLI 0.2.2 adds commands to inspect, update, diagnose, rebuild, and
+
+remove text-search configurations. TSVector setup now supports generated or
+
+existing columns, compound row keys, metadata and filter columns, and
+
+project-specific result limits.
+
+Polygres SDK 0.2.1 now catches unsupported pgContext operations and requests
+
+that exceed project limits before sending them to Polygres. Existing method
+
+signatures have not changed.
 
 2026-08-11
 
@@ -50,12 +90,6 @@ The dashboard adds index diagnostics, rebuild actions, metadata and filter
 fields, compound row keys, result limits, and a TSVector or Fuzzy Search
 
 Preview.
-
-The CLI adds text configuration get , update , diagnostics , and reindex
-
-commands. Existing create-tsvector --tsvector-column scripts continue to
-
-work, while --text-column with --generated-column uses the one-call setup.
 
 The Python SDK keeps its existing query interface:
 

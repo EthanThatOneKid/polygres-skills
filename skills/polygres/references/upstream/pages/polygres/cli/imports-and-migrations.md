@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/imports-and-migrations
 title: CLI imports and migrations | Polygres
-source_hash: 70b257e78875f8d9f2dae5a5f055f262e67fafe5c5382479e7469c916dc0e552
+source_hash: 19c8fdbb738a8aa0926c0f4b649e533b8e94476188c4eac8d5f13f8054e9453c
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI imports and migrations | Polygres
@@ -78,3 +78,23 @@ polygres migrations list
 polygres migrations apply --file ./migrations/001_create_documents.sql --name create_documents
 
 If omitted, --name is derived from the file name. A duplicate migration name can exit 6.
+
+Repeating the command with the same name and unchanged SQL is safe. Polygres
+
+reuses the existing migration instead of creating another version.
+
+Polygres manages the database transaction for the complete SQL file. Do not
+
+wrap the file in BEGIN and COMMIT , and do not use another top-level
+
+transaction command such as END , ROLLBACK , ABORT , or
+
+PREPARE TRANSACTION . If a statement fails, earlier changes from that
+
+migration are rolled back and the command exits 1.
+
+If another migration is already running, the command reports
+
+MIGRATION_LOCK_BUSY and exits 6. Your migration is unchanged. Wait for the
+
+other migration to finish, then run the same command again.

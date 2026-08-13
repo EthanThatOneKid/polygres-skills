@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/load-and-manage-data
 title: Load and manage data | Polygres
-source_hash: 56089548972733acb24f1236e4be3cd5ad3226e56884022fe4976a462f7985aa
+source_hash: d289ca7622caf314b70ae238be45be3c917f8a8d1e2b0877245a6b5dc28bd225
 discovered_from: https://docs.evokoa.com/polygres
 
 # Load and manage data | Polygres
@@ -167,11 +167,37 @@ Enter and review the SQL carefully, then save the migration as a draft.
 
 Review its assigned version and checksum. The saved name and SQL are immutable; if either is wrong, create a new forward migration.
 
-Apply the draft. Polygres runs migrations over the direct database connection.
+Apply the draft. Polygres runs it against your project’s PostgreSQL database.
 
 Wait for Applied or inspect a Failed migration.
 
-Migration statuses include Draft , Applying , Applied , and Failed . The dashboard refreshes while a migration is applying. SQL is policy-checked, and the saved checksum protects the migration definition from silent changes.
+Migration statuses include Draft , Applying , Applied , and Failed . The dashboard refreshes while a migration is applying. SQL is checked when you save it and again before it runs. The saved checksum protects the migration definition from silent changes.
+
+Each migration is atomic
+
+Polygres runs the complete SQL body in one database transaction. If PostgreSQL
+
+reports an error, changes made earlier in that migration are rolled back before
+
+the migration is marked Failed .
+
+Do not add top-level transaction commands to migration SQL. Polygres rejects
+
+BEGIN , START TRANSACTION , COMMIT , END , ROLLBACK , ABORT , and
+
+PREPARE TRANSACTION because they could end the managed transaction early.
+
+The same words remain valid inside a function, procedure, or DO block when
+
+they are part of a dollar-quoted body.
+
+If another migration is running
+
+Only one migration can run for a project at a time. If another migration is
+
+already running, Polygres leaves your draft unchanged and tells you to try
+
+again. Wait for the active migration to finish, then apply the same draft.
 
 Migrations are forward-only. There is no rollback button. To undo a change, create and apply a new migration that safely reverses it.
 
@@ -193,7 +219,9 @@ SQL import is blocked Remove unsupported statements and use dashboard-supported 
 
 pg_dump restore fails Check dump format, target compatibility, referenced roles or extensions, and the job error.
 
-Migration fails Read the database error and do not assume a rollback occurred. Saved migrations are immutable, so correct bad SQL in a new migration; retry the same migration only when the cause was transient.
+Migration fails Read the database error. Polygres rolls back database changes from the failed migration. Saved migrations are immutable, so correct bad SQL in a new forward migration; retry the same migration only when the cause was transient.
+
+Migration apply returns MIGRATION_LOCK_BUSY Another migration is already running. Your draft is unchanged. Wait for the active migration to finish, then retry the same draft.
 
 Platform error has a request ID Keep the request ID and include it when contacting support.
 

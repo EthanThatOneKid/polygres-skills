@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started
 title: Getting started | Polygres
-source_hash: a752a16ec6ed775bae4081cbffb446c1eb5d26242d18d396877b7211c05e3ad0
+source_hash: fd8798a3ec674e930619ac4827e20926560c06b2c4add006418034f9827e5243
 discovered_from: https://docs.evokoa.com/polygres
 
 # Getting started | Polygres

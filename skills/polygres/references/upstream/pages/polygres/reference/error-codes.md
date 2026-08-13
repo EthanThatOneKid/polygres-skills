@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: 7ee5a78b08d6f324a98415de9725e0d94469693c1fc9ec3e8df5ab573cd21f05
+source_hash: 4a25d3f3b966b507494d96c7828654d84225c5e4f78f049c577248c98f57fea0
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
@@ -143,11 +143,11 @@ Code Status Meaning First action
 
 MIGRATION_NOT_FOUND — The migration ID is unknown for the project. Confirm both project ID and migration ID.
 
-MIGRATION_LOCK_BUSY — Another migration operation holds the project lock. Wait for the active operation to finish before retrying.
+MIGRATION_LOCK_BUSY 409 Another migration is already running. Your migration is unchanged. Wait for the active migration to finish, then retry.
 
 MIGRATION_SQL_CHECKSUM_MISMATCH 409 Stored SQL no longer matches the migration checksum. Do not bypass the check; contact support.
 
-MIGRATION_SQL_BLOCKED 400 The migration contains a statement denied by SQL safety policy. Use the policy details to rewrite the migration.
+MIGRATION_SQL_BLOCKED 400 The migration contains a statement denied by SQL safety policy, including a top-level transaction command. Use the policy details to rewrite the migration. Let Polygres manage the transaction.
 
 MIGRATION_RUNTIME_NOT_CONFIGURED — Migration execution is unavailable for the runtime. Retry once; contact support if it persists.
 

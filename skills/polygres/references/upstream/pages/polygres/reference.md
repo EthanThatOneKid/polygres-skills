@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference
 title: Reference and troubleshooting | Polygres
-source_hash: d9aabaa1f31e393ae18c724879ec22a86de8eb41b6dc4ba936659ff2205e127d
+source_hash: 184bb7b8547beb5e572ba2dfd318a7b968f06343bc4b6b93352eb001230ff2b9
 discovered_from: https://docs.evokoa.com/polygres
 
 # Reference and troubleshooting | Polygres
@@ -18,6 +18,8 @@ Need Page
 See recent user-facing changes Changelog
 
 Find a retrieval HTTP route and auth mode Retrieval routes
+
+Validate, insert, or upsert one row Runtime Row Writes
 
 Configure or query AI Search over HTTP pgContext API
 

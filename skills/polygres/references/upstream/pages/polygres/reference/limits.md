@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/limits
 title: Limits | Polygres
-source_hash: 6d035636a935842de1c26ceb6477b74998280ce681c24278075952a42c602d0d
+source_hash: ac326306bca27330590f097850b7db3b04bf977eb512043066e73653351758b1
 discovered_from: https://docs.evokoa.com/polygres
 
 # Limits | Polygres
@@ -117,7 +117,9 @@ Input Limit
 
 Table viewer limit 1..500
 
-Retrieval request fields named limit 1..1000
+Retrieval request fields named limit Request-shape range 1..1000 ; the effective project cap can be lower.
+
+Hybrid retrieval vector_limit Request-shape range 1..1000
 
 Graph max_depth 1..20
 
@@ -131,11 +133,43 @@ Fuzzy similarity threshold 0..1
 
 Exact-match filters Scalar values only; arrays and objects are rejected.
 
-For vector and hybrid retrieval, the selected vector configuration’s max_limit can
+The 1..1000 range above is the API contract ceiling, not a guarantee that every
 
-lower the request limit. A vector request may supply max_distance or
+project can return 1,000 results. Runtime API routes enforce the project’s live
+
+retrieval_max_limit against result fields named limit . Read the project’s
+
+applied tier from project status, then read limits.retrieval_max_limit from
+
+GET /tiers . Always use this live value rather than a copied plan value. A
+
+selected vector or text configuration’s max_limit can lower the number of
+
+results returned further.
+
+For hybrid retrieval, vector_limit controls how many vector candidates are
+
+considered before graph processing and final ranking. limit controls how many final
+
+results are returned. vector_limit is bounded by the 1..1000 request contract;
+
+it is not the result limit advertised by limits.retrieval_max_limit . Choose a
+
+candidate count appropriate for your workload and keep limit at or below the
+
+live project maximum. A vector request may supply max_distance or
 
 min_similarity , but not both.
+
+When a result limit exceeds the live project maximum, the Runtime API returns
+
+HTTP 400 LIMIT_OUT_OF_RANGE with the effective min and max in details .
+
+Correct the value before retrying. Do not send the same invalid value to a
+
+fallback route, because that produces another validation failure. Values outside
+
+the request-shape range are rejected during request validation.
 
 Tier graph-capacity values can constrain graph execution independently of request
 
@@ -192,6 +226,36 @@ present, vector_name must exactly match a vector in the collection. The
 project also has at most one default collection, independently of each
 
 collection’s default vector.
+
+Runtime row-write limits
+
+Input or execution limit Maximum
+
+Request body 256 KiB
+
+Columns in row 128
+
+conflict_columns 16
+
+update_columns 128
+
+returning columns 32
+
+Serialized returned object 64 KiB
+
+Statement timeout 5 seconds
+
+Lock wait 1 second
+
+Context idempotency key 1 to 128 printable ASCII characters
+
+Context idempotency retention 24 hours
+
+The statement and lock values are ceilings. A project’s applied values may be
+
+lower. Context idempotency is available only when the row request also asks for
+
+pgContext reconciliation.
 
 Vector and text configuration limits
 
@@ -298,6 +362,18 @@ List or get migrations 120/min 600/min 2,000/min
 Create migration 10/min 30/min 1,000/min
 
 Apply migration 5/min 10/min 1,000/min
+
+Runtime row writes
+
+Route User + project API key Project IP
+
+Validate one row write 120/min 120/min 120/min 1,000/min
+
+Write one row 60/min 60/min 60/min 600/min
+
+Only the scopes that apply to the active credential are charged, and every
+
+applicable window is enforced at the same time.
 
 Retrieval configuration and status
 

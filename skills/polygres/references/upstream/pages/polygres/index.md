@@ -1,29 +1,41 @@
 source: https://docs.evokoa.com/polygres
 title: Polygres documentation | Polygres
-source_hash: affd07fe3285d308db6849d61b946f2e13dcfc5d23c4e6fa57188d27f1a09456
+source_hash: 72d9b246c3fd4f53d4b4a46a695a667240a570f69079e8321ec0e15c926ef6e1
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres documentation | Polygres
 
+Managed PostgreSQL + Retrieval
+
 Polygres documentation
 
-Polygres gives your team a managed PostgreSQL database with graph, pgvector,
+Polygres gives your team a managed PostgreSQL database with graph, pgvector, TSVector full-text, Fuzzy text, hybrid retrieval, and pgContext AI Search over the same data. PostgreSQL stays the source of truth — one operational data store for application data and retrieval.
 
-TSVector full-text, Fuzzy text, hybrid retrieval, and pgContext AI Search over
+What is Polygres? → Product fit, capabilities, and how the retrieval modes complement each other. Quickstart → The shortest complete path from account to a verified retrieval query. Polygres CLI → Terminal workflows for projects, imports, migrations, and retrieval setup.
 
-the same data. Use standard PostgreSQL connections for application reads,
+Use standard PostgreSQL connections for application reads, writes, migrations,
 
-writes, migrations, and imports. Use the dashboard for interactive retrieval
+and imports. Use the dashboard for interactive retrieval setup and testing, or
 
-setup and testing, or use the CLI, API, and Python SDK for pgContext collection
+use the CLI, API, and Python SDK for pgContext collection workflows and
 
-workflows and application search.
+application search.
 
 Polygres is designed for SaaS teams that want one operational data store for
 
 application data and retrieval. PostgreSQL remains the source of truth,
 
 including tsvector , pg_trgm , pgvector , and native pgContext collections.
+
+One database, every retrieval mode
+
+Every mode reads the same project rows your application just wrote — no
+
+separate systems to provision or keep in sync.
+
+Graph pgContext AI Search Text Legacy Vector Legacy Hybrid
+
+Graph Follow relationships across records — a customer, their account, tickets, messages, and related incidents.
 
 Start here
 
@@ -37,25 +49,37 @@ Deciding how your team and application should connect? See Dashboard, API, and d
 
 Working from a terminal? Use the Polygres CLI for project setup, imports, migrations, and retrieval configuration.
 
+Want a coding agent to recommend and build a setup from your own data? Start
+
+with Polygres Agent Skills .
+
+Writing individual application records without opening a database connection?
+
+See Runtime Row Writes .
+
 Building AI Search? Start with the pgContext CLI guide and
 
 pgContext API reference .
 
 Explore the overview
 
-What is Polygres? : product fit and capabilities.
+Product fit and capabilities.
 
-Core workflow : the SaaS journey from account to query.
+What is Polygres? The SaaS journey from account to query.
 
-Key concepts : organizations, roles, projects, connections, credentials, and retrieval.
+Core workflow Organizations, roles, projects, connections, credentials, and retrieval.
 
-Dashboard, API, and database access : which access method to use for each job.
+Key concepts Which access method to use for each job.
 
-Polygres CLI : terminal workflows for projects, credentials, imports, migrations, and retrieval setup.
+Dashboard, API, and database access Terminal workflows for projects, credentials, imports, migrations, and retrieval setup.
 
-Quickstart : the shortest complete setup path.
+Polygres CLI Guided setup, data pipelines, application integration, and troubleshooting with a compatible coding agent.
 
-Common use cases : concrete patterns for SaaS products and data teams.
+Polygres Agent Skills The shortest complete setup path.
+
+Quickstart Concrete patterns for SaaS products and data teams.
+
+Common use cases
 
 Next steps
 
@@ -75,6 +99,8 @@ SDK Guide
 
 Connect and credentials
 
+Write rows with Python
+
 Connection examples
 
 Configure and query retrieval
@@ -86,6 +112,8 @@ Reference
 Changelog
 
 Routes
+
+Runtime Row Writes
 
 Error codes
 

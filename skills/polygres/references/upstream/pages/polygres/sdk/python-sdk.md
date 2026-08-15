@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/python-sdk
 title: Python SDK | Polygres
-source_hash: a2faecca6d71e5a4883c51524a463a74974ce415086f34a938804b1c3966c11f
+source_hash: 414d10f3ded6a003cbf4f916dabea912481552406ff2c025cb5a152dbf6c9152
 discovered_from: https://docs.evokoa.com/polygres
 
 # Python SDK | Polygres
@@ -13,7 +13,11 @@ Installation
 
 Install the package via pip:
 
-pip install polygres-sdk
+pip install "polygres-sdk==0.3.0"
+
+To upgrade an existing environment:
+
+pip install --upgrade "polygres-sdk==0.3.0"
 
 Quick Start
 
@@ -75,6 +79,14 @@ pgContext AI Search ( project.context.search , project.context.text_hybrid , pro
 
 Head over to Retrieval Integration Patterns to copy the Python code for your specific workflow.
 
+To validate, insert, upsert, or ignore one record through the Runtime API, see
+
+Write rows with Python . The guide also covers optional
+
+pgContext reconciliation, waiting, idempotency, and recovery after an uncertain
+
+write.
+
 Vector result metrics
 
 VectorResult.distance and VectorResult.score can be None when a metric cannot be calculated, such as cosine distance for a zero vector. similarity can also be None . Check these values before displaying or using them for additional ranking; do not replace them with a made-up score.
@@ -87,7 +99,53 @@ continue
 
 print (result.id, result.distance, result.similarity, result.score)
 
-The SDK raises PolygresMaintenanceError when scheduled maintenance blocks a request. Pause the affected operation and retry after service returns to normal.
+The SDK maps catalog errors to its stable exception hierarchy and renders the
+
+exception message from the catalog instead of trusting server-supplied prose.
+
+PolygresAPIError exposes code , status_code , request_id , and safe
+
+details . Branch on code rather than matching the exception string. The SDK
+
+raises PolygresMaintenanceError when scheduled maintenance blocks a request.
+
+Pause the affected operation and retry after service returns to normal. See the
+
+API error-handling guide for integration
+
+patterns and the complete error catalog for exact
+
+messages and retry classes.
+
+SDK update notices
+
+As SDK requests complete, the client processes applicable notices returned by
+
+the Runtime API and periodically checks Polygres for release notices. It emits
+
+PolygresVersionWarning when a newer version is recommended. A
+
+notice is a Python warning, not a request failure. If the notice check cannot
+
+reach Polygres or receives an invalid response, your application request still
+
+succeeds or fails according to its own response.
+
+Each notice is emitted at most once per Python process, including notices
+
+returned with a Runtime API response. Follow the HTTPS link in the warning or
+
+review the changelog before upgrading. To install the
+
+recommended release:
+
+pip install --upgrade polygres-sdk
+
+You can handle or filter PolygresVersionWarning with Python’s standard
+
+warnings module if your
+
+application has a centralized warning policy.
 
 pgContext collections and operations
 

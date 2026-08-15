@@ -1,11 +1,147 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 1368ac3936248e04018e4c906ea61dd698f165f7d5bc5e60c73e6c70f89f90e0
+source_hash: c59be79bc7d5bd7d220b3e49d93a9cb7f3636e6c22e17063a59d1b0c1befc2e7
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
+
+2026-08-14
+
+Misc Fixes
+
+Returned json and jsonb columns from a Runtime row write now remain
+
+structured values, so applications do not need to decode a JSON string after
+
+a successful write.
+
+AI Context readiness now accounts for collection readiness, current point
+
+reconciliation, and the selected vector index. The dashboard identifies when
+
+a ready collection still needs a project default.
+
+Graph traversal now reports a missing start entity as
+
+GRAPH_NODE_NOT_FOUND . An unknown requested relationship type reports
+
+GRAPH_RELATIONSHIP_TYPE_NOT_FOUND with an actionable correction.
+
+Agent Skills now route one-record writes to the rows surface and datasets to
+
+imports. They reconcile a selected Context collection after an import and
+
+preserve the recovery boundary for Context-backed writes.
+
+Write one row through the Runtime API
+
+Polygres CLI 0.3.0 and SDK 0.3.0 can now
+
+validate, insert, upsert, or ignore one row at a time through the project
+
+Runtime API . This is useful for application
+
+events, agent memory, and other small writes that do not need a bulk import.
+
+You can ask Polygres to return selected columns from the row, and you can
+
+validate the request before changing data .
+
+A row write can also refresh its matching AI Context
+
+point . Context-backed
+
+writes use an idempotency key so you can safely check or resume the Context
+
+step without writing the database row twice.
+
+The CLI and SDK do not automatically replay a write when the server cannot
+
+confirm whether it committed. They return a clear recovery error instead, so
+
+your application can avoid creating duplicate
+
+rows .
+
+A guided way to set up Polygres
+
+Polygres Agent Skills 0.4.0 adds a data-pipeline skill. You
+
+can describe what you want in ordinary language, point it at an accessible
+
+source, and let it inspect a small sample before recommending a setup.
+
+The skill chooses only the pieces that help with your goal. It can work with
+
+files, databases, APIs, or conversations, and can add text, semantic, or
+
+connected-data search when those options are useful. See how guided pipeline
+
+setup works .
+
+Before it uploads data or changes your project, the skill shows one review
+
+covering the project, data scope, external processing, cost, and destructive
+
+effects.
+
+The project dashboard now includes a ready-to-copy prompt that helps your
+
+coding agent review the workspace and recommend a Polygres setup. The data
+
+loading guide
+
+explains when to use this workflow instead of a one-time import.
+
+Clearer errors
+
+Graph depth errors now include the limit configured for your project instead
+
+of showing one fixed number for every plan. See the graph capacity
+
+limits .
+
+Dashboard page errors now give a direct refresh step and make it clearer which
+
+support code to include if the problem continues. See how to handle API
+
+errors for request IDs and safe recovery.
+
+2026-08-13
+
+Graph retrieval update
+
+Graph path and connection searches now follow the relationship types and
+
+directions you select, so results do not use relationships you excluded.
+
+When the same filter name exists on several connected tables, you can choose
+
+which table Polygres should filter. For example, you can make status: open
+
+apply to support tickets instead of customers.
+
+Graph neighborhood results now show accurate counts for each table and its
+
+distance from the starting record. These counts describe the current page of
+
+results.
+
+Errors and limits
+
+Errors are now more consistent across the dashboard, CLI, API, and Python
+
+SDK. Each error includes a code you can use to find the right troubleshooting
+
+steps, and some errors include a more specific reason.
+
+The limits guide now explains how to find the current search result limit for
+
+your project. This helps you choose a valid result count instead of relying on
+
+plan values that may have changed.
 
 2026-08-12
 

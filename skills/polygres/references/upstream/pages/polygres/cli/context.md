@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/context
 title: CLI AI Search with pgContext | Polygres
-source_hash: b2c673f18bd9dadf88f4d6221d9bd1a075ce6b921a50d93198cf14d34189bbf1
+source_hash: 1841a7b0ed08e1dfa4a1e1e87142720e60a4a641940ed33bb214583feb828ce2
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI AI Search with pgContext | Polygres
@@ -11,7 +11,7 @@ AI Search is the collection-based retrieval product backed by pgContext Preview.
 
 Install the current CLI and confirm the version before using the Context namespace:
 
-pipx install "polygres-cli==0.2.2"
+pipx install "polygres-cli==0.3.0"
 
 polygres --version
 
@@ -306,6 +306,14 @@ polygres context points reconcile < collection-uui d >
 polygres context points scroll < collection-uui d > --limit 50
 
 Upsert and delete accept 1 through 10,000 source keys and preserve them as text. Batches up to the server synchronous threshold can complete immediately; larger batches return durable operations. reconcile adds missing mappings and removes mappings for deleted rows. If the source table uses row-level security, it does not remove orphan mappings because a hidden row may still exist. The result reports orphan_cleanup_skipped_reason: "source_rls_enabled" ; delete keys explicitly when you know their source rows were removed. There are no public backfill or sync aliases.
+
+After a point upsert or delete, the collection’s reported mapped-point count is
+
+updated with the same operation. Use points status or collections verify to
+
+investigate a stale reconciliation state, then run points reconcile when the
+
+source table and active point mappings need to be brought back into agreement.
 
 Point scrolling respects row-level security. A page can be empty and still return has_more: true when hidden rows were skipped, so continue until has_more is false. Ranked retrieval never has a cursor.
 

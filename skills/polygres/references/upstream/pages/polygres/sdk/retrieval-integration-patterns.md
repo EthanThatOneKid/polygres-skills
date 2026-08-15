@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/retrieval-integration-patterns
 title: Retrieval integration patterns | Polygres
-source_hash: 89ed6d5d4775ed622757605965c5dc4fa2aa092ddf097698480895abfb7d9855
+source_hash: 32d9b09d74a67f0c83de16149933087ea12081df2b4d7031c18d042b46376a3d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Retrieval integration patterns | Polygres
@@ -183,9 +183,11 @@ page = project.graph.related(
 
 relationship_types = [ "opened_by_customer" ],
 
-direction = "any" ,
+direction = "out" ,
 
 filters = { "status" : "open" },
+
+target_table = { "schema" : "public" , "table" : "support_tickets" },
 
 limit = 50 ,
 
@@ -209,9 +211,55 @@ for result in page.results:
 
 print (result.node.table, result.node.id, result.depth, result.readable_path)
 
-Use graph.path when the product needs to explain how two records connect, and graph.connection when investigating connections across several entities.
+All filters in a graph request must be registered on one target table. Supply
+
+target_table when the same filter name is registered on more than one graph
+
+table. Filtering and target_table are supported by graph.related ,
+
+graph.expand , and graph.neighborhood .
+
+Use graph.path when the product needs to explain how two records connect:
+
+response = project.graph.path(
+
+{ "schema" : "public" , "table" : "customers" , "id" : "cus_123" },
+
+{ "schema" : "public" , "table" : "support_tickets" , "id" : "ticket_42" },
+
+max_depth = 4 ,
+
+relationship_types = [ "opened_by_customer" ],
+
+direction = "out" ,
+
+)
+
+for path in response.paths:
+
+print (path[ "readable_path" ])
+
+for step in path[ "steps" ]:
+
+print (step[ "node" ], step[ "edge_label" ], step[ "properties" ])
+
+Use graph.connection to evaluate each consecutive pair in a list of two to
+
+ten entities. Both methods enforce relationship_types and direction .
+
+They do not accept filters or target_table .
+
+Neighborhood responses expose groups through page.metadata["groups"] .
+
+Each group counts the current page’s results for one actual depth and table;
+
+do not treat the count as a total for the complete traversal.
 
 Keep depth and result limits small in request-time paths. A depth of one or two is easier to reason about and less likely to produce an overly broad candidate set.
+
+See the Graph Retrieval API reference for
+
+method defaults, response fields, cursor pagination, and filter errors.
 
 pgContext AI Search
 
@@ -398,6 +446,16 @@ limit = 12 ,
 )
 
 This pattern is useful for global knowledge search where related records improve context after the initial semantic match.
+
+vector_limit is the vector candidate count and limit is the final result count.
+
+The candidate count has its own 1..1000 request range. The project tier’s
+
+retrieval_max_limit applies to the final result limit . Read it from GET /tiers ,
+
+or use details.max from LIMIT_OUT_OF_RANGE , before retrying with a smaller result
+
+limit. Do not fall back to vector-only search with the same rejected result limit.
 
 Joint ranking
 

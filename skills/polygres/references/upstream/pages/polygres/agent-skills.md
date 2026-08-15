@@ -1,49 +1,55 @@
 source: https://docs.evokoa.com/polygres/agent-skills
 title: Polygres Agent Skills | Polygres
-source_hash: be14a344d47580da805fb0f4a2aab5cb6758624719d5a0a7c907ecb3b7278c1b
+source_hash: 9e051da1c882c4f919b3beceaed294628dfdf0bfe53f2891ab5e35658e9e3035
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres Agent Skills | Polygres
 
 Polygres Agent Skills
 
-The Polygres plugin includes four independently triggered Agent Skills:
+Polygres Agent Skills help compatible coding agents understand your data,
 
-polygres-cli operates Polygres through the public CLI, including login,
+recommend a useful setup, and build or operate it with you. The plugin includes
 
-project selection, imports, migrations, keys, retrieval setup, pgContext
+five skills:
 
-collection lifecycle, and recovery;
+polygres-data-pipeline turns files, databases, APIs, conversations, or
 
-polygres-sdk builds Python application retrieval with pgContext, graph,
+existing Polygres data into a working ingestion and retrieval pipeline;
 
-vector, text, hybrid, pagination, typed models, and grounded RAG workflows;
+polygres-cli helps with everyday project operations such as signing in,
 
-polygres-retrieval-design decides when pgContext or another retrieval
+choosing a project, importing data, applying migrations, managing keys, and
 
-strategy is appropriate without changing a project;
+configuring retrieval;
 
-polygres-troubleshooting diagnoses failures, including Context collection
+polygres-sdk helps you add pgContext, graph, vector, text, and hybrid
 
-and operation failures, from public read-only CLI and SDK evidence.
+retrieval to a Python application;
+
+polygres-retrieval-design compares retrieval options and recommends a
+
+design without changing your project;
+
+polygres-troubleshooting investigates project, import, retrieval, and
+
+Context problems using read-only checks.
 
 The skills do not include the Python packages. Install the component required
 
 by the task, then install the skill repository:
 
-Install the current CLI and SDK, then add Polygres Agent Skills 0.3.1 :
+Install the current CLI and SDK, then add Polygres Agent Skills 0.4.0 :
 
-pipx install "polygres-cli==0.2.2"
+pipx install "polygres-cli==0.3.0"
 
-python -m pip install "polygres-sdk==0.2.1"
+python -m pip install "polygres-sdk==0.3.0"
 
 npx skills add Evokoa/polygres-skills
 
-Agent Skills 0.3.1 was released against CLI 0.2.1 and SDK 0.2.0 . The
+Agent Skills 0.4.0 , CLI 0.3.0 , and SDK 0.3.0 form one coordinated release
 
-newer client releases keep the command and method surfaces used by those
-
-skills compatible.
+set.
 
 The public skill source is
 
@@ -60,6 +66,10 @@ Compatible Agent Skills installers
 Install only the operational skill into the current project:
 
 npx skills add Evokoa/polygres-skills --skill polygres-cli
+
+Install only the guided pipeline skill:
+
+npx skills add Evokoa/polygres-skills --skill polygres-data-pipeline
 
 Install only the application-development skill:
 
@@ -115,6 +125,8 @@ request. Invoke a skill explicitly when you need to select the CLI or SDK
 
 workflow yourself:
 
+/polygres:polygres-data-pipeline
+
 /polygres:polygres-cli
 
 /polygres:polygres-sdk
@@ -123,15 +135,29 @@ workflow yourself:
 
 /polygres:polygres-troubleshooting
 
-Use the skill
+Ask in your own words
 
-Describe the result you want. The agent should select the relevant CLI, SDK,
+Describe the result you want. You do not need to know which skill, schema, or
 
-design, or troubleshooting workflow, resolve the target project when needed,
+retrieval method you need. The agent can inspect the relevant parts of your
 
-and ask before destructive or secret-producing operations.
+workspace and selected project, recommend an approach, and ask for approval
+
+before it uploads data or changes a project.
 
 Example prompts:
+
+Look at my data and use $polygres-data-pipeline to set up a Polygres data pipeline.
+
+Look at this project and tell me what I could do with Polygres.
+
+Turn these support conversations into searchable agent memory. Keep customer
+
+secrets out and show me what will be stored before uploading anything.
+
+Build a repeatable pipeline from this API. I need exact search for product
+
+codes and semantic search for customer questions.
 
 Log me into Polygres and help me select the correct project.
 
@@ -172,6 +198,142 @@ corrective action.
 The installed polygres --help output remains authoritative if the local CLI
 
 version differs from the skill examples.
+
+Set up a data pipeline from one prompt
+
+You can start with a broad request such as “Look at my data and set up
+
+Polygres.” If you are still exploring, ask “What could I do with Polygres?”
+
+The agent will inspect a small, read-only sample of the data and the relevant
+
+parts of your project, then suggest the outcome most likely to help. It will
+
+not change anything while it is making a recommendation.
+
+Once you ask it to proceed, the agent works through the setup with you:
+
+It checks the source shape, existing schema, ownership fields, and current
+
+retrieval setup. Inspection stays limited to what is needed for the task.
+
+It recommends the smallest useful design. That might reuse an existing
+
+table, add a purpose-built table, start with text search, add pgContext for
+
+semantic recall, or use graph retrieval when real relationships make the
+
+results better.
+
+It prepares runnable, source-specific code for the parts you need, such as a
+
+source adapter, privacy filter, safe writer, resume checkpoints, retrieval
+
+function, and focused tests.
+
+Before the first upload or project change, it shows one review covering the
+
+target project, data being stored, schema changes, retrieval setup, external
+
+services, costs, and anything destructive or difficult to reverse.
+
+After you approve that review, it applies the covered changes and tests a
+
+small end-to-end example before continuing with a larger import or ongoing
+
+integration.
+
+The result is more than a schema suggestion. You receive the local code and
+
+operator instructions needed to run the selected workflow, plus a clear report
+
+of what was verified. If part of the setup cannot be completed, the agent marks
+
+it as partial or blocked instead of presenting an untested scaffold as a
+
+working pipeline.
+
+Route each write to the right interface
+
+The skill chooses the write surface by workload, not by a file extension:
+
+Workload Recommended interface
+
+One JSON record or runtime event for an eligible existing table Validate, then use the Runtime rows surface.
+
+Dataset or bounded backfill Use the reviewed import workflow. If it feeds a pgContext collection, reconcile the imported source rows before declaring retrieval ready.
+
+Source-row deletion Use an approved deletion path, then remove or invalidate the matching Context points and other derived retrieval evidence. The rows surface has no delete mode.
+
+For a Context-backed row write, the skill preserves the exact request and
+
+idempotency key so it can safely resume the Context step during the 24-hour
+
+replay window. A row-only write has no replay protection, so the skill checks a
+
+stable business key before deciding whether another write is necessary.
+
+Embeddings and semantic search
+
+When semantic search or memory would help, the agent checks your existing
+
+embedding setup first. It can recommend a compatible local model and a hosted
+
+alternative, including the privacy, hardware, and cost tradeoffs that matter
+
+for your source. You choose between the reviewed options before data is sent to
+
+an external model.
+
+Polygres stores and searches embeddings, but it does not generate them. The
+
+pipeline creates embeddings before writing source records and uses the same
+
+compatible model for search queries. If embeddings are unnecessary or not yet
+
+available, the agent can start with relational or text retrieval and leave
+
+semantic search for later.
+
+Capture conversations and build agent memory
+
+The pipeline skill can turn conversations or agent activity into
+
+pgContext-backed memory. It can add capture, recall, or both, depending on what
+
+you want the agent to remember. Captured records keep stable source IDs and
+
+provenance so updates, retries, and deletions can be handled safely.
+
+Privacy filters run before content is stored or embedded. System instructions,
+
+credentials, retrieved context, attachments, and tool output are excluded
+
+unless you explicitly choose to include them. Retrieval still needs to respect
+
+your application’s authorization rules; a search filter is not a replacement
+
+for access control.
+
+If you approve an agent integration, the skill can add clearly marked capture
+
+and recall guidance to that agent’s instruction file without replacing your
+
+existing instructions. For reliable ongoing capture, it also needs a tested
+
+application hook, wrapper, queue, or worker. The final report tells you whether
+
+capture is automatic, retryable, best effort, or manual.
+
+Credentials stay local
+
+Generated setup files use an empty .env.example and an ignored .env file.
+
+Add values directly to .env on your computer instead of pasting secrets into
+
+chat. Credential checks report only whether each required value is present,
+
+missing, or empty.
 
 Build with the Python SDK
 
@@ -279,6 +441,8 @@ Update
 
 Update a skill installed with the generic installer:
 
+npx skills update polygres-data-pipeline
+
 npx skills update polygres-cli
 
 npx skills update polygres-sdk
@@ -304,6 +468,8 @@ Update the Claude Code marketplace and plugin:
 Uninstall
 
 Remove a global generic installation:
+
+npx skills remove --global polygres-data-pipeline
 
 npx skills remove --global polygres-cli
 
@@ -346,6 +512,14 @@ psql prompt interactively.
 Runtime API-key secrets are displayed once. Run key creation in your own
 
 terminal when agent-transcript exposure is unacceptable.
+
+Store local runtime credentials in an ignored .env , not in chat, source
+
+files, commands, or generated plans.
+
+Local embedding installation, model download, or service startup requires
+
+explicit approval after the device feasibility check.
 
 Replacement imports, migrations, revocations, deletes, and schema mutations
 

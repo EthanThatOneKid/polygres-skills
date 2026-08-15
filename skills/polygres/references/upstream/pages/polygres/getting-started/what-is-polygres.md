@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/what-is-polygres
 title: What is Polygres? | Polygres
-source_hash: 3c89fb06986db77608c001e9ed8b306de3cd2c6f0a464b3f30f49d148732312d
+source_hash: 1d7aa9ad621d2b58687d6e7a69e03ffc21debd699a07f8a788f26eb0d7bb8444
 discovered_from: https://docs.evokoa.com/polygres
 
 # What is Polygres? | Polygres
@@ -19,17 +19,9 @@ The result is one operational data foundation for your SaaS product: PostgreSQL 
 
 One database, complementary retrieval modes
 
-Mode What it helps you find
+Graph pgContext AI Search Text Legacy Vector Legacy Hybrid
 
 Graph Records connected through relationships, such as a customer, their account, tickets, messages, and related incidents.
-
-Legacy Vector Records with similar meaning through a persisted pgvector configuration registered before new registration was retired.
-
-Text Words and phrases through TSVector full-text search, or close text matches through Fuzzy pg_trgm search.
-
-Legacy Hybrid Results that combine a ready graph build with an effectively Ready persisted Legacy vector registration.
-
-pgContext AI Search The normal path for new semantic and composed retrieval, with collection-based dense, grouped, text-hybrid, graph-composed, rank-fusion, and Joint methods through the CLI, API, or Python SDK.
 
 Polygres does not generate embeddings. You bring or create embeddings in your
 
@@ -98,6 +90,26 @@ The dashboard is the starting point for SaaS customers. It provides organization
 A concrete example
 
 Consider a customer-support product with accounts , customers , tickets , and messages tables:
+
+accounts account_id
+
+▼
+
+▼
+
+customers customer_id → account_id
+
+▼
+
+tickets ticket_id → customer_id
+
+▼
+
+messages message_id → ticket_id
+
+▼
+
+incidents related through tickets
 
 PostgreSQL serves the product’s normal ticket and customer workflows.
 

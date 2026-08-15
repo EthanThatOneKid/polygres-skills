@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/imports-and-migrations
 title: CLI imports and migrations | Polygres
-source_hash: 19c8fdbb738a8aa0926c0f4b649e533b8e94476188c4eac8d5f13f8054e9453c
+source_hash: 7b34fdb2475e678cb3b45b0f830c41f488679639900e4a7feb82c546b298607e
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI imports and migrations | Polygres
@@ -71,6 +71,20 @@ and does not submit the final import. Retry after choosing a smaller file or
 
 after the project’s effective tier policy changes.
 
+If an import finishes with failed , inspect the exact job in JSON mode:
+
+polygres --json import status < job-uui d >
+
+The job can include a stable error_code , an optional error_variant , a
+
+readable error_message , and progress or database details. Use the code and
+
+variant to decide what to correct. Do not match the message text. The normal
+
+CLI output prints the error code and message for a failed import; JSON mode is
+
+the complete record to retain for automation or support.
+
 SQL migrations
 
 polygres migrations list
@@ -98,3 +112,21 @@ If another migration is already running, the command reports
 MIGRATION_LOCK_BUSY and exits 6. Your migration is unchanged. Wait for the
 
 other migration to finish, then run the same command again.
+
+A failed migration record can include error_code , optional error_variant ,
+
+error_message , and safe PostgreSQL context. Inspect it with:
+
+polygres --json migrations list
+
+Use the stable code and variant for automation. Preserve the migration ID and
+
+request ID when contacting support. Correct invalid SQL in a new forward
+
+migration; retry the same immutable migration only when its SQL remains
+
+intended and the reported cause was transient.
+
+See Handle API errors for the common response
+
+format, retry guidance, and safe logging practices.

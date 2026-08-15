@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/command-reference
 title: CLI command reference | Polygres
-source_hash: 6ab8d3f7fa479ef6792b28c490ca947141166e3b4025bea7be2bd7944eb257fe
+source_hash: 1eb321b4205748896e92f533570dd1516999f74d4c03b3789d057d688fcdb6b9
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI command reference | Polygres
@@ -20,6 +20,8 @@ Connection env , db info , db psql
 API keys keys create , keys list , keys revoke
 
 Data import csv , import status , migrations list , migrations apply
+
+Rows rows validate , rows insert , rows upsert , rows ignore
 
 Graph graph discover , graph config export , graph config apply , graph build , graph status
 
@@ -60,3 +62,27 @@ through application APIs and the pgContext composition commands. Use
 polygres <command> --help for command-specific arguments, and place global
 
 flags before the command.
+
+Row command options
+
+All row commands require --table and --file <path|-> . They default to
+
+--schema public . Repeat --returning to select returned columns.
+
+rows validate accepts --mode insert|upsert|ignore . Upsert and ignore require
+
+one or more --conflict-column values. Upsert also accepts repeatable
+
+--update-column values.
+
+Execution commands accept --wait (the default), --no-wait , and
+
+--timeout <seconds> . Add either --reconcile-context or
+
+--context-collection <uuid> to reconcile one pgContext collection. Context
+
+reconciliation supports --idempotency-key <key> ; the CLI generates a key for
+
+an executing command when one is not supplied.
+
+See Write rows for complete examples and safe recovery guidance.

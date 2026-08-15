@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/graph
 title: CLI graph retrieval | Polygres
-source_hash: b3b5bed6911d20df0a83cc5880ce574a933fd65aa2241aa25d15be69825135f8
+source_hash: 1890b6f5452ec496f67f4490ee84b5c1482b630babcd20354fee22aa80c664de
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI graph retrieval | Polygres
@@ -17,4 +17,4 @@ polygres graph build
 
 polygres graph status
 
-Discovery proposes configuration but does not apply it. Export emits configuration: null on an unconfigured project. Apply accepts an exported wrapper or raw configuration and validates it before an API request. The CLI configures graph retrieval only. Query it with the Python SDK after the build is ready.
+Discovery proposes configuration but does not apply it. Export emits configuration: null on an unconfigured project. Apply accepts an exported wrapper or raw configuration and validates it before an API request. The CLI configures graph retrieval only. After the build is ready, query it with the Python SDK or follow the Graph Retrieval API reference for REST and Python examples.

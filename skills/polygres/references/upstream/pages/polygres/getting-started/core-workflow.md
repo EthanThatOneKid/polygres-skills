@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/core-workflow
 title: Core workflow | Polygres
-source_hash: 77701d48129edcd171691e418870d4550a60bcf07936bb287b7e45eab189b1c2
+source_hash: 99002aa0090b3271669570c6d19cd543ab122aabf64c6aa9e353659ce986c411
 discovered_from: https://docs.evokoa.com/polygres
 
 # Core workflow | Polygres
@@ -8,6 +8,58 @@ discovered_from: https://docs.evokoa.com/polygres
 Core workflow
 
 The Polygres customer journey starts with an account and organization, not an API key. Set up the shared SaaS workspace first, then create projects, connect data, configure retrieval, and add application access.
+
+1 Create your account
+
+Sign up with the available method and accept the current legal terms. Polygres creates your organization and makes you its owner.
+
+Details →
+
+2 Use your organization or accept an invitation
+
+The organization is the top-level workspace for members, roles, project allowances, and projects.
+
+/{organization} /{organization}/members
+
+Details →
+
+3 Create a project
+
+Polygres provisions the managed PostgreSQL environment. Wait until the project reports ready.
+
+/{organization}/new
+
+Details →
+
+4 Connect or load data
+
+Use the pooled URL for application traffic and the direct URL for migrations, imports, and bulk work.
+
+/{organization}/{projectId}/connect
+
+Details →
+
+5 Configure retrieval
+
+Set up graph, vector, text, hybrid, and pgContext AI Search over the tables you already manage.
+
+/{organization}/{projectId}/workspace
+
+Details →
+
+6 Query through the Runtime API or SDK
+
+After confirming readiness, exercise queries through the Runtime API, CLI, or Python SDK.
+
+Details →
+
+7 Query from your application
+
+Create a project API key and move the same queries into trusted backend code.
+
+/{organization}/{projectId}/settings
+
+Details →
 
 1. Create your account
 

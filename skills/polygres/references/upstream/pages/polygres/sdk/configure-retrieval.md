@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/configure-retrieval
 title: Dashboard retrieval setup | Polygres
-source_hash: 695e89354ae6e579b070a023588cd19a565902b41117f63a6a93d61e00efe93f
+source_hash: cda834f77e988068fbab247cd52cb66f3c3c89731d5e911153e3986ee8aa3ae3
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard retrieval setup | Polygres
@@ -395,11 +395,13 @@ Before testing graph, vector, text, or Hybrid retrieval in the dashboard, confir
 
 Graph: saved configuration, meaningful nodes and edges, latest build Ready .
 
-pgContext: collection ready, intended vector index Ready , collection
+pgContext: collection ready, point reconciliation current, and the
 
-and vector defaults understood, and vector_name supplied when the query
+intended vector index Ready when it uses HNSW. Collection and vector
 
-should not use the collection default.
+defaults must be understood, and vector_name supplied when the query should
+
+not use the collection default.
 
 Legacy vector: persisted enabled registration exists, embeddings are
 

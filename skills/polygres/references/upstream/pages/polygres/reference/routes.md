@@ -1,13 +1,13 @@
 source: https://docs.evokoa.com/polygres/reference/routes
-title: Retrieval routes | Polygres
-source_hash: d8e13b2567c17f4f756048c9cc2413e8603b02fcd8ef731a405331c5d75afe5d
+title: Runtime routes | Polygres
+source_hash: 895f27277041138499a3a47d4d697d72e6e2914954e050284254854432e82d7b
 discovered_from: https://docs.evokoa.com/polygres
 
-# Retrieval routes | Polygres
+# Runtime routes | Polygres
 
-Retrieval routes
+Runtime routes
 
-This page covers retrieval routes, not every dashboard or control-plane route.
+This page covers application-facing Runtime routes, not every dashboard or control-plane route.
 
 Gateway retrieval paths are relative to the gateway API base URL, such as
 
@@ -27,7 +27,25 @@ Dashboard Authorization: Bearer <dashboard_session_jwt> .
 
 Retrieval Authorization: Bearer poly_live_<32hex> sent to the project Runtime API URL. Dashboard query surfaces may use a dashboard session through gateway-managed calls.
 
+Row write A project_full Runtime API key, or a delegated Runtime token with the exact rows:write scope, sent to the project Runtime API URL.
+
 An API key used on a dashboard-only route returns AUTH_MODE_NOT_ALLOWED .
+
+Row writes
+
+Method Route Auth Purpose
+
+POST /tables/{schema_name}/{table_name}/rows/validate Row write Check one insert, upsert, or ignore request without changing data.
+
+POST /tables/{schema_name}/{table_name}/rows Row write Insert, upsert, or ignore one row, with optional pgContext reconciliation.
+
+These routes are available directly on the project Runtime API. They are not
+
+available through the Gateway Runtime token used for dashboard retrieval. See
+
+the Runtime Row Writes reference for payloads,
+
+responses, idempotency, and recovery guidance.
 
 Graph
 
@@ -42,6 +60,8 @@ POST /graph/related Retrieval Return related entities.
 POST /graph/path Retrieval Find paths between source and target entities.
 
 POST /graph/connection Retrieval Find connections among two to ten entities.
+
+See the Graph Retrieval API reference for request and response shapes, traversal controls, filter scoping, pagination, and REST and Python examples.
 
 Vector
 
@@ -139,7 +159,19 @@ configuration.
 
 Response conventions
 
-Successful and error responses include a top-level request_id . Errors also use an error object with code , message , and details .
+Successful and error responses include a top-level request_id . Errors also use
+
+an error object with code , optional variant , catalog-owned message , and
+
+safe details . The variant identifies the specific condition when one code has
+
+more than one message or status. Branch on code and variant , not message
+
+text. See Handle API errors for integration
+
+patterns and the complete error catalog for exact
+
+identities.
 
 For a gateway-proxied request, X-Request-ID identifies the gateway request. The JSON body’s request_id and the optional X-Polygres-Upstream-Request-ID header identify the corresponding Runtime request. Preserve both IDs when contacting support.
 

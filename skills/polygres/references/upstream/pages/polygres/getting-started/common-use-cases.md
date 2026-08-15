@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/common-use-cases
 title: Common use cases | Polygres
-source_hash: dea8447ec36f523869f1759a92c07aac711f61df153ad4177be6f375b9b057f3
+source_hash: 11d092a6434c3620d8cff489f10680902bf942cf76d2323e601ec7492e6d3cbb
 discovered_from: https://docs.evokoa.com/polygres
 
 # Common use cases | Polygres
@@ -42,6 +42,36 @@ matching physical index to be Ready; an existing exact-scan index_kind: none
 registration does not. A physical-only pgvector index is never implicitly
 
 usable.
+
+Get a recommendation for your own data
+
+You do not have to choose a retrieval mode before getting started. With the
+
+polygres-data-pipeline Agent Skill ,
+
+you can ask a coding agent to inspect a small, read-only sample of the data it
+
+can access and recommend the most useful first workflow for your project.
+
+Look at this project and tell me what I could do with Polygres.
+
+The recommendation is tailored to the source, schema, and application entry
+
+points the agent finds. It might suggest exact text search for support codes,
+
+semantic recall for conversations, graph retrieval for connected accounts, or
+
+a simpler relational workflow when that is enough. Nothing is changed during
+
+this recommendation step.
+
+If you ask the agent to continue, it prepares the pipeline and shows you the
+
+data scope, schema, retrieval choices, embedding options, costs, and project
+
+changes before anything is uploaded or changed. After approval, it verifies a
+
+small end-to-end example so you can judge both the setup and the result quality.
 
 Customer support search and investigation
 
@@ -118,6 +148,18 @@ untrusted client request. pgContext collections use native
 pgcontext.vector(n) columns and support dense, text-hybrid, graph-composed,
 
 rank-fusion, and Joint retrieval.
+
+For agent memory, the data-pipeline skill can connect conversation capture and
+
+recall to a pgContext collection. It filters content before storage or
+
+embedding, preserves the source of each memory, and can add capture and recall
+
+guidance to your agent after you approve the integration. Reliable automatic
+
+capture also needs a tested application hook, wrapper, queue, or worker; the
+
+setup report tells you exactly what level of automation was verified.
 
 Account and customer intelligence
 
@@ -208,6 +250,8 @@ users, then move the validated query into backend application code.
 Next steps
 
 Product Guides
+
+Polygres Agent Skills
 
 Load and manage data
 

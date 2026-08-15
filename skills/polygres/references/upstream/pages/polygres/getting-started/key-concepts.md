@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/key-concepts
 title: Key concepts | Polygres
-source_hash: b34239d4b78261b34b6283fa7b9b0e4fa240ec0f9e131c1c610387c8773ad2f6
+source_hash: 3c9d878395ab5808ad6dec3f910893926997ae7f11814e6be821d4f502462528
 discovered_from: https://docs.evokoa.com/polygres
 
 # Key concepts | Polygres
@@ -49,11 +49,17 @@ PostgreSQL connections
 
 Every project exposes two connection URLs:
 
-Connection Use it for
+DATABASE_URL Pooled connection
 
-Pooled ( DATABASE_URL ) Application traffic, ORMs, serverless functions, and short request-time queries.
+Application traffic, ORMs, serverless functions, and short request-time
 
-Direct ( DIRECT_URL ) Schema changes, migrations, COPY , imports, restores, and tools that need a stable database session.
+queries.
+
+DIRECT_URL Direct connection
+
+Schema changes, migrations, COPY , imports, restores, and tools that need
+
+a stable database session.
 
 Both connect to the same PostgreSQL project. Choose the URL based on the job rather than creating separate databases.
 
@@ -63,15 +69,29 @@ For more details, see Connect Your App and Connection Examples .
 
 Credentials
 
-Polygres separates three kinds of access so that one secret does not unlock every surface.
+Polygres separates three kinds of access so that one secret does not unlock
 
-Credential Main purpose
+every surface. Hover a credential to see exactly what it can — and cannot —
 
-Dashboard session Manage the organization and projects, use data tools, configure retrieval, test queries, and manage allowed credentials.
+reach.
 
-Native PostgreSQL password Connect an application or database tool through the pooled or direct PostgreSQL URL.
+Credential
 
-Polygres API key Call graph, vector, text, hybrid, and pgContext retrieval, plus explicit pgContext Runtime resource management, from trusted application code. Keys look like poly_live_<...> and the raw value is shown once.
+Dashboard session Manage the organization and projects, use data tools, configure retrieval, test queries, and manage allowed credentials. ✕
+
+Native PostgreSQL password Connect an application or database tool through the pooled or direct PostgreSQL URL. ✕
+
+Polygres API key Call graph, vector, text, hybrid, and pgContext retrieval, plus explicit pgContext Runtime resource management, from trusted application code. Keys look like poly_live_<...> and the raw value is shown once. ✕
+
+Surface
+
+Dashboard Organization, projects, data tools, retrieval setup ✕
+
+PostgreSQL protocol Pooled and direct connection URLs ✕
+
+Runtime retrieval API Graph, vector, text, hybrid, and pgContext queries ✕
+
+Each credential unlocks exactly one surface.
 
 A dashboard session is not an application API key. A PostgreSQL password does not authenticate retrieval calls. A Polygres API key cannot reveal the database password or perform dashboard-only setup work.
 

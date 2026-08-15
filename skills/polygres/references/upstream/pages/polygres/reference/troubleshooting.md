@@ -1,13 +1,23 @@
 source: https://docs.evokoa.com/polygres/reference/troubleshooting
 title: Troubleshooting | Polygres
-source_hash: 7e80a64cb5b992e6a9d0575068c82492213ed6b504cfdd3ea1dcd147e9795533
+source_hash: 3d7de516b662b371468f4b3fccde5d3c1d187097896009bc08c579f13ea9654e
 discovered_from: https://docs.evokoa.com/polygres
 
 # Troubleshooting | Polygres
 
 Troubleshooting
 
-Start with the symptom. Capture the request_id , exact route, project ID, and a timestamp with timezone before retrying. For gateway-proxied requests, also capture X-Request-ID and X-Polygres-Upstream-Request-ID . Do not include credentials or sensitive data in diagnostic logs.
+Start with the symptom. Capture the stable error code , optional variant ,
+
+request_id , exact route, project ID, and a timestamp with timezone before
+
+retrying. For gateway-proxied requests, also capture X-Request-ID and
+
+X-Polygres-Upstream-Request-ID . Do not include credentials or sensitive data
+
+in diagnostic logs. See Handle API errors for
+
+the response format and retry guidance.
 
 Scheduled maintenance
 
@@ -91,7 +101,7 @@ CSV start returns IMPORT_CANCELLED The preview job was cancelled. Create a new C
 
 SQL import says empty Check for IMPORT_SQL_EMPTY and verify the uploaded body is non-empty. Submit a non-empty SQL body.
 
-Job is failed Read error_code , error_message , and progress ; also verify project is not read-only. Correct the input/runtime cause and create a new job. Escalate non-actionable or repeated failures.
+Job is failed Read error_code , optional error_variant , error_message , and progress ; also verify the project is not read-only. Use the code and variant to identify the cause, then correct it before creating a new job. Escalate non-actionable or repeated failures with the job and request IDs.
 
 Job appears stuck Compare status , progress , and updated_at across refreshes. Do not start parallel imports. Escalate with job ID and timestamps when there is no progress or error.
 
@@ -109,7 +119,7 @@ Apply returns MIGRATION_LOCK_BUSY Another migration is already running. Your mig
 
 Apply returns checksum mismatch MIGRATION_SQL_CHECKSUM_MISMATCH means stored SQL and checksum disagree. Stop retrying and contact support; do not alter or bypass the record.
 
-Migration becomes failed PostgreSQL executed the migration and returned an error. Changes made earlier in that migration were rolled back. Read error_message and inspect the database error context. Correct the problem with a new forward migration, or retry only when the stored SQL remains intended and the cause was transient.
+Migration becomes failed PostgreSQL executed the migration and returned an error. Changes made earlier in that migration were rolled back. Read error_code , optional error_variant , error_message , and the available database context. Use the code and variant to identify the cause. Correct bad SQL with a new forward migration, or retry the same migration only when its SQL remains intended and the cause was transient.
 
 Migration remains applying Refresh the detail and check the last update time. Avoid concurrent apply calls; escalate when it does not transition and no active operation is visible.
 
@@ -140,6 +150,8 @@ Symptom Check Action
 Existing Legacy vector update fails validation Verify the persisted registration, table, row ID, fixed-dimension vector(n) column, dimensions 1..2000 , metric, metadata columns, filter columns, and limits. Correct the existing registration. Use pgContext for new vector setup; creation and re-enabling through Legacy routes are retired.
 
 Vector query rejects embedding Compare embedding length with configuration dimensions ; verify all values are finite. Generate the correct fixed-length embedding. Send either max_distance or min_similarity , not both.
+
+Vector or hybrid query returns LIMIT_OUT_OF_RANGE Compare the final result limit with details.max . Its effective maximum comes from the project tier’s retrieval_max_limit and can be lower than the 1..1000 request-shape ceiling. Hybrid vector_limit has its own 1..1000 request-shape range. Reduce limit to the effective maximum. Correct vector_limit only when it is outside its request-shape range. Do not retry a fallback route with the same invalid value.
 
 Vector index is failed or stale Read index_error ; inspect recent target, metric, or schema changes. Correct the target and reindex. Escalate repeated failures with config name and request ID.
 

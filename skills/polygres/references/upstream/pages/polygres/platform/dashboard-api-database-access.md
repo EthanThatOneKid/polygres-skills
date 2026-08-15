@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/dashboard-api-database-access
 title: Dashboard, API, and database access | Polygres
-source_hash: 38b2cfccde9baa2d464f3be86fdf8e4428589a50854686a6669b9d3d5e7fd1a8
+source_hash: 9a0b4af7f73f05c91d62c817db102fc077e5b8a3fc4089ca7746b2180425c1d6
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard, API, and database access | Polygres
@@ -68,6 +68,16 @@ Configure AI Context in the dashboard
 The Vector page has separate pgContext collections and Legacy tabs. Each pgContext collection appears separately, with one row for each named vector in that collection. Creating a collection creates its initial vector and makes that vector the collection default. Use Add vector to attach more named vectors to the same collection.
 
 Every collection has one default vector. That choice is independent of the project’s default collection: the project default chooses a collection when no collection is named, while the collection default chooses a vector when no exact vector_name is supplied. Ranked retrieval can instead select an exact vector by name.
+
+The project overview treats AI Context as ready only when a collection is
+
+ready, its point reconciliation is current, and its default vector is ready
+
+when that vector uses HNSW. A ready collection without a project default is
+
+usable only when callers select it explicitly, so the overview asks you to
+
+choose a default for searches that omit a collection.
 
 In collection setup, Existing vector column lists eligible native pgcontext.vector(n) and compatible pgvector.vector(n) columns. Creating from a compatible pgvector column converts it in place. If that column has a persisted Legacy registration, the dashboard asks for confirmation and deletes the registration after the collection or additional vector is created successfully. The Legacy tab shows persisted Legacy registrations that are effectively Ready ; a physical-only pgvector index is not implicitly registered or usable by Legacy retrieval.
 

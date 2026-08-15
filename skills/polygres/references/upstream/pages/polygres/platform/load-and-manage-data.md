@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/load-and-manage-data
 title: Load and manage data | Polygres
-source_hash: d289ca7622caf314b70ae238be45be3c917f8a8d1e2b0877245a6b5dc28bd225
+source_hash: 1dff93ffc6ec6f13332d46fb9c4810891758d4f3e0eb07ae96e5b59ad405f1e9
 discovered_from: https://docs.evokoa.com/polygres
 
 # Load and manage data | Polygres
@@ -24,6 +24,58 @@ Upload CSV, SQL, or pg_dump data Import ( /{organization}/{project_id}/import )
 Apply an ordered, repeatable schema change Migrations ( /{organization}/{project_id}/migrations )
 
 From a terminal, use polygres import csv and polygres migrations apply . See CSV imports and Migrations .
+
+Build a repeatable pipeline with an agent
+
+Use the polygres-data-pipeline Agent Skill
+
+when you want more than a one-time import. It can inspect a small sample from a
+
+file, API, database, conversation export, or existing Polygres project and
+
+recommend how to store and retrieve it.
+
+You can start with a simple request:
+
+Look at this data and set up the smallest useful Polygres pipeline.
+
+The agent can reuse an existing table or propose a new schema, choose between
+
+relational, text, pgContext, and graph retrieval, and prepare the source adapter,
+
+privacy filter, writer, resume checkpoints, retrieval code, and tests needed for
+
+the selected workflow. If semantic search is useful, it also explains the
+
+local and hosted embedding options. Polygres stores and searches embeddings;
+
+the pipeline is responsible for generating them.
+
+Before uploading data or changing the project, the agent shows you one review
+
+with the target project, data scope, schema and retrieval changes, external
+
+services, costs, and destructive effects. After approval, it verifies a small
+
+end-to-end example before continuing with a full backfill or ongoing capture.
+
+Use the dashboard for quick, hands-on imports and edits. Use the pipeline skill
+
+when the process needs to be repeatable, resumable, privacy-filtered, or
+
+connected to an application or agent memory workflow.
+
+For a single JSON record or runtime event, have the pipeline validate and use
+
+the Runtime row-write workflow instead of
+
+turning it into an import. Use imports for datasets and backfills. When an
+
+import feeds a pgContext collection, reconcile the imported source rows before
+
+serving semantic retrieval. Deleting a source row also requires cleanup of its
+
+Context points and any other derived retrieval evidence.
 
 Browse and edit tables
 
@@ -155,6 +207,18 @@ Cancelled — stopped before completion.
 
 The page refreshes active jobs automatically. You can cancel a Queued or Running job. A finished job cannot be cancelled, and cancelling does not imply that every already-applied statement or row was rolled back.
 
+When a job is Failed , open its details and record the stable error code,
+
+optional variant, message, progress, job ID, and request ID. Use the code and
+
+variant to identify the corrective action; do not build automation around the
+
+message text. Correct the cause before starting another import. A local timeout
+
+or closed browser does not mean the server-side job stopped, so refresh the
+
+same job before submitting the file again.
+
 Apply forward-only migrations
 
 Use Migrations for versioned, repeatable schema changes.
@@ -219,10 +283,14 @@ SQL import is blocked Remove unsupported statements and use dashboard-supported 
 
 pg_dump restore fails Check dump format, target compatibility, referenced roles or extensions, and the job error.
 
-Migration fails Read the database error. Polygres rolls back database changes from the failed migration. Saved migrations are immutable, so correct bad SQL in a new forward migration; retry the same migration only when the cause was transient.
+Migration fails Read the stable error code, optional variant, message, and available database context. Polygres rolls back database changes from the failed migration. Saved migrations are immutable, so correct bad SQL in a new forward migration; retry the same migration only when the cause was transient.
 
 Migration apply returns MIGRATION_LOCK_BUSY Another migration is already running. Your draft is unchanged. Wait for the active migration to finish, then retry the same draft.
 
 Platform error has a request ID Keep the request ID and include it when contacting support.
 
 After loading data, continue with Configure retrieval or the Polygres CLI retrieval setup commands.
+
+For the shared error format and guidance on retries, request IDs, and safe
+
+logging, see Handle API errors .

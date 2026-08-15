@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/quickstart
 title: Quickstart | Polygres
-source_hash: 3c490e545379350304efa53c5202018e0b308e6c693c4f402c97103ead61136e
+source_hash: 4c5aa86d8e9a77efab11f15be19b60bf2d4d5ae41d105b3ad029a987bcff7ecf
 discovered_from: https://docs.evokoa.com/polygres
 
 # Quickstart | Polygres
@@ -15,7 +15,7 @@ An active Polygres account. Signup, organization setup, and any required email v
 
 Python 3.10 or newer.
 
-For the CLI path, pipx install "polygres-cli==0.2.2" . For SDK calls, install polygres-sdk==0.2.1 in your application virtual environment.
+For the CLI path, pipx install "polygres-cli==0.3.0" . For SDK calls, install polygres-sdk==0.3.0 in your application virtual environment.
 
 1. Create and select a project
 
@@ -107,7 +107,7 @@ export POLYGRES_RUNTIME_URL = "https://{project_id}.api.db.polygres.com/v1"
 
 In your application virtual environment:
 
-pip install "polygres-sdk==0.2.1"
+pip install "polygres-sdk==0.3.0"
 
 import os
 

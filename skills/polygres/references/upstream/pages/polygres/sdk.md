@@ -1,15 +1,17 @@
 source: https://docs.evokoa.com/polygres/sdk
 title: SDK guide | Polygres
-source_hash: 969f26cec108a6a94e48f62bbe306dee9f75584c3a2803bb4e26503f3a503b86
+source_hash: 9ee4ebb11ab3b4e439b68aeb0ed5a5b9292bafafac92036baba8a7b0656cd32f
 discovered_from: https://docs.evokoa.com/polygres
 
 # SDK guide | Polygres
 
 SDK guide
 
-For Runtime API application code, start with the Python SDK
+For Runtime API application code, start with the Python SDK ,
 
-and retrieval integration patterns .
+single-row writes , and retrieval integration
+
+patterns .
 
 This section also currently contains related product guidance that is not part
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/pgcontext-api
 title: pgContext API | Polygres
-source_hash: cc6e80d2e07b3f0158d3d96e959a1ad043db59ec551d6450e9d405fed01fc7a5
+source_hash: 3f98df5f43656a35f36cd96c1b1eb554815dc8e7332ebb36b7916aa3ffc51273
 discovered_from: https://docs.evokoa.com/polygres
 
 # pgContext API | Polygres
@@ -35,15 +35,27 @@ Every response contains request_id . Preserve it when reporting a failure. Error
 
 "error" : {
 
-"code" : "CONTEXT_COLLECTION_NOT_READY" ,
+"code" : "CONTEXT_DELETE_CONFIRMATION_INVALID" ,
 
-"message" : "Context collection is not ready." ,
+"variant" : "context_collection_delete_confirmation_invalid" ,
+
+"message" : "Context collection delete confirmation is invalid." ,
 
 "details" : {}
 
 }
 
 }
+
+variant is omitted when the base error code supplies the message. A variant
+
+selects the exact catalog message and can also select a different status for
+
+the same code. Branch on code and, when present, variant . Do not parse the
+
+message text. The complete error catalog lists every
+
+public pgContext base error and variant.
 
 Request bodies are strict. Unknown fields return 400 CONTEXT_REQUEST_INVALID . Response bodies can gain additive fields.
 

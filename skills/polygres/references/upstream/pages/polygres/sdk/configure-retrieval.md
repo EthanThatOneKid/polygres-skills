@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/configure-retrieval
 title: Dashboard retrieval setup | Polygres
-source_hash: cda834f77e988068fbab247cd52cb66f3c3c89731d5e911153e3986ee8aa3ae3
+source_hash: f84ff1ea86a935e621b864d76241af4066da6a821f99757888ad1af5615f4730
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard retrieval setup | Polygres
@@ -8,6 +8,14 @@ discovered_from: https://docs.evokoa.com/polygres
 Dashboard retrieval setup
 
 Retrieval setup does not replace data modeling. It tells Polygres which existing tables, relationships, embedding columns, and text columns should participate in retrieval. Start after your schema and initial data are present.
+
+Legacy Vector and Legacy Hybrid are deprecated compatibility surfaces for
+
+existing pgvector registrations. New vector and hybrid workflows use pgContext
+
+AI Search, which brings semantic, lexical, filter, graph, and Joint retrieval
+
+into one collection-centered setup.
 
 Prepare the source data
 
@@ -17,11 +25,11 @@ Retrieval feature Source data it needs
 
 Graph Tables with stable primary or unique identifiers and meaningful relationships between columns.
 
-Vector (previously registered) A vector(n) column whose rows already contain embeddings, plus a stable row ID column. New pgvector configuration registration is retired.
+Legacy Vector (deprecated) A vector(n) column whose rows already contain embeddings, plus a stable row ID column from a previously registered configuration.
 
 Text search A text or existing tsvector column, plus a stable row ID column.
 
-Hybrid (Legacy) A ready graph build and at least one persisted Legacy vector registration that is effectively Ready. If no effective default exists, the request must name an exact configuration.
+Legacy Hybrid (deprecated) A ready graph build and at least one persisted Legacy vector registration that is effectively Ready. If no effective default exists, the request must name an exact configuration.
 
 pgContext AI Search A stable source key, native pgcontext.vector(n) column or reviewed column/table creation plan, and optional text, result, and filter columns.
 
@@ -81,13 +89,11 @@ Polygres reconciles the saved dashboard configuration with the graph registratio
 
 Tables that use FORCE ROW LEVEL SECURITY cannot be included in a graph build. Remove those tables from the graph or choose a retrieval design that keeps their access rules intact.
 
-Configure vector retrieval
+Maintain deprecated Legacy Vector retrieval
 
-New pgvector configuration registration is retired. Open AI Context (Vector)
+New pgvector configuration registration is retired. Open AI Context (Vector) setup
 
-setup
-
-( /{organization}/{project_id}/workspace/vector ) now creates and manages
+( /{organization}/{project_id}/workspace/context ) to create and manage
 
 pgContext collections. Use a collection for every new searchable vector source;
 
@@ -99,7 +105,7 @@ Previously registered pgvector configurations remain available for existing
 
 vector and hybrid integrations. The dashboard identifies them as legacy
 
-registered columns under the Legacy tab. The Legacy status tooltip
+registered columns under the Legacy tab for standard projects. The Legacy status tooltip
 
 directs you to create a pgContext collection to replace the old configuration.
 
@@ -331,7 +337,7 @@ generated TSVector column from the source table.
 
 List existing TSVector and Fuzzy configurations before creating another so the saved search names and source columns remain easy to identify.
 
-Confirm hybrid readiness
+Confirm deprecated Legacy Hybrid readiness
 
 Hybrid retrieval combines graph and vector signals. It is ready only when:
 
@@ -349,7 +355,7 @@ pgContext is the supported path for new vector setup. It uses
 
 collection-specific capabilities, preflight, verification, and durable
 
-operations. The dashboard’s Vector setup manages the same collection lifecycle.
+operations. The dashboard’s AI Context (Vector) setup manages the same collection lifecycle.
 
 An ordinary collection-creation request through the CLI or API can migrate a
 

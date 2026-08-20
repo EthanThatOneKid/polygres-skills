@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/dashboard-api-database-access
 title: Dashboard, API, and database access | Polygres
-source_hash: 9a0b4af7f73f05c91d62c817db102fc077e5b8a3fc4089ca7746b2180425c1d6
+source_hash: c5783d66751039e076c34708e0562da37fdc37f609dc4311388467ead11b504a
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard, API, and database access | Polygres
@@ -11,13 +11,15 @@ A Polygres project can be used through complementary surfaces. The dashboard ope
 
 Confusing these surfaces is a common setup mistake. Each one is meant for a different job, and each one has its own credential boundary.
 
+Native PostgreSQL access applies only to managed database projects created with Host with Polygres . Synced projects do not provide connection URLs, a native database password, psql , the SQL Editor, or other direct SQL access. Use the source PostgreSQL database for direct queries and mutations.
+
 Surface Best for Access used
 
 Dashboard Organizations, members, projects, imports, SQL, migrations, retrieval setup, query testing, and credential management. Signed-in dashboard session.
 
-Polygres CLI Project selection, environment output, psql , Runtime API keys, CSV import, migrations, and retrieval configuration from a terminal. CLI login session for the authenticated user and active organization.
+Polygres CLI Project selection, Runtime API keys, and retrieval configuration. Managed database projects also support database environment output, psql , CSV import, and migrations. CLI login session for the authenticated user and active organization.
 
-PostgreSQL Normal application reads and writes, ORM traffic, database clients, schema tools, and bulk data work. Project connection URL plus native PostgreSQL password.
+PostgreSQL Managed database projects only: normal application reads and writes, ORM traffic, database clients, schema tools, and bulk data work. Project connection URL plus native PostgreSQL password.
 
 Polygres API or SDK Graph, vector, text, hybrid, and pgContext retrieval, including backend-owned Context collection operations. Project API key such as poly_live_<...> .
 
@@ -29,7 +31,7 @@ Match each surface to the task
 
 Use a dashboard session for signed-in organization and project workflows.
 
-Use a PostgreSQL password for direct or pooled database connections.
+For a managed database project, use a PostgreSQL password for direct or pooled database connections. Synced projects do not issue this credential.
 
 Use a project API key for application retrieval and pgContext Runtime
 
@@ -83,7 +85,7 @@ In collection setup, Existing vector column lists eligible native pgcontext.vect
 
 Use PostgreSQL for application data
 
-A project exposes a pooled URL and a direct URL. Both reach the project’s managed PostgreSQL database.
+A managed database project exposes a pooled URL and a direct URL. Both reach the project’s managed PostgreSQL database. A synced project exposes neither URL and cannot be queried with psql , the SQL Editor, or another direct SQL client.
 
 Pooled URL
 
@@ -155,7 +157,7 @@ This keeps schema and retrieval decisions visible to SaaS operators while giving
 
 A typical production split
 
-A SaaS application commonly uses both project credentials on the server:
+A SaaS application backed by a managed database project commonly uses both project credentials on the server:
 
 DATABASE_URL and the native PostgreSQL password for transactional product data.
 

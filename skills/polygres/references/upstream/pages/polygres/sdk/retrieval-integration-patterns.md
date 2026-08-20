@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/retrieval-integration-patterns
 title: Retrieval integration patterns | Polygres
-source_hash: 32d9b09d74a67f0c83de16149933087ea12081df2b4d7031c18d042b46376a3d
+source_hash: e5f6055cdb7d70a215ee3479cfb3881dc7c7e9763fb6ddd46e8004377edfcec0
 discovered_from: https://docs.evokoa.com/polygres
 
 # Retrieval integration patterns | Polygres
@@ -9,11 +9,19 @@ Retrieval integration patterns
 
 Choose the retrieval mode that matches the signal your application already has.
 
+project.vector and project.hybrid are deprecated compatibility namespaces
+
+for applications with previously registered pgvector configurations. New
+
+semantic and composed retrieval uses a pgContext collection through
+
+project.context .
+
 Application need Recommended method
 
-Search by meaning from an embedding context.search for new setup; vector.search for a previously registered configuration
+Search by meaning from an embedding context.search
 
-Find records similar to a known row vector.similar_to for a previously registered configuration
+Find records similar to a known point context.recommend
 
 Search document language and keywords text.tsvector
 
@@ -23,7 +31,7 @@ Find directly related records graph.related
 
 Traverse a multi-hop neighborhood graph.expand
 
-Combine semantic similarity with graph context Hybrid retrieval
+Combine semantic similarity with graph context context.graph_first , context.vector_first , context.rank_fusion , or context.joint
 
 Search one collection with semantic, lexical, filter, graph, or Joint evidence context AI Search
 
@@ -37,7 +45,7 @@ workflow , then exercise the intended method through the CLI, API,
 
 or SDK.
 
-Semantic search
+Semantic search migration
 
 For new semantic-search setup, create a pgContext collection and use
 
@@ -47,11 +55,11 @@ Search . New pgvector configuration registration is
 
 retired.
 
-The following project.vector example applies only when the project already has
+The following deprecated project.vector example supports an application that
 
-a previously registered vector configuration. Generate query embeddings with
+already has a previously registered vector configuration. Generate query
 
-the same model and dimensions as that saved configuration.
+embeddings with the same model and dimensions as that saved configuration.
 
 query_embedding = embed_text( "How do I request a refund?" )
 
@@ -397,7 +405,11 @@ authorization.
 
 Graph plus vector RAG
 
-Hybrid retrieval is useful when a RAG system needs both semantic relevance and relational context.
+Use project.context when a RAG system needs both semantic relevance and
+
+relational context. The Context namespace keeps collection identity, named
+
+vectors, filters, graph composition, and operational insight together.
 
 Anchor-first RAG
 
@@ -405,19 +417,21 @@ When the application knows the current customer, account, case, or document, tra
 
 query_embedding = embed_text( "What prior incidents mention login failures?" )
 
-page = project.hybrid.graph_first(
+page = project.context.graph_first(
 
-{ "schema" : "public" , "table" : "accounts" , "id" : "acct_123" },
+"support_docs" ,
 
 query_embedding,
 
-config = "knowledge_default" ,
+start = { "schema" : "public" , "table" : "accounts" , "id" : "acct_123" },
+
+vector_name = "title_semantic" ,
 
 max_depth = 2 ,
 
 relationship_types = [ "belongs_to_account" , "references" ],
 
-filters = { "status" : "published" },
+filter = { "must" : [{ "key" : "status" , "match" : "published" }]},
 
 limit = 12 ,
 
@@ -429,17 +443,19 @@ Semantic-first RAG
 
 When there is no reliable anchor, find semantic candidates first and then add graph context:
 
-page = project.hybrid.vector_first(
+page = project.context.vector_first(
+
+"support_docs" ,
 
 query_embedding,
 
-config = "knowledge_default" ,
+vector_name = "title_semantic" ,
 
-vector_limit = 50 ,
+context_limit = 50 ,
 
 max_depth = 1 ,
 
-filters = { "status" : "published" },
+filter = { "must" : [{ "key" : "status" , "match" : "published" }]},
 
 limit = 12 ,
 
@@ -447,27 +463,29 @@ limit = 12 ,
 
 This pattern is useful for global knowledge search where related records improve context after the initial semantic match.
 
-vector_limit is the vector candidate count and limit is the final result count.
+context_limit is the semantic candidate count and limit is the final result
 
-The candidate count has its own 1..1000 request range. The project tier’s
+count. The candidate count has its own 1..1000 request range. The project tier’s
 
 retrieval_max_limit applies to the final result limit . Read it from GET /tiers ,
 
 or use details.max from LIMIT_OUT_OF_RANGE , before retrying with a smaller result
 
-limit. Do not fall back to vector-only search with the same rejected result limit.
+limit. Apply the returned maximum when retrying a request.
 
 Joint ranking
 
 Use joint retrieval when both a semantic query and an anchor should independently contribute to rank:
 
-page = project.hybrid.joint(
+page = project.context.joint(
+
+"support_docs" ,
 
 query_embedding,
 
-{ "schema" : "public" , "table" : "accounts" , "id" : "acct_123" },
+starts = [{ "schema" : "public" , "table" : "accounts" , "id" : "acct_123" }],
 
-config = "knowledge_default" ,
+vector_name = "title_semantic" ,
 
 max_depth = 2 ,
 
@@ -475,7 +493,7 @@ limit = 12 ,
 
 )
 
-Joint ranking uses weighted reciprocal rank fusion. Tune vector_weight and
+Joint ranking uses weighted reciprocal rank fusion. Tune semantic_weight and
 
 graph_weight to express the relative contribution of semantic and graph
 
@@ -499,13 +517,19 @@ context.append(
 
 {
 
-"source" : f " { result.schema } . { result.table } : { result.id } " ,
+"source" : (
+
+f " { result.source.schema_name } ."
+
+f " { result.source.table } : { result.source.id } "
+
+),
 
 "score" : result.score,
 
 "body" : body,
 
-"relationships" : result.relationships,
+"relationships" : result.graph.relationships if result.graph else [],
 
 }
 
@@ -517,11 +541,11 @@ Combine lexical and semantic search
 
 For a pgContext collection with a configured text column, use
 
-project.context.text_hybrid() as shown above. For existing pgvector and
+project.context.query() as shown above. An application migrating an existing
 
-TSVector configurations, an application can also run both searches and combine
+deprecated pgvector and TSVector pairing can also run both compatibility
 
-IDs in its own ranking layer.
+searches and combine IDs in its own ranking layer.
 
 A simple approach is reciprocal rank fusion:
 
@@ -567,13 +591,15 @@ ranked_ids = reciprocal_rank_fusion(
 
 Use application-side fusion when its ranking policy belongs in your service.
 
-Use pgContext text hybrid for collection-based lexical and semantic retrieval,
+For new development, use project.context.query() for collection-based lexical
 
-and use the Hybrid namespace for graph plus pgvector retrieval.
+and semantic retrieval, and use the Context graph-composed methods for semantic
+
+plus graph retrieval.
 
 Background enrichment jobs
 
-Embedding generation and data mutation happen through PostgreSQL, not through the retrieval SDK. Use DIRECT_URL for sustained or bulk enrichment work.
+Embedding generation and data mutation happen through PostgreSQL, not through the retrieval SDK. For a managed database project, use DIRECT_URL for sustained or bulk enrichment work. For a synced project, no Polygres DIRECT_URL , psql , or direct SQL surface exists; run enrichment against the source PostgreSQL database and let CDC synchronize the selected changes.
 
 This minimal psycopg job targets a legacy public.vector(n) column, selects
 
@@ -675,7 +701,7 @@ store the embedding model/version alongside data when model changes matter,
 
 run a readiness or test query after large configuration or index changes.
 
-Use the pooled DATABASE_URL for lightweight request-time writes and the direct DIRECT_URL for bulk or session-sensitive work.
+For a managed database project, use the pooled DATABASE_URL for lightweight request-time writes and the direct DIRECT_URL for bulk or session-sensitive work. For a synced project, perform both kinds of work through the source database’s own connection details.
 
 Operational checklist
 

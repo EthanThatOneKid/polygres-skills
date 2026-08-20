@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/what-is-polygres
 title: What is Polygres? | Polygres
-source_hash: 1d7aa9ad621d2b58687d6e7a69e03ffc21debd699a07f8a788f26eb0d7bb8444
+source_hash: e253d3c08ea96dde4add919b4637f3d83290f66e5669464b399a160d8339c6be
 discovered_from: https://docs.evokoa.com/polygres
 
 # What is Polygres? | Polygres
@@ -23,25 +23,37 @@ Graph pgContext AI Search Text Legacy Vector Legacy Hybrid
 
 Graph Records connected through relationships, such as a customer, their account, tickets, messages, and related incidents.
 
-Polygres does not generate embeddings. You bring or create embeddings in your
+Mode What it helps you find
 
-own data workflow and store them in PostgreSQL. For new vector setup, create a
+Graph Records connected through relationships, such as a customer, their account, tickets, messages, and related incidents.
 
-pgContext collection with a native pgcontext.vector(n) column. A compatible
+Legacy Vector (deprecated) Compatibility retrieval for a persisted pgvector configuration.
 
-existing public.vector(n) column can be migrated during collection creation;
+Text Words and phrases through TSVector full-text search, or close text matches through Fuzzy pg_trgm search.
 
-Polygres converts that column in place to pgcontext.vector(n) . Previously
+Legacy Hybrid (deprecated) Compatibility retrieval that combines a ready graph build with an effectively Ready persisted Legacy vector registration.
 
-registered pgvector configurations continue to support existing vector and
+pgContext AI Search The normal path for new semantic and composed retrieval, with collection-based dense, grouped, text-hybrid, graph-composed, rank-fusion, and Joint methods through the CLI, API, or Python SDK.
 
-hybrid integrations until you migrate them, provided the persisted
+Your data workflow creates embeddings and stores them in PostgreSQL. For new
 
-registration is effectively Ready. HNSW requires its exact physical index to be
+vector and hybrid development, create a pgContext collection with a native
 
-Ready. An existing index_kind: none registration can be Ready for exact-scan
+pgcontext.vector(n) column and use the Context API or project.context SDK
 
-retrieval without HNSW. A physical pgvector index without a persisted
+namespace. A compatible existing public.vector(n) column can be migrated
+
+during collection creation; Polygres converts that column in place to
+
+pgcontext.vector(n) . Deprecated Vector and Hybrid surfaces continue to
+
+support existing integrations while teams adopt Context, provided the
+
+persisted registration is effectively Ready. HNSW requires its exact physical
+
+index to be Ready. An existing index_kind: none registration can be Ready for
+
+exact-scan retrieval without HNSW. A physical pgvector index without a persisted
 
 registration is never an implicit Legacy configuration, and the retired API
 
@@ -169,9 +181,11 @@ API, or Python SDK.
 
 Use PostgreSQL connection URLs for application reads and writes, database clients, schema tools, imports, and migrations. Open connection details ( /{organization}/{projectId}/connect ) for the project.
 
-Use the Polygres API or Python SDK for graph, vector, text, hybrid, and
+Use the Polygres API or Python SDK for graph, text, and pgContext retrieval
 
-pgContext retrieval from trusted application code. Create a project API key in
+from trusted application code. Existing Vector and Hybrid integrations use
+
+their deprecated compatibility surfaces during migration. Create a project API key in
 
 the dashboard and store the one-time value, such as poly_live_<...> , in a
 

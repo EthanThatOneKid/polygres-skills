@@ -1,11 +1,81 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: c59be79bc7d5bd7d220b3e49d93a9cb7f3636e6c22e17063a59d1b0c1befc2e7
+source_hash: 81006fc31d862c4a87865fb6061ae2db2acdf2dd34e36c88fa2abbb19fca6c0f
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
+
+2026-08-19
+
+Sync an existing PostgreSQL database
+
+You can now create a synced project from Supabase, Neon, or another PostgreSQL
+
+database.
+
+Polygres continuously syncs the eligible public schema tables you select.
+
+Each table needs a stable primary or unique key. Tables containing unsupported
+
+columns can offer a supported column subset when the synchronization key
+
+remains available.
+
+Synchronization can be paused, resumed, retried, or reconfigured after
+
+creation.
+
+Synced projects support graph, text, vector, hybrid, and AI Context retrieval.
+
+Database connections, SQL editing, imports, migrations, and row writes remain
+
+on the source database. See how synced PostgreSQL projects
+
+work and the
+
+provider-specific setup guides .
+
+CLI, Python SDK, and Agent Skills
+
+Polygres CLI 0.4.0 adds
+
+polygres projects create sync , a guided command for checking a source,
+
+selecting tables, and creating a synced project. Source credentials are read
+
+from hidden prompts or named environment variables.
+
+Polygres SDK 0.4.0 aligns its
+
+AI Context interface with pgContext 0.2.0 and adds typed operations for
+
+collections, vectors, points, filters, facets, query plans, diagnostics,
+
+telemetry, and embedding migrations.
+
+Existing SDK 0.3.0 methods remain available with unchanged signatures and
+
+behavior. Synced projects return a clear permission error when an application
+
+requests a database connection, while supported retrieval and readiness
+
+operations remain available.
+
+Polygres Agent Skills 0.5.0
+
+can recognize synced projects, guide their creation, and keep writes,
+
+embeddings, and schema changes on the source database.
+
+Retrieval and dashboard improvements
+
+AI Context collection setup now uses one consistent dashboard workflow for
+
+standard and synced projects, including existing source tables and vector
+
+columns.
 
 2026-08-14
 

@@ -1,13 +1,13 @@
 source: https://docs.evokoa.com/polygres/getting-started/key-concepts
 title: Key concepts | Polygres
-source_hash: 3c9d878395ab5808ad6dec3f910893926997ae7f11814e6be821d4f502462528
+source_hash: e58d9b7c1efed682a3d236cc07f731698b6d786a21a1736e04b9c1d6ae7c8587
 discovered_from: https://docs.evokoa.com/polygres
 
 # Key concepts | Polygres
 
 Key concepts
 
-Polygres is easiest to understand as a shared SaaS workspace around one or more managed PostgreSQL projects.
+Polygres is easiest to understand as a shared SaaS workspace around managed database projects and projects synchronized from existing PostgreSQL databases.
 
 Organization
 
@@ -41,13 +41,15 @@ The organization creator is the owner. Invitations assign admin, developer, or v
 
 Project
 
-A project is an organization-owned managed PostgreSQL environment. It is the unit you connect to, load data into, configure, and query.
+A project is an organization-owned data and retrieval environment. A managed database project owns a Polygres PostgreSQL database. A synced project continuously copies selected tables from an external PostgreSQL source without exposing the synchronized copy through direct SQL.
 
 Each project has a stable project ID, represented in developer examples as {project_id} . Dashboard routes use the organization and project together, such as /{organization}/{projectId} .
 
 PostgreSQL connections
 
-Every project exposes two connection URLs:
+Only managed database projects created with Host with Polygres expose connection URLs. Synced projects do not provide a native database password, pooled or direct URLs, psql , the SQL Editor, or any other direct SQL access. Use the source PostgreSQL database for SQL queries and mutations.
+
+Managed database projects expose two connection URLs:
 
 DATABASE_URL Pooled connection
 
@@ -103,7 +105,7 @@ Your application tables remain the authoritative data. Polygres retrieval is con
 
 Graph configuration selects records and relationships that can be traversed.
 
-A Legacy vector configuration is a persisted registration over an existing
+A deprecated Legacy vector configuration is a persisted registration over an existing
 
 fixed-dimension vector(n) embedding column. It is usable only while it is
 
@@ -123,7 +125,7 @@ create and maintain a stored generated TSVector column during configuration,
 
 or register an existing one.
 
-Legacy Hybrid retrieval combines a ready graph build with an effectively
+Deprecated Legacy Hybrid retrieval combines a ready graph build with an effectively
 
 Ready persisted Legacy vector registration.
 
@@ -145,6 +147,14 @@ when supplied and otherwise uses that collection’s default vector.
 
 Polygres does not generate embeddings and does not require you to move the project into a separate vector or text-search database.
 
+For new vector and hybrid application work, use a pgContext collection through
+
+the Context API or project.context SDK namespace. Existing Legacy Vector and
+
+Legacy Hybrid integrations remain available as deprecated compatibility
+
+surfaces while applications move to Context.
+
 Retrieval configuration and readiness
 
 Configuration defines what a query is allowed to use: tables, relationships, embedding columns, text columns, metadata, filters, limits, and indexes.
@@ -153,13 +163,13 @@ Readiness is mode-specific:
 
 Graph queries require a ready graph build.
 
-Legacy vector queries require an effectively Ready persisted registration.
+Deprecated Legacy vector queries require an effectively Ready persisted registration.
 
 HNSW requires a Ready matching index; exact-scan index_kind: none does not.
 
 Text search requires a ready saved TSVector or Fuzzy configuration.
 
-Legacy Hybrid queries require both their graph and Legacy vector inputs to be
+Deprecated Legacy Hybrid queries require both their graph and Legacy vector inputs to be
 
 ready.
 
@@ -183,11 +193,11 @@ Use the dashboard to configure retrieval and confirm readiness. Exercise graph,
 
 vector, text, hybrid, and pgContext retrieval through the CLI, public API, or SDK.
 
-After the results look right, create a project API key and move the same graph,
+After the results look right, create a project API key and move graph, text, or
 
-Legacy vector, or Legacy Hybrid query into backend application code. Exercise
+pgContext retrieval into backend application code. Existing Legacy Vector and
 
-text retrieval through the API or SDK. For pgContext, configure collections in
+Legacy Hybrid queries remain available during migration. For pgContext, configure collections in
 
 the dashboard or preflight them through the CLI, then query them through the
 

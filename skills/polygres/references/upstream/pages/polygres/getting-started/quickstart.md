@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/quickstart
 title: Quickstart | Polygres
-source_hash: 4c5aa86d8e9a77efab11f15be19b60bf2d4d5ae41d105b3ad029a987bcff7ecf
+source_hash: 0be67fb3e3b49fa4ac3feadcd9e869559bf9fdf8f6c0deadc04077090ed024b5
 discovered_from: https://docs.evokoa.com/polygres
 
 # Quickstart | Polygres
@@ -9,13 +9,25 @@ Quickstart
 
 This guided outcome takes you from an active account to a verified text-retrieval query in the Python SDK. It uses dashboard and CLI alternatives for setup, then the same SDK query.
 
+To connect an existing PostgreSQL database, follow
+
+Create a synced PostgreSQL project .
+
+This workflow uses a standard project created with Host with Polygres so it
+
+can apply SQL and migrations. For synchronized data, use the synced-project
+
+guide linked above and keep SQL workflows in the source PostgreSQL database.
+
 Prerequisites
 
 An active Polygres account. Signup, organization setup, and any required email verification happen in the dashboard .
 
 Python 3.10 or newer.
 
-For the CLI path, pipx install "polygres-cli==0.3.0" . For SDK calls, install polygres-sdk==0.3.0 in your application virtual environment.
+For the CLI path, install polygres-cli==0.4.0 .
+
+For SDK calls, install polygres-sdk==0.4.0 in your application virtual environment.
 
 1. Create and select a project
 
@@ -23,7 +35,7 @@ Dashboard CLI
 
 Dashboard
 
-Sign in, create Support Search from New project , and wait until the project is ready.
+Sign in, choose Host with Polygres , create Default Project , rename it to Support Search from Settings, and wait until the managed database project is ready.
 
 CLI
 
@@ -31,11 +43,13 @@ The CLI path begins with an existing active account:
 
 polygres login
 
-polygres projects create "Support Search"
+polygres projects create standard "Support Search"
 
 polygres projects use "Support Search"
 
-projects create waits for provisioning but does not select the project.
+projects create standard waits for provisioning. Run projects use
+
+afterward to select the project for later commands.
 
 2. Add schema and data
 
@@ -107,7 +121,7 @@ export POLYGRES_RUNTIME_URL = "https://{project_id}.api.db.polygres.com/v1"
 
 In your application virtual environment:
 
-pip install "polygres-sdk==0.3.0"
+pip install "polygres-sdk==0.4.0"
 
 import os
 

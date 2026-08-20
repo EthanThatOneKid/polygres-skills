@@ -1,15 +1,17 @@
 source: https://docs.evokoa.com/polygres/sdk/connect-your-app
 title: Dashboard connection setup | Polygres
-source_hash: 9590d428dd91b7c5edfb44d4de08fe8d3aebed5582bb3f6cb1600291f8f6d20f
+source_hash: 973480c0c8f2920d1b38b7cf31a4cc4bed9b0e823653b773238ad075331ebb2c
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard connection setup | Polygres
 
 Dashboard connection setup
 
+This guide applies to managed database projects created with Host with Polygres . Synced projects do not provide pooled or direct PostgreSQL URLs, a native database password, psql , the SQL Editor, or other direct SQL access. Query the source PostgreSQL database instead.
+
 Open connection details
 
-Confirm that the project, database, and pooler show Ready on the project overview.
+Confirm that this is a managed database project and that the project, database, and pooler show Ready on the project overview.
 
 Open Connect ( /{organization}/{project_id}/connect ).
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres
 title: Polygres documentation | Polygres
-source_hash: 72d9b246c3fd4f53d4b4a46a695a667240a570f69079e8321ec0e15c926ef6e1
+source_hash: 886b34aaf29f78b794546fd3e2ee7936e31d30128b11a3fadf0442723e56826c
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres documentation | Polygres
@@ -85,7 +85,11 @@ Next steps
 
 Platform Guide
 
-Projects and Organizations
+Projects
+
+Organizations
+
+Sync PostgreSQL
 
 Load and manage data
 

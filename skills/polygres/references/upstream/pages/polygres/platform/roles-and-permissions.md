@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/roles-and-permissions
 title: Roles and permissions | Polygres
-source_hash: 606b28a7dd8c6089661c0e7e4b50f932a58cbe3a1ba5e93b60db9339a9c6e877
+source_hash: 9b707d34c2e2ff7a7f6aca30a20753a44e7bc1fdd612dc5d816d31b823dd4e85
 discovered_from: https://docs.evokoa.com/polygres
 
 # Roles and permissions | Polygres
@@ -120,6 +120,24 @@ text, pgContext, and runtime status.
 The dashboard uses the backend’s effective permissions for the active member
 
 and project.
+
+Synced-project permissions
+
+Action Owner Admin Developer Viewer
+
+View sync status, progress, tables, and retrieval readiness Yes Yes Yes Yes
+
+Create a synced project Yes Yes Yes No
+
+Update the synchronized table selection Yes Yes Yes No
+
+Pause, resume, or retry synchronization when the action is shown Yes Yes Yes No
+
+Delete a synced project Yes Yes No No
+
+The project overview presents the actions available to the signed-in member for
+
+the project’s current synchronization state.
 
 Diagnosing a permission denial
 

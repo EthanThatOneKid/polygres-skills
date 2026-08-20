@@ -1,11 +1,13 @@
 source: https://docs.evokoa.com/polygres/cli/database-and-environment
 title: CLI database and environment | Polygres
-source_hash: 3d9f8cc05ac78f46c777971902b331f68ca9f3dc6ded40f6ca2fb205484681dd
+source_hash: 94057deee529f5b32dbbd6edb498d03a5fec842f4a2fda949d08d96490a6de8c
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI database and environment | Polygres
 
 Database and environment
+
+The native database commands on this page apply only to managed database projects created with Host with Polygres . Synced projects do not issue PostgreSQL credentials or connection URLs, so polygres db psql and direct SQL access are unavailable for them. Run SQL against the source PostgreSQL database instead.
 
 polygres env
 
@@ -13,7 +15,7 @@ polygres db info
 
 polygres db psql
 
-env prints passwordless, POSIX-shell-quoted DATABASE_URL , DIRECT_URL , and
+For a managed database project, env prints passwordless, POSIX-shell-quoted DATABASE_URL , DIRECT_URL , and
 
 POLYGRES_RUNTIME_URL . It keeps API-key secrets separate. db info shows safe
 
@@ -27,4 +29,4 @@ connection automation. When PostgreSQL client tools are ready, db psql opens
 
 the session directly.
 
-Open psql and paste SQL into the prompt. Do not describe this command as piping SQL unless you supply an actual pipe command. Use the direct URL for migrations and administrative tools, and use the pooled URL for normal application traffic.
+For a managed database project, open psql and paste SQL into the prompt. Do not describe this command as piping SQL unless you supply an actual pipe command. Use the direct URL for migrations and administrative tools, and use the pooled URL for normal application traffic.

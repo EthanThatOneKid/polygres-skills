@@ -1,163 +1,27 @@
-source: https://docs.evokoa.com/polygres/platform/projects-and-orgs
-title: Projects and Organizations | Polygres
-source_hash: d1f3ba69bc1b2d23bd0c52456b40ab1019700f625e54e8efcecd611f93b9b22a
+source: https://docs.evokoa.com/polygres/platform/projects
+title: Projects | Polygres
+source_hash: 18a83e3313c44c473d86d9705df91093f53425557fc4de45d7e982bb0ed14019
 discovered_from: https://docs.evokoa.com/polygres
 
-# Projects and Organizations | Polygres
-
-Projects and Organizations
-
-Account onboarding
-
-Create and activate your account
-
-Open Sign up and register with the email address you intend to use for Polygres. Enter and confirm a password of at least eight characters, then accept the Terms of Service and acknowledge the Privacy Policy.
-
-If an organization invitation exists for that authenticated address, review the available invitation or invitations before creating a new organization.
-
-Otherwise, Polygres completes the normal self-service setup automatically. It creates an organization, assigns the current self-service tier ( Shared Nano ), and opens the dashboard.
-
-If the account reaches Onboarding instead of the organization dashboard, setup is incomplete. Follow the support guidance on that page rather than looking for an organization-name or tier-selection form.
-
-You can also choose Continue with email on the login page. Its secure link can sign in an existing account or begin a new passwordless account. If password signup detects an existing account, Polygres sends the same privacy-preserving sign-in link instead of disclosing account details.
-
-Join an organization through an invitation
-
-An invitation is tied to an email address and an organization role.
-
-Open the invitation link from your email. The link opens Polygres signup; it does not authenticate you by itself.
-
-Sign in with the invited email address, or create an account with that same address.
-
-Review the pending organization invitations for the authenticated address. If several exist, select the one organization you intend to join.
-
-Select Accept invitation . If the address is not verified, use the verification message Polygres sends and finish from the link in that message.
-
-If the email was already verified, acceptance completes immediately. Otherwise, verification activates the selected membership. In either case, Polygres closes the other pending invitations for that email and opens the selected organization.
-
-You do not need to enter an invitation code in the Members page. The dashboard resolves invitations from the authenticated email, not from the editable email shown in a signup URL. When an invitation does not appear, first confirm that the signed-in email exactly matches the invited address and that the invitation has not expired, been revoked, or been replaced.
-
-If you change your mind after selecting an invitation but before verifying, choose Cancel invitation on the verification page. This declines the pending organization invitations for that email and returns the account to normal organization setup.
-
-Understand account status pages
-
-Dashboard state What it means What to do
-
-Verify email A selected organization invitation or project-creation flow requires proof of the account email. Use the newest verification email. If an invitation is selected, you can cancel it from this page.
-
-Onboarding Automatic account or organization setup did not complete. Follow the support guidance on the page. There is no self-service organization-name form on this page.
-
-Pending approval The account or organization requires an administrative decision. Keep using the same account and follow the guidance shown on the page.
-
-Rejected The account was not approved. Follow the contact guidance shown on that page.
-
-Suspended Access has been paused. Follow the support guidance shown on that page; project access remains blocked while suspended.
-
-After onboarding
-
-Your next destination depends on how you joined:
-
-A new account can open its organization overview and create a project .
-
-An invited account can open Members ( /{organization}/members ) to confirm its role, then use the projects owned by that organization.
-
-An organization administrator can continue with members, roles, and invitations .
-
-Organizations, members, and roles
-
-Treat the organization as the ownership boundary
-
-Every Polygres project belongs to an organization. The organization is where you manage members and roles, and its slug is part of every organization-scoped project link. For example, a project’s Tables page is /{organization}/{project_id}/tables .
-
-Open the organization overview ( /{organization} ) to see organization details such as its name, organization ID, billing status, tier, and project count. Open Projects ( /{organization}/projects ) to work with the projects that organization owns.
-
-Membership changes affect access to organization-owned projects. They do not transfer a project to a different organization.
-
-Understand the roles
-
-Polygres uses four organization roles:
-
-Role Membership behavior in the dashboard
-
-Owner Organization steward. Owners can administer membership. The current Members workflow protects the owner from routine role changes and removal.
-
-Admin Can administer members and pending invitations alongside the owner.
-
-Developer Intended for builders working with organization projects. Developers can list active members but cannot administer membership or invitations.
-
-Viewer Intended for teammates who need a more limited, viewing-oriented role. Viewers can list active members but cannot administer membership or invitations.
-
-Every active organization member can view the active-member list. Only Owner and Admin can view pending invitations or perform membership-management actions. Project actions remain subject to the permissions attached to each role.
-
-Invite a member
-
-Open Members ( /{organization}/members ).
-
-Select Invite member .
-
-Enter the teammate’s email address.
-
-Choose Admin , Developer , or Viewer . Developer is selected by default. The invitation flow does not assign the Owner role.
-
-Send the invitation.
-
-You cannot invite your own signed-in email address. A new invitation appears in the pending invitations area with its role and expiration.
-
-Replace an existing pending invitation
-
-When the same email already has a pending invitation, the dashboard asks whether to replace it. Choose Send new invite to refresh the invitation, selected role, expiration, and delivery attempt. This is useful when the first message was lost, delivery failed, or the intended role changed.
-
-Accept an invitation
-
-The recipient should open the email link and sign in or register with the exact invited email address. The invitation email opens signup and does not authenticate the recipient. After authentication, the dashboard lists every pending organization invitation for that address. The recipient chooses one, then verifies the address if prompted. Acceptance activates the membership immediately for an already verified address; otherwise verification activates it. Polygres then closes the other pending invitations for the same email. See Account onboarding for the complete sequence.
-
-An invitation may be pending , accepted , declined , expired , or revoked . If an expired or revoked link is opened, an owner or admin must send a new invitation.
-
-Change a member’s role
-
-Open Members ( /{organization}/members ).
-
-Find the active member.
-
-Use the role control to select Admin , Developer , or Viewer .
-
-Confirm that the updated role appears in the member row.
-
-The Members workflow does not use routine role changes to transfer ownership. It also prevents a signed-in administrator from changing their own role through the row action. Plan owner changes through your organization’s supported administrative process rather than trying to work around those protections.
-
-Revoke a pending invitation
-
-In Members , find the pending invitation.
-
-Select its remove or trash action.
-
-Confirm the revocation.
-
-The invitation can no longer be accepted. Send a new invitation if access is needed later.
-
-Remove a member
-
-In Members , find the active member.
-
-Select the remove or trash action.
-
-Confirm removal.
-
-Removal cuts off that membership’s organization access. The dashboard prevents removing yourself and protects the organization owner from the routine remove action. Reassign ongoing work before removing a developer or admin.
-
-Recognize member states
-
-Active membership rows can reflect states such as active , invited , or suspended . Pending invitations are managed separately from active members. When access does not match expectations, check both the member’s role and state before sending another invitation.
-
-Continue administering the organization
-
-Create and manage projects owned by this organization.
-
-Review security basics before granting production access.
-
-Open Project settings and operations for project-level runtime and credential administration.
+# Projects | Polygres
 
 Projects
+
+Every project belongs to an organization . Use a standard project when Polygres owns the primary database, or create a synced project when an existing PostgreSQL database remains the source of truth.
+
+Choose a project type
+
+Data source Use it when Access model
+
+Supabase You want selected tables from an existing Supabase project copied continuously into Polygres. The synced-project access model applies. Query and modify rows in Supabase.
+
+Neon You want selected tables from an existing Neon database copied continuously into Polygres. The synced-project access model applies. Query and modify rows in Neon.
+
+Postgres Database You want selected tables from another PostgreSQL database copied continuously into Polygres. The synced-project access model applies. Query and modify rows in the source database.
+
+Host with Polygres You want a new Polygres-managed PostgreSQL database. Native database credentials, pooled and direct connection URLs, psql , the SQL Editor, imports, migrations, and Runtime API access are available.
+
+For the complete workflow and operating model, see Create a synced PostgreSQL project . Before opening the wizard, follow the PostgreSQL sync setup guides for standard PostgreSQL, Neon, or Supabase.
 
 Create a project in an organization
 
@@ -165,13 +29,13 @@ A project cannot exist outside an organization. Confirm the organization slug in
 
 Open New project ( /{organization}/new ) from the target organization.
 
-Enter a project name between 1 and 80 characters.
+Choose the data source.
 
-Select Create project .
+Select Create project . New projects are named Default Project .
 
-The dashboard opens the organization-scoped project overview while Polygres provisions the project’s database and connection endpoints.
+The dashboard opens the organization-scoped project overview while Polygres provisions the selected project type. You can change the name later in the project’s Settings page.
 
-The organization’s assigned tier determines runtime placement. Shared tiers place the project in a shared runtime pool; isolated tiers provision isolated runtime placement. Each project still has its own logical database, connection endpoints, and Runtime API URL. Project creation can be blocked when the assigned tier has reached its project limit. Delete an unused project or contact Polygres about the applicable tier before trying again.
+The organization’s assigned tier determines runtime placement. Shared tiers place the project in a shared runtime pool; isolated tiers provision isolated runtime placement. A managed database project receives a logical database, connection endpoints, and a Runtime API URL. A synced project receives no customer-facing database endpoint or direct SQL access. Project creation can be blocked when the assigned tier has reached its project limit. Delete an unused project or contact Polygres about the applicable tier before trying again.
 
 Follow provisioning
 
@@ -179,9 +43,11 @@ While the project shows Provisioning , keep the overview open or return to it la
 
 Project state What it means Recommended action
 
-Provisioning Infrastructure is still being created or retried. Wait for the automatic status refresh. Do not start imports or migrations yet.
+Provisioning Infrastructure is still being created or retried. Wait for the automatic status refresh before starting imports or migrations.
 
-Ready The database and pooler are available for normal project work. Connect an app, load data, and configure retrieval.
+Syncing The synced project is copying its initial table selection or catching up with source changes. Follow synchronization progress from the project overview.
+
+Ready Provisioning is complete. Standard projects have database access; synced projects have completed their initial synchronization and continue receiving source changes. Continue with the workflows available for the selected project type.
 
 Read-only Reads may continue, but writes are restricted for the reason shown in Runtime. Pause imports, migrations, schema changes, and configuration writes; address the displayed cause.
 
@@ -191,7 +57,11 @@ Deleting Permanent deletion is in progress. Do not attempt new project work.
 
 Deleted The project and its associated resources have been removed. Create a new project if a replacement is required.
 
-The project overview also reports Database and Pooler status independently. A project is not ready for an application just because one component is ready.
+For a standard project, the overview reports Database and Pooler status
+
+alongside the project status. For a synced project, the overview reports
+
+synchronization state, progress, table status, and freshness.
 
 Recover from a provisioning failure
 
@@ -213,13 +83,13 @@ Use the project overview as the launch point
 
 After the project is ready, its organization-scoped pages cover the main product workflows:
 
-Connect ( /{organization}/{project_id}/connect ) for database URLs, client examples, and API access.
+Connect ( /{organization}/{project_id}/connect ) for API access and, for managed database projects only, database URLs and client examples.
 
-Tables ( /{organization}/{project_id}/tables ), SQL Editor ( /{organization}/{project_id}/sql ), Import ( /{organization}/{project_id}/import ), and Migrations ( /{organization}/{project_id}/migrations ) for data work.
+For managed database projects, Tables ( /{organization}/{project_id}/tables ), SQL Editor ( /{organization}/{project_id}/sql ), Import ( /{organization}/{project_id}/import ), and Migrations ( /{organization}/{project_id}/migrations ) provide database work surfaces. Synced projects do not expose direct SQL, import, or migration surfaces.
 
 Workspace ( /{organization}/{project_id}/workspace ) for the visual graph-centered project view.
 
-Graph ( /{organization}/{project_id}/workspace/graph ), Vector ( /{organization}/{project_id}/workspace/vector ), and Text Search ( /{organization}/{project_id}/workspace/text-search ) for retrieval setup. The Vector page separates pgContext collections from Legacy registrations.
+Graph ( /{organization}/{project_id}/workspace/graph ), AI Context (Vector) ( /{organization}/{project_id}/workspace/context ), and Text Search ( /{organization}/{project_id}/workspace/text-search ) for retrieval setup. The AI Context (Vector) page adds a Legacy submenu for standard projects with existing registrations.
 
 Settings ( /{organization}/{project_id}/settings ) for rename, Project API Key, Runtime, and deletion.
 
@@ -289,7 +159,15 @@ Read-only reason Explains why writes are currently restricted.
 
 Runtime versions Shows Postgres, pgGraph, pgvector, and pgContext versions. pgContext shows Not installed when the runtime has no version metadata.
 
-A healthy application path normally requires Project , Database , and Pooler to be Ready . A direct migration may not depend on the pooler in the same way, but it still requires a ready, writable database.
+For a standard project, application database access begins when the required
+
+Project, Database, and Pooler components are Ready .
+
+For a synced project, retrieval begins when the project is Ready , the
+
+required tables have completed synchronization, and the selected retrieval
+
+configuration is ready.
 
 Respond to provisioning status
 
@@ -373,7 +251,13 @@ A Project API Key is not the database password. See Security basics before distr
 
 Delete a project permanently
 
-Deletion destroys the project database, indexes, and Project API Keys. It cannot be undone.
+Deletion permanently removes the Polygres project, its indexes, retrieval
+
+configuration, and Project API Keys.
+
+For a synced project, the source PostgreSQL tables and their application data
+
+remain in the source database.
 
 Open General and locate Danger zone .
 

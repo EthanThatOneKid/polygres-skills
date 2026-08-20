@@ -1,19 +1,37 @@
 source: https://docs.evokoa.com/polygres/reference/pgcontext-api
 title: pgContext API | Polygres
-source_hash: 3f98df5f43656a35f36cd96c1b1eb554815dc8e7332ebb36b7916aa3ffc51273
+source_hash: 9127bb14889934484b4fe3be60833f965b317a96638b4a839b0d7139bb1bfab5
 discovered_from: https://docs.evokoa.com/polygres
 
 # pgContext API | Polygres
 
 pgContext API
 
-The pgContext API powers the AI Search collection workflow. It is a Preview surface with the contract version context.v1 . It remains separate from the pgvector-backed /vector routes. Ordinary collection creation with source mode existing can convert a compatible public.vector(n) column in place to pgcontext.vector(n) . The onboarding endpoints persist guided candidate discovery and the user’s decision; they do not activate a separate public bridge or replace ordinary collection creation.
+The pgContext API powers the AI Search collection workflow. It is a Preview
+
+surface with the contract version context.v1 , distinct from the
+
+pgvector-backed /vector routes. Ordinary collection creation with source mode
+
+existing can convert a compatible public.vector(n) column in place to
+
+pgcontext.vector(n) . The onboarding endpoints persist guided candidate
+
+discovery and the user’s decision, while ordinary collection creation remains
+
+the activation path.
+
+Use this Context API for new vector and hybrid application development. The
+
+/vector and /hybrid route families remain available as deprecated
+
+compatibility surfaces for existing pgvector integrations.
 
 Use GET /capabilities before setup or retrieval. Its feature flags, blocker messages, and effective limits are authoritative for the selected project. Point scrolling has its own point_scroll , point_scroll_blocker , and point_scroll_blocker_message fields. These show whether point listings are available and explain what must be corrected when they are not.
 
 Base URLs and authentication
 
-The same 40 route suffixes are available through two project-bound surfaces:
+The same 75 route suffixes are available through two project-bound surfaces:
 
 Surface Base URL Credential
 
@@ -21,7 +39,11 @@ Gateway https://api.polygres.com/v1/projects/{project_id}/context Dashboard or C
 
 Runtime {project_runtime_url}/context Project Runtime API key with project_full scope
 
-The project Runtime URL already ends in /v1 . Copy it from Connect > API access . Do not add a project routing header or database role to Runtime requests.
+The project Runtime URL already ends in /v1 . Copy it from Connect > API
+
+access and send the Project Runtime API key as the bearer credential. The URL
+
+and key bind each request to its project and database role.
 
 Gateway callers need context:read for inspection and retrieval, and context:manage for onboarding, collection, filter, point-administration, cancellation, and retry operations. Owners, admins, and developers have both permissions. Viewers have read permission only.
 
@@ -59,9 +81,47 @@ public pgContext base error and variant.
 
 Request bodies are strict. Unknown fields return 400 CONTEXT_REQUEST_INVALID . Response bodies can gain additive fields.
 
-Durable resource mutations require an Idempotency-Key header containing 1 to 128 printable ASCII characters. Replaying the same canonical request with the same key returns the original response. Reusing a key for a different request returns 409 CONTEXT_IDEMPOTENCY_CONFLICT . The idempotent onboarding state endpoints do not require this header.
+Durable resource mutations require an Idempotency-Key header containing 1 to
 
-Read-only POST routes, including discovery, preflight, verification, search, and recall check, do not require an idempotency key.
+128 printable ASCII characters. Replaying the same canonical request with the
+
+same key returns the original response. Reusing a key for a different request
+
+returns 409 CONTEXT_IDEMPOTENCY_CONFLICT . The idempotent onboarding state
+
+endpoints accept requests without this header.
+
+Read-only POST routes, including discovery, preflight, verification, search, and
+
+recall check, accept requests without an idempotency key.
+
+pgContext 0.2.0 API additions
+
+The SDK 0.4.0 release expands the public Context API with 35 project-scoped
+
+routes. Together with the established collection and retrieval routes, these
+
+additions cover the stable pgContext 0.2.0 application workflows through typed
+
+HTTP requests.
+
+Workflow Added API coverage
+
+Collection identity and configuration Aliases, exact-name collection information, collection limits, vector listings, and vector configuration
+
+Point synchronization Bounded bulk upsert, bulk delete, backfill, and registered payload updates
+
+Retrieval Candidate search, explicit-array search, recommendation, discovery, exploration, query-plan execution, and query explanation
+
+Operations insight Index status, diagnostics, memory estimates, vacuum advice, index recommendations, optimization status, telemetry, and query statistics
+
+Embedding lifecycle Model-version registration and embedding-migration tracking
+
+The Gateway and Runtime expose matching paths and response envelopes. The
+
+Python SDK guide maps these routes
+
+to task-oriented methods and typed results.
 
 Success statuses
 
@@ -75,7 +135,13 @@ Success Operations
 
 200 Operation cancellation, including an accepted cooperative cancellation request
 
-A 202 response contains an operation envelope. Poll the returned operation until its status is terminal. Do not treat a client timeout as cancellation.
+200 Alias and exact-name configuration; bounded point batches; payload updates; model-version and embedding-migration records
+
+A 202 response contains an operation envelope. Poll the returned operation
+
+until its status is terminal. A successful cancellation request returns its own
+
+operation acknowledgment.
 
 Request examples
 
@@ -107,7 +173,9 @@ curl -X POST " $CONTEXT_URL /onboarding/acknowledge" \
 
 -d '{}'
 
-GET /onboarding reads only the saved decision and candidate snapshot. POST /onboarding/refresh is the only route that reruns eligibility after the first evaluation. POST /onboarding/dismiss records a declined offer. A successful collection create records completed atomically; normal retrieval never reads onboarding state.
+GET /onboarding reads the saved decision and candidate snapshot. POST /onboarding/refresh reruns eligibility after the first evaluation. POST /onboarding/dismiss records a declined offer. A successful collection create
+
+records completed atomically, and retrieval reads collection state directly.
 
 Discover visible sources:
 
@@ -271,6 +339,42 @@ curl -X POST " $CONTEXT_URL /search" \
 
 }'
 
+Execute a typed query plan by placing one validated plan tree under plan :
+
+curl -X POST " $CONTEXT_URL /query/execute" \
+
+-H "Authorization: Bearer <token-or-runtime-api-key>" \
+
+-H "Content-Type: application/json" \
+
+-d '{
+
+"collection":"support_docs",
+
+"plan":{
+
+"kind":"nearest",
+
+"vector_name":"title_semantic",
+
+"vector":[0.1,0.2,0.3],
+
+"limit":10
+
+}
+
+}'
+
+Query plans support dense and sparse nearest search, full-text search,
+
+late-interaction search, recommendation, discovery, point lookup, branch
+
+prefetch, weighting, score thresholds, formulas, and reranking. Nested plans
+
+let one request express a complete retrieval strategy. The Python SDK supplies
+
+typed builders for each plan kind.
+
 Other retrieval bodies use these strict field sets:
 
 Route Accepted request fields
@@ -289,7 +393,27 @@ Route Accepted request fields
 
 /hybrid/joint collection , optional vector_name , embedding , optional query , optional starts , optional filter , weights , candidate limits, and graph traversal fields
 
-Graph start contains schema , table , and id . Traversal fields are relationship_types , direction , max_depth , and graph_limit . Read the effective caps from /capabilities before constructing large requests. Rank-fusion weights contains context and graph numeric fields. Grouped search and text hybrid do not accept filter in context.v1 . Joint weights contains semantic , lexical , and graph numeric fields. The server normalizes active Joint weights. A positive lexical weight requires both query and a configured collection text column. starts accepts up to 32 complete graph entities. Unlike graph first and rank fusion, Joint can run with no explicit start because its top pgContext results also become graph seeds.
+Graph start contains schema , table , and id . Traversal fields are
+
+relationship_types , direction , max_depth , and graph_limit . Read the
+
+effective caps from /capabilities before constructing large requests.
+
+Rank-fusion weights contains context and graph numeric fields. In
+
+context.v1 , filters apply to dense, recall, graph-composed, rank-fusion, and
+
+Joint retrieval. Grouped search uses its registered group_by key, while text
+
+hybrid uses the collection’s text configuration. Joint weights contains
+
+semantic , lexical , and graph numeric fields. The server normalizes active
+
+Joint weights. A positive lexical weight requires both query and a configured
+
+collection text column. starts accepts up to 32 complete graph entities.
+
+Joint can also use its top pgContext results as graph seeds.
 
 Route inventory
 
@@ -309,13 +433,11 @@ Guided Legacy-source onboarding
 
 These stateful onboarding routes describe optional candidate discovery and the
 
-user’s decision. A client that accepts a candidate still submits an ordinary
+user’s decision. A client that accepts a candidate submits an ordinary
 
-source.mode: "existing" collection-create request. The routes do not activate
+source.mode: "existing" collection-create request, which activates the
 
-the Runtime’s internal same-column binding and are never called automatically
-
-by retrieval.
+collection. Application code calls onboarding explicitly.
 
 Method Path Permission Purpose
 
@@ -328,6 +450,32 @@ POST /onboarding/refresh manage Explicitly rerun eligibility discovery.
 POST /onboarding/acknowledge manage Accept the saved eligible candidate.
 
 POST /onboarding/dismiss manage Record that the offer was declined.
+
+Collection aliases and exact-name configuration
+
+Aliases provide a stable application-facing name while a deployment retargets
+
+traffic to another collection. Exact-name routes expose pgContext configuration
+
+for automation that already knows the collection name.
+
+Method Path Permission Purpose
+
+POST /aliases manage Create an alias or retarget it to a collection name.
+
+GET /aliases read List visible aliases and their target collections.
+
+DELETE /aliases/{alias_name} manage Drop an alias.
+
+GET /collections/by-name/{collection_name}/info read Read pgContext collection metadata by exact name.
+
+GET /collections/by-name/{collection_name}/limits read Read strict-mode collection limits.
+
+PATCH /collections/by-name/{collection_name}/limits manage Configure strict-mode collection limits.
+
+GET /collections/by-name/{collection_name}/vectors read List registered dense vectors.
+
+PATCH /collections/by-name/{collection_name}/vectors/{vector_name} manage Configure HNSW, quantization, and lifecycle metadata for a vector.
 
 Collections
 
@@ -347,7 +495,7 @@ GET /collections/{collection_id}/diagnostics read Return sanitized checks and re
 
 PATCH /collections/{collection_id} manage Update logical configuration or set the default collection.
 
-DELETE /collections/{collection_id} manage Delete the collection and its managed resources after UUID confirmation. A new_table source is deleted only when no other collection references it.
+DELETE /collections/{collection_id} manage Delete the collection and its managed resources after UUID confirmation. A new_table source is preserved while another collection references it.
 
 POST /collections/{collection_id}/reindex manage Rebuild the current default vector’s Polygres-owned HNSW index.
 
@@ -357,7 +505,7 @@ Collection creation accepts three source modes:
 
 existing registers an existing table and native pgcontext.vector(n) NOT NULL column, or converts a compatible public.vector(n) column in place before registration.
 
-add_column adds a vector column to an empty existing table. Polygres does not generate embeddings.
+add_column adds a vector column to an empty existing table. The application populates embeddings.
 
 new_table creates a managed source table. Deleting the collection also deletes that table and its rows when no other collection references it. A shared source table is preserved and becomes user-managed. Collections created with existing or add_column preserve their source tables.
 
@@ -369,7 +517,9 @@ the same source table. Collection responses expose vectors and
 
 default_vector_name . Updating default_vector_name changes the fallback used
 
-by ranked retrieval and does not change the project’s default collection.
+by ranked retrieval. The project’s default collection remains independently
+
+configurable.
 
 The initial vector’s optional name defaults to its column_name .
 
@@ -417,7 +567,27 @@ POST /collections/{collection_id}/points/delete manage Logically delete mappings
 
 POST /collections/{collection_id}/points/reconcile manage Reconcile point mappings with source rows.
 
-Point scrolling returns point_id and the canonical source_key ; it does not return vectors or source payloads. Results respect row-level security on the source table. If hidden rows are skipped, a page can be empty while has_more is still true. Continue with next_cursor until has_more is false. If Polygres cannot verify the source table or enforce its access rules, the request returns a 409 error instead of exposing unverified results.
+POST /points/bulk-upsert manage Upsert point mappings in bounded batches.
+
+POST /points/bulk-delete manage Delete point mappings in bounded batches.
+
+POST /points/backfill manage Backfill source rows into point mappings in bounded batches.
+
+PUT /points/payload manage Set registered payload fields for selected source keys.
+
+POST /points/payload/delete manage Delete selected registered payload fields.
+
+POST /points/payload/clear manage Clear registered payload fields for selected source keys.
+
+Point scrolling returns point_id and the canonical source_key . Source-table
+
+row-level security filters every result. A page can be empty while has_more
+
+is true when the policy filters rows; continue with next_cursor through the
+
+final page. Source verification and enforceable access rules are prerequisites,
+
+with a 409 response guiding callers to restore them.
 
 Upsert and delete accept 1 through 10,000 keys. Requests of up to 1,000 keys can complete synchronously; larger valid requests return a durable operation. Reconciliation adds missing mappings and normally removes mappings for deleted rows. When the source table uses row-level security, orphan cleanup is skipped because a hidden row may still exist. The result includes orphan_cleanup_skipped_reason: "source_rls_enabled" ; explicitly delete keys for rows that you know were removed.
 
@@ -439,6 +609,44 @@ Operation statuses are queued , running , cancel_requested , succeeded , failed 
 
 Verification includes a point_scroll_access check for source-table permissions. If it fails, diagnostics recommends repair_permissions . Run preflight and verification again after changing source ownership, permissions, or row-level security policies.
 
+Index health, telemetry, and embedding lifecycle
+
+These routes scope operational insight to one named collection. Index routes
+
+also select one exact index name, giving dashboards and automation a precise
+
+resource identity.
+
+Method Path Permission Purpose
+
+GET /collections/by-name/{collection_name}/indexes/{index_name}/status read Read index lifecycle status.
+
+GET /collections/by-name/{collection_name}/indexes/{index_name}/diagnostics read Read index diagnostics and actionable checks.
+
+GET /collections/by-name/{collection_name}/indexes/{index_name}/memory-estimate read Estimate index memory requirements.
+
+GET /collections/by-name/{collection_name}/indexes/{index_name}/vacuum-advice read Read vacuum guidance for the index.
+
+GET /collections/by-name/{collection_name}/index-advisor read Read filter-index recommendations.
+
+GET /collections/by-name/{collection_name}/optimization-status read Read collection optimization readiness.
+
+GET /collections/by-name/{collection_name}/telemetry read Read collection-scoped telemetry rollups.
+
+GET /collections/by-name/{collection_name}/query-cohort-stats read Read query cohort statistics.
+
+GET /collections/by-name/{collection_name}/query-execution-stats read Read query execution statistics.
+
+GET /collections/by-name/{collection_name}/model-versions read List registered embedding model versions.
+
+POST /collections/by-name/{collection_name}/model-versions manage Register an embedding model version.
+
+GET /collections/by-name/{collection_name}/embedding-migrations read List embedding migrations.
+
+POST /collections/by-name/{collection_name}/embedding-migrations manage Create an embedding migration record.
+
+PATCH /collections/by-name/{collection_name}/embedding-migrations/{migration_id} manage Update migration progress and status.
+
 Aggregates and retrieval
 
 Method Path Permission Purpose
@@ -449,9 +657,23 @@ POST /facets read Count values for a registered filter key.
 
 POST /search read Run dense pgContext retrieval.
 
+POST /search/raw read Score an explicit array of point IDs and dense vectors.
+
+POST /search/candidates read Search within explicit candidate point IDs.
+
+POST /recommend read Recommend points from positive and negative examples.
+
+POST /search/discover read Discover points from contextual point IDs.
+
+POST /explore read Explore points from contextual point IDs.
+
 POST /grouped-search read Group dense results by a registered filter key.
 
 POST /recall-check read Compare HNSW and exact top-K result sets.
+
+POST /query/execute read Execute a validated typed query plan.
+
+POST /query/explain read Explain the stable dense plus full-text collection query.
 
 POST /hybrid/text read Combine dense and full-text rankings.
 
@@ -471,9 +693,7 @@ the collection’s default_vector_name . Every embedding must contain finite
 
 JSON numbers and match the selected vector’s configured dimensions. Ranked
 
-responses preserve server order and scores and never contain a pagination
-
-cursor.
+responses preserve server order and scores in one bounded result set.
 
 Rank fusion and Joint are different operations. /hybrid/rank-fusion combines independently produced Context and graph rankings. /hybrid/joint couples candidate generation: pgContext results create graph seeds, graph traversal can introduce candidates, every admitted candidate receives an exact pgContext rescore, and the final weighted reciprocal-rank fusion is applied once over the combined pool. Neither route is an alias for the other.
 
@@ -543,7 +763,11 @@ The final limit is applied once after fusion.
 
 The response uses mode = "joint" , score_kind = "joint_weighted_rrf" , and returns lane evidence, a score breakdown, fusion metadata, and bounded trace counts. introduced_by_graph distinguishes candidate introduction from rank reordering. Graph-introduced results have null baseline_rank and rank_lift ; other results compare their final rank with the semantic-plus-lexical baseline.
 
-Joint does not infer arbitrary entities from the query. Resolve application entities before the request and send them through starts . The endpoint also does not provide application-specific temporal boosts, structured-fact hydration, or answer synthesis.
+Resolve application entities before the Joint request and send them through
+
+starts . Apply application-specific temporal boosts, structured-fact
+
+hydration, and answer synthesis in the application layer.
 
 Minimal lifecycle
 

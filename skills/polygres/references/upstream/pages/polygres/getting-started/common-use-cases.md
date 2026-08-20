@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/common-use-cases
 title: Common use cases | Polygres
-source_hash: 11d092a6434c3620d8cff489f10680902bf942cf76d2323e601ec7492e6d3cbb
+source_hash: 6d4f7ab925e57591689bbc6ed559c227e33f5d065043e0c66548423602e1e3f6
 discovered_from: https://docs.evokoa.com/polygres
 
 # Common use cases | Polygres
@@ -109,7 +109,7 @@ Graph retrieval follows the customer, account, product, incident, and conversati
 
 pgContext graph-composed, rank-fusion, or Joint retrieval combines semantic results with relevant connected context.
 
-Start in the dashboard with Text search setup ( /{organization}/{projectId}/workspace/text-search ), AI Context (Vector) setup ( /{organization}/{projectId}/workspace/vector ), and Graph setup ( /{organization}/{projectId}/workspace/graph ). Verify retrieval readiness there, then exercise the intended method through the public API or Python SDK, or use the CLI for pgContext.
+Start in the dashboard with Text search setup ( /{organization}/{projectId}/workspace/text-search ), AI Context (Vector) setup ( /{organization}/{projectId}/workspace/context ), and Graph setup ( /{organization}/{projectId}/workspace/graph ). Verify retrieval readiness there, then exercise the intended method through the public API or Python SDK, or use the CLI for pgContext.
 
 This pattern is the core Polygres value proposition in one workflow:
 

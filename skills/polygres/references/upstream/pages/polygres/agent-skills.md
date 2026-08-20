@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/agent-skills
 title: Polygres Agent Skills | Polygres
-source_hash: 9e051da1c882c4f919b3beceaed294628dfdf0bfe53f2891ab5e35658e9e3035
+source_hash: 0a68a9e563d6fa8500b63f36483879562e25eede20dc9a6a16bf05cc86e8e7aa
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres Agent Skills | Polygres
@@ -15,13 +15,15 @@ five skills:
 
 polygres-data-pipeline turns files, databases, APIs, conversations, or
 
-existing Polygres data into a working ingestion and retrieval pipeline;
+existing Polygres data into a managed PostgreSQL sync or working custom
 
-polygres-cli helps with everyday project operations such as signing in,
+ingestion and retrieval pipeline;
 
-choosing a project, importing data, applying migrations, managing keys, and
+polygres-cli helps with signing in, creating standard or synchronized
 
-configuring retrieval;
+projects, selecting projects, importing standard-project data, applying
+
+migrations, managing keys, and configuring retrieval;
 
 polygres-sdk helps you add pgContext, graph, vector, text, and hybrid
 
@@ -39,15 +41,15 @@ The skills do not include the Python packages. Install the component required
 
 by the task, then install the skill repository:
 
-Install the current CLI and SDK, then add Polygres Agent Skills 0.4.0 :
+Install the current CLI and SDK, then add Polygres Agent Skills 0.5.0 :
 
-pipx install "polygres-cli==0.3.0"
+pipx install "polygres-cli==0.4.0"
 
-python -m pip install "polygres-sdk==0.3.0"
+python -m pip install "polygres-sdk==0.4.0"
 
 npx skills add Evokoa/polygres-skills
 
-Agent Skills 0.4.0 , CLI 0.3.0 , and SDK 0.3.0 form one coordinated release
+Agent Skills 0.5.0 , CLI 0.4.0 , and SDK 0.4.0 form one coordinated release
 
 set.
 
@@ -159,6 +161,10 @@ Build a repeatable pipeline from this API. I need exact search for product
 
 codes and semantic search for customer questions.
 
+Sync my Supabase, Neon, or PostgreSQL database into Polygres and configure
+
+retrieval over the selected tables.
+
 Log me into Polygres and help me select the correct project.
 
 Import customers.json into public.customers. Inspect it first, explain any
@@ -219,11 +225,11 @@ retrieval setup. Inspection stays limited to what is needed for the task.
 
 It recommends the smallest useful design. That might reuse an existing
 
-table, add a purpose-built table, start with text search, add pgContext for
+table, choose managed PostgreSQL sync, add a purpose-built table to a
 
-semantic recall, or use graph retrieval when real relationships make the
+standard project, start with text search, add pgContext for semantic recall,
 
-results better.
+or use graph retrieval when real relationships make the results better.
 
 It prepares runnable, source-specific code for the parts you need, such as a
 
@@ -253,9 +259,43 @@ it as partial or blocked instead of presenting an untested scaffold as a
 
 working pipeline.
 
+Synchronized PostgreSQL projects
+
+For an eligible Supabase, Neon, or PostgreSQL source, the pipeline skill can
+
+create a synchronized project and configure retrieval over selected tables.
+
+The source remains the system of record, while Polygres maintains a current
+
+copy for retrieval.
+
+The skill can use either supported setup path:
+
+the dashboard for a guided visual workflow; or
+
+polygres projects create sync for an interactive or automated CLI workflow.
+
+For CLI automation, the skill keeps the connection value in an environment
+
+variable and passes its name through --connection-env . It can select explicit
+
+public tables, use a reviewed selection file, or select all eligible tables.
+
+After creation, the dashboard provides synchronized-table configuration and
+
+the lifecycle actions available for the project’s current state.
+
+For a synced project, the skills route application writes, schema changes, and
+
+embedding generation to the source database. They use Polygres Runtime APIs for
+
+graph, text, vector, hybrid, AI Context, catalog, and readiness workflows.
+
 Route each write to the right interface
 
-The skill chooses the write surface by workload, not by a file extension:
+For a standard project, the skill chooses the write surface by workload, not by
+
+a file extension:
 
 Workload Recommended interface
 
@@ -505,9 +545,11 @@ Login uses browser approval. Do not give an agent a username, password, or
 
 POLYGRES_ACCESS_TOKEN .
 
-Database passwords are never retrieved or placed in command arguments. Let
+Database passwords are never retrieved or placed in command arguments. For a
 
-psql prompt interactively.
+managed database project, let psql prompt interactively. Synced projects do
+
+not provide psql or direct SQL access.
 
 Runtime API-key secrets are displayed once. Run key creation in your own
 

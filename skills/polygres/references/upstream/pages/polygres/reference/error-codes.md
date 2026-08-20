@@ -1,13 +1,13 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: a433b0605294367f0bdd8e26ad8d8813e8d0cc246aab75b0c2dde3a40722b9cd
+source_hash: b8cdc892018d45ff3ebed776a2e59a8bc433ab69263ce3c9ba46c9577fc0abcd
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
 
 Error codes
 
-This page lists all 649 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
+This page lists all 667 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
 
 Error response contract
 
@@ -201,7 +201,7 @@ CONTEXT_COLLECTION_REQUIRED 400 API response after_user_action An explicit Conte
 
 CONTEXT_COLLECTION_TARGET_MISMATCH 400 API response after_user_action The Context collection does not target the requested table.
 
-CONTEXT_COMPATIBILITY_PAGE_FALLBACK 409 API response after_user_action This legacy page is served by the retained pgvector fallback.
+CONTEXT_COMPATIBILITY_PAGE_FALLBACK 409 API response after_user_action This legacy page exceeds the pgContext compatibility window.
 
 CONTEXT_COMPATIBILITY_QUERY_FAILED 503 API response + Async operation after_delay Context compatibility query failed.
 
@@ -1806,6 +1806,46 @@ SQL_QUERY_FAILED/relation_not_found 400 API response + Async operation after_del
 SQL_QUERY_FAILED/syntax_error 400 API response + Async operation after_delay The query contains a SQL syntax error. Correct the SQL and try again.
 
 SQL_QUERY_FAILED/timeout 408 API response + Async operation after_delay The query exceeded its time limit and was cancelled. Simplify it and try again.
+
+Sync
+
+Error identity HTTP Used by Retry Exact message
+
+SYNCED_PROJECT_SURFACE_UNAVAILABLE 403 API response never This operation is unavailable for a synchronized project.
+
+SYNC_ACTION_INVALID_FOR_STAGE 409 API response + Async operation after_user_action This synchronization action is not available in the current lifecycle stage.
+
+SYNC_ATTEMPT_EXPIRED 409 API response + Async operation after_user_action The synchronization preflight attempt has expired.
+
+SYNC_ATTEMPT_GENERATION_CONFLICT 409 API response + Async operation after_user_action The synchronization preflight attempt changed before this request completed.
+
+SYNC_ATTEMPT_NOT_FOUND 404 API response + Async operation after_user_action Synchronization preflight attempt not found.
+
+SYNC_ATTEMPT_NOT_READY 409 API response + Async operation user_retry Synchronization preflight is not ready for this operation.
+
+SYNC_CAPACITY_BLOCKED 409 API response + Async operation after_user_action Synchronization work is blocked until target storage capacity is available.
+
+SYNC_CONFIGURATION_GENERATION_CONFLICT 409 API response + Async operation after_user_action The synchronization configuration changed before this request completed.
+
+SYNC_CONFIRMATIONS_INCOMPLETE 422 API response + Async operation after_user_action All required synchronization confirmations must be accepted.
+
+SYNC_IDEMPOTENCY_CONFLICT 409 API response + Async operation never This idempotency key was already used for a different synchronization request.
+
+SYNC_IDEMPOTENCY_EXPIRED 409 API response + Async operation never This synchronization idempotency record has expired.
+
+SYNC_PREFLIGHT_BACKEND_UNAVAILABLE 503 API response + Async operation after_delay Synchronization preflight is temporarily unavailable.
+
+SYNC_PREFLIGHT_NOT_ADMITTED 409 API response + Async operation after_user_action Synchronization preflight has not been admitted for project creation.
+
+SYNC_SELECTION_GENERATION_CONFLICT 409 API response + Async operation after_user_action The selected synchronization tables changed before this request completed.
+
+SYNC_SELECTION_INVALID 422 API response + Async operation after_user_action The selected table is not eligible for synchronization.
+
+SYNC_SELECTION_OVER_TIER_LIMIT 409 API response + Async operation after_user_action The selected tables exceed the organization’s storage limit.
+
+SYNC_SOURCE_IDENTITY_IMMUTABLE 422 API response + Async operation never Source host, port, and database cannot be changed during credential rotation.
+
+SYNC_SOURCE_URL_INVALID 422 API response + Async operation after_user_action The PostgreSQL source connection is invalid or unsupported.
 
 Text retrieval
 

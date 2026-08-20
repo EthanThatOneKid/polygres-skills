@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/routes
 title: Runtime routes | Polygres
-source_hash: 895f27277041138499a3a47d4d697d72e6e2914954e050284254854432e82d7b
+source_hash: df594587b2c07de58e8bdd3fa31aec7156b1d17557dff986ff0a45c36315ca11
 discovered_from: https://docs.evokoa.com/polygres
 
 # Runtime routes | Polygres
@@ -63,9 +63,17 @@ POST /graph/connection Retrieval Find connections among two to ten entities.
 
 See the Graph Retrieval API reference for request and response shapes, traversal controls, filter scoping, pagination, and REST and Python examples.
 
-Vector
+Vector (deprecated)
 
-These retrieval routes require a persisted vector configuration registered
+The /vector family is a deprecated compatibility surface for existing
+
+integrations. New vector retrieval uses a pgContext collection through
+
+POST /context/search , POST /context/recommend , or
+
+POST /context/query/execute .
+
+These compatibility routes require a persisted vector configuration registered
 
 before new pgvector registration was retired. It must be effectively Ready. An
 
@@ -73,7 +81,7 @@ HNSW configuration requires its exact physical index to be Ready; an existing
 
 index_kind: none configuration can be Ready for exact-scan retrieval without
 
-HNSW. Unregistered physical pgvector indexes are never discovered as implicit
+HNSW. Register physical pgvector indexes to make them available as explicit
 
 Legacy configurations. For new vector setup and retrieval, use a pgContext
 
@@ -111,7 +119,15 @@ See the Text Search API reference for both base
 
 URLs, setup payloads, backwards compatibility, and query examples.
 
-Hybrid
+Hybrid (deprecated)
+
+The /hybrid family is a deprecated compatibility surface for existing
+
+pgvector integrations. New composed retrieval uses
+
+/context/hybrid/graph-first , /context/hybrid/vector-first ,
+
+/context/hybrid/rank-fusion , or /context/hybrid/joint .
 
 Method Route Auth Purpose
 
@@ -121,25 +137,45 @@ POST /hybrid/vector-first Retrieval Produce vector candidates, then evaluate gra
 
 POST /hybrid/joint Retrieval Combine graph and vector rankings with Reciprocal Rank Fusion.
 
-These legacy hybrid routes use the retained pgvector plan when no pgContext compatibility binding is active. With an active binding, vector retrieval delegates through pgContext while preserving the legacy request and response contract. The collection-based pgContext surface also exposes separate /context/hybrid/* routes. Context rank-fusion combines independent pgContext and pgGraph rankings, while Context joint couples candidate generation, graph expansion, combined-pool pgContext rescoring, and one final weighted reciprocal-rank fusion.
+These legacy hybrid routes use the retained pgvector plan by default. With an
+
+active pgContext compatibility binding, vector retrieval delegates through
+
+pgContext while preserving the legacy request and response contract. The
+
+collection-based pgContext surface also exposes distinct /context/hybrid/*
+
+routes. Context rank-fusion combines independent pgContext and pgGraph
+
+rankings, while Context joint couples candidate generation, graph expansion,
+
+combined-pool pgContext rescoring, and one final weighted reciprocal-rank
+
+fusion.
 
 pgContext AI Search
 
-The pgContext Preview API exposes 40 collection-based routes. Use either the Gateway base /projects/{project_id}/context with a dashboard or CLI bearer credential, or the project Runtime base /context with a project_full Runtime API key.
+The pgContext Preview API exposes 75 project-scoped routes. Use the Gateway
+
+base /projects/{project_id}/context with a dashboard or CLI bearer credential,
+
+or the project Runtime base /context with a project_full Runtime API key.
 
 Area Routes
 
 Capabilities and sources GET /capabilities ; POST /discover ; POST /preflight
 
-Collections list, create, get, status, verify, diagnostics, update, delete, reindex, and add named vectors under /collections
+Collections list, create, get, status, verify, diagnostics, update, delete, reindex, aliases, exact-name settings, and named vectors
 
-Filters and points registered column and JSONB filters; point status, scroll, upsert, delete, and reconcile
+Filters and points registered column and JSONB filters; point status, scroll, upsert, delete, reconcile, bounded batches, and payload updates
 
 Operations list, get, cancel, and retry durable operations
 
 Aggregates POST /count ; POST /facets
 
-Retrieval dense, grouped, recall, text hybrid, graph first, vector first, rank fusion, and coupled Joint; ranked routes accept an optional exact vector_name
+Retrieval dense, candidate, explicit-array, recommendation, discovery, exploration, grouped, recall, query plans, text hybrid, graph first, vector first, rank fusion, and coupled Joint
+
+Insight index health, memory estimates, vacuum guidance, query statistics, collection telemetry, model versions, and embedding migrations
 
 See the pgContext API reference for every method, path, permission, core request convention, and lifecycle examples.
 

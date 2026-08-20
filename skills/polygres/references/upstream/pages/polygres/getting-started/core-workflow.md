@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/core-workflow
 title: Core workflow | Polygres
-source_hash: 99002aa0090b3271669570c6d19cd543ab122aabf64c6aa9e353659ce986c411
+source_hash: 97133e5bfcfef12cf8c2a256731b7d0485a0d79afc74053046b4c0fec46ac039
 discovered_from: https://docs.evokoa.com/polygres
 
 # Core workflow | Polygres
@@ -99,13 +99,13 @@ Open the organization home ( /{organization} ) and Members ( /{organization}/mem
 
 3. Create a project
 
-Open New project ( /{organization}/new ), name the project, and submit it. Polygres creates the managed PostgreSQL environment and shows its status while setup completes.
+Open New project ( /{organization}/new ), choose Host with Polygres , and submit it. Polygres creates the managed PostgreSQL environment as Default Project and shows its status while setup completes. You can rename it later from its Settings page. To synchronize an existing database instead, choose Supabase , Neon , or Postgres Database and follow the synced-project guide .
 
 If the account email is not yet verified, project creation first sends a verification message and preserves the intended destination. Complete verification from that message, then return to the project workflow.
 
 Wait until the project reports ready before using data tools or retrieval setup. Open the project overview ( /{organization}/{projectId} ) to see its status and next actions.
 
-A project belongs to the organization and contains:
+A managed database project belongs to the organization and contains:
 
 one managed PostgreSQL database,
 
@@ -122,6 +122,8 @@ project API keys for Runtime retrieval.
 4. Connect or load data
 
 Open connection details ( /{organization}/{projectId}/connect ).
+
+The pooled and direct database workflow in this section applies only to managed database projects. Synced projects do not provide connection URLs, psql , the SQL Editor, imports, migrations, or other direct SQL access. Query and modify synchronized rows in the source PostgreSQL database.
 
 Use the pooled connection URL , commonly stored as DATABASE_URL , for normal application traffic, ORMs, and short-lived requests. Use the direct connection URL , commonly stored as DIRECT_URL , for migrations, schema changes, COPY , restores, and bulk ingestion.
 
@@ -149,9 +151,9 @@ Graph
 
 Use Graph setup ( /{organization}/{projectId}/workspace/graph ) to review candidate tables and relationships, save the paths that matter to your product, and build the graph configuration. A ready build is required before graph queries work.
 
-Vector
+AI Context (Vector)
 
-Use Vector setup ( /{organization}/{projectId}/workspace/vector ) to create a
+Use AI Context (Vector) setup ( /{organization}/{projectId}/workspace/context ) to create a
 
 pgContext collection over a vector source, choose its search settings, and
 
@@ -163,7 +165,7 @@ collection has a default vector, independently of the project’s default
 
 collection.
 
-The Legacy tab is only for persisted pgvector registrations that are
+For standard projects, the Legacy tab is only for persisted pgvector registrations that are
 
 effectively Ready. An HNSW registration needs its exact physical index to be
 
@@ -229,7 +231,7 @@ find content similar to an existing row,
 
 find semantically similar records within related account data.
 
-Configure and inspect pgContext collections in Vector setup, then exercise their dense,
+Configure and inspect pgContext collections in AI Context (Vector) setup, then exercise their dense,
 
 text-hybrid, graph-composed, rank-fusion, or Joint methods through the CLI,
 

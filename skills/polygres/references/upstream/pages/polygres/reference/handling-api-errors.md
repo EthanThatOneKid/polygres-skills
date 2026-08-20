@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/handling-api-errors
 title: Handle API errors | Polygres
-source_hash: b21864bae045922ea0f9bf2608c83c46c98fd3f6cde725690e37db37d7f09667
+source_hash: 9ffcd2ed61eb5a84d377be00ae1db2cb840f50984f9b4b27f9b5990d3ba14345
 discovered_from: https://docs.evokoa.com/polygres
 
 # Handle API errors | Polygres

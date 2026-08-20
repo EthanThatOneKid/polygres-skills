@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/python-sdk
 title: Python SDK | Polygres
-source_hash: 414d10f3ded6a003cbf4f916dabea912481552406ff2c025cb5a152dbf6c9152
+source_hash: a2e1befca0e85ef6b062070b819c575ccabd0332fef8b374d35d93e183e5a624
 discovered_from: https://docs.evokoa.com/polygres
 
 # Python SDK | Polygres
@@ -13,11 +13,11 @@ Installation
 
 Install the package via pip:
 
-pip install "polygres-sdk==0.3.0"
+pip install "polygres-sdk==0.4.0"
 
 To upgrade an existing environment:
 
-pip install --upgrade "polygres-sdk==0.3.0"
+pip install --upgrade "polygres-sdk==0.4.0"
 
 Quick Start
 
@@ -57,27 +57,53 @@ print (context_capabilities.setup, context_capabilities.dense_search)
 
 project.readiness() covers graph, previously registered pgvector, and legacy
 
-hybrid retrieval. It does not establish that an AI Context collection or a
+hybrid retrieval. For AI Context readiness, check the capability for the
 
-specific named vector is ready. For AI Context, check the capability for the
+intended method, then inspect collection status and verification for the
 
-intended method, then inspect collection status and verification.
+selected named vector.
 
 Running Queries
 
 The SDK supports all retrieval modes. The integration patterns guide provides copyable examples for the most common application workflows:
 
-Vector Retrieval ( project.vector.search )
+pgContext semantic retrieval ( project.context.search , project.context.recommend )
 
 Text Retrieval ( project.text.tsvector , project.text.fuzzy )
 
 Graph Retrieval ( project.graph.expand , project.graph.related )
 
-Hybrid Retrieval ( project.hybrid.graph_first , project.hybrid.joint )
+pgContext hybrid retrieval ( project.context.graph_first , project.context.vector_first , project.context.rank_fusion , project.context.joint )
 
-pgContext AI Search ( project.context.search , project.context.text_hybrid , project.context.joint )
+pgContext query plans ( project.context.query_* , project.context.execute_query )
 
 Head over to Retrieval Integration Patterns to copy the Python code for your specific workflow.
+
+Vector and Hybrid migration guidance
+
+project.vector and project.hybrid are deprecated compatibility namespaces.
+
+They remain available for applications with existing pgvector registrations.
+
+For new development, create a pgContext collection and use project.context :
+
+Deprecated compatibility method Recommended pgContext method
+
+project.vector.search() project.context.search() or query_nearest() with execute_query()
+
+project.vector.similar_to() project.context.recommend() with a known positive point
+
+project.hybrid.graph_first() project.context.graph_first()
+
+project.hybrid.vector_first() project.context.vector_first()
+
+project.hybrid.joint() project.context.joint()
+
+The pgContext path adds named vectors, registered filters, point and payload
+
+synchronization, text composition, query plans, diagnostics, telemetry, and
+
+embedding migration tracking in one collection-centered API.
 
 To validate, insert, upsert, or ignore one record through the Runtime API, see
 
@@ -87,9 +113,15 @@ pgContext reconciliation, waiting, idempotency, and recovery after an uncertain
 
 write.
 
-Vector result metrics
+Deprecated Vector result metrics
 
-VectorResult.distance and VectorResult.score can be None when a metric cannot be calculated, such as cosine distance for a zero vector. similarity can also be None . Check these values before displaying or using them for additional ranking; do not replace them with a made-up score.
+Existing project.vector integrations return VectorResult values.
+
+VectorResult.distance , VectorResult.score , and VectorResult.similarity can
+
+be None when a metric is undefined, such as cosine distance for a zero
+
+vector. Use present values for display and additional ranking.
 
 for result in project.vector.search(query_embedding).results:
 
@@ -149,9 +181,75 @@ application has a centralized warning policy.
 
 pgContext collections and operations
 
-All pgContext methods live directly under project.context . Collection and operation objects are typed data and do not perform network actions.
+All pgContext methods live directly under project.context . Collection and
 
-To build a custom onboarding UI, call get_onboarding() first. An unassessed project can be evaluated once with evaluate_onboarding() . Use acknowledge_onboarding() or dismiss_onboarding() for the user’s decision, and reserve refresh_onboarding() for an explicit retry. These calls are never made automatically by retrieval methods.
+operation objects are typed data; explicit namespace methods perform network
+
+actions.
+
+SDK 0.4.0 pgContext alignment
+
+SDK 0.4.0 adds 54 public methods aligned with the stable pgContext 0.2.0
+
+vocabulary. Every method lives on project.context , giving applications one
+
+typed namespace for collection management, point synchronization, retrieval,
+
+query plans, diagnostics, telemetry, and embedding migrations.
+
+Goal SDK 0.4.0 methods
+
+Use pgContext names for established workflows register_vector() , register_filter_column() , register_jsonb_path() , drop_collection() , facet() , query() , scroll()
+
+Manage aliases and collection settings create_collection_alias() , collection_aliases() , drop_collection_alias() , collection_info() , collection_limits() , configure_collection_limits() , collection_vectors() , configure_vector()
+
+Synchronize points and payloads bulk_upsert_points() , bulk_delete_points() , backfill_points() , set_payload() , delete_payload() , clear_payload()
+
+Retrieve and compose results candidate_search() , raw_vector_search() , recommend() , discover() , explore() , execute_query() , explain()
+
+Build typed query plans query_nearest() , query_sparse_nearest() , query_full_text() , query_late_interaction() , query_recommend() , query_discover() , query_lookup() , query_prefetch() , query_weight() , query_score_threshold() , query_formula() , query_rerank()
+
+Inspect index and query health index_status() , index_diagnostics() , estimate_index_memory() , vacuum_advice() , index_advisor() , optimization_status() , telemetry() , query_cohort_stats() , query_execution_stats()
+
+Track models and migrations model_versions() , register_model_version() , embedding_migrations() , create_embedding_migration() , update_embedding_migration()
+
+The seven preferred pgContext names share the same Runtime operations as their
+
+SDK 0.3.0 counterparts. Applications can upgrade first and adopt the preferred
+
+names on their own schedule:
+
+Preferred in SDK 0.4.0 Available SDK 0.3.0 name
+
+register_vector() add_vector()
+
+register_filter_column() add_filter_column()
+
+register_jsonb_path() add_jsonb_filter_path()
+
+drop_collection() delete_collection()
+
+facet() facets()
+
+query() text_hybrid()
+
+scroll() scroll_points()
+
+For new application code, start with the preferred names. Existing calls keep
+
+their signatures, request behavior, return types, retry rules, and exception
+
+categories in SDK 0.4.0.
+
+To build a custom onboarding UI, call get_onboarding() first. An unassessed
+
+project can be evaluated once with evaluate_onboarding() . Use
+
+acknowledge_onboarding() or dismiss_onboarding() for the user’s decision,
+
+and reserve refresh_onboarding() for an explicit retry. Application code
+
+controls each onboarding call.
 
 operation = project.context.create_collection(
 
@@ -179,7 +277,7 @@ collection_response = project.context.get_collection(completed.collection_id)
 
 collection = collection_response.collection
 
-add_operation = project.context.add_vector(
+add_operation = project.context.register_vector(
 
 collection.id,
 
@@ -217,11 +315,11 @@ limit = 10 ,
 
 )
 
-This example assumes documents.title_embedding already exists and contains
+This example uses an existing documents.title_embedding column populated
 
-768-dimensional values because mode="existing" does not create or populate
+with 768-dimensional values. Choose mode="add_column" when preparing an
 
-the column.
+empty table for application-managed embedding writes.
 
 The vector supplied during creation is the collection default. A collection
 
@@ -245,15 +343,71 @@ set_default_collection(collection.id) . Both methods return durable operations
 
 that must be waited for explicitly when the caller needs the completed state.
 
-Mutations return immediately and never wait implicitly. Collection, filter, and
+Mutations return immediately, and wait_for_operation() gives callers explicit
 
-point administration methods use collection UUIDs; operation methods use
+control over polling. Collection, filter, and point administration methods use
 
-operation UUIDs. Counts, facets, and ranked retrieval accept a collection UUID
+collection UUIDs; operation methods use operation UUIDs. Counts, facets, and
 
-or exact name. project.context.joint() is coupled pgContext true hybrid and is
+ranked retrieval accept a collection UUID or exact name.
 
-separate from Context rank fusion and the existing pgvector Hybrid namespace.
+project.context.joint() provides coupled pgContext true hybrid retrieval,
+
+while Context rank fusion and the pgvector Hybrid namespace remain distinct
+
+retrieval choices.
+
+Build and execute a typed query plan
+
+Query-plan builders validate the plan locally and return typed
+
+ContextQueryPlan values. Compose branches in Python, then send the completed
+
+plan through one execute_query() call:
+
+dense = project.context.query_nearest(
+
+embed_text( "How do I rotate a signing key?" ),
+
+vector_name = "title_semantic" ,
+
+limit = 40 ,
+
+)
+
+lexical = project.context.query_full_text(
+
+"rotate signing key" ,
+
+"content" ,
+
+limit = 40 ,
+
+)
+
+plan = project.context.query_prefetch([
+
+project.context.query_weight(dense, 0.7 ),
+
+project.context.query_weight(lexical, 0.3 ),
+
+])
+
+plan = project.context.query_rerank(plan, limit = 10 )
+
+response = project.context.execute_query( "support_docs" , plan)
+
+for result in response.results:
+
+print (result.point_id, result.score)
+
+Use explain("support_docs", "content") to inspect the collection’s stable
+
+dense plus full-text query. Use query_cohort_stats() ,
+
+query_execution_stats() , and telemetry() to follow collection-scoped query
+
+behavior in production.
 
 Choosing your access method
 
@@ -269,7 +423,13 @@ Direct database connections for ORMs, migration tools, bulk inserts Native Postg
 
 Direct database connections
 
-The Polygres Python SDK is for the project Runtime API, including pgContext management and retrieval. It does not bundle Postgres drivers like asyncpg or psycopg , and it is not meant for database migrations, bulk background inserts, or raw SQL execution.
+The Polygres Python SDK serves the project Runtime API, including pgContext
+
+management and retrieval. Native Postgres drivers such as asyncpg and
+
+psycopg serve database migrations, bulk background inserts, and raw SQL
+
+execution.
 
 If your backend application needs to establish a pooled database connection
 

@@ -1,11 +1,13 @@
 source: https://docs.evokoa.com/polygres/platform/load-and-manage-data
 title: Load and manage data | Polygres
-source_hash: 1dff93ffc6ec6f13332d46fb9c4810891758d4f3e0eb07ae96e5b59ad405f1e9
+source_hash: 9a60d3659c46331a14c624ea64d6ecc59c1c31fedd381890d75c9368137228d2
 discovered_from: https://docs.evokoa.com/polygres
 
 # Load and manage data | Polygres
 
 Load and manage data
+
+The database tools on this page apply only to managed database projects created with Host with Polygres . Synced projects do not provide the Tables mutation surface, SQL Editor, imports, migrations, psql , or other direct SQL access. Browse or change synchronized rows in the source PostgreSQL database instead.
 
 Wait until the project is Ready before starting a write operation. If Settings > Runtime shows Read-only , browsing and read queries may still work, but imports, migrations, row edits, and schema changes can fail until the displayed cause is resolved.
 

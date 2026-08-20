@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/command-reference
 title: CLI command reference | Polygres
-source_hash: 1eb321b4205748896e92f533570dd1516999f74d4c03b3789d057d688fcdb6b9
+source_hash: d2a68f95e42f23713a1bb3f823297527d9c66455d266d5a0ef035cd64ffd8928
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI command reference | Polygres
@@ -13,9 +13,9 @@ Area Commands
 
 Authentication login , logout , whoami
 
-Projects projects list , projects use , projects create , projects status
+Projects projects list , projects use , projects create standard , projects create sync , projects status
 
-Connection env , db info , db psql
+Connection env , db info , db psql (standard projects provide native database connections and psql )
 
 API keys keys create , keys list , keys revoke
 
@@ -45,6 +45,44 @@ Notices notices
 
 Status and local configuration ready , config path
 
+Project creation
+
+Create a standard project hosted by Polygres:
+
+polygres projects create standard NAME
+
+Create a project synchronized from an existing PostgreSQL database:
+
+polygres projects create sync NAME
+
+Synced project creation accepts:
+
+a securely prompted PostgreSQL URL;
+
+--connection-env NAME ;
+
+structured --host , --port , --database , --username , and
+
+--password-env fields;
+
+repeatable --table schema.table ;
+
+--file selection.json ;
+
+--all-eligible ;
+
+--yes ;
+
+--no-wait ;
+
+--timeout <seconds> ; and
+
+--idempotency-key <key> .
+
+The sync creation workflow includes source checks, table discovery, selection,
+
+and project creation.
+
 vector configs create is retained as a migration command and always returns
 
 VECTOR_CREATION_RETIRED . Create a pgContext collection for new vector setup.
@@ -53,13 +91,15 @@ The other vector commands continue to manage configurations registered before
 
 creation was retired.
 
-The generic API surface can invoke versioned routes included with the CLI,
+The generic API surface supports the versioned public routes included with the
 
-subject to the caller’s server-side permissions. Graph queries are available
+installed CLI. Prefer dedicated commands for documented workflows because they
 
-through application APIs and the pgContext composition commands. Use
+provide task-specific validation, output, and recovery guidance. Graph queries
 
-polygres <command> --help for command-specific arguments, and place global
+are available through application APIs and the pgContext composition commands.
+
+Use polygres <command> --help for command-specific arguments, and place global
 
 flags before the command.
 

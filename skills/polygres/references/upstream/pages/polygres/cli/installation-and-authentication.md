@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/installation-and-authentication
 title: CLI installation and authentication | Polygres
-source_hash: cc230ab4d355aae0ffd82c68d5953963e1c4759fcc5bce7585ac15214e6de2ba
+source_hash: 938f7c551e6693e8e535361925703a6d7fec8efe796db04de930f4dacac5e989
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI installation and authentication | Polygres
@@ -9,7 +9,7 @@ Installation and authentication
 
 The public CLI package is polygres-cli and requires Python 3.10 or newer. Install it with pipx so it does not alter an application environment:
 
-pipx install "polygres-cli==0.3.0"
+pipx install "polygres-cli==0.4.0"
 
 polygres --version
 
@@ -19,7 +19,7 @@ python -m venv .venv
 
 . .venv/bin/activate
 
-pip install "polygres-sdk==0.3.0"
+pip install "polygres-sdk==0.4.0"
 
 Package split migration
 
@@ -31,7 +31,7 @@ installation with the standalone CLI:
 
 pipx uninstall polygres
 
-pipx install "polygres-cli==0.3.0"
+pipx install "polygres-cli==0.4.0"
 
 polygres --version
 
@@ -39,13 +39,17 @@ For an application virtual environment that needs both tools:
 
 pip uninstall polygres
 
-pip install "polygres-sdk==0.3.0"
+pip install "polygres-sdk==0.4.0"
 
-pip install --force-reinstall "polygres-cli==0.3.0"
+pip install --force-reinstall "polygres-cli==0.4.0"
 
 polygres --version
 
-Confirm the printed CLI version is 0.3.0 before continuing. Existing login credentials remain on disk; run polygres login again only if a command exits with authentication errors.
+Confirm that the CLI reports version 0.4.0 before continuing. Existing login
+
+credentials remain on disk. Sign in again when the CLI reports that the saved
+
+session needs renewal.
 
 Sign in
 

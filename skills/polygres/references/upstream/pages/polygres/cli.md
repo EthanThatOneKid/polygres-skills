@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli
 title: Polygres CLI | Polygres
-source_hash: 4952538abd386eb590584ca912288faaeb713c3b07891733f10656c610ce3896
+source_hash: 753daae5497c48bc83d6e1d43ca8bed311ee39f48a06330d3085f545db6fd962
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres CLI | Polygres
@@ -25,15 +25,21 @@ before following the workflows below.
 
 CLI setup requires an existing active Polygres account. Signup, organization onboarding, email verification, password management, organization switching, and project deletion remain dashboard workflows.
 
-First project from a terminal
+First standard project from a terminal
 
-Copy this workflow after your account is active. projects create waits for provisioning, but does not select the new project .
+Use this workflow when Polygres should host the primary PostgreSQL database. It
 
-pipx install "polygres-cli==0.3.0"
+creates a standard project, applies a migration, configures text retrieval, and
+
+creates a Runtime API key. Project creation waits for readiness, while project
+
+selection remains an explicit step.
+
+pipx install "polygres-cli==0.4.0"
 
 polygres login
 
-polygres projects create "Support Search"
+polygres projects create standard "Support Search"
 
 polygres projects use "Support Search"
 
@@ -48,6 +54,38 @@ polygres keys create local-dev
 polygres env
 
 Wait until text configs list reports ready , save the one-time API-key secret, and use the POLYGRES_RUNTIME_URL line from polygres env with the Python SDK.
+
+First synced project from a terminal
+
+Use this workflow when an existing PostgreSQL database remains the source of
+
+truth:
+
+export SOURCE_DATABASE_URL = "postgresql://..."
+
+polygres login
+
+polygres projects create sync "Support Search" \
+
+--connection-env SOURCE_DATABASE_URL \
+
+--all-eligible \
+
+--yes
+
+polygres projects use "Support Search"
+
+polygres projects status
+
+For an interactive setup, run:
+
+polygres projects create sync "Support Search"
+
+The CLI securely prompts for the connection URL and table selection. After the
+
+project reaches Streaming , configure retrieval over the synchronized
+
+tables. Application writes continue through the source PostgreSQL database.
 
 Navigation
 

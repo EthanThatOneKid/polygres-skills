@@ -1,29 +1,27 @@
 source: https://docs.evokoa.com/polygres/platform/security-basics
 title: Security basics | Polygres
-source_hash: fc1525e45d8f213a89eb365b0b16f701cfd7380385673dcd64c48af2d0181159
+source_hash: 01a9becd2f99d68c39489a4dc245c40e400b1ea65a52867c6d9b9a12bc47edda
 discovered_from: https://docs.evokoa.com/polygres
 
 # Security basics | Polygres
 
 Security basics
 
-Polygres uses three distinct access mechanisms. They are not interchangeable.
+Polygres uses distinct access mechanisms for people, standard databases,
 
-Each credential has a focused role: the dashboard session supports people and
+synchronized sources, and application retrieval. Each credential has a focused
 
-control-plane workflows, PostgreSQL credentials support database traffic, and
+purpose and a trusted storage location.
 
-the project API key supports application retrieval plus pgContext Runtime
-
-resource management.
-
-Separate the three credentials
+Use each credential for its purpose
 
 Access mechanism What it authenticates Where it belongs Where it does not belong
 
 Dashboard session A person using the Polygres dashboard, including their organization membership and role. The signed-in user’s browser session. Application environment variables, database clients, copied SDK examples, or shared automation.
 
-Native database password Direct or pooled Postgres access to one project database. A trusted backend, migration runner, approved database tool, or secret manager as part of a database URL. Browser-side application code, public repositories, screenshots, support chats, or retrieval API headers.
+Native database password Direct or pooled Postgres access to one standard project. A trusted backend, migration runner, approved database tool, or secret manager as part of a database URL. Browser-side application code, public repositories, screenshots, support chats, or retrieval API headers.
+
+Source PostgreSQL credential Connects Polygres to the PostgreSQL database used by a synced project. The synced-project setup flow, a protected environment variable, or a secret manager. Frontend code, source control, screenshots, terminal history, logs, documentation, or support messages.
 
 Project API Key Server-side retrieval and pgContext Runtime resource management for one project. A backend or trusted worker secret store; generated SDK and API examples reference it through an environment variable. Native Postgres clients, frontend bundles, documentation, or a person’s dashboard login.
 
@@ -35,7 +33,7 @@ The safest default is to treat each Polygres credential as single-purpose:
 
 Dashboard session for people operating the SaaS workspace.
 
-Native database password for pooled or direct PostgreSQL access.
+Native database password for pooled or direct PostgreSQL access to a managed database project. Synced projects do not issue one.
 
 Project API key for backend retrieval and explicit pgContext collection workflows.
 
@@ -57,7 +55,7 @@ Never copy browser session material into an application. Create a purpose-built 
 
 Handle the native database password
 
-The Connect ( /{organization}/{project_id}/connect ) page initially shows <password> in connection strings.
+This section applies only to managed database projects. The Connect ( /{organization}/{project_id}/connect ) page initially shows <password> in connection strings for those projects. Synced projects do not show native connection strings or support direct SQL access.
 
 Select Reveal Password only when a trusted destination is ready.
 
@@ -72,6 +70,38 @@ Use the Pooled connection for normal application traffic and the Direct connecti
 The revealed password can be requested again by an authorized dashboard user; it is not a one-time display. That makes access to the Connect page itself sensitive.
 
 When you reset the native database password from Settings, Polygres rotates the password immediately and existing direct or pooled connections that use the old password stop working. The reset action does not display the new password automatically and Polygres does not email database passwords. After a reset, use the normal Reveal Password flow from the dashboard to view the new password, then update the affected application secrets and database tools.
+
+Protect a synchronized source credential
+
+A synced project uses a source PostgreSQL credential during setup and ongoing
+
+synchronization.
+
+For interactive CLI setup, use the hidden connection prompt:
+
+polygres projects create sync "Support Search"
+
+For automation, store the complete URL in a protected environment variable:
+
+export SOURCE_DATABASE_URL = "postgresql://..."
+
+polygres projects create sync "Support Search" \
+
+--connection-env SOURCE_DATABASE_URL
+
+--connection-env receives the environment-variable name, keeping the
+
+connection value in the protected environment.
+
+Use a dedicated source role with access to the selected public tables and the
+
+logical-replication capabilities described in the
+
+PostgreSQL sync setup guides .
+
+When the source credential changes, rotate it with the source provider and
+
+contact Polygres support to update the synchronized connection.
 
 Create and protect a Project API Key
 
@@ -160,3 +190,9 @@ No secret appears in source control, frontend bundles, screenshots, SQL text, qu
 The team knows how to revoke a Project API Key and how to remove a member or pending invitation.
 
 Production connections keep encrypted transport enabled.
+
+Synced-project source credentials are stored in a protected environment or secret manager.
+
+CLI automation passes source credentials through --connection-env or --password-env .
+
+The source role is scoped to the selected database and synchronization requirements.

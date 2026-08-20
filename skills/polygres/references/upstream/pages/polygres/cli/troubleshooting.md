@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/troubleshooting
 title: CLI troubleshooting | Polygres
-source_hash: d0ef23aad4f2a9ecbe3fd406974dc2005b1b8c714ad1d15b35be5c80a1c01124
+source_hash: f0a741e1f75bca5f2360128b486415f662b17816fcecac9869e4d94a5f2ae5ba
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI troubleshooting | Polygres
@@ -9,7 +9,7 @@ CLI troubleshooting
 
 Symptom Action
 
-polygres --version is older than 0.3.0 Upgrade with pipx install "polygres-cli==0.3.0" --force , or pip install --force-reinstall "polygres-cli==0.3.0" in your app venv. See package split migration .
+polygres --version is older than 0.4.0 Upgrade with pipx install "polygres-cli==0.4.0" --force , or pip install --force-reinstall "polygres-cli==0.4.0" in your app venv. See package split migration .
 
 Exit 3 or “Run polygres login ” Run polygres login , then confirm with polygres --json whoami .
 
@@ -19,7 +19,9 @@ Name is ambiguous Use the project ID from polygres projects list .
 
 Project is still provisioning Run polygres projects status ; use the dashboard if provisioning fails.
 
-db psql exits 9 Install PostgreSQL client tools, then rerun polygres db psql .
+A synced-project workflow needs SQL access Open the source PostgreSQL database with its usual database tools. Use Polygres CLI commands for synchronized retrieval workflows.
+
+db psql exits 9 for a managed database project Install PostgreSQL client tools, then rerun polygres db psql .
 
 Text or vector query is not ready Check text configs list , vector configs list , and polygres ready .
 
@@ -35,7 +37,27 @@ An import wait timed out Run polygres --json import status <job-uuid> before res
 
 A command returns MAINTENANCE_READ_ONLY or MAINTENANCE_FULL Stop immediate retries and read the dashboard maintenance notice. Read-only maintenance permits reads but blocks writes; full maintenance blocks normal API and database access.
 
-You need to delete a project Use the dashboard project lifecycle controls , not the CLI.
+You need to delete a project Use the dashboard project lifecycle controls .
+
+Synced project setup
+
+Result Recommended action
+
+Source connection times out Confirm the direct hostname, port, address family, and source network allowlist.
+
+Authentication needs attention Verify the database name, username, password, and URL encoding.
+
+TLS verification needs attention Use the provider’s direct hostname and its verified server certificate.
+
+Logical replication needs attention Enable logical replication and make replication capacity available at the source.
+
+A table needs selection review Review the displayed eligibility reason, synchronization key, and eligible columns.
+
+Creation ends before readiness Run polygres projects status and reuse the same --idempotency-key when resuming the same creation workflow.
+
+Synchronization is paused Open the project overview and follow the displayed action.
+
+A changed table is resyncing Follow table progress until its state returns to Streaming .
 
 For a request failure, preserve the request ID from JSON or error output when
 

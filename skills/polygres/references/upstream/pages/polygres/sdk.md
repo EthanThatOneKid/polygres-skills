@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk
 title: SDK guide | Polygres
-source_hash: b3ede495a8b640d72d7ca6aafac64252b1e16962f5acb1f8a22791d9ccd6eb8b
+source_hash: 7718652a8bbdb8dd3c62072afb2fbe88fac105b1a0ee8f89d051f2d0f6f3faed
 discovered_from: https://docs.evokoa.com/polygres
 
 # SDK guide | Polygres

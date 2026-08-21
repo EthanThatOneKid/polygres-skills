@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/roles-and-permissions
 title: Roles and permissions | Polygres
-source_hash: 9b707d34c2e2ff7a7f6aca30a20753a44e7bc1fdd612dc5d816d31b823dd4e85
+source_hash: 56ba844010808424b74638589dcdd2fac2546a12a5f617ccda02d0586b56754e
 discovered_from: https://docs.evokoa.com/polygres
 
 # Roles and permissions | Polygres

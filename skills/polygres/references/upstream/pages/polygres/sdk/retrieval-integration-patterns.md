@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/retrieval-integration-patterns
 title: Retrieval integration patterns | Polygres
-source_hash: e5f6055cdb7d70a215ee3479cfb3881dc7c7e9763fb6ddd46e8004377edfcec0
+source_hash: 566640cd373f0efb97b1b743597e3bb57165ad5f6e59261b0da223d272fe588b
 discovered_from: https://docs.evokoa.com/polygres
 
 # Retrieval integration patterns | Polygres

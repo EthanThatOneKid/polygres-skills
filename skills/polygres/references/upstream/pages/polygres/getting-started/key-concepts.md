@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/key-concepts
 title: Key concepts | Polygres
-source_hash: e58d9b7c1efed682a3d236cc07f731698b6d786a21a1736e04b9c1d6ae7c8587
+source_hash: c76990fd8bd81525c02b5c87183deb5f959fe1811a4bb08442aa7cf1dd526b16
 discovered_from: https://docs.evokoa.com/polygres
 
 # Key concepts | Polygres

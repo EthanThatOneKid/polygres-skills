@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects
 title: Projects | Polygres
-source_hash: 18a83e3313c44c473d86d9705df91093f53425557fc4de45d7e982bb0ed14019
+source_hash: 5a33a5dbb8b2c65c33ae453a3cdeba645882dc6ac862218da95b2e5e9c0b5586
 discovered_from: https://docs.evokoa.com/polygres
 
 # Projects | Polygres
@@ -102,6 +102,8 @@ Use Settings > Runtime to check project, database, and pooler state, tier, hosts
 Rename or delete a project
 
 Renaming changes the dashboard display name but not the project ID used in links and application configuration. Deletion permanently destroys the database, indexes, and Project API Keys. Perform either action from Settings ( /{organization}/{project_id}/settings ), following Project settings and operations .
+
+Project deletion allows up to 30 authenticated attempts in a rolling 24-hour window. Separate limits apply to the user, the user and project together, and the project across all users. The most restrictive applicable limit is enforced. An authenticated request consumes quota before the deletion handler runs, so a request that later fails can still count. If the API returns RATE_LIMITED , wait for the duration in the Retry-After response header before trying again.
 
 Project settings and operations
 

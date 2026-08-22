@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/core-workflow
 title: Core workflow | Polygres
-source_hash: 9622dc90b9fcb85825d87af6572bef025f4817de328908dee5a5c779fd0a63ce
+source_hash: e3cb3860dbbb51f3b43d8395319ef66da3aeb3fc6f36bb4a31ea95c8f3a5ec86
 discovered_from: https://docs.evokoa.com/polygres
 
 # Core workflow | Polygres
@@ -99,7 +99,7 @@ Open the organization home ( /{organization} ) and Members ( /{organization}/mem
 
 3. Create a project
 
-Open New project ( /{organization}/new ), choose Host with Polygres , and submit it. Polygres creates the managed PostgreSQL environment as Default Project and shows its status while setup completes. You can rename it later from its Settings page. To synchronize an existing database instead, choose Supabase , Neon , or Postgres Database and follow the synced-project guide .
+Open New project ( /{organization}/new ), choose Host with Polygres , and submit it. Polygres creates the managed PostgreSQL environment as Default Project and shows its status while setup completes. You can rename it later from its Settings page. To synchronize an existing database instead, choose Supabase , Neon , PlanetScale , or Postgres Database and follow the synced-project guide .
 
 If the account email is not yet verified, project creation first sends a verification message and preserves the intended destination. Complete verification from that message, then return to the project workflow.
 

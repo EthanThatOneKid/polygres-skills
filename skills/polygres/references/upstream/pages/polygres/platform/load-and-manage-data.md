@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/load-and-manage-data
 title: Load and manage data | Polygres
-source_hash: 022b13333d9a08b94ac7c7e2220151257cfb4751bdf63c6d04841bc83ada55bd
+source_hash: 89b01b41a06e7be39142fb706c37809c9d803051f8ac0d470f8f42fabe250fad
 discovered_from: https://docs.evokoa.com/polygres
 
 # Load and manage data | Polygres
@@ -159,7 +159,7 @@ Import a CSV file
 
 Open Import ( /{organization}/{project_id}/import ) and choose CSV .
 
-Select the file. The dashboard previews sample rows and infers column names, data types, and nullability.
+Select the file. The dashboard previews sample rows and infers column names and data types. Columns in a newly created table default to nullable because a preview sample cannot prove that every row contains a value.
 
 Choose Create new table , Append to existing , or Replace existing .
 

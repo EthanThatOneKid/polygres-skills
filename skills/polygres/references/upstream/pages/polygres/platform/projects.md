@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects
 title: Projects | Polygres
-source_hash: 5a33a5dbb8b2c65c33ae453a3cdeba645882dc6ac862218da95b2e5e9c0b5586
+source_hash: 0c10dc24da344fccd9ba66a6903fd048aab681cf89477524ea5fb404fcf3699d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Projects | Polygres
@@ -17,11 +17,13 @@ Supabase You want selected tables from an existing Supabase project copied conti
 
 Neon You want selected tables from an existing Neon database copied continuously into Polygres. The synced-project access model applies. Query and modify rows in Neon.
 
+PlanetScale You want selected tables from a PlanetScale Postgres database copied continuously into Polygres. The synced-project access model applies. Query and modify rows in PlanetScale.
+
 Postgres Database You want selected tables from another PostgreSQL database copied continuously into Polygres. The synced-project access model applies. Query and modify rows in the source database.
 
 Host with Polygres You want a new Polygres-managed PostgreSQL database. Native database credentials, pooled and direct connection URLs, psql , the SQL Editor, imports, migrations, and Runtime API access are available.
 
-For the complete workflow and operating model, see Create a synced PostgreSQL project . Before opening the wizard, follow the PostgreSQL sync setup guides for standard PostgreSQL, Neon, or Supabase.
+For the complete workflow and operating model, see Create a synced PostgreSQL project . Before opening the wizard, follow the PostgreSQL sync setup guides for standard PostgreSQL, Neon, Supabase, or PlanetScale.
 
 Create a project in an organization
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/connection-examples
 title: Database client examples | Polygres
-source_hash: 53f0ebcc6d723f129a9a7fcdb926731b85d26004013e1c9c8633d55c182d9b0c
+source_hash: a5f5b1c4e527128f21ca5914d0dc46d54c906657f7d9a049de8d4234b55d3033
 discovered_from: https://docs.evokoa.com/polygres
 
 # Database client examples | Polygres

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects/sync-postgresql
 title: Create a Synced PostgreSQL Project | Polygres
-source_hash: 85e0644820f025268dfaa5da5dcda42534ab733af27527ebf38f1d1ce4871039
+source_hash: ffa657440f30c90b2589a1d5b240ffe3b97c293b428f82ca2f5f03529600e820
 discovered_from: https://docs.evokoa.com/polygres
 
 # Create a Synced PostgreSQL Project | Polygres
@@ -71,7 +71,7 @@ Dashboard
 
 Open New project from the organization that should own the project.
 
-Choose Supabase , Neon , or Postgres Database .
+Choose Supabase , Neon , PlanetScale , or Postgres Database .
 
 Add the displayed regional egress addresses to the source allowlist when required.
 
@@ -263,4 +263,4 @@ See the
 
 PostgreSQL sync setup guides for
 
-standard PostgreSQL, Neon, and Supabase instructions.
+standard PostgreSQL, Neon, Supabase, and PlanetScale instructions.

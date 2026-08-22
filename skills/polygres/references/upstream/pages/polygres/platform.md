@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform
 title: Platform guide | Polygres
-source_hash: 65e73a880fa2f099c2bd0ebee3c22ea3355718a78a0390b703208b13c0095e23
+source_hash: d3b922d316a9ddc026ef23cf34716385c5de96c2d4cce2b86de77522f4096a64
 discovered_from: https://docs.evokoa.com/polygres
 
 # Platform guide | Polygres
@@ -11,7 +11,7 @@ Use the dashboard for project lifecycle workflows and organization administratio
 
 Create a synced PostgreSQL project to continuously copy selected source tables into Polygres.
 
-PostgreSQL sync setup guides for standard PostgreSQL, Neon, and Supabase.
+PostgreSQL sync setup guides for standard PostgreSQL, Neon, Supabase, and PlanetScale.
 
 Load and manage data for tables, SQL, imports, and migrations.
 

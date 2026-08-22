@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects/postgresql-source-setup
 title: PostgreSQL Sync Setup Guides | Polygres
-source_hash: 1635a4adcf12490ede17bb38f54c7d4b5e111c9dbbdc465ebba4e64b0dbacb4b
+source_hash: 4831f87d7fd9f2d87df31ced67779b32b59909779912276b0985327844f11b3e
 discovered_from: https://docs.evokoa.com/polygres
 
 # PostgreSQL Sync Setup Guides | Polygres
@@ -16,6 +16,8 @@ Self-hosted PostgreSQL or another managed provider Standard PostgreSQL
 Neon Neon
 
 Supabase Supabase
+
+PlanetScale Postgres PlanetScale
 
 Polygres uses a direct PostgreSQL connection for logical replication. Choose
 
@@ -112,6 +114,76 @@ When IP Allow is enabled, copy every regional egress address displayed by
 Polygres into the Neon project’s IP Allow list before testing. Other Neon
 
 projects can continue directly to the source check.
+
+PlanetScale
+
+Enable logical replication
+
+Open the PlanetScale database and select Clusters .
+
+Open Parameters for the source cluster.
+
+Set wal_level to logical .
+
+Set max_replication_slots and max_wal_senders high enough to leave at least one slot and sender available to Polygres. PlanetScale recommends twice the number of subscribers as a starting point.
+
+Set max_slot_wal_keep_size above 4 GB and monitor retained WAL against the source change rate and available disk.
+
+Set hot_standby_feedback and sync_replication_slots to on . PlanetScale requires both settings to synchronize logical slots to standbys during failover.
+
+Apply the queued parameter changes before testing the connection.
+
+Create a dedicated replication role
+
+Select Connect on the PlanetScale database branch.
+
+Choose User-defined role and give the role a recognizable name such as polygres-sync-main .
+
+Select the inherited postgres role.
+
+Enable WITH REPLICATION .
+
+Create the role. pg_create_subscription is not required because Polygres consumes the source WAL directly.
+
+PlanetScale requires the inherited postgres role before its managed role
+
+builder enables WITH REPLICATION . The resulting role can create the
+
+filtered publication and replication slot that Polygres manages.
+
+Copy the PlanetScale connection URL
+
+In the connection panel, choose General PostgreSQL .
+
+Copy the direct URL on port 5432 . Do not use the PgBouncer endpoint on port 6432 .
+
+Store the password immediately because PlanetScale displays it only once.
+
+Paste the complete URL into PostgreSQL connection URL in Polygres. It resembles:
+
+postgresql://ROLE.BRANCH-ID:PASSWORD@REGION.pg.psdb.cloud:5432/postgres?sslmode=verify-full&sslrootcert=system
+
+Polygres accepts PlanetScale’s sslrootcert=system option and uses the system
+
+certificate-authority store with full hostname verification. Arbitrary
+
+customer-provided certificate paths remain unsupported.
+
+Protect the replication slot during failover
+
+PlanetScale cannot register a Polygres slot until the first capture creates it. Immediately after the capture starts:
+
+Copy the exact pgres_cdc_... slot name from PlanetScale’s logical replication warning or from pg_replication_slots .
+
+Open Clusters , Parameters , then the Failover section.
+
+Confirm that hot_standby_feedback and sync_replication_slots are both on .
+
+Add the slot name under Logical slot name . Use Add another value for every additional active Polygres slot.
+
+Queue and apply the parameter changes, then confirm that PlanetScale’s logical replication warning clears.
+
+An unregistered slot can be removed during a switchover or cluster change, forcing the subscriber to be recreated and fully synchronized. Monitor replication lag and remove a registered slot only after its Polygres project no longer uses it.
 
 Supabase
 

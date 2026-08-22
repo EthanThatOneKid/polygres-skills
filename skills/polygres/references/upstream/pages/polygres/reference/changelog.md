@@ -1,11 +1,17 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: d7104e6150951b620180244a4320483d6839092baaf2643865297da6c3b05f33
+source_hash: 9d6866945a4856b052e09d6aa73585e2978e0b119f1ba00dbc48c4d2c5f53a44
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
+
+2026-08-20
+
+PlanetScale Postgres is now a first-class synchronized-project source with provider-specific role, logical-replication, and connection guidance.
+
+PlanetScale connection URLs that use sslrootcert=system are accepted while arbitrary client certificate paths remain blocked.
 
 2026-08-19
 

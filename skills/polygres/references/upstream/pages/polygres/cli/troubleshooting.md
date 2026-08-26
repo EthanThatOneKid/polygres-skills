@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/troubleshooting
 title: CLI troubleshooting | Polygres
-source_hash: b758edd3347ddee30ecba49f6f43521afc0a341898df0115ac001aae32007440
+source_hash: 9f4a0ad5dae3acd9713be8e905d1ab326fb613acd51cfea8812cdb9fec4d7bb3
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI troubleshooting | Polygres
@@ -9,7 +9,7 @@ CLI troubleshooting
 
 Symptom Action
 
-polygres --version is older than 0.4.0 Upgrade with pipx install "polygres-cli==0.4.0" --force , or pip install --force-reinstall "polygres-cli==0.4.0" in your app venv. See package split migration .
+polygres --version is older than 0.4.1 Upgrade with pipx install "polygres-cli==0.4.1" --force , or pip install --force-reinstall "polygres-cli==0.4.1" in your app venv. See package split migration .
 
 Exit 3 or “Run polygres login ” Run polygres login , then confirm with polygres --json whoami .
 
@@ -32,6 +32,8 @@ A pgContext collection needs review Use polygres --json context collections get 
 Collection vectors or a deletion preview look incomplete Use global --json . The current human collection and deletion renderers lag the multi-vector response fields. For deletion, inspect collection.source_mode and collection.owns_source_table ; an owned new_table source is deleted with the collection.
 
 A durable Context operation is still running Use polygres context operations get <operation-uuid> or polygres context operations wait <operation-uuid> and retain its request ID. A local timeout or Ctrl-C does not cancel it.
+
+A durable Context operation failed Preserve the displayed error_code , failure_stage , and operation_id . Read the operation by ID and follow the durable AI Context recovery guidance before retrying.
 
 An import wait timed out Run polygres --json import status <job-uuid> before resubmitting. Exit 8 stops local polling but does not cancel the import.
 

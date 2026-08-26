@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/agent-skills
 title: Polygres Agent Skills | Polygres
-source_hash: b669925eb744a33d6f692bab111b9e1eb04e5b9fc841727f07f4aef45078af7f
+source_hash: bdb4cc7418c08f6ab1c28e578c89c3880f745037cf5f4a16998703989a41bfff
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres Agent Skills | Polygres
@@ -43,15 +43,15 @@ by the task, then install the skill repository:
 
 Install the current CLI and SDK, then add Polygres Agent Skills 0.5.0 :
 
-pipx install "polygres-cli==0.4.0"
+pipx install "polygres-cli==0.4.1"
 
-python -m pip install "polygres-sdk==0.4.0"
+python -m pip install "polygres-sdk==0.4.1"
 
 npx skills add Evokoa/polygres-skills
 
-Agent Skills 0.5.0 , CLI 0.4.0 , and SDK 0.4.0 form one coordinated release
+Agent Skills 0.5.0 , CLI 0.4.1 , and SDK 0.4.1 form the current coordinated
 
-set.
+release set.
 
 The public skill source is
 

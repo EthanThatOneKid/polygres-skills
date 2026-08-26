@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/limits
 title: Limits | Polygres
-source_hash: a5c773076f6936f019375912b1ad40ab9fddaaef0bfdc73f66548e120792bfdf
+source_hash: f6f27e59f6063a0ee4d4a56a9e0feb7d91936f6bdb79b8d03594646578b4d7b5
 discovered_from: https://docs.evokoa.com/polygres
 
 # Limits | Polygres
@@ -417,7 +417,7 @@ Collection updates, filter registration, point batches, and cancellation 20/min 
 
 Operation listing and polling 600/min 1,200/min 3,000/min 4,000/min
 
-Collection deletion, reindex, reconciliation, and operation retry 10/hour 3/hour 10/hour 300/hour
+Collection deletion, reindex, reconciliation, and operation retry 20/hour 10/hour 25/hour 300/hour
 
 All applicable scopes are evaluated together. Use the response’s
 

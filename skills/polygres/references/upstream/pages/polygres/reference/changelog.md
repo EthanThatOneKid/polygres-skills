@@ -1,11 +1,39 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 9d6866945a4856b052e09d6aa73585e2978e0b119f1ba00dbc48c4d2c5f53a44
+source_hash: 959a96165534dc710aa0480b882273335263937e11a4d845c8826e673eb8b98d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
+
+2026-08-25
+
+Improved AI Context error messages
+
+When an AI Context setup, synchronization, or indexing task fails, Polygres
+
+now explains what went wrong and what to do next.
+
+Polygres CLI 0.4.1 shows which step failed
+
+and the operation ID, making it easier to correct the problem, retry, or
+
+contact support.
+
+Polygres SDK 0.4.1 makes the same recovery information
+
+available to applications and logs. Existing SDK methods continue to work
+
+without changes.
+
+AI Context limits
+
+Hourly collection deletion, reindex, reconciliation, and operation-retry
+
+budgets are now 20 per user and project, 10 per API key, and 25 per project.
+
+The IP budget remains 300 per hour. See Limits .
 
 2026-08-20
 

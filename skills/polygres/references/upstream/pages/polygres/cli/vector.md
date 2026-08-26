@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/vector
 title: CLI vector retrieval | Polygres
-source_hash: 7cdeb01b50c467bfadb1ab2e23576f6a3498c77024ed2776efe60a67a56cba20
+source_hash: 20567d2f7049e708b4792275c0db6517aaf0cb3adc1ec729eb4507dfa7f379a2
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI vector retrieval | Polygres

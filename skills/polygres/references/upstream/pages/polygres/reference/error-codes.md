@@ -1,13 +1,13 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: 0f5c1870c82775f8f2291e4761100270c477123399fe95155e0a155a39ffe5f6
+source_hash: 302f2244a92ddef07e61ba52858bf2415c1af13a3dfe138852464e04ccf14ca5
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
 
 Error codes
 
-This page lists all 667 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
+This page lists all 673 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
 
 Error response contract
 
@@ -199,6 +199,8 @@ CONTEXT_COLLECTION_NOT_READY 409 API response + Async operation after_user_actio
 
 CONTEXT_COLLECTION_REQUIRED 400 API response after_user_action An explicit Context collection is required for this row target.
 
+CONTEXT_COLLECTION_SYNC_FAILED 500 API response + Async operation after_delay Context collection sync failed. Retry the operation. If it fails again, contact support with the operation ID.
+
 CONTEXT_COLLECTION_TARGET_MISMATCH 400 API response after_user_action The Context collection does not target the requested table.
 
 CONTEXT_COMPATIBILITY_PAGE_FALLBACK 409 API response after_user_action This legacy page exceeds the pgContext compatibility window.
@@ -245,7 +247,7 @@ CONTEXT_GRAPH_NOT_READY 409 API response + Async operation after_user_action Gra
 
 CONTEXT_GRAPH_START_REQUIRED 400 API response after_user_action A graph start entity is required.
 
-CONTEXT_HNSW_UNSUPPORTED 409 API response after_user_action Hnsw unsupported.
+CONTEXT_HNSW_UNSUPPORTED 409 API response + Async operation after_user_action Hnsw unsupported.
 
 CONTEXT_IDEMPOTENCY_CONFLICT 409 API response + Async operation after_user_action Idempotency key was used for a different request.
 
@@ -256,6 +258,10 @@ CONTEXT_INDEX_ATTACHMENT_STALE 409 API response + Async operation after_user_act
 CONTEXT_INDEX_CONFLICT 409 API response + Async operation after_user_action Index conflict.
 
 CONTEXT_INDEX_CONFLICT/pgvector_column_used_by_database_constraint 409 API response + Async operation after_user_action The pgvector column is used by a database constraint and cannot be converted safely.
+
+CONTEXT_INDEX_CORRUPT 500 API response + Async operation after_user_action The Context index failed its integrity check. Rebuild the index. If rebuilding fails, contact support with the operation ID.
+
+CONTEXT_INDEX_MEMORY_BUDGET_EXCEEDED 409 API response + Async operation after_user_action The HNSW index needs more build memory than this project currently allows. Contact support with the operation ID to increase the index-build budget, then retry.
 
 CONTEXT_INDEX_MISSING 409 API response + Async operation after_user_action The compatibility index disappeared during reindex.
 
@@ -275,9 +281,11 @@ CONTEXT_LIMIT_EXCEEDED/context_exceeds_effective_limit 400 API response + Async 
 
 CONTEXT_LIMIT_EXCEEDED/context_exceeds_effective_graph_limit 400 API response + Async operation after_user_action Context request exceeds the effective graph limit.
 
-CONTEXT_MEMORY_PRESSURE 409 API response after_user_action Memory pressure.
+CONTEXT_MEMORY_PRESSURE 409 API response + Async operation after_user_action Memory pressure.
 
-CONTEXT_MEMORY_PRESSURE/context_heavy_work_blocked_by_project 409 API response after_user_action Context heavy work is blocked by project memory pressure.
+CONTEXT_MEMORY_PRESSURE/context_heavy_work_blocked_by_project 409 API response + Async operation after_user_action Context heavy work is blocked by project memory pressure.
+
+CONTEXT_MEMORY_PRESSURE/context_operation_database_memory_exhausted 503 API response + Async operation after_user_action The Context operation stopped because the project database ran out of available memory.
 
 CONTEXT_ONBOARDING_NOT_AVAILABLE 409 API response after_user_action Onboarding not available.
 
@@ -344,6 +352,8 @@ CONTEXT_OPERATION_RETRY_EXHAUSTED 500 API response + Async operation after_delay
 CONTEXT_OPERATION_RETRY_EXHAUSTED/execution_attempts_exhausted 500 API response + Async operation after_delay The Context operation could not be completed after several execution attempts.
 
 CONTEXT_OPERATION_RETRY_EXHAUSTED/dispatch_attempts_exhausted 500 API response + Async operation after_delay The Context operation could not be scheduled after several attempts.
+
+CONTEXT_OPERATION_TIMED_OUT 504 API response + Async operation after_delay The Context operation exceeded the processing time limit. Retry the operation.
 
 CONTEXT_PGVECTOR_SOURCE 409 API response after_user_action Pgvector source.
 
@@ -429,7 +439,9 @@ CONTEXT_SOURCE_UNAVAILABLE 409 API response + Async operation after_user_action 
 
 CONTEXT_SOURCE_UNAVAILABLE/context_collection_source_identity_unavailable 409 API response + Async operation after_user_action The Context collection source identity is unavailable.
 
-CONTEXT_SOURCE_VECTOR_INVALID 409 API response after_user_action One or more source vectors are invalid.
+CONTEXT_SOURCE_VECTOR_INVALID 409 API response + Async operation after_user_action One or more source vectors are invalid.
+
+CONTEXT_STORAGE_PRESSURE 503 API response + Async operation after_user_action The Context operation stopped because the project database ran out of storage.
 
 CONTEXT_SYNC_TRIGGER_UNAVAILABLE 409 API response + Async operation after_user_action The legacy vector synchronization trigger could not be verified.
 
@@ -836,6 +848,8 @@ Data plane
 Error identity HTTP Used by Retry Exact message
 
 DATA_PLANE_CONNECTION_FAILED 503 API response + Async operation after_delay Project data-plane connection failed.
+
+DATA_PLANE_CONNECTION_FAILED/context_operation_connection_lost 503 API response + Async operation after_delay Connection to the project database was lost during the Context operation. Retry the operation.
 
 DATA_PLANE_CONNECTION_INVALID 500 API response + Async operation after_delay Invalid connection.
 
@@ -1624,6 +1638,8 @@ RUNTIME_HOST_INVALID 400 API response + Async operation user_retry The runtime h
 RUNTIME_HOST_INVALID/runtime_host_invalid 400 API response + Async operation user_retry Runtime host is invalid.
 
 RUNTIME_INSPECTION_UNAVAILABLE 503 API response + Async operation after_delay Runtime inspection unavailable.
+
+RUNTIME_JOINT_QUERY_BUSY 503 API response after_delay Hybrid retrieval is busy. Try again shortly.
 
 RUNTIME_KEY_SYNC_FAILED 503 API response + Async operation after_delay Runtime key sync failed.
 

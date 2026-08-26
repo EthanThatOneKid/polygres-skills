@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/python-sdk
 title: Python SDK | Polygres
-source_hash: e378089a54c9db6fdf2543bc40b6c49ab03c217e09710eaee07bb0bbcc2dc542
+source_hash: d2657d9f3fcc8fe75511556aa2bb9f1eb86412fe41e2bf093ac750ae2c848318
 discovered_from: https://docs.evokoa.com/polygres
 
 # Python SDK | Polygres
@@ -13,11 +13,11 @@ Installation
 
 Install the package via pip:
 
-pip install "polygres-sdk==0.4.0"
+pip install "polygres-sdk==0.4.1"
 
 To upgrade an existing environment:
 
-pip install --upgrade "polygres-sdk==0.4.0"
+pip install --upgrade "polygres-sdk==0.4.1"
 
 Quick Start
 
@@ -148,6 +148,16 @@ API error-handling guide for integration
 patterns and the complete error catalog for exact
 
 messages and retry classes.
+
+SDK 0.4.1 adds canonical handling for durable AI Context timeout, connection,
+
+memory, storage, collection synchronization, and index failures. When supplied
+
+by the Runtime, exc.details["failure_stage"] and
+
+exc.details["operation_id"] provide the safe recovery context. This patch
+
+does not change SDK method signatures, requests, or exception classes.
 
 SDK update notices
 

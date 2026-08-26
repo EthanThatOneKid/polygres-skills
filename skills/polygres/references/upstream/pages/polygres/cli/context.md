@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/context
 title: CLI AI Search with pgContext | Polygres
-source_hash: 6b562cf0726a253e2e764c1d42d1e96d18cec7f2f93daa264cd20a814e20654e
+source_hash: 8bb1e5c3a7b4838ce96ed8442b17f2fc37bf59730ddc6bc46d90f8552af193ff
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI AI Search with pgContext | Polygres
@@ -11,7 +11,7 @@ AI Search is the collection-based retrieval product backed by pgContext Preview.
 
 Install the current CLI and confirm the version before using the Context namespace:
 
-pipx install "polygres-cli==0.4.0"
+pipx install "polygres-cli==0.4.1"
 
 polygres --version
 
@@ -350,6 +350,30 @@ polygres context operations cancel < operation-uui d >
 polygres context operations retry < operation-uui d >
 
 Waiting reports real stage and committed-count changes. It uses an adaptive poll interval unless a fixed interval is supplied, honors Retry-After , and uses one monotonic timeout. A timeout or Ctrl-C stops local waiting but does not cancel the server operation.
+
+Failed operations
+
+CLI 0.4.1 includes the stable error code, failure stage, and operation ID in
+
+human-readable output when a durable operation fails:
+
+Context collection sync failed. Retry the operation. (error_code:
+
+CONTEXT_COLLECTION_SYNC_FAILED, failure_stage: syncing_points, operation_id:
+
+00000000-0000-0000-0000-000000000001)
+
+Use polygres context operations get <operation-uuid> to read the durable
+
+record before retrying. Correct storage, memory, index, or source problems
+
+first when the code requires user action. A timeout or connection failure can
+
+be retried after the dependency is healthy. Preserve the operation ID when
+
+contacting support. See Handle API errors
+
+for the recovery table.
 
 Aggregates
 

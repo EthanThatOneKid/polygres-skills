@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/handling-api-errors
 title: Handle API errors | Polygres
-source_hash: e46fec0fbb8768e1221c2a6814566c8f66f77a94b21376a82b09354fb8a56294
+source_hash: 3840ab11f7b69cd9a7784640eff3dc2c53673b72810966c6418220c0b057c09e
 discovered_from: https://docs.evokoa.com/polygres
 
 # Handle API errors | Polygres
@@ -208,6 +208,40 @@ message as explanatory text. Correct the documented cause before creating a
 new job or applying another migration. If a polling timeout occurs, keep the
 
 operation ID and confirm its current status before retrying anything.
+
+Durable AI Context failures
+
+Failed AI Context operations include operation_id and failure_stage when
+
+those fields are available. The operation remains the recovery boundary: read
+
+it by ID, correct the classified cause, then retry or resume that operation as
+
+documented. Do not start a duplicate collection mutation merely because local
+
+waiting timed out.
+
+Error code Meaning Recovery
+
+CONTEXT_OPERATION_TIMED_OUT Database processing exceeded the operation time limit. Retry the same intended operation after a delay, preserving its idempotency boundary.
+
+DATA_PLANE_CONNECTION_FAILED The project database connection was lost during the operation. Wait for database readiness, then retry the operation.
+
+CONTEXT_MEMORY_PRESSURE The project database exhausted available memory during the operation. Reduce the operation’s demand or contact support before retrying.
+
+CONTEXT_STORAGE_PRESSURE The project database ran out of storage. Free or increase storage before retrying.
+
+CONTEXT_COLLECTION_SYNC_FAILED Collection creation could not synchronize its source state. Retry once after a delay; include the operation ID when contacting support if it fails again.
+
+CONTEXT_INDEX_CORRUPT An index failed its integrity check. Rebuild the index; include the operation ID if rebuilding fails.
+
+CONTEXT_INDEX_MEMORY_BUDGET_EXCEEDED The HNSW build needs more memory than the project permits. Increase the index-build budget or choose a less demanding index configuration.
+
+CLI 0.4.1 renders the stable code, stage, and operation ID in ordinary error
+
+output. SDK 0.4.1 exposes them as the canonical exception code and safe
+
+details . JSON API and CLI output remain the preferred format for automation.
 
 Log only what you need
 

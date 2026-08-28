@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/database-and-environment
 title: CLI database and environment | Polygres
-source_hash: 3c2e2b379950c17ba23c9684fef3effbd4476b212b1f4d4f65992351aa8bda9e
+source_hash: 9b814485aec2ddedba4d9e0205c10c57da2add47dc9b33086e7fba720493ac53
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI database and environment | Polygres

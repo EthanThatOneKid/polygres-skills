@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/installation-and-authentication
 title: CLI installation and authentication | Polygres
-source_hash: ae9a91dda1a985234234fb7359a9f25e67900911e2d0dbb33798fcb193b5bad1
+source_hash: 3f390163c6f5802edcdd9b7b383577c8adce7b73f43d9c68bfe6b33888c862d4
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI installation and authentication | Polygres

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/context
 title: CLI AI Search with pgContext | Polygres
-source_hash: bdfd28604643cbe2c1e395f988134f410492b1742fd7529e39fc3db0794ee640
+source_hash: 86a0a427bcfea81a79e0a609bca97298944a928b5c2dc250b9c82e84838bcf30
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI AI Search with pgContext | Polygres

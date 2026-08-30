@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects
 title: Projects | Polygres
-source_hash: 5f104a938b33a77f4beba6ed87581a13df78c4e413dc03ac91672fe982ddfa18
+source_hash: 78e83b7bac37297b0b2edb3a5c57c723d41a060a3e0aaebf94c5b90922bea9d1
 discovered_from: https://docs.evokoa.com/polygres
 
 # Projects | Polygres
@@ -25,19 +25,29 @@ Host with Polygres You want a new Polygres-managed PostgreSQL database. Native d
 
 For the complete workflow and operating model, see Create a synced PostgreSQL project . Before opening the wizard, follow the PostgreSQL sync setup guides for standard PostgreSQL, Neon, Supabase, or PlanetScale.
 
+Before choosing a source, review Free and Paid projects . A Free project uses the shared Nano tier. A Paid project uses the isolated Basic tier and is available only to eligible organizations when the dashboard offers it.
+
 Create a project in an organization
 
-A project cannot exist outside an organization. Confirm the organization slug in the dashboard URL before creating it.
+Create each project inside the organization that should own it. Confirm the organization slug in the dashboard URL before you begin.
 
 Open New project ( /{organization}/new ) from the target organization.
 
+Choose Free or, when offered for your organization, Paid .
+
 Choose the data source.
 
-Select Create project . New projects are named Default Project .
+For any Paid project, configure Storage, Context, and Graph capacity. A Paid synchronized project does this after source checks and table selection.
+
+Confirm the creation action shown. Paid synchronized projects include a separate Review payment step before Create Project . New projects are named Default Project .
 
 The dashboard opens the organization-scoped project overview while Polygres provisions the selected project type. You can change the name later in the project’s Settings page.
 
-The organization’s assigned tier determines runtime placement. Shared tiers place the project in a shared runtime pool; isolated tiers provision isolated runtime placement. A managed database project receives a logical database, connection endpoints, and a Runtime API URL. A synced project receives no customer-facing database endpoint or direct SQL access. Project creation can be blocked when the assigned tier has reached its project limit. Delete an unused project or contact Polygres about the applicable tier before trying again.
+Free projects use the shared Nano tier. Each organization has one Free slot across hosted and synchronized projects. Paid Basic projects leave that slot available. Existing organizations with multiple Nano projects can keep them and can create another Free project after the current Nano projects are removed.
+
+Paid projects use the isolated Basic tier and start at $10 per month. An owner or admin with an eligible organization subscription can create one with Host with Polygres or, when offered, an external PostgreSQL source. The dashboard applies available credits to the estimated first-cycle charge and shows any remainder paid through Stripe. During Paid synced setup, Polygres temporarily sets aside only the available-credit portion shown in the payment review.
+
+A managed database project receives complete connection details and a Runtime API URL. For a synced project, use the source database for SQL and writes. After Synced Basic is ready, the overview shows stable pooled and direct hostnames for its isolated database; the connection details shown there are limited to those hostnames. When creation needs attention, the dashboard explains the permission, subscription, payment, or availability step to complete.
 
 Follow provisioning
 
@@ -85,7 +95,9 @@ Use the project overview as the launch point
 
 After the project is ready, its organization-scoped pages cover the main product workflows:
 
-Connect ( /{organization}/{project_id}/connect ) for API access and, for managed database projects only, database URLs and client examples.
+Connect ( /{organization}/{project_id}/connect ) for API access and, for managed database projects, database URLs and client examples.
+
+Upgrade ( /{organization}/{project_id}/upgrade ) to move a Nano project to Basic or change an active Basic project’s capacity.
 
 For managed database projects, Tables ( /{organization}/{project_id}/tables ), SQL Editor ( /{organization}/{project_id}/sql ), Import ( /{organization}/{project_id}/import ), and Migrations ( /{organization}/{project_id}/migrations ) provide database work surfaces. Synced projects do not expose direct SQL, import, or migration surfaces.
 

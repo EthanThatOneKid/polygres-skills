@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/key-concepts
 title: Key concepts | Polygres
-source_hash: 40034a8ee77d0981594356fdc8baa041fc5c911a1b8f9dbd38b185c484e44d00
+source_hash: cb0308c6286021a8a05e9c2b4e902917ae93bcf24eef392f6049f2245a00eeed
 discovered_from: https://docs.evokoa.com/polygres
 
 # Key concepts | Polygres
@@ -17,11 +17,35 @@ An organization contains:
 
 members and their fixed roles,
 
-a project allowance shared by all members,
+one shared Free-project allowance,
+
+an optional subscription and organization credit balance,
 
 the projects the team operates together.
 
-Project limits are counted for the organization, not separately for each user.
+The organization shares one Free-project allowance across all members. Paid
+
+projects leave that Free slot available.
+
+Plans, credits, and project tiers
+
+Launch and Scale are organization subscription plans. They grant organization
+
+credits after each paid monthly renewal. One credit is worth one cent toward
+
+Paid project charges, and the dashboard displays the balance as USD.
+
+Nano and Basic are project tiers. A Free project uses shared Nano capacity. A
+
+Paid project uses isolated Basic capacity configured for that project. An
+
+eligible organization subscription lets owners and admins create Paid projects.
+
+Each Paid project still has its own tier and capacity settings.
+
+See Billing and credits and Free and Paid
+
+projects for the complete workflows.
 
 Roles
 
@@ -41,13 +65,23 @@ The organization creator is the owner. Invitations assign admin, developer, or v
 
 Project
 
-A project is an organization-owned data and retrieval environment. A managed database project owns a Polygres PostgreSQL database. A synced project continuously copies selected tables from an external PostgreSQL source without exposing the synchronized copy through direct SQL.
+A project is an organization-owned data and retrieval environment. A managed database project owns a Polygres PostgreSQL database. A synced project continuously copies selected tables from an external PostgreSQL source. The source remains authoritative for synchronized rows and schemas.
 
 Each project has a stable project ID, represented in developer examples as {project_id} . Dashboard routes use the organization and project together, such as /{organization}/{projectId} .
 
 PostgreSQL connections
 
-Only managed database projects created with Host with Polygres expose connection URLs. Synced projects do not provide a native database password, pooled or direct URLs, psql , the SQL Editor, or any other direct SQL access. Use the source PostgreSQL database for SQL queries and mutations.
+Managed database projects created with Host with Polygres provide complete
+
+connection URLs, a native database password, psql , and the SQL Editor. Synced
+
+Nano keeps database work in the source. After Synced Basic is ready, its
+
+overview displays stable pooled and direct hostnames. The connection details
+
+shown there are limited to those hostnames. Use the source PostgreSQL database
+
+for SQL queries and mutations on synchronized data.
 
 Managed database projects expose two connection URLs:
 
@@ -210,6 +244,10 @@ See also Integration Patterns .
 Next steps
 
 Product Guides
+
+Billing and credits
+
+Free and Paid projects
 
 Connect and credentials
 

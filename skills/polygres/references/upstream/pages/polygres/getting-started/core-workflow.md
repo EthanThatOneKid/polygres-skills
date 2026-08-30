@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/core-workflow
 title: Core workflow | Polygres
-source_hash: 6b69ff84429eb6ce0e65149c0669b94b7c751656dccfdb8809929c81d188a5dd
+source_hash: 2d60acfbe2920622fcac0895960a1927228f498952b4b19a85a6a36c606c7999
 discovered_from: https://docs.evokoa.com/polygres
 
 # Core workflow | Polygres
@@ -25,7 +25,7 @@ Details →
 
 3 Create a project
 
-Polygres provisions the managed PostgreSQL environment. Wait until the project reports ready.
+Choose a Free Nano project or, when available, a Paid Basic project. Wait until the project reports ready.
 
 /{organization}/new
 
@@ -99,7 +99,11 @@ Open the organization home ( /{organization} ) and Members ( /{organization}/mem
 
 3. Create a project
 
-Open New project ( /{organization}/new ), choose Host with Polygres , and submit it. Polygres creates the managed PostgreSQL environment as Default Project and shows its status while setup completes. You can rename it later from its Settings page. To synchronize an existing database instead, choose Supabase , Neon , PlanetScale , or Postgres Database and follow the synced-project guide .
+Open New project ( /{organization}/new ) and choose Free or, when the dashboard offers it for your organization, Paid . Free creates a shared Nano project at no cost. An organization owner or admin with an eligible subscription can create an isolated Paid Basic project starting at $10 per month. See Free and Paid projects for capacity pricing, billing, and availability.
+
+Choose Host with Polygres for a managed PostgreSQL environment. To synchronize an existing database, choose Supabase , Neon , PlanetScale , or Postgres Database and follow the synced-project guide . When Paid synchronization is offered, the payment review shows the estimated first-cycle charge, applies available credits first, and shows the remainder paid through Stripe. Polygres activates Basic automatically after synchronization is established.
+
+Polygres creates the project as Default Project and shows its status while setup completes. You can rename it later from its Settings page. Each organization has one Free Nano slot shared across hosted and synchronized project types. Paid Basic projects leave that slot available. Existing organizations with multiple Nano projects can keep them and can create another Free project after the organization no longer has a Nano project.
 
 If the account email is not yet verified, project creation first sends a verification message and preserves the intended destination. Complete verification from that message, then return to the project workflow.
 
@@ -123,7 +127,7 @@ project API keys for Runtime retrieval.
 
 Open connection details ( /{organization}/{projectId}/connect ).
 
-The pooled and direct database workflow in this section applies only to managed database projects. Synced projects do not provide connection URLs, psql , the SQL Editor, imports, migrations, or other direct SQL access. Query and modify synchronized rows in the source PostgreSQL database.
+The complete pooled and direct database workflow in this section applies to managed database projects. For a synced project, continue using the source PostgreSQL database for SQL, writes, imports, and migrations. After Synced Basic activates, its overview displays stable destination hostnames; the connection details shown there are limited to those hostnames.
 
 Use the pooled connection URL , commonly stored as DATABASE_URL , for normal application traffic, ORMs, and short-lived requests. Use the direct connection URL , commonly stored as DIRECT_URL , for migrations, schema changes, COPY , restores, and bulk ingestion.
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/roles-and-permissions
 title: Roles and permissions | Polygres
-source_hash: 359f46ed73bd0429e2342c5deafb903e1035c07bf482cebb1ea544c0fd1243eb
+source_hash: 7f0dbb80a59b1b59a59aa2e9e2b436b586e174ca6d5610576d58e95e7f01be24
 discovered_from: https://docs.evokoa.com/polygres
 
 # Roles and permissions | Polygres
@@ -67,7 +67,7 @@ and checks the corresponding named permission.
 
 Permission used by current routes Representative operations
 
-project:create Create a project within the organization tier limit.
+project:create Create an eligible Free project. Owners and admins can also create Paid projects.
 
 project:read Read project metadata/status, connection metadata, API-key metadata, tables, and rows.
 
@@ -120,6 +120,32 @@ text, pgContext, and runtime status.
 The dashboard uses the backend’s effective permissions for the active member
 
 and project.
+
+Billing and Paid projects
+
+Billing belongs to the organization. Owners and admins manage it from the
+
+organization’s Billing page.
+
+Action Owner Admin Developer Viewer
+
+View billing and credit history Yes Yes No No
+
+Subscribe or change subscription plan Yes Yes No No
+
+Purchase credit top-ups Yes Yes No No
+
+Create a Paid project or upgrade Nano to Basic Yes Yes No No
+
+Increase or schedule a decrease to Paid-project capacity Yes Yes No No
+
+Create an eligible Free project Yes Yes Yes No
+
+Developers and viewers who encounter a Paid-project control can see why the
+
+action is unavailable. An owner or admin can make the billing change. See
+
+Billing and credits for the organization workflow.
 
 Synced-project permissions
 

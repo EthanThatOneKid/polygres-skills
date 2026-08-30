@@ -1,11 +1,81 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 28c5b03aa050acb13b3b4ac6300e492e39a650704ffbb179589ca6d003859e70
+source_hash: 1447a6e8138e6f02de729df3fd2290f6cdcccbafbd335a649433abf1fe029cdf
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
+
+2026-08-28
+
+Organization billing and credits
+
+Organization owners and admins can manage Launch or Scale subscriptions,
+
+payment methods, invoices, credit top-ups, and credit history from
+
+Billing . See Billing and credits .
+
+Subscription, purchased, and promotional credits are tracked separately.
+
+Credits with the earliest expiration are used first, and available credits
+
+are applied to paid-project charges before any remaining amount is invoiced.
+
+Checkout completion is not treated as payment confirmation. Subscription
+
+changes and credit grants appear after the verified payment is reflected in
+
+Billing.
+
+Free and Paid projects
+
+Each organization has one Free project slot shared by hosted and synchronized
+
+Nano projects. Paid Basic projects leave that slot available.
+
+Basic projects start at $10 per month and let owners and admins configure
+
+Storage, Context, and Graph capacity. Billing begins when Basic is ready.
+
+Paid project creation is being enabled in stages. The options shown in your
+
+dashboard are authoritative for your organization. See Free and Paid
+
+projects .
+
+Eligible owners and admins can now create a Paid synchronized project
+
+directly from the new-project wizard. The payment review applies available
+
+credits first and shows the remainder paid through the organization’s payment
+
+method. Creation works with any available credit balance.
+
+Owners and admins can upgrade an existing hosted or synchronized Nano project
+
+from its Upgrade page. Polygres prepares and verifies Basic before the
+
+first prorated charge is collected.
+
+Increase or reduce a Paid project’s limits
+
+Open a Paid project’s Upgrade page to review its current capacity, add
+
+capacity immediately, or schedule a decrease for the next billing date.
+
+The dashboard warns when Context or Graph usage approaches its limit and
+
+explains whether you should add capacity or reduce usage.
+
+Graph capacity reflects both nodes and edges. Each active node uses 1 unit,
+
+and every 10 active edges use 1 unit.
+
+Graph builds on Paid projects run one at a time. If an API request asks for a
+
+concurrent build, the response explains how to retry it.
 
 2026-08-25
 

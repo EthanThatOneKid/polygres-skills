@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/connection-examples
 title: Database client examples | Polygres
-source_hash: e3b43da477202f0dda45a713905bb9af6adcfeac7e8e7c3cd80227a0cf1a55d5
+source_hash: 72d3be72e82be6202722ee178f105e5d51b6dac47f44a19dcce9f5ea9a2873f4
 discovered_from: https://docs.evokoa.com/polygres
 
 # Database client examples | Polygres
@@ -9,7 +9,7 @@ Database client examples
 
 These examples apply only to managed database projects created with Host with Polygres . Polygres exposes a pooled PostgreSQL endpoint and a direct PostgreSQL endpoint for those projects, and both use the native PostgreSQL username and password revealed in the dashboard.
 
-Synced projects do not expose pooled or direct endpoints, native database credentials, psql , the SQL Editor, or other direct SQL access. Connect to the source PostgreSQL database when you need SQL access to synchronized data.
+Synced Nano keeps database work in the source. Synced Basic shows stable pooled and direct hostnames after activation; its overview is limited to those hostnames. Connect to the source PostgreSQL database when you need SQL access to synchronized data.
 
 DATABASE_URL=postgresql://<username>:<password>@<pooled_host>:5432/<database>?sslmode=verify-full&sslrootcert=system
 

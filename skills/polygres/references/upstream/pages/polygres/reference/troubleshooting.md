@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/troubleshooting
 title: Troubleshooting | Polygres
-source_hash: e434fb2de280dba4da31908b0ff89df39e1e97cc465da8d67c380025770b5c1e
+source_hash: 0ef278496b1df2f5042c3318fbc2b7108a37d3c203dc6270a991f3c839ae099a
 discovered_from: https://docs.evokoa.com/polygres
 
 # Troubleshooting | Polygres
@@ -52,6 +52,56 @@ Invitation cannot be generated Look for DASHBOARD_PUBLIC_BASE_URL_INVALID or DAS
 Access disappeared after previously working Check membership status, organization selection, account lifecycle state, and project organization. Restore an active membership or complete verification or approval. Ask an administrator or support to resolve a missing tier assignment. Escalate if GET /me is inconsistent with the dashboard.
 
 API key works for retrieval but not a control-plane route Check for AUTH_MODE_NOT_ALLOWED . Use the project API key for Runtime retrieval and pgContext management. Use a dashboard session or CLI login for organizations, projects, SQL, imports, migrations, key lifecycle, and database credentials.
+
+Billing and Paid-project issues
+
+Only organization owners and admins can open Billing or submit Paid-project
+
+actions. The Billing page is the authoritative place to check subscription,
+
+credit, payment, and plan-change state.
+
+Symptom Check Action
+
+Returned from Checkout but credits are missing Billing may still show Payment pending while Stripe confirms the purchase. Wait for the payment status to update, then refresh Billing.
+
+Billing is unavailable Look for BILLING_NOT_CONFIGURED or a maintenance notice. Try again later. Contact support if Billing remains unavailable.
+
+Payment methods and invoices will not open Look for BILLING_PORTAL_UNAVAILABLE . Try again later or contact support.
+
+Subscription Checkout reports a conflict BILLING_SUBSCRIPTION_CONFLICT means the organization already has an active or pending subscription. Refresh Billing and manage the subscription shown there.
+
+A Paid action asks for a subscription BILLING_REQUIRED means the organization needs an eligible subscription for that action. Open Billing and complete the subscription or payment step shown there. Credit top-ups can supplement an active subscription but cannot replace one.
+
+A plan change is unavailable Compare the current plan, any scheduled plan change, payment status, and next billing date. Complete or resolve the change already shown in Billing, then choose the new plan again.
+
+A top-up is still pending Open the purchase in top-up history and review its status. Wait for Stripe to confirm payment. Contact support if the purchase remains pending or moves to support review.
+
+Top-up purchase cannot be found Refresh top-up history and confirm the organization in the dashboard URL. Open the purchase from the current history. Contact support with the Checkout reference if a paid purchase remains missing.
+
+Paid capacity is rejected Check Storage, Context, and Graph against the minimum, maximum, and increment shown in the dashboard. Choose supported values. Context and Graph change in exact 100,000-unit increments.
+
+A Paid project reports PAID_PROJECT_PRICE_CHANGED The price changed after the payment preview was prepared. Review the updated monthly price and first-cycle maximum, then confirm again.
+
+A capacity increase reports CAPACITY_PAYMENT_FAILED The credit and Stripe payment could not be completed. The current capacity remains active. Check the payment method in Billing, then retry the capacity increase from the project’s Upgrade page.
+
+Context or Graph shows Approaching or Grace Compare current usage with the configured limit and the 50,000-unit grace ceiling. Graph usage counts each node as 1 unit and each edge as 0.1 unit. Increase capacity from the project’s Upgrade page or reduce usage before the capability becomes paused.
+
+Context or Graph reports CAPACITY_CAPABILITY_PAUSED Usage has reached the temporary allowance above the configured limit. Increase capacity or reduce usage below the configured limit, then wait for the dashboard status to update.
+
+A change reports CAPACITY_GRACE_CEILING_EXCEEDED The change would use more than the project’s temporary capacity allowance. Reduce the size of the change, remove unused data, or increase capacity from the project’s Upgrade page before trying again.
+
+A Context or Graph action reports CAPACITY_STATE_UNAVAILABLE Polygres is still updating the project’s capacity status. After a successful increase payment, this can mean activation still needs to finish. Retry from the Upgrade page. A previously accepted payment is reused rather than charged again. Contact support if the status does not update.
+
+A lower capacity reports CAPACITY_DECREASE_REQUIRES_CLEANUP Current usage and active work do not fit within the selected limit. Remove at least the amount shown, let active work finish, and apply the lower capacity again.
+
+A billing request reports BILLING_IDEMPOTENCY_CONFLICT The request was repeated with different details. Refresh Billing and submit the intended change again.
+
+Paid project creation is unavailable PROJECT_TIER_UNAVAILABLE means the selected tier, feature, or capacity is not currently available. Also check your subscription, organization role, and any maintenance notice. Use an owner or admin account, complete the billing step shown, or choose an available option.
+
+Free project creation reports the project limit TIER_PROJECT_LIMIT_EXCEEDED means the organization already uses its one Free Nano slot, including any hosted or synchronized Nano project. Delete the existing Free project before creating another Free project. A new Paid project does not consume the Free slot.
+
+An upgrade to Basic needs attention Read the saved progress on the project’s Upgrade page and confirm that Nano remains active. Follow the displayed recovery guidance. Contact support with the operation and request IDs before trying again.
 
 Connection issues
 
@@ -132,6 +182,8 @@ Retrieval readiness
 Symptom Check Action
 
 GRAPH_NOT_READY GET .../graph/status : build_status , needs_rebuild , and graph configuration invalid_reason . Build or rebuild until status is exactly ready . Correct failed configuration before retrying.
+
+GRAPH_CONCURRENT_BUILD_UNAVAILABLE A Basic project received a concurrent graph-build request. Retry the graph build synchronously with concurrent set to false .
 
 VECTOR_CONFIGURATION_NOT_FOUND Requested config , persisted configurations, and whether an effective default exists. Pass an existing persisted Ready registration. For a new source, create a pgContext collection; retired routes cannot register or re-enable a physical-only pgvector index.
 

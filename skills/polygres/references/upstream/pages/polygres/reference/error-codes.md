@@ -1,13 +1,13 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: ceb233c28738a6bc4f5a5225e294d69577695a68046033cc4568cd626a0cd6c6
+source_hash: f2e8beae19d860d735de7cc0a361b880d10bde7961b806ab824d674d92abd516
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
 
 Error codes
 
-This page lists all 673 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
+This page lists all 688 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
 
 Error response contract
 
@@ -156,6 +156,38 @@ CLI_AUTH_SESSION_TERMINAL 409 API response never The CLI login session is no lon
 CLI_AUTH_SESSION_TERMINAL/cli_login_session_no_longer_pending 409 API response never CLI login session is no longer pending.
 
 CLI_AUTH_TIMEOUT 500 API response dependency_retry CLI authentication timed out.
+
+Billing
+
+Error identity HTTP Used by Retry Exact message
+
+BILLING_IDEMPOTENCY_CONFLICT 409 API response + Async operation after_user_action This billing request was repeated with different details. Refresh your billing information and try again.
+
+BILLING_NOT_CONFIGURED 503 API response after_delay Billing is temporarily unavailable. Try again later.
+
+BILLING_PLAN_CHANGE_INVALID 409 API response + Async operation after_user_action This plan change is not available for the organization’s current subscription.
+
+BILLING_PORTAL_UNAVAILABLE 503 API response after_delay Payment methods and invoices are temporarily unavailable. Try again later.
+
+BILLING_SUBSCRIPTION_CONFLICT 409 API response + Async operation after_user_action This organization already has an active or pending subscription.
+
+BILLING_TOP_UP_PURCHASE_NOT_FOUND 404 API response after_user_action The requested top-up purchase was not found.
+
+CAPACITY_CAPABILITY_PAUSED 409 API response + Async operation after_user_action This project has reached its temporary capacity allowance. Increase capacity or reduce usage before adding more work.
+
+CAPACITY_CONFIGURATION_INVALID 422 API response + Async operation after_user_action Choose capacity values within the limits and increments shown for this project.
+
+CAPACITY_DECREASE_REQUIRES_CLEANUP 409 API response + Async operation after_user_action Reduce current usage before applying this lower capacity.
+
+CAPACITY_GRACE_CEILING_EXCEEDED 409 API response + Async operation after_user_action This change would exceed the project’s temporary capacity allowance.
+
+CAPACITY_PAYMENT_FAILED 402 API response + Async operation after_user_action The capacity upgrade payment could not be completed. No additional capacity was activated.
+
+CAPACITY_STATE_UNAVAILABLE 503 API response + Async operation after_delay Polygres is still updating this project’s capacity status. Try again shortly.
+
+CREDIT_INSUFFICIENT_BALANCE 409 API response + Async operation after_user_action The available organization credit balance is too low for this action.
+
+PAID_PROJECT_PRICE_CHANGED 409 API response + Async operation after_user_action Paid project pricing changed. Review the updated price before confirming again.
 
 pgContext
 
@@ -525,7 +557,7 @@ APPROVAL_REQUIRED 403 API response + Async operation user_retry Account approval
 
 APPROVAL_REQUIRED/approval_required 403 API response + Async operation user_retry Approval is required.
 
-BILLING_REQUIRED 403 API response + Async operation after_user_action Active or beta billing status is required.
+BILLING_REQUIRED 403 API response + Async operation after_user_action A current eligible organization subscription is required.
 
 CATALOG_UNAVAILABLE 503 API response + Async operation after_delay Project catalog is unavailable.
 
@@ -958,6 +990,8 @@ GRAPH_BUILD_POPULATION_MISMATCH 409 API response + Async operation after_user_ac
 GRAPH_COLUMN_NOT_FOUND 400 API response + Async operation after_user_action Configured column was not found.
 
 GRAPH_COLUMN_NOT_SYNCABLE 400 API response after_user_action Configured column is not eligible for pgGraph sync.
+
+GRAPH_CONCURRENT_BUILD_UNAVAILABLE 409 API response + Async operation after_user_action Basic projects build graphs synchronously. Retry with concurrent set to false.
 
 GRAPH_CONFIGURATION_EMPTY 409 API response after_user_action Graph configuration is empty. Register at least one graph table, build the graph, and retry.
 

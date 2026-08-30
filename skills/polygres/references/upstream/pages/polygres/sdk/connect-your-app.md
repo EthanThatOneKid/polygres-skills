@@ -1,13 +1,13 @@
 source: https://docs.evokoa.com/polygres/sdk/connect-your-app
 title: Dashboard connection setup | Polygres
-source_hash: e5e2d9f965a19a12bcb88cc06c3ee506f9335b8af37823269c51bb6cb8de9cf1
+source_hash: 20bf98090a2b66c517697402d7e326aa570610bb5bac383bc9f513957e73f736
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard connection setup | Polygres
 
 Dashboard connection setup
 
-This guide applies to managed database projects created with Host with Polygres . Synced projects do not provide pooled or direct PostgreSQL URLs, a native database password, psql , the SQL Editor, or other direct SQL access. Query the source PostgreSQL database instead.
+This guide’s complete connection workflow applies to managed database projects created with Host with Polygres . Synced Nano keeps database work in the source. Synced Basic shows stable pooled and direct hostnames after activation; its overview is limited to those hostnames. Query and change synchronized data through the source PostgreSQL database.
 
 Open connection details
 

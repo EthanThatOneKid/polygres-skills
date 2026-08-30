@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/limits
 title: Limits | Polygres
-source_hash: a3eca8858a74095bdd6d5edb2599729db501feb2effe5c07683035175fd577c4
+source_hash: 9bbd29df6d09420e0d3f346d28c56fdf4b2ed2946aeb33b955beca45ade7f570
 discovered_from: https://docs.evokoa.com/polygres
 
 # Limits | Polygres
@@ -13,51 +13,87 @@ the project’s applied tier, a saved retrieval configuration, and the route’s
 
 windows can all apply at once.
 
-Use GET /tiers for current plan values. Use
+Use the project dashboard for a Basic project’s configured capacity. Use
 
-GET /projects/{project_id}/status for the project’s current storage measurement and
+GET /tiers for the shared and legacy tiers returned to your account, and use
 
-read-only reason. The values below are the limits present in the current references;
+GET /projects/{project_id}/status for the project’s current storage measurement
 
-a deployment’s live responses are authoritative.
+and read-only reason. The values below are the limits present in the current
+
+references; a deployment’s live responses are authoritative.
 
 Tier limits
 
 Project resources
 
-Shared and dedicated tier records can coexist. A self-service account currently starts on Shared Nano when self-service admission is enabled. Shared runtime capacity is evaluated when the project is created. The project’s applied tier in project status, together with GET /tiers , is authoritative.
+The self-service creation flow presents Free and, when available for the
 
-Limit Shared Nano Shared Small Starter Pro Where to verify
+organization, Paid. A Free project uses the Shared Nano tier. A Paid
 
-Projects 1 1 1 3 GET /tiers → limits.project_limit
+project uses the Basic tier with capacity configured for that project. The
 
-Enforced storage 500 MiB 8 GiB 1 GiB 5 GiB limits.storage_bytes ; compare with project status
+project tier and configured capacity shown by the project and Billing
 
-Direct database connections 10 10 10 10 limits.direct_connection_limit
+pages are authoritative.
 
-Pooled database connections 10 25 50 50 limits.pooled_connection_limit
+Limit Shared Nano (Free) Basic (Paid) Where to verify
 
-Concurrent imports per project 3 3 3 3 limits.import_concurrency
+Organization project allowance 1 Free project Paid projects leave the Free slot available Project list and Billing
+
+Included storage 500 MiB 1 GiB configured capacity limits.storage_bytes ; compare with project status
+
+Direct database connections 10 25 project-owner connections Live tier limits
+
+Pooled database connections 10 50 limits.pooled_connection_limit
+
+Concurrent imports per project 3 3 limits.import_concurrency
+
+The one Free slot is shared across hosted and synchronized project modes. Paid
+
+Basic projects leave the slot available. Existing organizations with more than
+
+one Nano project can continue using those projects. They can create another
+
+Free project after the organization no longer has a Nano project.
+
+Starter and Pro are retained only for historical projects and are unavailable
+
+for new assignment. Other legacy tier records can also remain visible in live
+
+responses. Do not use them as current self-service choices.
 
 The user-facing gateway can be more restrictive. Statement timeouts, temporary-file limits, retrieval limits, and feature flags also vary by tier. Read them from the live tier response instead of inferring them from a display name.
 
 Graph capacity
 
-Limit Shared Nano Shared Small Starter Pro
+Limit Shared Nano Basic
 
-Graph memory 256 MB 512 MB 1,024 MB 2,048 MB
+Graph memory 256 MB 1,024 MB base value
 
-Default maximum depth 3 5 Live tier value Live tier value
+Default maximum depth 3 Live tier value
 
-Maximum depth 5 10 Live tier value Live tier value
+Maximum depth 5 Live tier value
 
-Graph build batch size 1,000 5,000 Live tier value Live tier value
+Graph build batch size 1,000 Live tier value
 
-Graph edge buffer Live tier value Live tier value 500,000 500,000
+Graph edge buffer Live tier value 500,000
 
-Graph sync batch size Live tier value Live tier value 125 125
+Graph sync batch size Live tier value 125
 
-Shared Nano caps graph nodes, frontier, and exact path count at 10,000. Shared Small caps each at 50,000. Dedicated-tier values come from the live tier response.
+Shared Nano caps graph nodes, frontier, and exact path count at 10,000. Basic
+
+has a separate configured Graph capacity measured in weighted units:
+
+weighted Graph units = active nodes + (active edges / 10)
+
+Each active node therefore consumes 1 unit and each active edge consumes 0.1
+
+unit. Execution limits still come from live project and graph-system responses.
+
+Graph builds on Basic projects run synchronously. When calling the graph-build
+
+API directly, set concurrent to false .
 
 Read effective graph settings and caps from
 
@@ -69,7 +105,7 @@ Project limits
 
 Limit area Behavior
 
-Project count Project creation is checked against the effective tier’s project_limit .
+Project count The organization shares one Nano slot. Paid projects leave that slot available.
 
 Storage The latest measured bytes and read_only_reason are returned by project status. The storage quota is the tier’s storage_bytes , not the provisioned volume size.
 
@@ -77,7 +113,61 @@ Connections Direct and pooled connection counts have separate tier caps. Use poo
 
 SQL resources Statement timeout and temporary-file limits are applied from the project tier.
 
-Feature availability Tier metadata contains feature flags. Check GET /tiers ; do not infer availability from the tier name.
+Feature availability Check the options shown by the dashboard and the project’s capability responses; do not infer availability from the tier name.
+
+Paid-project configured capacity
+
+Capacity Included Creation maximum Increment Additional monthly price
+
+Storage 1 GiB 64 GiB 1 GiB $2
+
+Context 100,000 points 5,000,000 100,000 $3
+
+Graph 200,000 weighted units 5,000,000 100,000 $1
+
+The Basic project base price is $10 per month. The dashboard shows whether the
+
+selected capacity is currently available before you create the project.
+
+When a change raises the monthly price, Polygres collects the prorated amount
+
+due and activates the additional capacity immediately after payment succeeds.
+
+When a change lowers the monthly price, Polygres schedules the new capacity and
+
+price for the next organization billing date.
+
+Graph prices and limits use the weighted formula above. For example, 100,000
+
+active nodes and 1,000,000 active edges consume 200,000 weighted Graph units.
+
+Context and Graph capacity states
+
+Basic projects enforce configured Context and weighted Graph capacity using the
+
+same state boundaries:
+
+State Usage Behavior
+
+Healthy More than 20,000 units below the configured limit Context or Graph work proceeds normally.
+
+Approaching Within 20,000 units below the configured limit The dashboard warns that the project is approaching capacity.
+
+Grace At the limit and up to 49,999 units above it Existing data remains available, but the dashboard asks you to increase capacity or reduce usage.
+
+Paused 50,000 units or more above the configured limit Work that would consume more of the affected capacity is paused.
+
+After Context or Graph enters Paused , the warning remains visible until
+
+usage falls below the configured limit or a higher capacity takes effect.
+
+Use the project’s Upgrade page to add capacity immediately or schedule a
+
+lower limit for the next billing date. Current usage and active work must fit
+
+within every lower limit. Polygres confirms this when you submit the change and
+
+again before a scheduled decrease takes effect.
 
 Import caps
 
@@ -317,9 +407,17 @@ Update organization settings 30/min — — — 500/min
 
 Create project 10/day — — — 300/hour
 
+Read billing, credits, plan preview, or top-up history 120/min — — — 2,000/min
+
+Subscribe, change plan, buy a top-up, create a Paid project, or schedule capacity 30/min — — — 500/min
+
 Project status — 120/min — 600/min 2,000/min
 
 Project runtime — 60/min — 300/min 2,000/min
+
+Start a Basic upgrade — 6/hour — 12/hour 300/hour
+
+Read Basic upgrade progress — 60/min — 300/min 2,000/min
 
 Retry provisioning — 6/hour — 12/hour 300/hour
 

@@ -1,13 +1,17 @@
 source: https://docs.evokoa.com/polygres/platform/organizations
 title: Organizations | Polygres
-source_hash: dfbe2fa7a66b3257922136d166ee34605033d85a0bc9300a7f3acf2b56298bca
+source_hash: a03c1b99a2b89a0c20f0efd8a9310be66752a17aed91a6df4fc618a49a9a58ad
 discovered_from: https://docs.evokoa.com/polygres
 
 # Organizations | Polygres
 
 Organizations
 
-Every Polygres project belongs to an organization. Organizations define project ownership, membership, roles, billing status, and the tier used when projects are created.
+Every Polygres project belongs to an organization. Organizations define project
+
+ownership, membership, roles, subscriptions, and credits. Each project keeps
+
+its own tier and capacity.
 
 Create and activate your account
 
@@ -15,7 +19,7 @@ Open Sign up and register with the email address you intend to use for Polygres.
 
 If an organization invitation exists for that authenticated address, review the available invitations before creating a new organization.
 
-Otherwise, Polygres completes the normal self-service setup automatically. It creates an organization, assigns the current self-service tier ( Shared Nano ), and opens the dashboard.
+Otherwise, Polygres completes the normal self-service setup automatically. It creates an organization and opens the dashboard. The organization can create one Free project without a subscription.
 
 If the account reaches Onboarding instead of the organization dashboard, setup is incomplete. Follow the support guidance on that page.
 
@@ -57,7 +61,15 @@ Treat the organization as the ownership boundary
 
 The organization slug is part of every organization-scoped project link. For example, a project’s Tables page is /{organization}/{project_id}/tables .
 
-Open the organization overview ( /{organization} ) to see its name, organization ID, billing status, tier, and project count. Open Projects ( /{organization}/projects ) to work with the projects it owns.
+Open the organization overview ( /{organization} ) to see its name,
+
+organization ID, billing status, and project count. Open Projects
+
+( /{organization}/projects ) to work with the projects it
+
+owns. Owners and admins can open Billing ( /{organization}/billing ) to review
+
+the organization subscription, credit balance, and billing history.
 
 Membership changes affect access to organization-owned projects. They do not transfer a project to a different organization.
 
@@ -75,7 +87,13 @@ Developer Intended for builders working with organization projects. Developers c
 
 Viewer Intended for teammates who need a more limited, viewing-oriented role. Viewers can list active members but cannot administer membership or invitations.
 
-Every active organization member can view the active-member list. Only Owner and Admin can view pending invitations or perform membership-management actions. Project actions remain subject to the permissions attached to each role.
+Every active organization member can view the active-member list. Only
+
+Owner and Admin can view pending invitations, perform
+
+membership-management actions, or view and manage organization billing.
+
+Project actions remain subject to the permissions attached to each role.
 
 Invite a member
 
@@ -126,6 +144,8 @@ Active membership rows can reflect states such as active , invited , or suspende
 Continue administering the organization
 
 Create and manage projects owned by this organization.
+
+Manage billing and credits for Paid projects.
 
 Review roles and permissions before assigning access.
 

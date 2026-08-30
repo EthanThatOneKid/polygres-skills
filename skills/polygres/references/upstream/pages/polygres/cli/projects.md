@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/projects
 title: CLI projects | Polygres
-source_hash: 9d8fe63a50c9ea7ca06e8dcbef01e9a32e96727a173dbeed7f674e1a1ad49c52
+source_hash: 38c627487a1488d274dd1a30a691c467b058eb62c15d305ae5c7f573e650f389
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI projects | Polygres

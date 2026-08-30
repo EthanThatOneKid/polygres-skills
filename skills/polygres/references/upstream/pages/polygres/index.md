@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres
 title: Polygres documentation | Polygres
-source_hash: 849063e6b0354ef5edc51e9bff78e3d1f72714b827dc4e571b006480e519d59c
+source_hash: c6168aa4fab5fcf1ed4f42b52cc33af1a319b22a991bc930c36576e3ef17f51d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres documentation | Polygres
@@ -71,7 +71,9 @@ Core workflow Organizations, roles, projects, connections, credentials, and retr
 
 Key concepts Which access method to use for each job.
 
-Dashboard, API, and database access Terminal workflows for projects, credentials, imports, migrations, and retrieval setup.
+Dashboard, API, and database access Organization plans, credit top-ups, payment methods, invoices, and credit history.
+
+Billing and credits Terminal workflows for projects, credentials, imports, migrations, and retrieval setup.
 
 Polygres CLI Guided setup, data pipelines, application integration, and troubleshooting with a compatible coding agent.
 
@@ -88,6 +90,8 @@ Platform Guide
 Projects
 
 Organizations
+
+Billing and credits
 
 Sync PostgreSQL
 

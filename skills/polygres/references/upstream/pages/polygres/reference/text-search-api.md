@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/text-search-api
 title: Text Search API | Polygres
-source_hash: bd5ff8b4d8ccd19d697069f9bba6c9fec1e609df01a45383b1a96ad4cacc2b53
+source_hash: 6dd2a62b67ae0e9971553098a54e9924c4ec576e23c1f8034b10ba8b9f61b7be
 discovered_from: https://docs.evokoa.com/polygres
 
 # Text Search API | Polygres

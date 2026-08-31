@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/troubleshooting
 title: Troubleshooting | Polygres
-source_hash: 0ef278496b1df2f5042c3318fbc2b7108a37d3c203dc6270a991f3c839ae099a
+source_hash: 4edf4d4c611d74879346a549974cef0fd905dc6d86d4eff8e616b24f45cbd730
 discovered_from: https://docs.evokoa.com/polygres
 
 # Troubleshooting | Polygres
@@ -57,29 +57,31 @@ Billing and Paid-project issues
 
 Only organization owners and admins can open Billing or submit Paid-project
 
-actions. The Billing page is the authoritative place to check subscription,
+actions. Billing is the place to check the account category, credit balance,
 
-credit, payment, and plan-change state.
+payment method, next billing date, project charges, and invoices.
 
 Symptom Check Action
 
-Returned from Checkout but credits are missing Billing may still show Payment pending while Stripe confirms the purchase. Wait for the payment status to update, then refresh Billing.
+Returned from payment-method setup but the project has not continued Stripe confirmation may still be pending. Keep the project page open or return shortly. Polygres continues with the saved project selection after the payment method is confirmed.
 
-Billing is unavailable Look for BILLING_NOT_CONFIGURED or a maintenance notice. Try again later. Contact support if Billing remains unavailable.
+Returned from a top-up but credits are missing Billing may still show Payment pending while Stripe confirms the purchase. Wait for the payment status to update, then refresh Billing.
 
-Payment methods and invoices will not open Look for BILLING_PORTAL_UNAVAILABLE . Try again later or contact support.
+Billing is unavailable Check for a maintenance notice. Try again later. Contact support if Billing remains unavailable.
 
-Subscription Checkout reports a conflict BILLING_SUBSCRIPTION_CONFLICT means the organization already has an active or pending subscription. Refresh Billing and manage the subscription shown there.
+Payment methods and invoices will not open Refresh Billing and try the action again. Try again later or contact support.
 
-A Paid action asks for a subscription BILLING_REQUIRED means the organization needs an eligible subscription for that action. Open Billing and complete the subscription or payment step shown there. Credit top-ups can supplement an active subscription but cannot replace one.
+A Paid action needs a payment method Compare the amount due with the available credit balance and check the payment state in Billing. Add or update the payment method, then return to the saved project action.
 
-A plan change is unavailable Compare the current plan, any scheduled plan change, payment status, and next billing date. Complete or resolve the change already shown in Billing, then choose the new plan again.
+Billing shows Launch unexpectedly Launch is derived from active Paid projects. Review the Paid projects list. If no active Paid project explains the category, refresh Billing and contact support.
+
+An invoice is past due or needs payment confirmation Open invoice history or the Stripe invoice portal and review the payment status. Complete the action requested by Stripe, then return to Billing and wait for the status to update.
 
 A top-up is still pending Open the purchase in top-up history and review its status. Wait for Stripe to confirm payment. Contact support if the purchase remains pending or moves to support review.
 
 Top-up purchase cannot be found Refresh top-up history and confirm the organization in the dashboard URL. Open the purchase from the current history. Contact support with the Checkout reference if a paid purchase remains missing.
 
-Paid capacity is rejected Check Storage, Context, and Graph against the minimum, maximum, and increment shown in the dashboard. Choose supported values. Context and Graph change in exact 100,000-unit increments.
+Project limits are rejected Check Storage, Context, and Graph against the minimum, maximum, and increment shown in the dashboard. Choose supported values. Context and Graph change in exact 100,000-unit increments.
 
 A Paid project reports PAID_PROJECT_PRICE_CHANGED The price changed after the payment preview was prepared. Review the updated monthly price and first-cycle maximum, then confirm again.
 
@@ -95,9 +97,7 @@ A Context or Graph action reports CAPACITY_STATE_UNAVAILABLE Polygres is still u
 
 A lower capacity reports CAPACITY_DECREASE_REQUIRES_CLEANUP Current usage and active work do not fit within the selected limit. Remove at least the amount shown, let active work finish, and apply the lower capacity again.
 
-A billing request reports BILLING_IDEMPOTENCY_CONFLICT The request was repeated with different details. Refresh Billing and submit the intended change again.
-
-Paid project creation is unavailable PROJECT_TIER_UNAVAILABLE means the selected tier, feature, or capacity is not currently available. Also check your subscription, organization role, and any maintenance notice. Use an owner or admin account, complete the billing step shown, or choose an available option.
+Paid project creation is unavailable PROJECT_TIER_UNAVAILABLE means the selected limits are not currently available. Also check your organization role, payment state, and any maintenance notice. Use an owner or admin account, complete the payment step shown, or choose supported limits.
 
 Free project creation reports the project limit TIER_PROJECT_LIMIT_EXCEEDED means the organization already uses its one Free Nano slot, including any hosted or synchronized Nano project. Delete the existing Free project before creating another Free project. A new Paid project does not consume the Free slot.
 

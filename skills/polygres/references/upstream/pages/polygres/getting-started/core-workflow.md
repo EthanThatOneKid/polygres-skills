@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/core-workflow
 title: Core workflow | Polygres
-source_hash: 2d60acfbe2920622fcac0895960a1927228f498952b4b19a85a6a36c606c7999
+source_hash: 742000f5fc81810249df661e4a9b2ce12e0c1fbf797cfc1748faffa1e6f307a1
 discovered_from: https://docs.evokoa.com/polygres
 
 # Core workflow | Polygres
@@ -25,7 +25,7 @@ Details →
 
 3 Create a project
 
-Choose a Free Nano project or, when available, a Paid Basic project. Wait until the project reports ready.
+Choose project limits. The Free values create Nano; any increase creates Basic. Wait until the project reports ready.
 
 /{organization}/new
 
@@ -99,9 +99,27 @@ Open the organization home ( /{organization} ) and Members ( /{organization}/mem
 
 3. Create a project
 
-Open New project ( /{organization}/new ) and choose Free or, when the dashboard offers it for your organization, Paid . Free creates a shared Nano project at no cost. An organization owner or admin with an eligible subscription can create an isolated Paid Basic project starting at $10 per month. See Free and Paid projects for capacity pricing, billing, and availability.
+Open New project ( /{organization}/new ) and choose a data source. Set Storage,
 
-Choose Host with Polygres for a managed PostgreSQL environment. To synchronize an existing database, choose Supabase , Neon , PlanetScale , or Postgres Database and follow the synced-project guide . When Paid synchronization is offered, the payment review shows the estimated first-cycle charge, applies available credits first, and shows the remainder paid through Stripe. Polygres activates Basic automatically after synchronization is established.
+Context, and Graph to the limits you need. The initial values create a shared
+
+Free Nano project. Increasing any value switches all three controls to at least
+
+the Paid Basic minimum, starting at $16 per month. See Free and Paid
+
+projects for limits and pricing.
+
+Choose Host with Polygres for a managed PostgreSQL environment. To
+
+synchronize an existing database, choose Supabase , Neon ,
+
+PlanetScale , or Postgres Database and follow the synced-project
+
+guide . For Basic, the cost summary applies
+
+available credits first and shows the remainder charged to the organization’s
+
+payment method.
 
 Polygres creates the project as Default Project and shows its status while setup completes. You can rename it later from its Settings page. Each organization has one Free Nano slot shared across hosted and synchronized project types. Paid Basic projects leave that slot available. Existing organizations with multiple Nano projects can keep them and can create another Free project after the organization no longer has a Nano project.
 
@@ -127,7 +145,13 @@ project API keys for Runtime retrieval.
 
 Open connection details ( /{organization}/{projectId}/connect ).
 
-The complete pooled and direct database workflow in this section applies to managed database projects. For a synced project, continue using the source PostgreSQL database for SQL, writes, imports, and migrations. After Synced Basic activates, its overview displays stable destination hostnames; the connection details shown there are limited to those hostnames.
+The pooled and direct database workflow in this section applies to projects
+
+created with Host with Polygres . For a synchronized project, continue using
+
+the source PostgreSQL database for SQL, writes, imports, and migrations.
+
+Polygres provides retrieval over the synchronized copy.
 
 Use the pooled connection URL , commonly stored as DATABASE_URL , for normal application traffic, ORMs, and short-lived requests. Use the direct connection URL , commonly stored as DIRECT_URL , for migrations, schema changes, COPY , restores, and bulk ingestion.
 

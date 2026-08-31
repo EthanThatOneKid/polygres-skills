@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/limits
 title: Limits | Polygres
-source_hash: 9bbd29df6d09420e0d3f346d28c56fdf4b2ed2946aeb33b955beca45ade7f570
+source_hash: 010d203846348305aad15e4506864062dd5b01f2ab334e639b64cf366b341700
 discovered_from: https://docs.evokoa.com/polygres
 
 # Limits | Polygres
@@ -27,21 +27,19 @@ Tier limits
 
 Project resources
 
-The self-service creation flow presents Free and, when available for the
+The self-service creation flow starts with the exact Free values. Increasing
 
-organization, Paid. A Free project uses the Shared Nano tier. A Paid
+Storage, Context, or Graph switches all three controls to at least the Basic
 
-project uses the Basic tier with capacity configured for that project. The
+minimum. The project tier and limits shown by the project and Billing pages are
 
-project tier and configured capacity shown by the project and Billing
-
-pages are authoritative.
+authoritative.
 
 Limit Shared Nano (Free) Basic (Paid) Where to verify
 
 Organization project allowance 1 Free project Paid projects leave the Free slot available Project list and Billing
 
-Included storage 500 MiB 1 GiB configured capacity limits.storage_bytes ; compare with project status
+Included storage 500 MiB 2 GiB configured capacity limits.storage_bytes ; compare with project status
 
 Direct database connections 10 25 project-owner connections Live tier limits
 
@@ -56,6 +54,14 @@ Basic projects leave the slot available. Existing organizations with more than
 one Nano project can continue using those projects. They can create another
 
 Free project after the organization no longer has a Nano project.
+
+The exact Free selection is 500 MiB Storage, 100,000 Context points, and
+
+100,000 Graph units. Increasing any of the three switches the selection to at
+
+least the Basic minimum shown below. Use Use free capacity in the
+
+new-project form to return all three values to the Free selection.
 
 Starter and Pro are retained only for historical projects and are unavailable
 
@@ -115,27 +121,27 @@ SQL resources Statement timeout and temporary-file limits are applied from the p
 
 Feature availability Check the options shown by the dashboard and the project’s capability responses; do not infer availability from the tier name.
 
-Paid-project configured capacity
+Paid-project Storage, Context, and Graph limits
 
-Capacity Included Creation maximum Increment Additional monthly price
+Limit Included Creation maximum Increment Additional monthly price
 
-Storage 1 GiB 64 GiB 1 GiB $2
+Storage 2 GiB 128 GiB 1 GiB $2
 
-Context 100,000 points 5,000,000 100,000 $3
+Context 200,000 points 4,000,000 100,000 $3
 
-Graph 200,000 weighted units 5,000,000 100,000 $1
+Graph 200,000 weighted units 4,000,000 100,000 $1
 
-The Basic project base price is $10 per month. The dashboard shows whether the
+The Basic project base price is $16 per month. The dashboard shows whether the
 
-selected capacity is currently available before you create the project.
+selected limits are currently available before you create the project.
 
 When a change raises the monthly price, Polygres collects the prorated amount
 
-due and activates the additional capacity immediately after payment succeeds.
+due and activates the higher limits immediately after payment succeeds. When a
 
-When a change lowers the monthly price, Polygres schedules the new capacity and
+change lowers the monthly price, Polygres schedules the lower limits and price
 
-price for the next organization billing date.
+for the next organization billing date.
 
 Graph prices and limits use the weighted formula above. For example, 100,000
 
@@ -407,9 +413,9 @@ Update organization settings 30/min — — — 500/min
 
 Create project 10/day — — — 300/hour
 
-Read billing, credits, plan preview, or top-up history 120/min — — — 2,000/min
+Read billing, credits, project quotes, or top-up history 120/min — — — 2,000/min
 
-Subscribe, change plan, buy a top-up, create a Paid project, or schedule capacity 30/min — — — 500/min
+Set up payment, buy a top-up, create a Paid project, or change project limits 30/min — — — 500/min
 
 Project status — 120/min — 600/min 2,000/min
 

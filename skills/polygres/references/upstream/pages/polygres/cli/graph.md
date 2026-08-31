@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/graph
 title: CLI graph retrieval | Polygres
-source_hash: 840f834d837782213851bc4a4a10d56d72268b6d7a173bb6e48f47a96307b061
+source_hash: 2aaa01ffa07b064270b446d40c7bda6d56091656c7bfd532134dc665daada2dc
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI graph retrieval | Polygres

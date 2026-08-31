@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/roles-and-permissions
 title: Roles and permissions | Polygres
-source_hash: 7f0dbb80a59b1b59a59aa2e9e2b436b586e174ca6d5610576d58e95e7f01be24
+source_hash: c5b64336da8511b2db818e95cce0d7a9813c97ece4c9ae884cbe21eeeaa06ca6
 discovered_from: https://docs.evokoa.com/polygres
 
 # Roles and permissions | Polygres
@@ -131,13 +131,13 @@ Action Owner Admin Developer Viewer
 
 View billing and credit history Yes Yes No No
 
-Subscribe or change subscription plan Yes Yes No No
+Add or update the organization payment method Yes Yes No No
 
 Purchase credit top-ups Yes Yes No No
 
 Create a Paid project or upgrade Nano to Basic Yes Yes No No
 
-Increase or schedule a decrease to Paid-project capacity Yes Yes No No
+Increase limits now or schedule lower limits for a Paid project Yes Yes No No
 
 Create an eligible Free project Yes Yes Yes No
 

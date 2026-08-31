@@ -1,210 +1,180 @@
 source: https://docs.evokoa.com/polygres/platform/billing
 title: Billing and credits | Polygres
-source_hash: 98e4ca99b1e1e59a7d9cb7dc447e152ec53cd10431b4e900315c8dfffc51dc76
+source_hash: c4daa4dd794e85fb55e77e6b7f866e89ebc5ac69f4fdca487badcb8e5ac4fd57
 discovered_from: https://docs.evokoa.com/polygres
 
 # Billing and credits | Polygres
 
 Billing and credits
 
-Billing belongs to the organization, not to an individual project or member.
+Billing belongs to the organization. Organization owners and admins can open
 
-Organization owners and admins can open Billing in the dashboard to view or
+Billing to manage payment methods, credits, top-ups, paid projects, and
 
-manage the subscription, credit balance, top-ups, invoices, and payment
+invoices. Developers and viewers can ask an owner or admin to make a billing
 
-methods. Developers and viewers can ask an owner or admin to make billing
+change.
 
-changes for the organization.
+Understand the account category
+
+Billing shows the organization as Free until its first Paid project becomes
+
+active. An organization with at least one active Paid project is shown as
+
+Launch .
+
+Launch is a display-only account category derived from active Paid projects.
+
+Project limits and charges come from each project’s selected Storage, Context,
+
+and Graph limits.
+
+Add a payment method
+
+A payment method is needed when a project charge is greater than the available
+
+credit balance.
+
+Open Billing .
+
+Select Add payment method or Update payment method .
+
+Complete the secure Stripe Checkout flow.
+
+Return to Polygres. Billing updates after Stripe confirms the saved payment
+
+method.
+
+You can also be sent to Stripe while creating a Paid project. After the payment
+
+method is confirmed, Polygres returns to the project flow and continues with
+
+the saved selection.
+
+Use Invoice portal to manage the payment method and open Stripe invoice
+
+documents.
 
 Understand credits
 
-One Polygres credit represents one US cent. The dashboard displays credit
+One Polygres credit represents one US cent. The dashboard displays credits as
 
-amounts as USD, so 1,000 credits appear as $10.00.
+USD, so 1,000 credits appear as $10.00.
 
-Subscription credits and purchased credits do not expire. Unused credits roll
+Purchased credits do not expire. Promotional credits can expire, and Billing
 
-over between billing cycles. Promotional credits can expire, and the dashboard
+shows their expiration date. Existing credits continue to roll over between
 
-shows their expiration date. When credits are used, credits with the earliest
+billing periods. Polygres uses credits with the earliest expiration first.
 
-expiration are applied before balances that expire later or never expire.
+For every Paid-project charge, available credits are applied before the
 
-On each billing date, Polygres adds the plan’s monthly credits before charging
+organization’s payment method. Billing and Stripe invoices show the project
 
-Paid projects. Those credits can therefore help pay the same billing date’s
-
-project charges. Polygres uses available organization credits first, then
-
-Stripe bills any remaining amount.
-
-Choose an organization plan
-
-The dashboard offers these organization subscription plans:
-
-Plan Monthly price Credits after each paid renewal
-
-Launch $16 $10
-
-Scale $256 $260
-
-The subscription plans differ in price and monthly credit grant. Paid-project
-
-pricing and included project capacity do not change between Launch and Scale.
-
-To subscribe:
-
-Open Billing for the organization.
-
-Review the available plans and select Subscribe for the plan you want.
-
-Complete payment in Stripe Checkout.
-
-Return to Billing and wait for the subscription and credit balance to
-
-update.
-
-After Checkout, Polygres updates the subscription and credit balance when
-
-Stripe confirms payment. Keep the Billing page open or return to it later if
-
-confirmation is still pending.
-
-Use Payment methods and invoices on the Billing page to open the Stripe
-
-billing portal.
-
-Change plans
-
-Upgrade from Launch to Scale
-
-The dashboard shows the prorated amount due and the estimated additional credit
-
-grant before you confirm an upgrade. Scale becomes active and the additional
-
-credits appear after Stripe confirms payment.
-
-Schedule a downgrade from Scale to Launch
-
-A Scale-to-Launch downgrade takes effect on the organization’s next billing
-
-date. Scale remains active through the current period, and existing credits
-
-remain available. Launch pricing and credits begin with the first paid Launch
-
-renewal.
-
-The Billing page shows a pending plan change and its effective date after the
-
-downgrade is scheduled.
+charge, the credit applied, and the remaining amount paid through Stripe.
 
 Buy a credit top-up
 
-Credit top-ups are one-time purchases made through Stripe Checkout. They are
+Credit top-ups are one-time purchases through Stripe Checkout. Owners and
 
-available while the organization has an active, paid subscription:
+admins can buy one before or after creating a Paid project.
 
-Choose one of the displayed fixed offers, or enter a custom amount when a
+Choose a fixed offer, or enter a custom amount when that option is shown.
 
-custom offer is available.
+Review the purchased credits, promotional bonus, and expiration terms.
 
-Review the purchased-credit amount, any promotional bonus, and its
+Select the payment action and complete Stripe Checkout.
 
-expiration terms.
+Return to Billing and wait for the balance and purchase history to update.
 
-Continue to Stripe Checkout and complete payment.
+Purchased credits never expire. Promotional bonus credits appear separately
 
-Return to Billing and wait for the credit balance and purchase history to
+with their expiration date. If a refund or payment dispute changes a purchase,
 
-update.
+Polygres updates the related credits to match the final payment result.
 
-Purchased credits never expire. Promotional bonus credits are recorded
+Offers can change. Review the amount, minimum, increment, bonus, and expiration
 
-separately and show their own expiration date. If a refund or payment dispute
+shown in Billing before each purchase.
 
-affects a purchase, Polygres adjusts the related credits to match the final
+Understand when projects are charged
 
-payment outcome.
+The first Paid project establishes the organization’s monthly billing date and
 
-Top-up amounts and promotional bonuses can change. Review the current amount,
+is charged for one full month when it activates. A later Paid project is charged
 
-minimum, increment, bonus, and expiration in Billing before each purchase.
+from its activation time through the organization’s next billing date.
 
-Purchased and promotional credits appear after Stripe confirms the top-up
+At each renewal, one organization invoice lists every active Paid project and
 
-payment.
+its selected Storage, Context, and Graph limits. Available credits reduce the
 
-Manage Paid-project capacity
+invoice before the remaining amount is charged to the payment method.
 
-Billing shows each Paid project’s current Storage, Context, and Graph capacity,
+Billing starts after the project is ready and payment is confirmed. If
 
-plus any capacity change already scheduled. Owners and admins can configure a
+activation ends before payment succeeds, reserved credits are returned and the
 
-new capacity from the project’s Upgrade page. The project card in Billing
+project is not billed.
 
-links to the same page.
+Deleting a Paid project does not create a prorated refund. The project is left
 
-When the selected monthly price is higher, the dashboard shows the new monthly
+off invoices for later billing periods. When no active Paid projects remain,
 
-price and the prorated amount due now. Available credits pay part or all of that
+the organization returns to the Free category, and the current billing period
 
-amount, and Stripe bills the remainder. The additional capacity becomes active
+closes on its scheduled date.
 
-after payment succeeds.
+Increase or reduce a Paid project’s limits
 
-When the selected monthly price is lower, the change is scheduled for the next
+Billing lists every Paid project’s current monthly amount and selected Storage,
 
-organization billing date. The current capacity remains active until then.
+Context, and Graph limits. Open the project’s Upgrade page to change them.
 
-Current usage and active work must fit within every lower limit when you
+When any selected limit increases, the dashboard shows the monthly price and
 
-schedule the change and when it takes effect. If cleanup is required, the
+the prorated difference due through the next billing date. Available credits
 
-dashboard shows how much usage to remove before you try again.
+are applied first. The higher limits become active after payment succeeds.
 
-If a selection raises the total monthly price while lowering one capacity
+When all changes are decreases, the lower limits and monthly price begin on the
 
-value, Polygres treats it as an increase. The lower value must already fit the
+next billing date. Current usage and active work must fit within each lower
 
-project’s current usage and active work.
+limit. The dashboard explains how much cleanup is needed before you try again.
 
-Review billing and credit history
+A selection with both increases and decreases is treated as an increase. Every
 
-The Billing page shows:
+lower value must already fit the project’s current usage and active work.
 
-The available credit balance, current subscription, next billing date, and
+Review billing history
 
-billing status.
+Billing shows:
 
-Credit history, including subscription grants, top-up grants, promotional
+the available credit balance, account category, and next billing date;
 
-credit expiration, Paid-project charges, and payment adjustments.
+payment-method setup and the Stripe invoice portal;
 
-Top-up purchase history, including purchased and promotional amounts,
+current and scheduled limits for each Paid project;
 
-payment status, bonus expiration, and any refund or dispute status.
+invoice history with amount, status, and document links;
 
-Current and pending Storage, Context, and Graph capacity for each Paid
+top-up purchase history and promotional bonus details; and
 
-project.
+credit history, including purchases, promotions, Paid-project charges,
 
-If a purchase is marked for support review, monitor its status in Billing and
+expirations, refunds, and payment adjustments.
 
-contact support if it remains unchanged.
+If a payment or purchase is marked for review, monitor its status in Billing
+
+and contact support if it remains unchanged.
 
 Continue
 
-Review organizations as the ownership boundary for
+Compare Free and Paid projects .
 
-projects, members, billing, and credits.
+Learn how to create and manage projects .
 
 Review roles and permissions before
 
 granting organization access.
-
-Compare Free and Paid projects ,
-
-including Basic capacity and billing.
-
-Learn how to create and manage projects .

@@ -1,81 +1,77 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 1447a6e8138e6f02de729df3fd2290f6cdcccbafbd335a649433abf1fe029cdf
+source_hash: 8f9e833e792f2dbb8dd73641f75081b1e0079ac63264f538055a2fdb549b74bf
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
 
-2026-08-28
+2026-08-30
 
-Organization billing and credits
+Choose project limits during creation
 
-Organization owners and admins can manage Launch or Scale subscriptions,
+New projects start with the Free Nano values: 500 MiB Storage, 100,000
 
-payment methods, invoices, credit top-ups, and credit history from
+Context points, and 100,000 Graph units.
 
-Billing . See Billing and credits .
+Increasing any value switches the project to the Paid Basic minimum: 2 GiB
 
-Subscription, purchased, and promotional credits are tracked separately.
+Storage, 200,000 Context points, and 200,000 Graph units for $16 per month.
 
-Credits with the earliest expiration are used first, and available credits
+The new-project page now uses one set of Storage, Context, and Graph controls
 
-are applied to paid-project charges before any remaining amount is invoiced.
+instead of a separate Free or Paid selector. Use free capacity returns all
 
-Checkout completion is not treated as payment confirmation. Subscription
+three controls to the Free values.
 
-changes and credit grants appear after the verified payment is reflected in
+Paid synchronized projects are prepared directly on Basic after source checks
 
-Billing.
+and table selection.
 
-Free and Paid projects
+Pay for projects directly
 
-Each organization has one Free project slot shared by hosted and synchronized
+Billing is now based directly on Paid projects. It shows Launch as the
 
-Nano projects. Paid Basic projects leave that slot available.
+account category when the organization has an active Paid project.
 
-Basic projects start at $10 per month and let owners and admins configure
+The first Paid project starts the organization’s monthly billing period and
 
-Storage, Context, and Graph capacity. Billing begins when Basic is ready.
+is charged for one full month. Later Paid projects are prorated to the same
 
-Paid project creation is being enabled in stages. The options shown in your
+next billing date.
 
-dashboard are authoritative for your organization. See Free and Paid
+Available credits are applied before the payment method. If payment setup is
 
-projects .
+needed, Stripe Checkout returns to the saved project flow after confirmation.
 
-Eligible owners and admins can now create a Paid synchronized project
+Billing shows Paid projects, credit and top-up history, the next billing date,
 
-directly from the new-project wizard. The payment review applies available
+and invoice history. Stripe invoices identify each project and its selected
 
-credits first and shows the remainder paid through the organization’s payment
-
-method. Creation works with any available credit balance.
-
-Owners and admins can upgrade an existing hosted or synchronized Nano project
-
-from its Upgrade page. Polygres prepares and verifies Basic before the
-
-first prorated charge is collected.
+limits.
 
 Increase or reduce a Paid project’s limits
 
-Open a Paid project’s Upgrade page to review its current capacity, add
+Open a Paid project’s Upgrade page to add limits immediately or schedule
 
-capacity immediately, or schedule a decrease for the next billing date.
+lower limits for the next billing date.
 
 The dashboard warns when Context or Graph usage approaches its limit and
 
-explains whether you should add capacity or reduce usage.
+explains whether to increase the limit or reduce usage.
 
-Graph capacity reflects both nodes and edges. Each active node uses 1 unit,
+Graph usage counts each active node as 1 unit and every 10 active edges as 1
 
-and every 10 active edges use 1 unit.
+unit.
 
-Graph builds on Paid projects run one at a time. If an API request asks for a
+Project pages show configured limits separately from current measured usage.
 
-concurrent build, the response explains how to retry it.
+Synchronized project access
+
+Synchronized project pages focus on source status, table progress, and
+
+retrieval. Continue using the source PostgreSQL database for SQL and writes.
 
 2026-08-25
 

@@ -1,183 +1,143 @@
 source: https://docs.evokoa.com/polygres/platform/projects/free-and-paid-projects
 title: Free and Paid projects | Polygres
-source_hash: b1d02a142ebb55834c86348cfc1f7add1d0b2b19f8154b34ee7ea63ee1355b86
+source_hash: 80e38baa215345c2f734c941fb6ee96ccec91478ac1e6fc0fe5cf4eafd4c99cd
 discovered_from: https://docs.evokoa.com/polygres
 
 # Free and Paid projects | Polygres
 
 Free and Paid projects
 
-The project plan determines its price, capacity, and database placement:
+You choose a project’s Storage, Context, and Graph limits when you create it.
 
-Project plan Project tier Price Database placement
+The selected values determine whether Polygres creates a Free Nano project or a
+
+Paid Basic project. One set of controls covers both choices.
+
+Project Monthly price Database placement
 
 Free Nano $0 Shared PostgreSQL capacity
 
-Paid Basic From $10 per month An isolated PostgreSQL database
+Paid Basic From $16 An isolated PostgreSQL database
 
-Availability: Paid project creation is being enabled in stages. The
+Choose Free Nano
 
-new-project screen shows the plans currently available to your organization.
+The exact Free selection is:
 
-Launch and Scale are organization subscriptions. Nano and Basic describe an
+Limit Free value
 
-individual project’s capacity and database placement. Each Paid project has its
+Storage 500 MiB
 
-own Basic capacity configuration.
+Context 100,000 points
 
-See Billing and credits for subscription plans, top-ups,
+Graph 100,000 units
 
-payment confirmation, and credit history.
+New-project controls start with these values. Select Use free capacity to
 
-Use the free Nano project
+return all three controls to the Free selection.
 
-A Free project uses the Nano tier and shared capacity. It is suitable for
+Each organization has one Free Nano project slot across hosted and synchronized
 
-getting started, evaluation, and smaller workloads. You can create one without
+projects:
 
-a paid subscription.
+A hosted Nano project uses the slot.
 
-Each organization has one free Nano project slot across both project types:
+A Nano project synchronized from an external PostgreSQL source uses the same
 
-A Polygres-hosted Nano project consumes the slot.
-
-A Nano project synchronized from an external PostgreSQL source consumes the
-
-same slot.
+slot.
 
 Paid Basic projects leave the Free slot available.
 
-Deleting a Nano project makes the slot available again.
+Deleting a Nano project or upgrading it to Basic releases the slot.
 
-Upgrading a Nano project to Basic also releases the slot.
+Owners, admins, and developers can create an eligible Free project. Some
 
-Some existing organizations may already have more than one Nano project. Those
+existing organizations may already have more than one Nano project. Those
 
-projects can continue running. The organization can create another Free project
+projects can continue running, and the organization can create another Free
 
-after it no longer has a Nano project.
+project after it no longer has a Nano project.
 
-Configure a paid Basic project
+Choose Paid Basic
 
-A Paid project uses the Basic tier. It starts at $10 per month and provides an
+Increasing any limit above the Free values switches the whole selection to the
 
-isolated PostgreSQL database with configurable Storage, Context, and Graph
+minimum Basic limits:
 
-capacity.
+Limit Included with Basic Maximum Price above the included amount
 
-For a hosted project, Basic provides complete pooled and direct PostgreSQL
+Storage 2 GiB 128 GiB $2 per additional GiB each month
 
-connection details. For a synced project, the external database remains the
+Context 200,000 points 4,000,000 points $3 per additional 100,000 points each month
 
-source of truth for synchronized tables, so continue making application writes
+Graph 200,000 units 4,000,000 units $1 per additional 100,000 units each month
 
-and schema changes there. After Synced Basic is ready, the project overview also
+The minimum Basic project costs $16 per month. Storage changes in 1 GiB steps.
 
-shows the stable pooled and direct hostnames for its isolated Polygres database;
+Context and Graph change in 100,000-unit steps. Each active Graph node uses 1
 
-the connection details shown there are limited to those hostnames.
+unit, and every 10 active edges use 1 unit.
 
-An organization owner or admin with an eligible subscription can create a Paid
+For example, 3 GiB of Storage, 300,000 Context points, and 300,000 Graph units
 
-project. The dashboard explains any subscription or availability requirement
+costs $22 per month: $16 for the project, $2 for Storage, $3 for Context, and $1
 
-before setup begins.
+for Graph.
 
-Capacity and monthly pricing
+An organization owner or admin can create a Paid project directly. If the
 
-Capacity Included Maximum in project creation Price above the included amount
+charge is greater than the available credit balance, the organization needs a
 
-Storage 1 GiB 64 GiB $2 per additional GiB
+payment method.
 
-Context 100,000 points 5,000,000 points $3 per additional 100,000 points
+Review the cost before creating a project
 
-Graph 200,000 weighted units 5,000,000 weighted units $1 per additional 100,000 weighted units
+The new-project page shows:
 
-Storage changes in 1 GiB increments. Context and Graph capacity change in exact
+the selected Storage, Context, and Graph limits;
 
-100,000-unit increments. The dashboard calculates the monthly price
+the full monthly price;
 
-from the selected capacity. Graph capacity uses weighted units: each active
+the amount due for the first billing period;
 
-node counts as 1 unit and every 10 active edges count as 1 unit.
+the amount covered by available credits; and
 
-The $10 base charge includes the minimum capacity in the table. For example, a
+the remainder charged to the organization’s payment method.
 
-project configured with 2 GiB of Storage, 200,000 Context points, and 300,000
+If a payment method is needed, Polygres opens Stripe Checkout and returns to the
 
-weighted Graph units costs $16 per month: $10 base, $2 for
+saved project flow after Stripe confirms it.
 
-Storage, $3 for Context, and $1 for Graph.
+The first active Paid project starts the organization’s monthly billing period
 
-Understand activation and billing
+and is charged for one full month. Paid projects added later are prorated to the
 
-The first Basic charge is collected when the project becomes ready:
+same next billing date.
 
-Project setup itself is not billed.
+Billing starts after the project is ready and payment is confirmed. If
 
-The first cycle is prorated from activation through the organization’s next
+activation ends before payment succeeds, the project is not billed and
 
-subscription billing date.
+reserved credits are returned.
 
-Available organization credits pay the prorated charge first. Stripe bills
-
-any remaining amount.
-
-If setup cannot be completed, Basic billing does not begin.
-
-Before you confirm, the dashboard shows the estimated first-cycle total, the
-
-part covered by credits, the part paid through Stripe, and the maximum amount
-
-you could pay. The final first-cycle charge is recalculated when Basic becomes
-
-ready and will not exceed that maximum when the selected capacity and pricing
-
-remain unchanged.
-
-For a Paid synced project, Polygres temporarily sets aside the available-credit
-
-portion shown in the payment review while setup continues. Creation works with
-
-any available credit balance, including zero; the payment method covers the
-
-remainder. The hold is released when the project activates or when setup ends
-
-before activation. Hosted Basic creation starts without a temporary credit
-
-hold.
-
-Capacity increases are prorated, paid, and activated immediately. Capacity
-
-decreases are scheduled for the next billing date.
-
-Create a hosted Paid project
-
-When direct Paid creation is available for your organization:
+Create a hosted project
 
 Open New project ( /{organization}/new ).
 
-Choose Paid .
-
 Choose Host with Polygres .
 
-Configure Storage, Context, and Graph capacity.
+Adjust Storage, Context, and Graph, or keep the Free values.
 
-Review the monthly total and first-cycle billing notice.
+Review the monthly total and the amount due for the first billing period.
 
-Select Create Project and review the displayed maximum charge.
+Select Create free project for Nano or Create Project for Basic.
 
-The project page shows saved provisioning progress. You can leave the page and
+The project page shows saved provisioning progress. You can leave and return
 
-return later. Billing begins when the isolated Basic database is ready.
+later.
 
-Create a Paid synchronized project
+Create a synchronized project
 
-When direct Paid synchronized-project creation is available for your
-
-organization:
-
-Open New project ( /{organization}/new ) and choose Paid .
+Open New project ( /{organization}/new ).
 
 Choose Supabase , Neon , PlanetScale , or Postgres Database .
 
@@ -185,53 +145,45 @@ Complete the source checks and select the tables to synchronize.
 
 Review the estimated Context points from selected embedding tables.
 
-Configure Storage, Context, and Graph capacity.
+Adjust Storage, Context, and Graph, or select Use free capacity .
 
-Select Review payment , check the credit and payment-method amounts, then
+For Nano, select Create free project . For Basic, select Review
 
-select Create Project .
+payment , review the breakdown, and then select Create Project .
 
-Polygres establishes synchronization and activates Basic automatically. Your
+A Paid synchronized project is provisioned directly on Basic. The external
 
-credit balance can cover any portion of the first charge, including none of it;
+PostgreSQL database remains the source of truth for synchronized rows and
 
-the payment method covers the remainder.
+schemas. Continue making application writes and schema changes in the source.
 
-The project keeps its identity and synchronization settings. Near completion,
+The synchronized project dashboard focuses on synchronization and retrieval
 
-Polygres may pause writes for up to 30 minutes while it applies the latest
-
-source changes. Reads may also pause briefly.
-
-The external PostgreSQL source remains authoritative throughout setup. If the
-
-dashboard reports that setup needs attention, follow its guidance or contact
-
-support with the displayed error code before trying again.
+rather than destination database connection details.
 
 Upgrade an existing Nano project
 
 Owners and admins can open a Nano project’s Upgrade page, choose Basic
 
-capacity, and review the estimated first-cycle charge. The dashboard shows how
+limits, and review the charge through the next billing date. Available credits
 
-much available credit will be used and how much will be paid through Stripe.
+are applied first, and the payment method covers the remainder.
 
 For a hosted project, Polygres pauses writes, copies and verifies the database,
 
-then switches the project to Basic. For a synced project, Polygres prepares a
+then switches the project to Basic. For a synchronized project, Polygres
 
-fresh synchronized copy while the current project remains active, then performs
+prepares a fresh Basic copy while Nano remains active, then performs the final
 
-the final switch. Plan for up to 30 minutes of paused writes near the end;
+switch. Plan for up to 30 minutes of paused writes near the end. Reads may also
 
-reads may also be briefly unavailable.
+be briefly unavailable.
 
-The charge is collected when Basic is activated. If the upgrade cannot reach
+The charge is collected when Basic activates. If the upgrade ends before
 
-activation, the project remains on Nano and is not charged. Follow the saved
+activation, Nano remains active and the project is not billed for Basic. Follow
 
-progress on the Upgrade page instead of starting another upgrade.
+the saved progress on the Upgrade page before starting another upgrade.
 
 For source preparation and synchronization details, see Create a synced
 

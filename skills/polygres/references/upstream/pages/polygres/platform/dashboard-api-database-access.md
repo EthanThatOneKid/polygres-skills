@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/dashboard-api-database-access
 title: Dashboard, API, and database access | Polygres
-source_hash: f7cb33514a25335bbeaef7f0ea6b7cd431bdf7441a2a94701fa734a230b2cc8a
+source_hash: 97fe2800823edbc827dcb75e80216799886ea00eb83680598afac4ba63a05637
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard, API, and database access | Polygres
@@ -11,7 +11,13 @@ A Polygres project can be used through complementary surfaces. The dashboard ope
 
 Confusing these surfaces is a common setup mistake. Each one is meant for a different job, and each one has its own credential boundary.
 
-Complete native PostgreSQL connection details apply to managed database projects created with Host with Polygres . Synced Nano keeps database work in the source. Synced Basic adds stable destination hostnames after activation; its overview is limited to those hostnames. Use the source PostgreSQL database for direct queries and mutations on synchronized data.
+Complete native PostgreSQL connection details apply to projects created with
+
+Host with Polygres . For a synchronized project, use the source PostgreSQL
+
+database for direct queries and changes. Polygres provides retrieval over the
+
+synchronized copy.
 
 Surface Best for Access used
 
@@ -31,7 +37,7 @@ Match each surface to the task
 
 Use a dashboard session for signed-in organization and project workflows.
 
-For a managed database project, use a PostgreSQL password for direct or pooled database connections. Synced project overviews are limited to hostnames.
+For a managed database project, use a PostgreSQL password for direct or pooled database connections. Keep synchronized-project database work in the source.
 
 Use a project API key for application retrieval and pgContext Runtime
 
@@ -85,7 +91,13 @@ In collection setup, Existing vector column lists eligible native pgcontext.vect
 
 Use PostgreSQL for application data
 
-A managed database project exposes a pooled URL and a direct URL. Both reach the project’s managed PostgreSQL database. Synced Nano keeps database work in the source. Synced Basic shows stable pooled and direct hostnames after activation; its overview is limited to those hostnames. Keep using the source database for SQL changes to synchronized data.
+A managed database project exposes a pooled URL and a direct URL. Both reach
+
+the project’s managed PostgreSQL database. For a synchronized project, keep
+
+using the source database for SQL changes and use Polygres retrieval features
+
+over the synchronized copy.
 
 Pooled URL
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects
 title: Projects | Polygres
-source_hash: 78e83b7bac37297b0b2edb3a5c57c723d41a060a3e0aaebf94c5b90922bea9d1
+source_hash: 95ff60e602c1da4bce862ae37a723d138a4723e7972fdd0141c8ec424c10783f
 discovered_from: https://docs.evokoa.com/polygres
 
 # Projects | Polygres
@@ -25,7 +25,7 @@ Host with Polygres You want a new Polygres-managed PostgreSQL database. Native d
 
 For the complete workflow and operating model, see Create a synced PostgreSQL project . Before opening the wizard, follow the PostgreSQL sync setup guides for standard PostgreSQL, Neon, Supabase, or PlanetScale.
 
-Before choosing a source, review Free and Paid projects . A Free project uses the shared Nano tier. A Paid project uses the isolated Basic tier and is available only to eligible organizations when the dashboard offers it.
+Before choosing a source, review Free and Paid projects . The exact Free limits create a shared Nano project. Increasing any limit creates an isolated Basic project.
 
 Create a project in an organization
 
@@ -33,21 +33,35 @@ Create each project inside the organization that should own it. Confirm the orga
 
 Open New project ( /{organization}/new ) from the target organization.
 
-Choose Free or, when offered for your organization, Paid .
-
 Choose the data source.
 
-For any Paid project, configure Storage, Context, and Graph capacity. A Paid synchronized project does this after source checks and table selection.
+Set Storage, Context, and Graph. Keep the initial values for Free Nano, or increase any value for Paid Basic.
 
-Confirm the creation action shown. Paid synchronized projects include a separate Review payment step before Create Project . New projects are named Default Project .
+For a synchronized project, complete the source checks and table selection before reviewing the final limits.
 
-The dashboard opens the organization-scoped project overview while Polygres provisions the selected project type. You can change the name later in the project’s Settings page.
+Confirm the creation action shown. Paid synchronized projects include Review payment before Create Project . New projects are named Default Project .
+
+The dashboard opens the project overview while Polygres prepares the selected project. You can change the name later in Settings.
 
 Free projects use the shared Nano tier. Each organization has one Free slot across hosted and synchronized projects. Paid Basic projects leave that slot available. Existing organizations with multiple Nano projects can keep them and can create another Free project after the current Nano projects are removed.
 
-Paid projects use the isolated Basic tier and start at $10 per month. An owner or admin with an eligible organization subscription can create one with Host with Polygres or, when offered, an external PostgreSQL source. The dashboard applies available credits to the estimated first-cycle charge and shows any remainder paid through Stripe. During Paid synced setup, Polygres temporarily sets aside only the available-credit portion shown in the payment review.
+Paid projects use the isolated Basic tier and start at $16 per month. An owner
 
-A managed database project receives complete connection details and a Runtime API URL. For a synced project, use the source database for SQL and writes. After Synced Basic is ready, the overview shows stable pooled and direct hostnames for its isolated database; the connection details shown there are limited to those hostnames. When creation needs attention, the dashboard explains the permission, subscription, payment, or availability step to complete.
+or admin can create one with Host with Polygres or an external PostgreSQL
+
+source. The dashboard applies available credits to the first charge and shows
+
+the remainder charged to the organization’s payment method.
+
+A managed database project receives complete connection details and a Runtime
+
+API URL. For a synchronized project, use the source database for SQL and writes.
+
+The project dashboard focuses on synchronization and retrieval. When creation
+
+needs attention, it explains the permission, payment, or availability step to
+
+complete.
 
 Follow provisioning
 
@@ -74,6 +88,12 @@ For a standard project, the overview reports Database and Pooler status
 alongside the project status. For a synced project, the overview reports
 
 synchronization state, progress, table status, and freshness.
+
+For an active hosted project, the Configuration card shows the selected
+
+Storage, Context, and Graph limits alongside current measured usage. Storage
+
+measurements refresh while the project page is active.
 
 Recover from a provisioning failure
 

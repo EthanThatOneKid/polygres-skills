@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects/sync-postgresql
 title: Create a Synced PostgreSQL Project | Polygres
-source_hash: 2faa674b1c83f25c97c3618714a10d6a1547865695a6462e09fa3a9c9311ebef
+source_hash: 2cd9e017adca07b43fea66d1f8aea1d06197fcf55cbfedf2a04fcf56a1653564
 discovered_from: https://docs.evokoa.com/polygres
 
 # Create a Synced PostgreSQL Project | Polygres
@@ -21,15 +21,13 @@ retrieval features over that data while application writes continue through
 
 the source.
 
-A synchronized project can use the Free Nano workflow or, when offered for your
+A synchronized project can use Free Nano or Paid Basic. The Storage, Context,
 
-organization, the Paid Basic workflow. Polygres activates Basic automatically
+and Graph values determine which tier is created. See Free and Paid
 
-after it establishes the initial synchronization. See Free and Paid
+projects for the current limits,
 
-projects for availability, pricing,
-
-capacity, and payment details.
+pricing, and payment details.
 
 Understand the operating model
 
@@ -45,11 +43,9 @@ Select tables with a stable primary key or eligible unique key.
 
 Update the selected tables from Configure sync after the project reaches Streaming .
 
-After Synced Basic is ready, the overview shows stable hostnames for its
+Use the source database for SQL and writes. The synchronized project
 
-isolated Polygres database. Keep making changes to synchronized rows and
-
-schemas in the source database.
+dashboard focuses on synchronization and retrieval.
 
 Check the source requirements
 
@@ -85,8 +81,6 @@ Dashboard
 
 Open New project from the organization that should own the project.
 
-Choose Free or, when offered for your organization, Paid .
-
 Choose Supabase , Neon , PlanetScale , or Postgres Database .
 
 Add the displayed regional egress addresses to the source allowlist when required.
@@ -95,7 +89,9 @@ Enter the complete PostgreSQL connection URL or choose Use structured connection
 
 Continue to the source checks and select eligible tables from the public schema.
 
-For Paid, review estimated Context usage, configure capacity, select Review payment , and confirm with Create Project . For Free, select Create and sync .
+Review estimated Context usage and set Storage, Context, and Graph. Keep the initial values for Free Nano, or increase any value for Paid Basic.
+
+For Nano, select Create free project . For Basic, select Review payment , review the cost, and confirm with Create Project .
 
 CLI
 
@@ -217,55 +213,37 @@ tables and retrieval configuration reach readiness.
 
 Understand Paid synchronized creation
 
-An organization owner or admin with an eligible subscription can create a Paid
+An organization owner or admin can create a Paid synchronized project. The
 
-synchronized project. The payment review shows the estimated first-cycle total,
+payment review shows the selected limits, monthly total, amount due for the
 
-the available-credit portion, the payment-method portion, and the maximum
+first billing period, available-credit portion, and payment-method portion.
 
-charge. Creation works with any available credit balance, including zero.
+Polygres provisions the project directly on Basic, takes the initial snapshot,
 
-While setup is in progress, Polygres temporarily sets aside only the
+and confirms that source changes are flowing. The source remains authoritative
 
-available-credit portion shown in the review. The hold remains part of the
+for application SQL, writes, and schema changes.
 
-organization balance and is reserved for this project until activation finishes
+The first active Paid project in an organization is charged for one full month
 
-or setup stops.
+when Basic activates. Later Paid projects are prorated through the existing
 
-Polygres establishes the synchronization, confirms that source changes are
+next billing date. Available credits are applied first. If payment setup is
 
-flowing, and completes the move to Basic automatically. Near completion,
+needed, Polygres opens Stripe Checkout and returns to the saved project flow
 
-Polygres may pause writes for up to 30 minutes while it applies the latest
+after the payment method is confirmed.
 
-source changes. Reads may also pause briefly.
+Billing begins after activation and payment are confirmed. If activation ends
 
-The first charge is collected when Basic is ready and is prorated through the
+before payment succeeds, reserved credits are returned and the project is not
 
-organization’s next subscription billing date. Polygres uses available credits
-
-first and charges the remainder through Stripe. The final amount cannot exceed
-
-the displayed maximum when capacity and pricing have not changed. The temporary
-
-credit hold is removed when the project activates or if setup cannot be
-
-completed.
-
-Continue using the external PostgreSQL database for application SQL and writes.
-
-After Synced Basic is ready, the project overview shows stable pooled and direct
-
-hostnames for the isolated Polygres database. The connection details shown
-
-there are limited to those hostnames. Keep the source database authoritative
-
-for synchronized rows and schemas.
+billed.
 
 Upgrade an existing synced Nano project
 
-Open the project’s Upgrade page, choose Basic capacity, and review the
+Open the project’s Upgrade page, choose Basic limits, and review the
 
 maximum first-cycle charge. Polygres prepares a fresh Basic copy while the Nano
 

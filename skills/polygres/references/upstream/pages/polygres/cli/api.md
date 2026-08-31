@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/api
 title: Generic API routes | Polygres
-source_hash: 2f485ef20add22406009f66dbd05dd2deac31ecf18c413a932c6b19972c8abf0
+source_hash: c6b47aa72b36fd469b63bf10a74671338c717eee72d886875a851bbd84a3df16
 discovered_from: https://docs.evokoa.com/polygres
 
 # Generic API routes | Polygres

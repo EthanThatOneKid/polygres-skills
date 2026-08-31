@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/key-concepts
 title: Key concepts | Polygres
-source_hash: cb0308c6286021a8a05e9c2b4e902917ae93bcf24eef392f6049f2245a00eeed
+source_hash: 6cc44a23f5e0cceea288216ce343845077b14156115e1dd32ba0544cb06a2820
 discovered_from: https://docs.evokoa.com/polygres
 
 # Key concepts | Polygres
@@ -19,7 +19,7 @@ members and their fixed roles,
 
 one shared Free-project allowance,
 
-an optional subscription and organization credit balance,
+an organization credit balance and billing history,
 
 the projects the team operates together.
 
@@ -27,21 +27,27 @@ The organization shares one Free-project allowance across all members. Paid
 
 projects leave that Free slot available.
 
-Plans, credits, and project tiers
+Credits and project tiers
 
-Launch and Scale are organization subscription plans. They grant organization
+One credit is worth one cent toward Paid-project charges, and Billing displays
 
-credits after each paid monthly renewal. One credit is worth one cent toward
+the balance as USD. Credits can come from top-up purchases, promotional offers,
 
-Paid project charges, and the dashboard displays the balance as USD.
+or an existing balance. Available credits are applied before the payment
 
-Nano and Basic are project tiers. A Free project uses shared Nano capacity. A
+method.
 
-Paid project uses isolated Basic capacity configured for that project. An
+Nano and Basic are project tiers. The exact Free limits create a shared Nano
 
-eligible organization subscription lets owners and admins create Paid projects.
+project. Increasing Storage, Context, or Graph creates an isolated Basic
 
-Each Paid project still has its own tier and capacity settings.
+project and moves all three limits to at least the Basic minimum. Each Paid
+
+project has its own monthly price and limits.
+
+An organization with an active Paid project is shown as Launch , a
+
+display-only account category derived from active Paid projects.
 
 See Billing and credits and Free and Paid
 
@@ -73,15 +79,13 @@ PostgreSQL connections
 
 Managed database projects created with Host with Polygres provide complete
 
-connection URLs, a native database password, psql , and the SQL Editor. Synced
+connection URLs, a native database password, psql , and the SQL Editor. For a
 
-Nano keeps database work in the source. After Synced Basic is ready, its
+synchronized project, use the source PostgreSQL database for SQL queries and
 
-overview displays stable pooled and direct hostnames. The connection details
+changes. The Polygres copy is available through its supported retrieval
 
-shown there are limited to those hostnames. Use the source PostgreSQL database
-
-for SQL queries and mutations on synchronized data.
+features rather than destination database connection details.
 
 Managed database projects expose two connection URLs:
 

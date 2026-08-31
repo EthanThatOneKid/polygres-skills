@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/organizations
 title: Organizations | Polygres
-source_hash: a03c1b99a2b89a0c20f0efd8a9310be66752a17aed91a6df4fc618a49a9a58ad
+source_hash: 4b2fbf370753d20ab16683d4b033bf6d600c4bae4c4b386d1cf8fa8579da6d83
 discovered_from: https://docs.evokoa.com/polygres
 
 # Organizations | Polygres
@@ -9,7 +9,7 @@ Organizations
 
 Every Polygres project belongs to an organization. Organizations define project
 
-ownership, membership, roles, subscriptions, and credits. Each project keeps
+ownership, membership, roles, billing, and credits. Each project keeps
 
 its own tier and capacity.
 
@@ -19,7 +19,7 @@ Open Sign up and register with the email address you intend to use for Polygres.
 
 If an organization invitation exists for that authenticated address, review the available invitations before creating a new organization.
 
-Otherwise, Polygres completes the normal self-service setup automatically. It creates an organization and opens the dashboard. The organization can create one Free project without a subscription.
+Otherwise, Polygres completes the normal self-service setup automatically. It creates an organization and opens the dashboard. The organization can create one Free project.
 
 If the account reaches Onboarding instead of the organization dashboard, setup is incomplete. Follow the support guidance on that page.
 
@@ -69,7 +69,7 @@ organization ID, billing status, and project count. Open Projects
 
 owns. Owners and admins can open Billing ( /{organization}/billing ) to review
 
-the organization subscription, credit balance, and billing history.
+the account category, credit balance, payment state, and billing history.
 
 Membership changes affect access to organization-owned projects. They do not transfer a project to a different organization.
 

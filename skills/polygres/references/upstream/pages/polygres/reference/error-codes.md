@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: f2e8beae19d860d735de7cc0a361b880d10bde7961b806ab824d674d92abd516
+source_hash: 95476e6024d3679f6dacf85e00772d8b6fcb32909e33de21327996f6cc488eb1
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
@@ -903,6 +903,10 @@ DATA_PLANE_CONNECTION_INVALID/custom_pg_dump_restore_must_use 500 API response +
 
 DATA_PLANE_CONNECTION_UNRESOLVED 503 API response after_delay Project data-plane host is not available.
 
+DATA_PLANE_CONNECTION_UNRESOLVED/basic_upgrade_migration_requires_direct_connection 503 API response after_delay Basic project migration requires a direct data-plane connection.
+
+DATA_PLANE_CONNECTION_UNRESOLVED/basic_upgrade_target_not_registered 503 API response after_delay Basic project data-plane registration is not ready.
+
 DATA_PLANE_CONNECTION_UNRESOLVED/project_data_plane_credentials_not_configured 503 API response after_delay Project data-plane credentials are not configured.
 
 DATA_PLANE_DRIVER_UNAVAILABLE 503 API response + Async operation after_delay SQL script execution driver is not available.
@@ -1752,6 +1756,8 @@ Error identity HTTP Used by Retry Exact message
 SHARED_DATABASE_BOOTSTRAP_CLEANUP_FAILED 500 API response + Async operation after_delay Shared database bootstrap failed and its partial resources could not be cleaned up.
 
 SHARED_DATABASE_BOOTSTRAP_INVALID 500 API response + Async operation after_delay Shared database bootstrap passwords are required.
+
+SHARED_DATABASE_BOOTSTRAP_INVALID/existing_database_owner_mismatch 500 API response + Async operation after_delay An existing shared database has an unexpected owner.
 
 SHARED_DATABASE_BOOTSTRAP_INVALID/postgres_did_not_return_valid_quoted 500 API response + Async operation after_delay Postgres did not return a valid quoted password literal.
 

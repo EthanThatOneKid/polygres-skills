@@ -1,77 +1,101 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 8f9e833e792f2dbb8dd73641f75081b1e0079ac63264f538055a2fdb549b74bf
+source_hash: 67d72c9001b1b1d52d7e0ddbad186f614bc8edbdf28d005f072da91e072c4936
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
 
+2026-08-31
+
+Project operation rate limits
+
+Project creation, synchronized-project preflight creation, and project
+
+deletion now allow up to 10 authenticated attempts per rolling hour.
+
+Project deletion enforces that limit separately for the user, the user and
+
+project together, and the project across all users. The IP limit remains 300
+
+requests per hour.
+
 2026-08-30
 
-Choose project limits during creation
+Choose your project’s capacity
 
-New projects start with the Free Nano values: 500 MiB Storage, 100,000
+You can now choose storage and retrieval capacity while creating a project.
 
-Context points, and 100,000 Graph units.
+A free project includes 500 MiB of storage, 100,000 items in AI Context, and
 
-Increasing any value switches the project to the Paid Basic minimum: 2 GiB
+graph capacity for 100,000 units.
 
-Storage, 200,000 Context points, and 200,000 Graph units for $16 per month.
+Need more capacity? Increasing any limit creates a paid project. Paid projects
 
-The new-project page now uses one set of Storage, Context, and Graph controls
+start at $16 per month and include 2 GiB of storage, 200,000 AI Context items,
 
-instead of a separate Free or Paid selector. Use free capacity returns all
+and 200,000 graph units.
 
-three controls to the Free values.
+Select Use free capacity to reset all three limits to the free allowance.
 
-Paid synchronized projects are prepared directly on Basic after source checks
+Synchronized projects that need paid capacity can be set up after Polygres
 
-and table selection.
+checks the source database and you choose which tables to sync.
 
-Pay for projects directly
+Pay per project
 
-Billing is now based directly on Paid projects. It shows Launch as the
+You now pay for each paid project instead of choosing a paid plan for your
 
-account category when the organization has an active Paid project.
+entire organization. An organization with at least one paid project is shown
 
-The first Paid project starts the organization’s monthly billing period and
+as being on the Launch plan.
 
-is charged for one full month. Later Paid projects are prorated to the same
+Your first paid project sets the organization’s monthly billing date and is
 
-next billing date.
+charged for the first full month. If you add another paid project later, its
 
-Available credits are applied before the payment method. If payment setup is
+first charge covers only the time until that same billing date.
 
-needed, Stripe Checkout returns to the saved project flow after confirmation.
+Polygres uses available credits before charging your payment method. If you
 
-Billing shows Paid projects, credit and top-up history, the next billing date,
+need to add a payment method, you will return to project creation after
 
-and invoice history. Stripe invoices identify each project and its selected
+completing Stripe Checkout.
 
-limits.
+The billing page now shows your paid projects, available credits, credit
 
-Increase or reduce a Paid project’s limits
+purchases, next billing date, and past invoices. Each invoice lists the
 
-Open a Paid project’s Upgrade page to add limits immediately or schedule
+project and capacity you paid for.
 
-lower limits for the next billing date.
+Change a paid project’s capacity
 
-The dashboard warns when Context or Graph usage approaches its limit and
+Open the project’s Upgrade page to increase its limits immediately. You
 
-explains whether to increase the limit or reduce usage.
+can also schedule a decrease for the next billing date.
 
-Graph usage counts each active node as 1 unit and every 10 active edges as 1
+The dashboard warns you when AI Context or graph usage is close to a limit
 
-unit.
+and tells you whether to increase capacity or remove data.
 
-Project pages show configured limits separately from current measured usage.
+Graph capacity is measured from the graph’s size: each node uses one unit,
 
-Synchronized project access
+and every ten edges use one unit.
 
-Synchronized project pages focus on source status, table progress, and
+Project pages now show your selected limits separately from the capacity you
 
-retrieval. Continue using the source PostgreSQL database for SQL and writes.
+are currently using.
+
+A clearer view of synchronized projects
+
+Synchronized project pages now focus on the connection to your source
+
+database, table sync progress, and data retrieval. Run SQL and make data
+
+changes in the source PostgreSQL database; Polygres keeps the selected tables
+
+synchronized for retrieval.
 
 2026-08-25
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/limits
 title: Limits | Polygres
-source_hash: 010d203846348305aad15e4506864062dd5b01f2ab334e639b64cf366b341700
+source_hash: 6e88d8c9d6dabe82f3c3ae636204b8263ac14c34e863e6ef5e438ba5ec93c64a
 discovered_from: https://docs.evokoa.com/polygres
 
 # Limits | Polygres
@@ -411,7 +411,9 @@ Complete email verification 20/hour — — — 120/hour
 
 Update organization settings 30/min — — — 500/min
 
-Create project 10/day — — — 300/hour
+Create project 10/hour — — — 300/hour
+
+Create synchronized-project preflight 10/hour — — — 300/hour
 
 Read billing, credits, project quotes, or top-up history 120/min — — — 2,000/min
 
@@ -429,7 +431,7 @@ Retry provisioning — 6/hour — 12/hour 300/hour
 
 Rename project — 60/min — 120/min 2,000/min
 
-Delete project 5/day 5/day — 10/day 300/hour
+Delete project 10/hour 10/hour — 10/hour 300/hour
 
 List API keys — 60/min — 120/min 2,000/min
 

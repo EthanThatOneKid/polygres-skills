@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: 95476e6024d3679f6dacf85e00772d8b6fcb32909e33de21327996f6cc488eb1
+source_hash: d843c497c2248cbb47abd1c981acc3640f1fae612b4c3f5662daa447a056b1b3
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
@@ -1505,7 +1505,7 @@ TIER_NOT_FOUND 404 API response + Async operation after_user_action Tier not fou
 
 TIER_PLACEMENT_CLASS_INVALID 500 API response + Async operation after_delay Tier placement_class must be isolated or shared.
 
-TIER_PROJECT_LIMIT_EXCEEDED 409 API response + Async operation after_user_action Tier project limit exceeded.
+TIER_PROJECT_LIMIT_EXCEEDED 409 API response + Async operation after_user_action Each organization can have one Free Nano project. To continue, create a Basic project, or delete or upgrade the existing Nano project.
 
 TIER_REQUIRED 403 API response + Async operation after_user_action A tier is required.
 

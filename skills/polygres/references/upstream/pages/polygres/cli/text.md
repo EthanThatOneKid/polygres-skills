@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/text
 title: CLI text retrieval | Polygres
-source_hash: e816929113cb98432aa6fb38687f192686f8fc2fb0a292819de0c9c8f64baa66
+source_hash: 83cf4bef0804c1fd7950d8a7c9555d1a2dadc6a662c4ab90adbb85bef81e3009
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI text retrieval | Polygres

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects/sync-postgresql
 title: Create a Synced PostgreSQL Project | Polygres
-source_hash: e07e420dc326a099ba57c74cea0eaa2a7dd0f5dd11dc780504ab19e4a073082e
+source_hash: 5a9d4bb160b0e24a44ec9128f653b55e4cf2c2b8761d7bb5273ee3d24785867b
 discovered_from: https://docs.evokoa.com/polygres
 
 # Create a Synced PostgreSQL Project | Polygres

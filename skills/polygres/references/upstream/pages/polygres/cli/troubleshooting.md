@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/troubleshooting
 title: CLI troubleshooting | Polygres
-source_hash: 7245f8f78f72f5a21ba4df2ddcbfed5edca76bfca68959bafdf6ded0f6fb9247
+source_hash: 29be747b40d1c49f1e4861f8348871441392e9e1dbe6ab2f5fa1ce929f08112d
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI troubleshooting | Polygres

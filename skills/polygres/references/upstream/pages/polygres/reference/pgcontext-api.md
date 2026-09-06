@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/pgcontext-api
 title: pgContext API | Polygres
-source_hash: dfbc4928378859dd4e495b41c425c063e01ee1bba491bd3e25c5129f14d8f559
+source_hash: 00639df2ac1d9eddc1df746d0ab90c6a784dd64eee8bfd51f1829b258621835c
 discovered_from: https://docs.evokoa.com/polygres
 
 # pgContext API | Polygres

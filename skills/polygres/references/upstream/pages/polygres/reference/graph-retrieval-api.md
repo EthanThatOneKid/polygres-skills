@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/graph-retrieval-api
 title: Graph Retrieval API | Polygres
-source_hash: 234b29292314bcddac3893353bc3fe8aaab862b765c8f33c67c439c099ff6d89
+source_hash: f2674d4d75912fd0bd94c455cac3bd2292e4a1f084d2a3107ffde3435f16dd5d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Graph Retrieval API | Polygres

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/python-sdk
 title: Python SDK | Polygres
-source_hash: 7c1f9ad186a86b2ea86cc7869a64724ebaf25bead9a2651374e6dfc909786666
+source_hash: 04c7343321453f80c2b4ff956b7c15a8c351fe1f028b36189c60536f83406e31
 discovered_from: https://docs.evokoa.com/polygres
 
 # Python SDK | Polygres

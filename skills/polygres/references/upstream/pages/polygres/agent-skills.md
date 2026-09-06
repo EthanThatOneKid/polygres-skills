@@ -1,47 +1,45 @@
 source: https://docs.evokoa.com/polygres/agent-skills
 title: Polygres Agent Skills | Polygres
-source_hash: 5e17efd3bd950409d9f25e4567487ad03b0b3dd2bb780a6eadaeb90d9498df41
+source_hash: 1646f336f422ead5bf9eec6aa3e95726d7046d6f016ae8d3f7f68ac5bc84cace
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres Agent Skills | Polygres
 
 Polygres Agent Skills
 
-Polygres Agent Skills help compatible coding agents understand your data,
+Polygres Agent Skills help coding agents understand your data, use the Polygres
 
-recommend a useful setup, and build or operate it with you. The plugin includes
+MCP connection, recommend a useful setup, and build or operate it with you. The
 
-five skills:
+plugin includes five skills:
 
-polygres-data-pipeline turns files, databases, APIs, conversations, or
+polygres-data-pipeline uses available MCP tools to turn files, databases, APIs, conversations, or
 
 existing Polygres data into a managed PostgreSQL sync or working custom
 
 ingestion and retrieval pipeline;
 
-polygres-cli helps with signing in, creating standard or synchronized
+polygres-cli uses MCP for compatible interactive operations and the CLI for signing in, creating standard or synchronized
 
 projects, selecting projects, importing standard-project data, applying
 
 migrations, managing keys, and configuring retrieval;
 
-polygres-sdk helps you add pgContext, graph, vector, text, and hybrid
+polygres-sdk uses MCP for interactive grounded answers and helps you add
 
-retrieval to a Python application;
+pgContext, graph, vector, text, and hybrid retrieval to a Python application;
 
-polygres-retrieval-design compares retrieval options and recommends a
+polygres-retrieval-design uses read-only MCP evidence to compare retrieval
 
-design without changing your project;
+options and prepare a project design;
 
-polygres-troubleshooting investigates project, import, retrieval, and
+polygres-troubleshooting investigates MCP connections, projects, imports,
 
-Context problems using read-only checks.
+retrieval, and Context operations using read-only checks.
 
-The skills do not include the Python packages. Install the component required
+Install the CLI or SDK when your workflow uses it, then add the skill repository:
 
-by the task, then install the skill repository:
-
-Install the current CLI and SDK, then add Polygres Agent Skills 0.5.0 :
+Install the current CLI and SDK, then add Polygres Agent Skills 0.6.0 :
 
 pipx install "polygres-cli==0.4.1"
 
@@ -49,7 +47,7 @@ python -m pip install "polygres-sdk==0.4.1"
 
 npx skills add Evokoa/polygres-skills
 
-Agent Skills 0.5.0 , CLI 0.4.1 , and SDK 0.4.1 form the current coordinated
+Agent Skills 0.6.0 , MCP catalog 1.0 , CLI 0.4.1 , and SDK 0.4.1 form the current coordinated
 
 release set.
 
@@ -107,9 +105,15 @@ codex plugin marketplace add Evokoa/polygres-skills
 
 Start Codex, open /plugins , select the Polygres marketplace, and install the
 
-Polygres plugin. Adding a marketplace makes its catalog available but does not
+Polygres plugin. The plugin adds the production MCP connection and the five
 
-install the plugin by itself. Start a new task after installation.
+skills. Start a new task so Codex loads both.
+
+The plugin MCP address covers All accessible projects . For a focused
+
+one-project connection, open that project’s Connect → MCP page and use its
+
+generated setup instructions.
 
 Claude Code plugin marketplace
 
@@ -139,15 +143,19 @@ workflow yourself:
 
 Ask in your own words
 
-Describe the result you want. You do not need to know which skill, schema, or
+Describe the result you want in your own words. The agent can select the skill,
 
-retrieval method you need. The agent can inspect the relevant parts of your
+schema, and retrieval method, inspect the relevant parts of your
 
 workspace and selected project, recommend an approach, and ask for approval
 
 before it uploads data or changes a project.
 
 Example prompts:
+
+Use Polygres MCP to inspect this project and recommend the next useful setup step.
+
+Use Polygres MCP to answer this question from my support collection and cite the returned records.
 
 Look at my data and use $polygres-data-pipeline to set up a Polygres data pipeline.
 
@@ -189,9 +197,9 @@ Use project.context.joint() to combine semantic, lexical, and graph evidence
 
 while preserving typed provenance and request IDs.
 
-Design a reviewable retrieval plan for this schema without changing the
+Design a reviewable retrieval plan for this schema using read-only project
 
-project. Compare relational, graph, pgvector, text, hybrid, and pgContext
+inspection. Compare relational, graph, pgvector, text, hybrid, and pgContext
 
 approaches.
 
@@ -213,9 +221,9 @@ Polygres.” If you are still exploring, ask “What could I do with Polygres?�
 
 The agent will inspect a small, read-only sample of the data and the relevant
 
-parts of your project, then suggest the outcome most likely to help. It will
+parts of your project, then suggest the outcome most likely to help. This
 
-not change anything while it is making a recommendation.
+recommendation phase stays read-only.
 
 Once you ask it to proceed, the agent works through the setup with you:
 
@@ -253,11 +261,9 @@ The result is more than a schema suggestion. You receive the local code and
 
 operator instructions needed to run the selected workflow, plus a clear report
 
-of what was verified. If part of the setup cannot be completed, the agent marks
+of what was verified. The final report labels any remaining setup as partial or
 
-it as partial or blocked instead of presenting an untested scaffold as a
-
-working pipeline.
+blocked and describes the next step needed to complete it.
 
 Synchronized PostgreSQL projects
 
@@ -293,9 +299,7 @@ graph, text, vector, hybrid, AI Context, catalog, and readiness workflows.
 
 Route each write to the right interface
 
-For a standard project, the skill chooses the write surface by workload, not by
-
-a file extension:
+For a standard project, the skill chooses the write surface from the workload:
 
 Workload Recommended interface
 
@@ -303,15 +307,15 @@ One JSON record or runtime event for an eligible existing table Validate, then u
 
 Dataset or bounded backfill Use the reviewed import workflow. If it feeds a pgContext collection, reconcile the imported source rows before declaring retrieval ready.
 
-Source-row deletion Use an approved deletion path, then remove or invalidate the matching Context points and other derived retrieval evidence. The rows surface has no delete mode.
+Source-row deletion Use an approved deletion path, then remove or invalidate the matching Context points and other derived retrieval evidence.
 
 For a Context-backed row write, the skill preserves the exact request and
 
 idempotency key so it can safely resume the Context step during the 24-hour
 
-replay window. A row-only write has no replay protection, so the skill checks a
+replay window. For a row-only write, the skill checks a stable business key
 
-stable business key before deciding whether another write is necessary.
+before deciding whether another write is necessary.
 
 Embeddings and semantic search
 
@@ -325,15 +329,13 @@ for your source. You choose between the reviewed options before data is sent to
 
 an external model.
 
-Polygres stores and searches embeddings, but it does not generate them. The
+Polygres stores and searches embeddings. The pipeline creates embeddings before
 
-pipeline creates embeddings before writing source records and uses the same
+writing source records and uses the same compatible model for search queries.
 
-compatible model for search queries. If embeddings are unnecessary or not yet
+The agent can also start with relational or text retrieval and add semantic
 
-available, the agent can start with relational or text retrieval and leave
-
-semantic search for later.
+search when embeddings are ready.
 
 Capture conversations and build agent memory
 
@@ -345,21 +347,21 @@ you want the agent to remember. Captured records keep stable source IDs and
 
 provenance so updates, retries, and deletions can be handled safely.
 
-Privacy filters run before content is stored or embedded. System instructions,
+Privacy filters run before content is stored or embedded. By default, they keep
 
-credentials, retrieved context, attachments, and tool output are excluded
+system instructions, credentials, retrieved context, attachments, and tool
 
-unless you explicitly choose to include them. Retrieval still needs to respect
+output outside captured memory. You can explicitly select additional content.
 
-your application’s authorization rules; a search filter is not a replacement
+Your application’s authorization rules remain the source of truth, while
 
-for access control.
+search filters narrow eligible results.
 
-If you approve an agent integration, the skill can add clearly marked capture
+If you approve an agent integration, the skill can append clearly marked
 
-and recall guidance to that agent’s instruction file without replacing your
+capture and recall guidance to that agent’s existing instruction file. For
 
-existing instructions. For reliable ongoing capture, it also needs a tested
+reliable ongoing capture, it also needs a tested
 
 application hook, wrapper, queue, or worker. The final report tells you whether
 
@@ -369,11 +371,9 @@ Credentials stay local
 
 Generated setup files use an empty .env.example and an ignored .env file.
 
-Add values directly to .env on your computer instead of pasting secrets into
+Add values directly to .env on your computer. Credential checks report a
 
-chat. Credential checks report only whether each required value is present,
-
-missing, or empty.
+simple readiness status for each required value while keeping the value private.
 
 Build with the Python SDK
 
@@ -435,7 +435,7 @@ token budgets, readiness, and validation into a reviewable plan. After user
 
 approval, it delegates project setup to polygres-cli and application code to
 
-polygres-sdk ; it never mutates a project directly.
+polygres-sdk . Its own work stays read-only.
 
 Diagnose with public evidence
 
@@ -447,9 +447,9 @@ pagination, timeout, and partial-failure symptoms. It uses installed CLI help,
 
 public status commands, SDK readiness and exception types, and retained
 
-request or job IDs. It does not use private endpoints or internal observability
+request or job IDs. Diagnosis stays on documented public interfaces and remains
 
-and does not perform corrective mutations during diagnosis.
+read-only until you approve a separate repair workflow.
 
 Import CSV, TSV, JSON, and JSONL
 
@@ -461,21 +461,21 @@ polygres import csv .
 
 The converter:
 
-makes no network requests;
+runs locally;
 
-never uploads the original non-CSV file;
+keeps the original source file on your computer;
 
 reports row count, columns, key mappings, nesting, and conversion warnings;
 
 requires an explicit choice before flattening or stringifying nested JSON;
 
-detects when null and empty-string values cannot remain distinct;
+highlights conversions where null and empty-string values would merge;
 
 writes the converted CSV atomically and reports source and output hashes.
 
-Excel, Parquet, Avro, ORC, XML, YAML, SQL dumps, and pg_dump archives are not
+For Excel, Parquet, Avro, ORC, XML, YAML, SQL dumps, and pg_dump archives,
 
-automatically converted. Export those sources to CSV or JSONL first.
+export the source to CSV or JSONL before import.
 
 Update
 
@@ -537,27 +537,25 @@ Removing a Claude marketplace also uninstalls plugins installed from it.
 
 Security boundaries
 
-The skill uses the public polygres CLI and does not call private Polygres
+The skill uses the public polygres CLI and documented Polygres interfaces.
 
-control-plane routes directly.
+Login uses browser approval, keeping your username, password, and
 
-Login uses browser approval. Do not give an agent a username, password, or
+POLYGRES_ACCESS_TOKEN within the authentication flow.
 
-POLYGRES_ACCESS_TOKEN .
+Database passwords stay out of command arguments. For a managed database
 
-Database passwords are never retrieved or placed in command arguments. For a
+project, let psql prompt interactively. Synced-project data operations use
 
-managed database project, let psql prompt interactively. Synced projects do
-
-not provide psql or direct SQL access.
+the Runtime API and source database.
 
 Runtime API-key secrets are displayed once. Run key creation in your own
 
-terminal when agent-transcript exposure is unacceptable.
+terminal when you want the secret to stay outside the agent transcript.
 
-Store local runtime credentials in an ignored .env , not in chat, source
+Store local runtime credentials in an ignored .env so chat, source files,
 
-files, commands, or generated plans.
+commands, and generated plans stay free of credentials.
 
 Local embedding installation, model download, or service startup requires
 

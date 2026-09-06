@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/connect-your-app
 title: Dashboard connection setup | Polygres
-source_hash: a32c9cfaf75ed29b663d1d1c6d323268c4810d32f633e5e9bac278810a847ee2
+source_hash: 7fad3bc8bbd8cc915719ec96c789d61677e47ea911d333aa5abae7f83bc76496
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard connection setup | Polygres

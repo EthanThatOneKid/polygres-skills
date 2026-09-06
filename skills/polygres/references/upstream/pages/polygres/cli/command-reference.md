@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/command-reference
 title: CLI command reference | Polygres
-source_hash: a40078c3a3d89eed7b98b96d1f44aa6127d112d7da8128b4910e091680644443
+source_hash: 87c10e65398844c2928654eb0c37b3c24e55ef13a711d4994b5ee042d0f1aa6f
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI command reference | Polygres

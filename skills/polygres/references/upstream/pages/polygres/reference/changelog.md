@@ -1,11 +1,65 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 232a0d4a705325dc9eec1b8c07fffd7e26959109c30ec524bd2105017f4b5e02
+source_hash: 5253508cb3f78ebab096b73b989c87dada903e3b2de5d280940f46be0a4712bc
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
+
+2026-09-05
+
+Connect AI clients with Polygres MCP
+
+Polygres MCP now connects supported AI clients through browser sign-in and a
+
+clear consent review.
+
+Choose one fixed project for focused work or All accessible projects for
+
+organization-wide workflows.
+
+Choose View only or View and make changes , then select the project,
+
+database, import, synchronization, AI Search, graph, debugging, and
+
+documentation features you want to share.
+
+The MCP catalog contains 91 tools and automatically adapts to the connection,
+
+your Polygres role, the project type, and its current state.
+
+Important changes use a separate review and confirmation step bound to the
+
+exact action, project, and parameters you approved.
+
+New MCP guides explain connection setup, the complete tool catalog,
+
+tool availability, action confirmation, request limits, error recovery, and
+
+common project, retrieval, and agent-memory workflows.
+
+Agent Skills 0.6.0
+
+The Codex plugin now includes the production Polygres MCP connection and all
+
+five Polygres skills.
+
+Each skill includes the complete MCP contract and chooses MCP first for
+
+compatible interactive work, with the CLI, Python SDK, Dashboard, and source
+
+PostgreSQL available for their strongest workflows.
+
+New skill playbooks cover project setup, synchronized databases, dataset
+
+imports, RAG, grounded answers, agent memory, graph retrieval, retrieval
+
+quality, and operation recovery.
+
+The Agent Skills guide includes installation choices,
+
+connection boundaries, security guidance, and ready-to-use MCP prompts.
 
 2026-08-31
 

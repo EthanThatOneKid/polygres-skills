@@ -1,11 +1,19 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 5253508cb3f78ebab096b73b989c87dada903e3b2de5d280940f46be0a4712bc
+source_hash: 910376606ddb12cea9a58643f2ae2106bd6de0b7fbd55ceaed57bf1e160ca06b
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
+
+2026-09-06
+
+MCP guide screenshots
+
+Restored three screenshots in the MCP connection guide , covering
+
+organization setup, consent review, and connection completion.
 
 2026-09-05
 

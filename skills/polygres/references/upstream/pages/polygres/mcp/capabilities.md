@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/mcp/capabilities
 title: MCP tools and capabilities | Polygres
-source_hash: 42be0b8422541c8f8551750b5b4d450b9f55cc01093d0c7a9d59184ca76fc7da
+source_hash: 05ccd0b681184dba9c848b64ad5833ba6af228331619aec0517ce3ca953ed891
 discovered_from: https://docs.evokoa.com/polygres
 
 # MCP tools and capabilities | Polygres

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/security-basics
 title: Security basics | Polygres
-source_hash: d32de65e2ceafe25dfae851a26aa325810f6d6c445bcb11700b1c6aec3a835fc
+source_hash: f07252872f5b63a8a1e1ff961df154693f32e8af0a7e243204745bde73b89488
 discovered_from: https://docs.evokoa.com/polygres
 
 # Security basics | Polygres
@@ -93,9 +93,11 @@ polygres projects create sync "Support Search" \
 
 connection value in the protected environment.
 
-Use a dedicated source role with access to the selected public tables and the
+Use a dedicated source role with access to the application schemas and tables
 
-logical-replication capabilities described in the
+you want to synchronize, whether they are in public or a custom schema such
+
+as app . Grant the logical-replication capabilities described in the
 
 PostgreSQL sync setup guides .
 

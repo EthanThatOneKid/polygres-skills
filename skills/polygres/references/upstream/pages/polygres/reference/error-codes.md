@@ -1,13 +1,15 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: 552552c2044be7112e082316af7dd44c3117fc4b8613712831c4aaff3f04b0a3
+source_hash: 494abfbec5396d573beea27aabb1992741458a1bead9f5a25d426f185bd44413
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
 
 Error codes
 
-This page lists all 688 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
+This page lists all 697 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
+
+MCP tool errors also include recovery instructions and optional safe context. See MCP errors and recovery for tool-specific handling.
 
 Error response contract
 
@@ -32,6 +34,8 @@ Every API error uses this envelope:
 }
 
 variant is omitted when the base code supplies the message. A variant selects a more specific catalog message and can also select a different HTTP status. Branch on code and, only when needed, variant . Do not parse message .
+
+Some variants have a contextual message template. MCP fills its named parameters from approved error details. The ordinary message is used when those details are unavailable.
 
 A failed asynchronous operation can include error_code , optional error_variant , and error_message . Use the code and variant as the stable machine-readable identity, and treat the message as explanatory text.
 
@@ -909,6 +913,8 @@ DATA_PLANE_CONNECTION_UNRESOLVED/basic_upgrade_target_not_registered 503 API res
 
 DATA_PLANE_CONNECTION_UNRESOLVED/project_data_plane_credentials_not_configured 503 API response after_delay Project data-plane credentials are not configured.
 
+DATA_PLANE_CONNECTION_UNRESOLVED/shared_project_role_missing 503 API response after_delay This project is missing a required database access role. Contact support and include the project ID and request ID shown. Changing your tool arguments will not resolve the missing role.
+
 DATA_PLANE_DRIVER_UNAVAILABLE 503 API response + Async operation after_delay SQL script execution driver is not available.
 
 DATA_PLANE_NOT_CONFIGURED 503 API response + Async operation after_delay Project query execution is not configured for this runtime. Ask the project operator to configure the data plane.
@@ -1252,6 +1258,184 @@ DATABASE_MAINTENANCE_TARGET_INVALID/database_maintenance_target_missing_platform
 DATABASE_MAINTENANCE_TARGET_INVALID/shared_database_maintenance_target_missing_its 503 API response + Async operation after_delay A shared database maintenance target is missing its pool.
 
 DATABASE_MAINTENANCE_TARGET_NOT_READY 503 API response + Async operation after_delay A database maintenance target dependency is unavailable.
+
+MCP
+
+Error identity HTTP Used by Retry Exact message
+
+DEPENDENCY_UNAVAILABLE 503 API response dependency_retry An upstream service is temporarily unavailable. Try again shortly.
+
+INVALID_UPSTREAM_RESPONSE 502 API response never Polygres could not read the service’s response. If this request changed data, check the affected record or operation status before submitting it again. If you cannot confirm the result, contact support and include the request ID shown.
+
+MCP_CONSENT_ACCOUNT_CHANGED 403 API response user_retry The signed-in account changed. Reload this request to review it before authorizing.
+
+MCP_CONSENT_ACCOUNT_MISMATCH 403 API response after_user_action This account cannot authorize the requested connection. Use another account to continue.
+
+MCP_CONSENT_UNAVAILABLE 400 API response after_user_action This connection request is unavailable or has expired. Return to your client app and start connecting again.
+
+MCP_CONSENT_UNAVAILABLE/not_found 404 API response after_user_action This connection request is unavailable or has expired. Return to your client app and start connecting again.
+
+MCP_INTERNAL_ERROR 500 API response never The MCP request could not be completed. Contact support with the request ID.
+
+MCP_REQUEST_DENIED 403 API response never This connection is not authorized to perform this action. Check its project, enabled features, and access level in the Polygres dashboard. If you need additional access, contact your organization administrator.
+
+MCP_REQUEST_DENIED/oauth_authentication_is_required 403 API response never Reconnect your Polygres MCP connection and complete browser sign-in, then try again.
+
+MCP_REQUEST_DENIED/connection_url_does_not_match_the_approved_installation 403 API response never This connection URL differs from the one you authorized. Restore the original URL, or create and authorize a new connection with the project and access settings you need.
+
+MCP_REQUEST_DENIED/project_id_is_required_in_multi_project_mode 403 API response never project_id is required in multi-project mode
+
+MCP_REQUEST_DENIED/project_is_not_in_the_local_development_allowlist 403 API response never The requested project is not enabled for this local MCP service. Choose an enabled project, or ask the service operator to add this project to the local project allowlist.
+
+MCP_REQUEST_DENIED/invalid_mcp_connection_url 403 API response never This MCP connection URL is invalid. Copy the complete connection URL from the Polygres dashboard and reconnect your MCP client.
+
+MCP_REQUEST_DENIED/insecure_local_mode_does_not_accept_credentials 403 API response never This local MCP service runs without authentication, but your connection supplied credentials. Remove credentials from this local connection. If you need an authenticated connection, ask the service operator to enable OAuth.
+
+MCP_REQUEST_DENIED/fixed_project_is_not_in_the_local_development_allowlist 403 API response never This connection targets a project that is not enabled for the local MCP service. Use a connection for an enabled project, or ask the service operator to enable this project.
+
+MCP_REQUEST_DENIED/oauth_token_is_missing_installation_bindings 403 API response never Your sign-in token does not contain valid connection information. Reconnect and complete browser authorization again. If the problem continues, contact support and include the request ID shown.
+
+MCP_REQUEST_DENIED/project_id_is_not_accepted_in_fixed_project_mode 403 API response never This connection can access only the project identified by fixed_project_id in the error details. Remove the project_id argument or use that project ID. To access another project, use a connection authorized for it.
+
+With context: This connection can access only project {fixed_project_id}. Remove the project_id argument or use that project ID. To access another project, use a connection authorized for it.
+
+MCP_REQUEST_DENIED/tool_does_not_use_a_project_scoped_central_token 403 API response never This tool’s access configuration is incomplete. Contact support and include the tool name and request ID shown.
+
+MCP_REQUEST_DENIED/this_tool_requires_oauth_or_an_explicit_local_development_access 403 API response never Reconnect your Polygres MCP connection and complete browser sign-in, then try this tool again.
+
+MCP_REQUEST_DENIED/this_operation_requires_oauth_or_an_explicit_local_development_a 403 API response never Reconnect your Polygres MCP connection and complete browser sign-in, then try this operation again.
+
+MCP_REQUEST_DENIED/local_tool_access_token_required 403 API response never This tool needs a Polygres access token. Ask the local service operator to configure local authentication, then try again.
+
+MCP_REQUEST_DENIED/local_operation_access_token_required 403 API response never This operation needs a Polygres access token. Ask the local service operator to configure local authentication, then try again.
+
+MCP_VALIDATION_ERROR 422 API response after_user_action The tool arguments are invalid. Compare the supplied arguments with the tool input schema and correct the field identified in the error details. If no field is identified, check for missing required arguments, unexpected arguments, and incorrect value types.
+
+MCP_VALIDATION_ERROR/query_must_contain_between_2_and_200_characters 422 API response after_user_action query must contain between 2 and 200 characters
+
+MCP_VALIDATION_ERROR/limit_must_be_between_1_and_10 422 API response after_user_action limit must be between 1 and 10
+
+MCP_VALIDATION_ERROR/max_characters_must_be_between_1000_and_20000 422 API response after_user_action max_characters must be between 1000 and 20000
+
+MCP_VALIDATION_ERROR/unknown_public_document_id 422 API response after_user_action No document was found for the supplied document_id. Call search_docs, then pass a returned document_id to get_doc.
+
+MCP_VALIDATION_ERROR/selected_operations_only_support_observation 422 API response after_user_action This tool cannot perform the action on the operation type identified in the error details. Use get_operation or wait_for_operation to check its status.
+
+With context: This tool cannot perform {action} on a {operation_kind} operation. Use get_operation or wait_for_operation to check its status.
+
+MCP_VALIDATION_ERROR/source_credentials_must_be_entered_in_the_polygres_dashboard 422 API response after_user_action source credentials must be entered in the Polygres dashboard
+
+MCP_VALIDATION_ERROR/timeout_seconds_must_be_between_1_and_30 422 API response after_user_action timeout_seconds must be between 1 and 30
+
+MCP_VALIDATION_ERROR/poll_interval_seconds_must_be_between_0_5_and_5 422 API response after_user_action poll_interval_seconds must be between 0.5 and 5
+
+MCP_VALIDATION_ERROR/import_operations_do_not_support_retry 422 API response after_user_action An existing import cannot be retried. Inspect the failed import and correct the reported problem. Before starting a new import from the dashboard’s Import page, check whether the failed import already added any data.
+
+MCP_VALIDATION_ERROR/payload_exceeds_the_1_mib_mcp_limit 422 API response after_user_action This request exceeds the 1 MiB limit. Remove optional input data that is not needed for the operation. If the complete request is required, contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_exceeds_the_maximum_nesting_depth_of_12 422 API response after_user_action The value identified in the error details is nested more than 12 levels deep. Simplify its nesting while preserving the structure required by the tool. If that structure requires deeper nesting, contact support and include the request ID shown.
+
+With context: The value at {field} is nested more than 12 levels deep. Simplify its nesting while preserving the structure required by the tool. If that structure requires deeper nesting, contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/provide_exactly_the_payload_matching_mode 422 API response after_user_action The selected mode requires the payload named in required_payload in the error details. Provide that payload and remove any other mode payloads.
+
+With context: Mode {mode} requires the {required_payload} payload. Provide that payload and remove any other mode payloads.
+
+MCP_VALIDATION_ERROR/idempotency_key_is_required_with_context_reconciliation 422 API response after_user_action idempotency_key is required with Context reconciliation
+
+MCP_VALIDATION_ERROR/preflight_attempt_id_expected_selection_generation_and_confirmat 422 API response after_user_action preflight_attempt_id, expected_selection_generation, and confirmations must be supplied together
+
+MCP_VALIDATION_ERROR/payload_object_exceeds_512_fields 422 API response after_user_action The object identified in the error details contains more than 512 fields. Remove optional fields that are not needed for the operation. If all fields are required, contact support and include the request ID shown.
+
+With context: The object at {field} contains more than 512 fields. Remove optional fields that are not needed for the operation. If all fields are required, contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_array_exceeds_10_000_items 422 API response after_user_action The array identified in the error details contains more than 10,000 items. Select fewer items only if the tool supports acting on that subset. If the complete array is required, contact support and include the request ID shown.
+
+With context: The array at {field} contains more than 10,000 items. Select fewer items only if the tool supports acting on that subset. If the complete array is required, contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_string_exceeds_100_000_characters 422 API response after_user_action The text identified in the error details exceeds 100,000 characters. Shorten it only if the shorter value meets your needs. If the full text is required, contact support and include the request ID shown.
+
+With context: The text at {field} exceeds 100,000 characters. Shorten it only if the shorter value meets your needs. If the full text is required, contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/invalid_connection_parameters 400 API response after_user_action This connection URL contains invalid parameters. Copy the complete connection URL for your intended project and access level from the Polygres dashboard, then reconnect.
+
+MCP_VALIDATION_ERROR/tool_not_available 404 API response after_user_action This tool is not available for the current MCP connection. List the available tools before retrying.
+
+MCP_VALIDATION_ERROR/argument_required 422 API response after_user_action A required argument is missing. Supply the field identified in the error details, using the format shown in the tool input schema.
+
+With context: The {field} argument is required. Supply it using the format shown in the tool input schema.
+
+MCP_VALIDATION_ERROR/argument_unexpected 422 API response after_user_action An unexpected argument was supplied. Remove arguments that are not listed in the tool input schema, then try again.
+
+MCP_VALIDATION_ERROR/argument_type 422 API response after_user_action An argument has the wrong value type. Set the field identified in the error details to the expected_type shown there, then try again.
+
+With context: The {field} argument has the wrong type. Use a value of type {expected_type}, then try again.
+
+MCP_VALIDATION_ERROR/argument_limit 422 API response after_user_action An argument is outside its allowed range or size. Adjust the field identified in the error details to satisfy the constraint and limit shown there.
+
+MCP_VALIDATION_ERROR/argument_format 422 API response after_user_action An argument has an invalid format or choice. Use the format or allowed values specified for this field in the tool input schema.
+
+With context: The {field} argument has an invalid format or choice. Use the format or allowed values shown for that field in the tool input schema.
+
+MCP_VALIDATION_ERROR/output_invalid 422 API response after_user_action This tool returned a response that does not match its expected format. Contact support and include the request ID shown. If this request changed data, check its result before submitting it again.
+
+MCP_VALIDATION_ERROR/payload_exceeds_the_1_mib_mcp_limit_read 422 API response after_user_action This tool returned data exceeding the 1 MiB size limit. Contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_exceeds_the_1_mib_mcp_limit_write 422 API response after_user_action The change may have completed, but its response exceeds the 1 MiB size limit. Check the affected record or operation status before submitting the change again. If you cannot confirm the result, contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_exceeds_the_maximum_nesting_depth_of_12_read 422 API response after_user_action This tool returned data exceeding the 12-level nesting limit. Contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_exceeds_the_maximum_nesting_depth_of_12_write 422 API response after_user_action The change may have completed, but its response exceeds the 12-level nesting limit. Check the affected record or operation status before submitting the change again. If you cannot confirm the result, contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_object_exceeds_512_fields_read 422 API response after_user_action This tool returned data exceeding the 512-field object limit. Contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_object_exceeds_512_fields_write 422 API response after_user_action The change may have completed, but its response exceeds the 512-field object limit. Check the affected record or operation status before submitting the change again. If you cannot confirm the result, contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_array_exceeds_10_000_items_read 422 API response after_user_action This tool returned data exceeding the 10,000-item array limit. Contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_array_exceeds_10_000_items_write 422 API response after_user_action The change may have completed, but its response exceeds the 10,000-item array limit. Check the affected record or operation status before submitting the change again. If you cannot confirm the result, contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_string_exceeds_100_000_characters_read 422 API response after_user_action This tool returned data exceeding the 100,000-character text limit. Contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_string_exceeds_100_000_characters_write 422 API response after_user_action The change may have completed, but its response exceeds the 100,000-character text limit. Check the affected record or operation status before submitting the change again. If you cannot confirm the result, contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_exceeds_the_1_mib_mcp_limit_page 422 API response after_user_action The results exceed the 1 MiB size limit. Reduce the result limit identified in the error details and try the read again. If even one result exceeds the limit, contact support and include the request ID shown.
+
+With context: The results exceed the 1 MiB size limit. Reduce {field} and try the read again. If even one result exceeds the limit, contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/payload_array_exceeds_10_000_items_page 422 API response after_user_action The results exceed the 10,000-item array limit. Reduce the result limit identified in the error details and try the read again. If even one result exceeds the limit, contact support and include the request ID shown.
+
+With context: The results exceed the 10,000-item array limit. Reduce {field} and try the read again. If even one result exceeds the limit, contact support and include the request ID shown.
+
+MCP_VALIDATION_ERROR/argument_at_least 422 API response after_user_action An argument is outside its allowed range or size. Adjust the field identified in the error details to satisfy the constraint and limit shown there.
+
+With context: The {field} argument must be at least {limit}. Adjust it and try again.
+
+MCP_VALIDATION_ERROR/argument_greater_than 422 API response after_user_action An argument is outside its allowed range or size. Adjust the field identified in the error details to satisfy the constraint and limit shown there.
+
+With context: The {field} argument must be greater than {limit}. Adjust it and try again.
+
+MCP_VALIDATION_ERROR/argument_at_most 422 API response after_user_action An argument is outside its allowed range or size. Adjust the field identified in the error details to satisfy the constraint and limit shown there.
+
+With context: The {field} argument must be at most {limit}. Adjust it and try again.
+
+MCP_VALIDATION_ERROR/argument_less_than 422 API response after_user_action An argument is outside its allowed range or size. Adjust the field identified in the error details to satisfy the constraint and limit shown there.
+
+With context: The {field} argument must be less than {limit}. Adjust it and try again.
+
+MCP_VALIDATION_ERROR/argument_minimum_length 422 API response after_user_action An argument is outside its allowed range or size. Adjust the field identified in the error details to satisfy the constraint and limit shown there.
+
+With context: The {field} argument must have a length of at least {limit}. Adjust it and try again.
+
+MCP_VALIDATION_ERROR/argument_maximum_length 422 API response after_user_action An argument is outside its allowed range or size. Adjust the field identified in the error details to satisfy the constraint and limit shown there.
+
+With context: The {field} argument must have a length of at most {limit}. Adjust it and try again.
+
+MCP_VALIDATION_ERROR/argument_multiple_of 422 API response after_user_action An argument is outside its allowed range or size. Adjust the field identified in the error details to satisfy the constraint and limit shown there.
+
+With context: The {field} argument must be a multiple of {limit}. Adjust it and try again.
+
+UPSTREAM_ERROR 502 API response never The upstream request failed. Contact support with the request ID.
 
 Metrics
 

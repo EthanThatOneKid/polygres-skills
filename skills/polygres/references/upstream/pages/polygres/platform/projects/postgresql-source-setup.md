@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects/postgresql-source-setup
 title: PostgreSQL Sync Setup Guides | Polygres
-source_hash: d2a2413c71d8a1ed108a5c20161e35ab8d727a8cadc2a535e237a68284bcd422
+source_hash: 8b3029bf2da63a6df5297176aaffbb97efebd88a4ea9eb3dbbdbca102f903338
 discovered_from: https://docs.evokoa.com/polygres
 
 # PostgreSQL Sync Setup Guides | Polygres
@@ -59,15 +59,45 @@ Provider dashboards may also show pooled URLs, API endpoints, and command-line
 
 examples. Choose the direct PostgreSQL URL for synchronization.
 
+Prepare your application tables
+
+Choose tables from public or custom application schemas such as app ,
+
+sales , or support . Give the sync role access to each selected schema and
+
+its tables. Polygres preserves their names, so sales.orders remains
+
+sales.orders in your synchronized project.
+
+Each table needs a stable key for source change tracking. A primary key is the
+
+usual choice. For a table without a primary key, have the source database owner
+
+configure an eligible unique, non-null index as its replica identity, then run
+
+the source checks again.
+
+During setup, you also choose the primary key for the copied table in Polygres.
+
+Your source table keeps its existing keys and replication settings. See
+
+Choose tables for schema
+
+eligibility and key selection, and
+
+Source-generated IDs
+
+for how Polygres preserves serial and identity values.
+
 Standard PostgreSQL
 
 Configure wal_level = logical on the source and restart PostgreSQL if the setting change requires it.
 
 Ensure max_wal_senders and max_replication_slots each have at least one free entry for Polygres.
 
-Use a role that can connect to the database, inspect the catalog, read the selected public tables, and support logical replication.
+Use a role that can connect to the database, inspect the catalog, access the chosen application schemas, read the selected tables, and support logical replication.
 
-Give each selected table a primary key or another eligible unique, non-null replica-identity index.
+Give each selected table a primary key or configure an eligible unique, non-null index as its replica identity.
 
 Permit inbound TCP connections from the Polygres regional egress addresses shown in the wizard if a firewall or database allowlist is active.
 

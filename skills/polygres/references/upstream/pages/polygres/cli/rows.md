@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/rows
 title: Write rows | Polygres
-source_hash: ca424b667b7e7ee51de5ff96bc1a35788c81dd35ebe216cb6835ec777a089cd0
+source_hash: 0f5c9f5a22b9cddab5f369bc83c393e404d137d9e43f26a01778948b9e63a911
 discovered_from: https://docs.evokoa.com/polygres
 
 # Write rows | Polygres

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/projects
 title: CLI projects | Polygres
-source_hash: 0e84a51bc0d21c23f105239302243adae5d08fb250dd9a37072c65ac0141b71f
+source_hash: cc450404500ae6d7ca9314434a3e6ad966e1fda7d503a1e43b0aa6df54616341
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI projects | Polygres
@@ -57,7 +57,7 @@ of truth.
 
 The interactive workflow securely prompts for the PostgreSQL connection URL,
 
-checks the source, shows eligible tables, and lets you choose what to
+checks the source, lists eligible public tables, and lets you choose what to
 
 synchronize:
 
@@ -109,7 +109,7 @@ Select source tables
 
 Choose one table-selection method.
 
-Select specific tables:
+Select specific tables from public or custom application schemas:
 
 polygres projects create sync "Support Search" \
 
@@ -117,7 +117,7 @@ polygres projects create sync "Support Search" \
 
 --table public.customers \
 
---table public.orders \
+--table app.orders \
 
 --yes
 
@@ -131,7 +131,17 @@ polygres projects create sync "Support Search" \
 
 --yes
 
-Use a reviewed JSON selection:
+Use --table schema.table or a selection file to select tables from custom
+
+schemas. Polygres keeps each table’s source schema and name. See
+
+Choose tables for supported
+
+schemas and source requirements.
+
+Use a selection file
+
+Save your table choices in sync-tables.json , then pass the file with --file :
 
 polygres projects create sync "Support Search" \
 
@@ -183,9 +193,57 @@ It can also use a top-level tables property:
 
 }
 
-Each entry supports schema_name , table_name , sync_key_index_name , and
+Choose a primary key in a selection file
 
-included_columns .
+Use destination_key_index_name to choose the primary key for a copied table.
+
+Set it to an eligible index name returned by the source checks. The index’s
+
+columns become the primary key in Polygres, while your source table keeps its
+
+existing keys and replication settings.
+
+For example, if the source checks list orders_pkey as an eligible key for
+
+app.orders , save this selection in sync-tables.json :
+
+{
+
+"tables" : [
+
+{
+
+"schema_name" : "app" ,
+
+"table_name" : "orders" ,
+
+"destination_key_index_name" : "orders_pkey"
+
+}
+
+]
+
+}
+
+Run the command above with --file sync-tables.json . When a table offers
+
+several eligible keys, the CLI asks you to make this choice in a selection
+
+file. With one eligible key, the choice is automatic.
+
+Each table entry supports these fields:
+
+Field What to provide
+
+schema_name The source schema, such as public or app .
+
+table_name The source table name.
+
+destination_key_index_name An eligible index whose columns will form the copied table’s primary key. Choose one explicitly when several keys are available.
+
+included_columns The columns to synchronize when the source checks offer a partial selection. Include every column used by the source’s replication key and your chosen Polygres primary key.
+
+sync_key_index_name Optional: the source’s existing replication-key index, exactly as returned by the source checks. This field refers to the source key; use destination_key_index_name for your Polygres primary-key choice.
 
 Control creation behavior
 

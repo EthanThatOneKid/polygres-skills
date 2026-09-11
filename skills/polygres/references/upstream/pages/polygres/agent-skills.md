@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/agent-skills
 title: Polygres Agent Skills | Polygres
-source_hash: 41ead59c7537c58f7849bb4807d3bc682a43c539f5e9f20754f0712aacde4bf7
+source_hash: 1b205c9bef183f11c5b7a16d9adfedcfff36b364d0ccd1e2547d4f2a39cb2fe3
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres Agent Skills | Polygres
@@ -285,7 +285,11 @@ For CLI automation, the skill keeps the connection value in an environment
 
 variable and passes its name through --connection-env . It can select explicit
 
-public tables, use a reviewed selection file, or select all eligible tables.
+tables such as public.customers and app.orders , use a reviewed selection
+
+file, or select all eligible public tables with --all-eligible . See
+
+CLI table selection for examples.
 
 After creation, the dashboard provides synchronized-table configuration and
 

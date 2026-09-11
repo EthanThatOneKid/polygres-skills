@@ -1,19 +1,33 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 910376606ddb12cea9a58643f2ae2106bd6de0b7fbd55ceaed57bf1e160ca06b
+source_hash: 0f47cdd9a703e763f0e16efe56687ad5e77f85a721d36731ece793eccf086b9c
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
 
-2026-09-06
+2026-09-11
 
-MCP guide screenshots
+Smoother MCP connections
 
-Restored three screenshots in the MCP connection guide , covering
+Improved sign-in and reconnection help you continue working across supported
 
-organization setup, consent review, and connection completion.
+AI clients. Reconnecting with the same account and approved access reuses
+
+your existing connection.
+
+Switch accounts during connection approval and continue with the account
+
+that has access to your project. The approval page also confirms when a
+
+connection is already authorized.
+
+MCP error messages provide clearer steps for adjusting requests and
+
+continuing your workflow. See MCP errors and recovery
+
+for guidance on tool arguments, request limits, and connection setup.
 
 2026-09-05
 

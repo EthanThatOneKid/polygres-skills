@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/common-use-cases
 title: Common use cases | Polygres
-source_hash: 378e8fc9775870ad6603356baad24c589394de7e511e3d77ceffd7c63ec844d4
+source_hash: a6fd00b9c9e9b7d321dffdc507394538310a50dae64c61c6dabd303f65559ecd
 discovered_from: https://docs.evokoa.com/polygres
 
 # Common use cases | Polygres

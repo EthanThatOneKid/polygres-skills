@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects/sync-postgresql
 title: Create a Synced PostgreSQL Project | Polygres
-source_hash: a34ef676f92bd53d2aab6ca0927ae4450f4e0b940b8ed6d433e05d16cdf721d2
+source_hash: eee5ad3cc7cb15b883e54102cae20f496a5e00f1ed8f91e6fb11793cf2e201c7
 discovered_from: https://docs.evokoa.com/polygres
 
 # Create a Synced PostgreSQL Project | Polygres
@@ -33,7 +33,7 @@ Understand the operating model
 
 A synced project keeps an existing PostgreSQL database as the source of truth
 
-and continuously copies selected public schema tables into Polygres.
+and continuously copies selected application tables into Polygres.
 
 Make row changes, schema changes, and embedding updates in the source database.
 
@@ -59,9 +59,17 @@ supports encrypted connections with a trusted hostname certificate;
 
 has logical replication enabled with available replication capacity;
 
-gives the selected role access to connect, inspect the catalog, and read the selected public tables; and
+gives the selected role access to connect, inspect the catalog, and read the chosen schemas and tables; and
 
-gives every selected table a stable primary key or eligible unique key.
+gives every selected table a stable key for source change tracking.
+
+A primary key is the usual choice for source change tracking. For a table
+
+without a primary key, have the source database owner configure an eligible
+
+unique, non-null index as the table’s replica identity, then refresh the source
+
+checks. This lets PostgreSQL identify the rows affected by updates and deletes.
 
 When the source uses a network allowlist, add the regional egress addresses
 
@@ -87,7 +95,7 @@ Add the displayed regional egress addresses to the source allowlist when require
 
 Enter the complete PostgreSQL connection URL or choose Use structured connection fields .
 
-Continue to the source checks and select eligible tables from the public schema.
+Continue to the source checks and select eligible tables from public or your custom application schemas.
 
 Review estimated Context usage and set Storage, Context, and Graph. Keep the initial values for Free Nano, or increase any value for Paid Basic.
 
@@ -111,13 +119,23 @@ polygres projects create sync "Support Search" \
 
 --yes
 
-Use repeatable --table public.TABLE_NAME options when you want an
+--all-eligible selects eligible tables from public . Use repeatable
 
-explicit selection. The CLI creates a Free Nano synchronized project and
+options such as --table public.customers and --table app.orders for an
 
-uses the organization’s one Free project slot. Use the dashboard for a
+explicit selection across schemas. When a table offers several eligible
 
-Paid synchronized project.
+keys for the Polygres copy, use a
+
+selection file
+
+to choose one.
+
+The CLI creates a Free Nano synchronized project and uses the
+
+organization’s one Free project slot. Use the dashboard for a Paid
+
+synchronized project.
 
 Store the source connection URL in a protected environment or secret manager.
 
@@ -147,13 +165,23 @@ Catalog access Polygres can inspect tables, columns, keys, constraints, and esti
 
 Choose tables
 
-Polygres shows the synchronization eligibility of each discovered public
+Select the application tables you want to bring into Polygres. You can choose
 
-schema table.
+eligible tables from public and custom schemas such as app , sales , or
+
+support .
+
+Tables keep their source schema and table names. For example, sales.orders
+
+remains sales.orders in Polygres. PostgreSQL system schemas, provider-managed
+
+schemas such as auth and storage , and schemas reserved by Polygres are
+
+excluded from selection.
 
 A table is ready for selection when it has:
 
-a stable primary key or eligible unique key;
+a stable key for source change tracking;
 
 supported columns for the selected synchronization scope;
 
@@ -163,13 +191,13 @@ source-role access that provides a consistent view of its rows.
 
 For a table with eligible and ineligible columns, Polygres can offer an
 
-included-column selection when the complete synchronization key remains
+included-column selection. Include the columns used by both the source’s
 
-available.
+replication key and your chosen Polygres primary key.
 
 Review:
 
-the selected synchronization key;
+the source change key and the primary key for the Polygres copy;
 
 included columns;
 
@@ -184,6 +212,42 @@ the storage available for the organization.
 Select both sides of a foreign-key relationship when you want pgGraph to use
 
 that relationship.
+
+Choose a primary key in Polygres
+
+Polygres uses a primary key to identify each row in the synchronized table.
+
+When a table has one eligible key, Polygres selects it automatically. When
+
+several keys are available, choose the one you want to use in Polygres.
+
+Your source table keeps its existing keys and replication settings. For
+
+example, your application can continue using its existing primary key while
+
+the copied table uses another eligible unique key.
+
+Polygres remembers your choice when the table is resynced. You can review the
+
+selected key in Configure sync .
+
+Source-generated IDs
+
+Polygres preserves the values in your serial and identity columns, so
+
+synchronized rows keep the same IDs as their source rows.
+
+Your source database continues generating IDs and applying column defaults
+
+when your application writes data. Polygres copies the resulting values into
+
+the synchronized table. Sequence counters and default expressions stay with
+
+the source database.
+
+Continue creating and updating records through your source application as
+
+usual.
 
 Follow synchronization progress
 
@@ -265,7 +329,7 @@ Open the project and select Configure sync .
 
 Refresh the source inspection.
 
-Review table eligibility, synchronization keys, included-column options, and storage estimates.
+Review table eligibility, the primary keys for the Polygres copies, included-column options, and storage estimates.
 
 Select the tables to keep synchronized.
 
@@ -311,9 +375,11 @@ PostgreSQL version Use a PostgreSQL 14 through 18 source.
 
 Logical replication Enable logical replication and make replication capacity available.
 
-Catalog access Grant the selected role access to inspect and read the chosen public tables.
+Catalog access Grant the selected role access to inspect and read the chosen application schemas and tables.
 
-Table eligibility Add or select a stable key and use the eligible columns shown by Polygres.
+Source change key Give the source table a primary key or configure an eligible unique, non-null index as its replica identity, then refresh the source checks.
+
+Table selection Choose a primary key for the Polygres copy and include the columns used by both that key and the source’s replication key.
 
 Storage estimate Select a smaller table set or choose a tier with suitable capacity.
 

@@ -1,11 +1,87 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 0f47cdd9a703e763f0e16efe56687ad5e77f85a721d36731ece793eccf086b9c
+source_hash: 96f9904fa1ead79521bfc4bb371102a49fd6aeae74b0489a811913a555114d10
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
+
+2026-09-12
+
+Automatic embedding generation
+
+Automatically generate and update embeddings from your text for semantic search.
+
+Open Embeddings in your project to choose a text column and model. Reuse
+
+compatible existing embeddings or split longer documents into searchable
+
+passages with chunking.
+
+Preview token, storage, and credit usage before starting. Choose automatic
+
+processing for ongoing updates or manual processing to run changes when you
+
+are ready. Track progress and pause or resume generation from the dashboard.
+
+Select Configure search to create a Context collection. Follow the
+
+automatic embeddings guide to get started.
+
+Use the new MCP embedding tools to
+
+preview and manage generation, check usage, and search through your AI client.
+
+MCP text queries
+
+Search with a question through the existing Context tools. Polygres uses your
+
+configured embedding model, and explicit vector inputs keep working.
+
+Use text with grouping, graph search, hybrid search, and semantic query plans.
+
+Choose whether to use organization credits and reuse a query key when retrying.
+
+See MCP text queries for examples.
+
+Polygres Python SDK 0.5.0
+
+Pass a question or phrase to existing search methods. Polygres generates the
+
+query embedding with your configured model. Existing vector inputs keep working.
+
+Combine semantic and text search with context.query() , or include text in
+
+a query plan.
+
+Choose whether queries can use organization credits, and reuse generated
+
+embeddings when retrying the same query with an idempotency key.
+
+See Python examples to get started.
+
+Polygres CLI 0.5.0
+
+Search with a question or phrase through existing Context commands. Polygres
+
+uses your configured embedding model; existing vector inputs keep working.
+
+Read questions from a file or standard input, choose a vector, and use the
+
+filters, grouping, and graph options available on each command.
+
+Set a timeout, reuse a retry key, and choose whether to use organization
+
+credits. See Context retrieval for examples.
+
+Generate embeddings from your project text and manage generation with the new
+
+embedding commands .
+
+Upgrade to 0.5.0 to get
+
+started. Your existing commands and saved sign-in keep working.
 
 2026-09-11
 

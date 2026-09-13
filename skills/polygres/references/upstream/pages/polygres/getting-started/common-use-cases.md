@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/common-use-cases
 title: Common use cases | Polygres
-source_hash: a6fd00b9c9e9b7d321dffdc507394538310a50dae64c61c6dabd303f65559ecd
+source_hash: 5f8349995088224c65adbef47663312ecc4a5d02081409516e11c8f82456b7f4
 discovered_from: https://docs.evokoa.com/polygres
 
 # Common use cases | Polygres
@@ -133,21 +133,19 @@ graph-composed, rank-fusion, or Joint retrieval combines semantic ranking with
 
 those relationships.
 
-Generate embeddings in your application pipeline and store them in the vector
+Use automatic embeddings to generate and
 
-type selected by the retrieval workflow. Authenticate and authorize the request
+refresh vectors, then query with text through the SDK .
 
-in your backend first, then derive tenant, user, or permission scope from that
+You can also use your own embedding pipeline and supply query vectors.
 
-trusted authorization context. Retrieval filters narrow the already authorized
+Check the user’s identity and permissions in your backend before searching.
 
-search; they are not an authorization boundary and should not be copied from an
+Build filters from those verified permissions to return rows they may access.
 
-untrusted client request. pgContext collections use native
+Keep these authorization checks in place when using filters. pgContext
 
-pgcontext.vector(n) columns and support dense, text-hybrid, graph-composed,
-
-rank-fusion, and Joint retrieval.
+collections combine semantic search with text, filters, and graph relationships.
 
 For agent memory, the data-pipeline skill can connect conversation capture and
 

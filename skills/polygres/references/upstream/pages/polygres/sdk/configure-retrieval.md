@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/configure-retrieval
 title: Dashboard retrieval setup | Polygres
-source_hash: a17649d3212c26a72464ef93e777baa8ee5d45fad9475325362cd9140dc5d1f7
+source_hash: f426676ad3a83b1493ab1709caf143305bea87e85fa7ef1302782ab68de3bdcf
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard retrieval setup | Polygres
@@ -351,23 +351,13 @@ Text-search readiness is independent; it does not substitute for graph or vector
 
 Configure pgContext AI Search
 
-pgContext is the supported path for new vector setup. It uses
+Use pgContext for new vector search. Create a collection through AI Context
 
-collection-specific capabilities, preflight, verification, and durable
+(Vector) in the dashboard, or use the CLI or API. Setup checks your source
 
-operations. The dashboard’s AI Context (Vector) setup manages the same collection lifecycle.
+table and can convert a compatible pgvector column to the pgContext format after
 
-An ordinary collection-creation request through the CLI or API can migrate a
-
-compatible pgvector embedding column in place after an explicit review. The
-
-CLI’s polygres context init command guides candidate selection from eligible
-
-persisted legacy registrations, but then submits the same ordinary native
-
-collection-creation request. It is not a public same-column bridge and is not
-
-the dashboard’s collection-creation workflow.
+you review the change. For an existing vector configuration, polygres context init helps you choose a source and create the collection.
 
 For an interactive setup:
 
@@ -375,25 +365,37 @@ Select the intended project with the Polygres CLI .
 
 Run polygres context capabilities and discover eligible source tables.
 
-Preflight the exact source, vector, text, result-column, and filter plan.
+Run preflight to check the source, vector, text, result columns, and filters.
 
 Review any proposed schema change and ownership details.
 
-Create the collection and wait for its durable operation. Its initial vector
+Create the collection and wait for setup to finish. Its initial vector
 
 becomes the collection default.
 
-Add any additional named vectors through the dashboard, public API, or
+Use the dashboard, API, or Python SDK to add named vectors and choose a
 
-Python SDK, wait for each operation, and set the intended default vector.
-
-The current CLI has no add-vector or set-default-vector command.
+default. Wait for each update to finish before querying.
 
 Verify the collection and each vector index, then inspect status,
 
 diagnostics, filters, and point mappings as the application evolves.
 
-Backend services that explicitly own collection provisioning can use project.context in the Python SDK . The application supplies embeddings with the selected vector’s dimensions. Authorize the request from trusted server-side identity before retrieval, then derive any collection filter used for result scoping; registered filters are not an authorization boundary.
+Use project.context in the Python SDK to manage collections
+
+and search from your backend application. With
+
+automatic embeddings configured for the selected
+
+vector, you can pass a question or phrase directly. You can also supply your own
+
+query vector with matching dimensions. See Python text queries .
+
+Check the user’s identity and permissions in your backend before searching.
+
+Then build collection filters from those permissions to narrow results to the
+
+rows they may access. Keep these authorization checks in place when using filters.
 
 Readiness checklist
 

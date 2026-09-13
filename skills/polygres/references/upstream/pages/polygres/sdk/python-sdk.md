@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/python-sdk
 title: Python SDK | Polygres
-source_hash: e15955a1e627a987191da93a34fa3bf508032531f56b00f2635c7f30e388cf7f
+source_hash: ab0b844b63be25310fe35580f080d61835b8c643262efb67d2dab555def88296
 discovered_from: https://docs.evokoa.com/polygres
 
 # Python SDK | Polygres
@@ -13,11 +13,11 @@ Installation
 
 Install the package via pip:
 
-pip install "polygres-sdk==0.4.1"
+pip install "polygres-sdk==0.5.0"
 
 To upgrade an existing environment:
 
-pip install --upgrade "polygres-sdk==0.4.1"
+pip install --upgrade "polygres-sdk==0.5.0"
 
 Quick Start
 
@@ -62,6 +62,152 @@ hybrid retrieval. For AI Context readiness, check the capability for the
 intended method, then inspect collection status and verification for the
 
 selected named vector.
+
+Query with text
+
+Search with a question or phrase by passing text . Polygres generates the
+
+query embedding with the model you selected during setup:
+
+results = project.context.search(
+
+"articles" ,
+
+text = "How does replication work?" ,
+
+vector_name = "content" ,
+
+idempotency_key = "replication-question-001" ,
+
+)
+
+for result in results.results:
+
+print (result.properties)
+
+First, set up automatic embeddings and a
+
+Context collection through the dashboard, CLI, or MCP. The collection’s selected
+
+vector must be linked to one embedding configuration, which supplies the model
+
+version and dimensions. For vectors you already have, confirm their original
+
+model during setup so Polygres can generate compatible query embeddings.
+
+vector_name selects a vector by its name in the collection, such as content .
+
+Omit it to use the collection’s default vector.
+
+To combine semantic and text search, use context.query() with a collection
+
+that has text search configured. It generates the embedding from query :
+
+results = project.context.query( "articles" , query = "replication failures" )
+
+You can also supply your own embedding , including in existing SDK 0.4.1 calls.
+
+Choose one input, text or a vector, and keep using the same filters, ranking
+
+options, result types, and pagination.
+
+Method Query input in SDK 0.5.0
+
+context.search() , candidate_search() , grouped_search() text or embedding
+
+context.graph_first() , vector_first() , rank_fusion() , joint() text or embedding ; Joint also accepts query for text search
+
+context.query() , text_hybrid() query , with an optional embedding from your application
+
+context.query_nearest() text or vector
+
+vector.search() , hybrid.graph_first() , hybrid.vector_first() , hybrid.joint() text or embedding with an existing vector configuration linked to an embedding model
+
+For candidate searches, provide candidate_point_ids to choose the records to
+
+search. For grouped searches, use group_by to choose a registered filter field.
+
+On context.joint() , text supplies the semantic question and query supplies
+
+the terms for text search. Recall checks and raw vector searches take vectors;
+
+recommendation and discovery methods use their existing inputs.
+
+Query plans
+
+Build a plan locally with context.query_nearest() , then call
+
+context.execute_query() to generate the embedding and search:
+
+plan = project.context.query_nearest(
+
+text = "How does replication work?" ,
+
+vector_name = "content" ,
+
+limit = 10 ,
+
+)
+
+results = project.context.execute_query(
+
+"articles" ,
+
+plan,
+
+use_credits = False ,
+
+idempotency_key = "replication-plan-001" ,
+
+timeout = 30.0 ,
+
+)
+
+Each nearest branch with text generates a query embedding using its selected
+
+vector’s model. Usage from these branches counts toward your retrieval allowance.
+
+Usage, retries, and timeouts
+
+Generating a query embedding uses your project’s retrieval allowance. Its cost
+
+depends on the input tokens and the configured model’s price. Set
+
+use_credits=True to allow additional usage from organization credits after an
+
+owner or administrator enables project spending. The default is False .
+
+Queries with vectors you provide use them directly and skip generation. See
+
+quota and credits
+
+for allowance amounts and renewal dates.
+
+Reuse an idempotency_key when retrying the same query or plan so Polygres can
+
+reuse its generated embeddings. Use a new key for a different query. Automatic
+
+retries and pagination keep the same key. Set timeout to choose how long the
+
+request may take, including generation. For query plans, pass these options to
+
+execute_query() .
+
+SDK 0.5.0 checks the Runtime’s query_embedding_generation capability before
+
+sending text queries. Your Runtime needs to support this capability.
+
+If a query needs attention, use the exception’s code to choose the next step:
+
+Code Next step
+
+EMBEDDING_SEARCH_NOT_READY Check that the collection is ready and its selected vector uses your configured embeddings.
+
+EMBEDDING_QUOTA_EXHAUSTED Check usage, enable additional credits with project spending permission, or retry after the allowance renews.
+
+See API error handling and the
+
+error catalog for more guidance.
 
 Running Queries
 

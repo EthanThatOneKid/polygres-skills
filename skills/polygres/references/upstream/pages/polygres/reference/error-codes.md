@@ -1,13 +1,13 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: 494abfbec5396d573beea27aabb1992741458a1bead9f5a25d426f185bd44413
+source_hash: 833acb6534abc728d13911e9df0ae27a586906ab3d71960be27d3c4fc586c07b
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
 
 Error codes
 
-This page lists all 697 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
+This page lists all 717 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
 
 MCP tool errors also include recovery instructions and optional safe context. See MCP errors and recovery for tool-specific handling.
 
@@ -506,6 +506,46 @@ CONTEXT_VECTOR_TYPE_UNSUPPORTED 409 API response + Async operation after_user_ac
 CONTEXT_VERIFICATION_FAILED 409 API response + Async operation after_user_action Context collection verification failed.
 
 CONTEXT_VERIFICATION_FAILED/legacy_vector_compatibility_recovery_verification_failed 409 API response + Async operation after_user_action Legacy vector compatibility recovery verification failed.
+
+EMBEDDING_CHUNK_BOUNDARY_INVALID 422 API response + Async operation after_user_action The text cannot be split safely with these token limits. Increase the chunk size.
+
+EMBEDDING_CONFIGURATION_CONFLICT 409 API response + Async operation after_user_action The embedding configuration changed. Refresh it and try again.
+
+EMBEDDING_CONFIGURATION_NOT_FOUND 404 API response + Async operation after_user_action The embedding configuration was not found.
+
+EMBEDDING_CREDIT_LIMIT_EXCEEDED 409 API response + Async operation after_user_action The project embedding credit limit has been reached.
+
+EMBEDDING_CREDIT_SPENDING_DISABLED 403 API response + Async operation after_user_action Organization credit spending is not enabled for this project. Ask an organization billing administrator to enable it.
+
+EMBEDDING_INPUT_TOO_LONG 422 API response + Async operation after_user_action Embedding input exceeds a model, source-record, or chunk limit. Split large records or adjust chunk size and overlap.
+
+EMBEDDING_MODEL_INVALID 422 API response + Async operation after_user_action The embedding model configuration is invalid. Check its endpoint, tokenizer and supported dimensions.
+
+EMBEDDING_MODEL_UNAVAILABLE 409 API response + Async operation after_user_action This embedding model is unavailable. Select an enabled model or contact an administrator.
+
+EMBEDDING_OPERATION_FAILED 503 API response + Async operation after_delay Embedding processing failed. Review the configuration status and retry eligible work.
+
+EMBEDDING_PROVIDER_CREDENTIALS_MISSING 503 API response + Async operation after_user_action Embedding provider credentials are missing or rejected. Contact an administrator.
+
+EMBEDDING_PROVIDER_OUTCOME_UNKNOWN 409 API response + Async operation after_user_action The provider outcome is uncertain. Reconcile its usage before retrying to prevent duplicate charges.
+
+EMBEDDING_PROVIDER_RATE_LIMITED 429 API response + Async operation after_delay The embedding provider is rate limiting requests. Processing will retry after a delay.
+
+EMBEDDING_PROVIDER_REQUEST_REJECTED 422 API response + Async operation after_user_action The provider rejected the embedding request. Check the model configuration and input limits.
+
+EMBEDDING_PROVIDER_UNAVAILABLE 503 API response + Async operation after_delay The embedding provider is unavailable. Processing will retry.
+
+EMBEDDING_QUOTA_EXHAUSTED 429 API response + Async operation after_user_action The project embedding allowance is exhausted. Enable authorized credits or wait for the next period.
+
+EMBEDDING_SEARCH_NOT_READY 409 API response + Async operation after_user_action The managed embeddings or the associated AI Context collection are not ready for search.
+
+EMBEDDING_SERVICE_UNAVAILABLE 503 API response + Async operation after_user_action The managed embedding service is not configured or unavailable. Contact an administrator.
+
+EMBEDDING_SOURCE_CHANGED 409 API response + Async operation after_user_action The watched source changed or is unavailable. Reconcile the configuration before continuing.
+
+EMBEDDING_SOURCE_INVALID 422 API response + Async operation after_user_action The embedding source requires a text column and a stable, non-null unique row key.
+
+EMBEDDING_USAGE_CONFLICT 409 API response + Async operation after_user_action Embedding usage conflicts with a recorded request. Reconcile the operation before continuing.
 
 Core platform
 

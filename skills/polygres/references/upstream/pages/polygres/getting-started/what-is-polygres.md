@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/what-is-polygres
 title: What is Polygres? | Polygres
-source_hash: 288b8574747fea71eff824226fdf769acf8731c3bb8d26a686f232ada98fb6c4
+source_hash: 7e8b45ac6efdef0c31da9c9312d39e2f98d818f2a5068a8a18ff064b7968cda4
 discovered_from: https://docs.evokoa.com/polygres
 
 # What is Polygres? | Polygres
@@ -15,7 +15,9 @@ using PostgreSQL for normal reads and writes while your team adds richer ways
 
 to find and connect records.
 
-The result is one operational data foundation for your SaaS product: PostgreSQL stays the source of truth, and retrieval is configured over the tables you already manage in Polygres.
+Add search and recommendations to your application using the tables you already
+
+manage in Polygres.
 
 One database, complementary retrieval modes
 
@@ -27,37 +29,29 @@ Mode What it helps you find
 
 Graph Records connected through relationships, such as a customer, their account, tickets, messages, and related incidents.
 
-Legacy Vector (deprecated) Compatibility retrieval for a persisted pgvector configuration.
+Legacy Vector (deprecated) Similar records using an existing pgvector configuration.
 
 Text Words and phrases through TSVector full-text search, or close text matches through Fuzzy pg_trgm search.
 
-Legacy Hybrid (deprecated) Compatibility retrieval that combines a ready graph build with an effectively Ready persisted Legacy vector registration.
+Legacy Hybrid (deprecated) Combined graph and vector results in existing integrations.
 
-pgContext AI Search The normal path for new semantic and composed retrieval, with collection-based dense, grouped, text-hybrid, graph-composed, rank-fusion, and Joint methods through the CLI, API, or Python SDK.
+pgContext AI Search Search by meaning, with text matches, filters, and graph relationships to refine results.
 
-Your data workflow creates embeddings and stores them in PostgreSQL. For new
+Polygres can generate embeddings from your text
 
-vector and hybrid development, create a pgContext collection with a native
+and keep them up to date. You can also use embeddings from your own pipeline.
 
-pgcontext.vector(n) column and use the Context API or project.context SDK
+Create a Context collection to search through the API or Python SDK. For
 
-namespace. A compatible existing public.vector(n) column can be migrated
+existing pgvector data, collection setup can convert a compatible vector column
 
-during collection creation; Polygres converts that column in place to
+to the pgContext format after you review the change.
 
-pgcontext.vector(n) . Deprecated Vector and Hybrid surfaces continue to
+Existing Vector and Hybrid integrations remain available while you adopt
 
-support existing integrations while teams adopt Context, provided the
+Context. See retrieval setup for configuration and
 
-persisted registration is effectively Ready. HNSW requires its exact physical
-
-index to be Ready. An existing index_kind: none registration can be Ready for
-
-exact-scan retrieval without HNSW. A physical pgvector index without a persisted
-
-registration is never an implicit Legacy configuration, and the retired API
-
-cannot register or re-enable it.
+readiness guidance.
 
 How Polygres fits your application stack
 
@@ -65,9 +59,9 @@ Polygres focuses on managed PostgreSQL and retrieval over operational data,
 
 with clear integration points for the rest of your application stack:
 
-Your embedding pipeline selects the model and writes vectors with the exact
+Choose an embedding model during setup, then search with text through the SDK.
 
-dimensions expected by the chosen retrieval configuration or collection.
+You can also supply vectors from your own embedding pipeline.
 
 Your application selects the language model for RAG and uses Polygres results
 

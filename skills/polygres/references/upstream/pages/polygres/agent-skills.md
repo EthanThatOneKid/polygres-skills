@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/agent-skills
 title: Polygres Agent Skills | Polygres
-source_hash: 1b205c9bef183f11c5b7a16d9adfedcfff36b364d0ccd1e2547d4f2a39cb2fe3
+source_hash: c62f2e86725f4e47d2825137cf89f81986b8da6be1e4bb5abffd1eb7bc57487a
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres Agent Skills | Polygres
@@ -13,51 +13,45 @@ MCP connection, recommend a useful setup, and build or operate it with you. The
 
 plugin includes five skills:
 
-polygres-data-pipeline uses available MCP tools to turn files, databases, APIs, conversations, or
+polygres-data-pipeline helps you bring data from files, databases, APIs, or
 
-existing Polygres data into a managed PostgreSQL sync or working custom
+conversations into Polygres and make it searchable.
 
-ingestion and retrieval pipeline;
+polygres-cli helps you sign in, create projects, import data, apply migrations,
 
-polygres-cli uses MCP for compatible interactive operations and the CLI for signing in, creating standard or synchronized
+manage keys, and set up search through MCP and the CLI.
 
-projects, selecting projects, importing standard-project data, applying
+polygres-sdk helps you answer questions from your data through MCP and add
 
-migrations, managing keys, and configuring retrieval;
+search to a Python application.
 
-polygres-sdk uses MCP for interactive grounded answers and helps you add
+polygres-retrieval-design inspects your project and compares search options
 
-pgContext, graph, vector, text, and hybrid retrieval to a Python application;
+to help you choose a setup.
 
-polygres-retrieval-design uses read-only MCP evidence to compare retrieval
+polygres-troubleshooting checks connections, projects, imports, and search
 
-options and prepare a project design;
+to help you resolve issues.
 
-polygres-troubleshooting investigates MCP connections, projects, imports,
+Install the CLI for terminal workflows or the SDK for Python applications, then
 
-retrieval, and Context operations using read-only checks.
+add Polygres Agent Skills:
 
-Install the CLI or SDK when your workflow uses it, then add the skill repository:
+pipx install "polygres-cli==0.5.0"
 
-Install the current CLI and SDK, then add Polygres Agent Skills 0.6.0 :
-
-pipx install "polygres-cli==0.4.1"
-
-python -m pip install "polygres-sdk==0.4.1"
+python -m pip install "polygres-sdk==0.5.0"
 
 npx skills add Evokoa/polygres-skills
 
-Agent Skills 0.6.0 , MCP catalog 1.0 , CLI 0.4.1 , and SDK 0.4.1 form the current coordinated
+With CLI 0.5.0 , you can generate embeddings and search with a question or
 
-release set.
+phrase. Start with the embedding setup guide ,
 
-The public skill source is
+then try the search examples .
 
-Evokoa/polygres-skills . Review the
+Find the skills and installation details in
 
-repository before installation if your organization requires third-party code
-
-approval.
+Evokoa/polygres-skills .
 
 Choose an installation method
 
@@ -295,11 +289,11 @@ After creation, the dashboard provides synchronized-table configuration and
 
 the lifecycle actions available for the project’s current state.
 
-For a synced project, the skills route application writes, schema changes, and
+For a synced project, make application data and schema changes in your source
 
-embedding generation to the source database. They use Polygres Runtime APIs for
+database. Use Polygres to generate embeddings, configure search, and query your
 
-graph, text, vector, hybrid, AI Context, catalog, and readiness workflows.
+synchronized data.
 
 Route each write to the right interface
 
@@ -333,13 +327,15 @@ for your source. You choose between the reviewed options before data is sent to
 
 an external model.
 
-Polygres stores and searches embeddings. The pipeline creates embeddings before
+You can use automatic embeddings to generate
 
-writing source records and uses the same compatible model for search queries.
+and maintain embeddings in Polygres, or generate them in your own pipeline before
 
-The agent can also start with relational or text retrieval and add semantic
+writing records. Use the same compatible model for your data and search queries.
 
-search when embeddings are ready.
+The agent can also start with relational or text search and add semantic search
+
+when embeddings are ready.
 
 Capture conversations and build agent memory
 

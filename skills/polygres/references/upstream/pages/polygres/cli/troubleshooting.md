@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/troubleshooting
 title: CLI troubleshooting | Polygres
-source_hash: 219132e693f32d028ef184def7aaf4e6325689795cd8f7564c2c90339d2c9776
+source_hash: 39353dc4a531e0790004585baebf1469ed9dc29e569e0fe4cd86605470b87f89
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI troubleshooting | Polygres
@@ -9,7 +9,7 @@ CLI troubleshooting
 
 Symptom Action
 
-polygres --version is older than 0.4.1 Upgrade with pipx install "polygres-cli==0.4.1" --force , or pip install --force-reinstall "polygres-cli==0.4.1" in your app venv. See package split migration .
+You need the embedding commands Install CLI 0.5.0 with pipx install "polygres-cli==0.5.0" --force , or pip install --upgrade "polygres-cli==0.5.0" in your app virtual environment. Check the version with polygres --version . See upgrade guidance .
 
 Exit 3 or “Run polygres login ” Run polygres login , then confirm with polygres --json whoami .
 
@@ -29,7 +29,7 @@ pgContext setup is blocked Run polygres context capabilities , then polygres con
 
 A pgContext collection needs review Use polygres --json context collections get <collection-uuid> , then run status , verify , and diagnostics with that UUID. Inspect polygres context points status <collection-uuid> and polygres context operations list --collection-id <collection-uuid> .
 
-Collection vectors or a deletion preview look incomplete Use global --json . The current human collection and deletion renderers lag the multi-vector response fields. For deletion, inspect collection.source_mode and collection.owns_source_table ; an owned new_table source is deleted with the collection.
+You want full vector or deletion details Add global --json to see all collection fields. Before deleting, review collection.source_mode and collection.owns_source_table : deleting a collection that owns its new_table source also deletes that table.
 
 A durable Context operation is still running Use polygres context operations get <operation-uuid> or polygres context operations wait <operation-uuid> and retain its request ID. A local timeout or Ctrl-C does not cancel it.
 
@@ -40,6 +40,34 @@ An import wait timed out Run polygres --json import status <job-uuid> before res
 A command returns MAINTENANCE_READ_ONLY or MAINTENANCE_FULL Stop immediate retries and read the dashboard maintenance notice. Read-only maintenance permits reads but blocks writes; full maintenance blocks normal API and database access.
 
 You need to delete a project Use the dashboard project lifecycle controls .
+
+Text queries
+
+Use these steps to check your text-query setup or retry a request:
+
+Task Action
+
+Use --text Check polygres --version and upgrade to CLI 0.5.0. Search with polygres context search COLLECTION --text "your question" .
+
+Choose the query input Choose one of --text , --text-file , --embedding-json , or --embedding-file . With --request , put the query fields in the JSON file.
+
+Check embedding setup Inspect the collection with polygres --json context collections get COLLECTION_ID . In the dashboard, confirm that its selected vector uses your configured embeddings.
+
+Choose a vector Choose a name listed on the collection, or omit --vector-name to use its default.
+
+Continue after reaching an allowance Run polygres embeddings usage to check usage and available allowance. An organization owner or administrator can enable more spending. Add --use-credits to use those credits, or retry after the allowance renews.
+
+Retry after a timeout Retry with the same --idempotency-key you supplied for the original query and, if needed, a longer --timeout . Generation may have completed while the CLI was waiting; keeping the same key lets Polygres reuse that work.
+
+Send text through api request Use CLI 0.5.0 for text input. CLI 0.4.1 accepts a query vector through embedding .
+
+Check Runtime support Use CLI 0.5.0 with a Runtime that supports query embedding generation. Queries with your own vectors also remain available.
+
+See Context retrieval for input examples and
+
+quota and credits for spending
+
+permissions and allowance renewal.
 
 Synced project setup
 

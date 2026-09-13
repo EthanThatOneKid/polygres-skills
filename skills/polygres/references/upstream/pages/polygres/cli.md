@@ -1,41 +1,41 @@
 source: https://docs.evokoa.com/polygres/cli
 title: Polygres CLI | Polygres
-source_hash: b2feba425912bb3c0336cc3325b796181b37de35b05e3eba83e30d002f8b063d
+source_hash: 4670c2b7aa233e817e7cb45f5d0288e05ee931323b22b893a9279c240a48f566
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres CLI | Polygres
 
 Polygres CLI
 
-The public CLI is shipped with PyPI package polygres-cli . Use it for project
+Use the Polygres CLI to create projects, import and update data, generate
 
-setup, migrations, imports, single-row writes, retrieval configuration, API
+embeddings, and set up search from your terminal. It also provides commands for
 
-keys, connection details, and pgContext AI Search collection workflows. Use the
+database migrations, API keys, and connection details.
 
-Python SDK for retrieval queries and backend-owned pgContext
+Install the polygres-cli package to get started, then follow the
 
-automation in application code. If you previously installed the combined
+search examples to query with text or your own
 
-polygres 0.2.x package, follow the package split
+vectors. For search and automation in your application, use the
 
-migration
+Python SDK . If you use the older
 
-before following the workflows below.
+combined polygres 0.2.x package, follow the migration steps .
 
-CLI setup requires an existing active Polygres account. Signup, organization onboarding, email verification, password management, organization switching, and project deletion remain dashboard workflows.
+Start with an active Polygres account. Use the dashboard to create your account, manage your profile, and switch organizations.
 
 First standard project from a terminal
 
 Use this workflow when Polygres should host the primary PostgreSQL database. It
 
-creates a standard project, applies a migration, configures text retrieval, and
+creates a standard project, applies a migration, configures text search, and
 
-creates a Runtime API key. Project creation waits for readiness, while project
+creates a Runtime API key. Once the project is ready, projects use selects it
 
-selection remains an explicit step.
+for the following commands.
 
-pipx install "polygres-cli==0.4.1"
+pipx install "polygres-cli==0.5.0"
 
 polygres login
 
@@ -100,6 +100,8 @@ API keys
 Imports and migrations
 
 Write rows
+
+Generate embeddings
 
 AI Search with pgContext
 

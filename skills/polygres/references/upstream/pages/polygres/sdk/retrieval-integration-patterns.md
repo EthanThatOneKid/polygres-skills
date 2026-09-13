@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/retrieval-integration-patterns
 title: Retrieval integration patterns | Polygres
-source_hash: 884026e5e156a97d79f8a647613d1d87cb0d0b339c79c9d24764deab73fb4e48
+source_hash: d1142f027ddee6aff46d454248c0942cbc38cb9aab32a3cd5cc9418889210e40
 discovered_from: https://docs.evokoa.com/polygres
 
 # Retrieval integration patterns | Polygres
@@ -19,7 +19,7 @@ project.context .
 
 Application need Recommended method
 
-Search by meaning from an embedding context.search
+Search by meaning from text or an embedding context.search
 
 Find records similar to a known point context.recommend
 
@@ -35,7 +35,7 @@ Combine semantic similarity with graph context context.graph_first , context.vec
 
 Search one collection with semantic, lexical, filter, graph, or Joint evidence context AI Search
 
-Generate or refresh embeddings in bulk Direct PostgreSQL background job
+Generate and refresh embeddings from source text Automatic embeddings
 
 All examples assume the project and named resources are ready. Confirm retrieval
 
@@ -93,7 +93,15 @@ for result in page.results
 
 ]
 
-embed_text is supplied by your application; Polygres retrieval accepts an embedding rather than generating one from text.
+Here, embed_text is your application’s embedding function. To have Polygres
+
+generate the query embedding, replace query_embedding with
+
+text="How do I request a refund?" . Set up automatic embeddings for that vector
+
+column and confirm its original model first, so the query uses the same model
+
+as the stored vectors.
 
 Use exact-match filters for lifecycle or result-scoping constraints registered
 
@@ -301,11 +309,17 @@ project.context.verify_collection(collection_id) , including the selected
 
 vector’s index status.
 
-Dense retrieval accepts an embedding that matches the selected vector’s dimensions.
+Set up automatic embeddings and create a ready
 
-After independently authorizing the request from trusted backend identity,
+Context collection to search with text. Polygres uses the selected vector’s
 
-derive a retrieval filter for the rows that request may see:
+saved model to embed your question. You can also supply your own query vector
+
+with matching dimensions.
+
+Check the user’s identity and permissions in your backend, then build a filter
+
+for the rows they may access:
 
 tenant_filter = {
 
@@ -317,7 +331,7 @@ response = project.context.search(
 
 "support_docs" ,
 
-embed_text( "How do I rotate a signing key?" ),
+text = "How do I rotate a signing key?" ,
 
 vector_name = "title_semantic" ,
 
@@ -331,11 +345,13 @@ for result in response.results:
 
 print (result.source.id, result.score, result.properties.get( "title" ))
 
-vector_name is optional on ranked retrieval. Omit it to use the collection’s
+Use vector_name to choose a vector by its name in the collection, or omit it
 
-default vector. When supplied, it must exactly match a vector registered in
+to use the default. Its embedding configuration determines the query model and
 
-that collection, and the query embedding must match that vector’s dimensions.
+dimensions. See query options and usage for
+
+credits, retries, and Runtime requirements.
 
 The same registered filter can scope counts and facets:
 
@@ -353,13 +369,11 @@ limit = 20 ,
 
 )
 
-Use text hybrid when the collection has a configured text column:
+Combine semantic and text search when the collection has a configured text column:
 
-response = project.context.text_hybrid(
+response = project.context.query(
 
 "support_docs" ,
-
-embed_text( "reset password" ),
 
 query = "reset password" ,
 
@@ -367,15 +381,15 @@ limit = 10 ,
 
 )
 
-Use Joint retrieval when semantic, lexical, and graph evidence should cooperate
+Use Joint retrieval to combine semantic search, text matches, and graph
 
-in one bounded query:
+relationships in one query:
 
 response = project.context.joint(
 
 "support_docs" ,
 
-embed_text( "Which deployment guidance applies to this account?" ),
+text = "Which deployment guidance applies to this account?" ,
 
 query = "deployment guidance" ,
 
@@ -415,13 +429,11 @@ Anchor-first RAG
 
 When the application knows the current customer, account, case, or document, traverse its graph neighborhood before semantic scoring:
 
-query_embedding = embed_text( "What prior incidents mention login failures?" )
-
 page = project.context.graph_first(
 
 "support_docs" ,
 
-query_embedding,
+text = "What prior incidents mention login failures?" ,
 
 start = { "schema" : "public" , "table" : "accounts" , "id" : "acct_123" },
 
@@ -447,7 +459,7 @@ page = project.context.vector_first(
 
 "support_docs" ,
 
-query_embedding,
+text = "What prior incidents mention login failures?" ,
 
 vector_name = "title_semantic" ,
 
@@ -481,7 +493,7 @@ page = project.context.joint(
 
 "support_docs" ,
 
-query_embedding,
+text = "What prior incidents mention login failures?" ,
 
 starts = [{ "schema" : "public" , "table" : "accounts" , "id" : "acct_123" }],
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/context
 title: CLI AI Search with pgContext | Polygres
-source_hash: bdd41e70d2ebbfa7f6f85c76bbb2906250e4f48355a8d5c5174aff31caa7bb50
+source_hash: 98f9656a620430a73ad15f16951d8edcb055ed71a928987f425667a2c36845de
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI AI Search with pgContext | Polygres
@@ -11,7 +11,7 @@ AI Search is the collection-based retrieval product backed by pgContext Preview.
 
 Install the current CLI and confirm the version before using the Context namespace:
 
-pipx install "polygres-cli==0.4.1"
+pipx install "polygres-cli==0.5.0"
 
 polygres --version
 
@@ -385,43 +385,153 @@ Both accept --filter-json <object> or --filter-file <path> . Facet fields must b
 
 Ranked retrieval
 
-All ranked modes accept one embedding source:
+CLI 0.5.0 accepts text or your own query vector for search ,
+
+grouped-search , graph-first , vector-first , rank-fusion , and joint .
+
+Choose one input:
 
 --embedding-json <json-array>
 
 --embedding-file <path>
 
-Alternatively, --request <path|-> supplies one strict request object. The positional collection remains authoritative, so the object must not contain a collection field. Request-file mode cannot be mixed with request-body flags.
+--text <query-text>
 
-Flag mode does not expose --vector-name , so it always omits vector_name and
+--text-file <path|->
 
-uses the collection’s default vector. To select an exact named vector, use a
+--text-file - reads UTF-8 query text from standard input. When you supply a
 
-request object that contains vector_name and the method’s other required
+vector, Polygres uses it directly. The retrieval allowance applies to generating
 
-fields. For a three-dimensional test collection, search-request.json can
+embeddings from text. For recall-check , supply a query vector.
 
-contain:
+polygres context search articles \
+
+--text "How does replication work?" \
+
+--vector-name content
+
+--vector-name selects a vector by its name in the collection, such as content .
+
+Omit it to use the collection’s default. Polygres embeds your query with that
+
+vector’s configured model. First, set up
+
+automatic embeddings and use a Runtime that
+
+supports query embedding generation.
+
+Generating a query embedding uses your project’s retrieval allowance. The cost
+
+depends on the input tokens and the configured model’s price. Add --use-credits
+
+to allow additional usage from organization credits after project spending has
+
+been enabled. This option is off by default. See
+
+quota and credits for allowance
+
+amounts and spending limits.
+
+Use --idempotency-key KEY when retrying the same text query to reuse its
+
+generated embedding. Automatic retries keep the same key. Choose a new key for a
+
+different query. Set --timeout SECONDS to choose how long the request may take;
+
+text queries default to 130 seconds. The credit and retry-key options apply to
+
+text input.
+
+To use a JSON file, pass --request <path|-> and put all query fields in that
+
+file. For example, include text , use_credits , and vector_name , or supply
+
+an embedding . Give the collection name in the command, keeping it out of the
+
+JSON. You can also set --idempotency-key and --timeout on the command.
+
+text-hybrid uses --query for both semantic and text search. To choose a
+
+different semantic input, add --text or supply your own embedding. In joint ,
+
+use --text for the semantic question and --query for text search terms.
+
+polygres context text-hybrid articles --query "replication failures"
+
+Text files and filters
+
+Read a query from a UTF-8 file or standard input:
+
+polygres context search articles --text-file question.txt
+
+polygres context search articles --text-file -
+
+The stdin form reads until end-of-file. To narrow results, pass a filter using
+
+a field registered on the collection. For example, with a registered
+
+tenant_id filter:
+
+polygres context search articles \
+
+--text "How does replication work?" \
+
+--filter-json '{"must":[{"key":"tenant_id","match":"acme"}]}'
+
+Query request files
+
+Save this as search-request.json , using a vector name from your collection:
 
 {
 
-"embedding" : [ 0.12 , -0.08 , 0.31 ],
+"text" : "How does replication work?" ,
 
-"vector_name" : "title_semantic" ,
+"vector_name" : "content" ,
 
-"limit" : 10
+"limit" : 5
 
 }
 
-Then run:
+polygres context search articles \
 
-polygres context search demo_3d --request search-request.json
+--request search-request.json \
 
-The name must exactly match a vector in that collection, and the embedding
+--idempotency-key replication-query-001 \
 
-dimensions must match that vector. If vector_name is omitted, ranked
+--timeout 130
 
-retrieval uses the collection’s default vector.
+Keep that key when retrying this query. Use a new key for a different query.
+
+To allow additional credit usage when project spending is enabled, set
+
+"use_credits": true in the request file.
+
+Semantic and lexical text in Joint
+
+For a collection with text search and graph retrieval configured, use a question
+
+for semantic search and specific terms for text search:
+
+polygres context joint articles \
+
+--text "How can I recover from a replication failure?" \
+
+--query "replication" \
+
+--semantic-weight 0.6 \
+
+--lexical-weight 0.2 \
+
+--graph-weight 0.2
+
+Existing vector queries
+
+Your existing vector queries work in CLI 0.4.1 and 0.5.0, including through
+
+api request . Upgrade to 0.5.0
+
+to use text input.
 
 Dense:
 

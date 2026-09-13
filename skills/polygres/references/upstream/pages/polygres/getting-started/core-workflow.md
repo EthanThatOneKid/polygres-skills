@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/getting-started/core-workflow
 title: Core workflow | Polygres
-source_hash: aeb16b54e84b99245dd2d81968f73ddb808bf8b944900fffe58101faa3b17f8a
+source_hash: 1dcaa53648e620521e4df6c0789f3dac6d5c15663eb785c32c48d1c41302f4c2
 discovered_from: https://docs.evokoa.com/polygres
 
 # Core workflow | Polygres
@@ -205,7 +205,11 @@ registration is never made implicitly usable, and new registration or
 
 re-enabling through the retired Legacy API is unsupported.
 
-Polygres does not create embeddings. When an existing public.vector(n) column
+Use Automatic embeddings to generate and
+
+maintain vectors from source text, or supply compatible vectors yourself.
+
+When an existing public.vector(n) column
 
 must be migrated, use Context discovery and preflight to review the in-place
 

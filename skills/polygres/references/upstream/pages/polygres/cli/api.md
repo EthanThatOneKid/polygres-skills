@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/api
 title: Generic API routes | Polygres
-source_hash: 1c70b230a92a25f16a77a3cbab2385cb0d48876b2a0bf37987d55a945c19405d
+source_hash: c295c0f426b4bfe0e8135cb3cac869be912e726726c274c2c4aeea8cb9d2b7ba
 discovered_from: https://docs.evokoa.com/polygres
 
 # Generic API routes | Polygres
@@ -166,3 +166,31 @@ route, parameters, and body before execution. The generic API command executes
 the reviewed operation directly, while dedicated high-level commands provide
 
 their command-specific prompts and previews.
+
+Text queries and CLI versions
+
+With CLI 0.5.0, you can search Context collections by passing a question or
+
+phrase. Preview a text search with --dry-run :
+
+polygres --json --project p0123456789abcdef0123456 api request context_search \
+
+--body '{"collection":"articles","text":"How does replication work?"}' \
+
+--dry-run
+
+Use context search to set a retry key and timeout:
+
+polygres --project PROJECT context search articles \
+
+--text "How does replication work?" \
+
+--idempotency-key replication-query-001 \
+
+--timeout 130
+
+Existing vector requests work in CLI 0.4.1 and 0.5.0. To use text, including
+
+through api request , upgrade to 0.5.0
+
+and connect to a Runtime that supports query embedding generation.

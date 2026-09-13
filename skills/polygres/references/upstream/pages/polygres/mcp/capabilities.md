@@ -1,13 +1,13 @@
 source: https://docs.evokoa.com/polygres/mcp/capabilities
 title: MCP tools and capabilities | Polygres
-source_hash: 05ccd0b681184dba9c848b64ad5833ba6af228331619aec0517ce3ca953ed891
+source_hash: 1b1550e9f34808b05c207ac63ec5fea5d4cf5fb625996f13ffe6c397d7ef0cca
 discovered_from: https://docs.evokoa.com/polygres
 
 # MCP tools and capabilities | Polygres
 
 MCP tools and capabilities
 
-Polygres MCP catalog 1.0 contains 91 tools. Your client shows the tools that
+Polygres MCP catalog 1.0 contains 102 tools. Your client shows the tools that
 
 match the connection settings, your current Polygres role, the project type,
 
@@ -181,9 +181,101 @@ delete_context_collection , delete_context_points , and
 
 backfill_context_points .
 
-Your application or AI client creates source and query embeddings. Polygres
+Use automatic embeddings to generate embeddings
 
-stores and retrieves the resulting evidence.
+and search with text. You can also supply embeddings from your application or AI
+
+client.
+
+Automatic embeddings
+
+Embedding tools are available through the Context feature group. Use them to
+
+choose a source and model, preview usage, generate embeddings, and search your
+
+text.
+
+Setup and progress: discover_embedding_sources , list_embedding_models ,
+
+get_embedding_usage , preview_embeddings , list_embedding_configurations ,
+
+get_embedding_configuration , and get_embedding_context_handoff .
+
+Configuration and processing: create_embedding_configuration ,
+
+update_embedding_configuration , process_embeddings , and
+
+remove_embedding_configuration .
+
+Search with a question
+
+Use context_search to search a collection with a question or phrase:
+
+{
+
+"project_id" : "<project-id>" ,
+
+"arguments" : {
+
+"collection" : "articles" ,
+
+"text" : "How does replication work?" ,
+
+"vector_name" : "content" ,
+
+"idempotency_key" : "articles-replication-1"
+
+}
+
+}
+
+Polygres uses the embedding model configured for the collection’s selected vector.
+
+vector_name selects a named vector, such as content ; you can omit it to use
+
+the collection’s default. Your filters and result limits work with either text
+
+or an explicit embedding vector.
+
+Text input is also available in group_context_results ,
+
+context_graph_first_search , context_first_graph_search ,
+
+context_rank_fusion_search , context_joint_search , and
+
+context_text_hybrid_search . With hybrid_search , place the query options inside
+
+the selected strategy. Text hybrid search uses query for both lexical and
+
+semantic search by default; set text to use a different semantic question.
+
+Joint search uses text for semantic search and query for lexical search.
+
+For query plans through search_full_text , a nearest node accepts text in
+
+place of vector . A full_text node continues to use text_query for lexical
+
+search. Put idempotency_key and use_credits alongside collection and plan .
+
+Generating a query embedding uses your project’s retrieval allowance. Set
+
+use_credits: true to continue with authorized organization credits after that
+
+allowance is used. Queries default to the included allowance. Supplying your own
+
+vector keeps embedding generation with your application.
+
+Supply an idempotency_key for a text query and reuse it with the same inputs
+
+when retrying. Choose a fresh key for a new query. Polygres allows extra time
+
+for text queries while the embedding is generated.
+
+Preview the work before creating a configuration, then review and confirm the
+
+changes. Once embeddings are available, create a Context collection to use them
+
+for search.
 
 Graph retrieval
 

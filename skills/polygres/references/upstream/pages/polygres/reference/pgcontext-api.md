@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/pgcontext-api
 title: pgContext API | Polygres
-source_hash: 668c6ade009333de52962b9980f661a3e2a9725c746fb3d86107ae5dc9a8b265
+source_hash: 4bb0d0e03648d43f90e63cbd26e6ddabc6af99a9fb566645bd4cc31857b97193
 discovered_from: https://docs.evokoa.com/polygres
 
 # pgContext API | Polygres
@@ -317,7 +317,17 @@ curl -X POST " $CONTEXT_URL /collections/<collection-uuid>/points/upsert" \
 
 -d '{"source_keys":["doc_1","doc_2"]}'
 
-Dense search requires a collection UUID or exact unique name and an embedding that matches its configured dimensions:
+For dense search, identify the collection by UUID or its exact name and supply
+
+either text or an embedding . Text queries use the model version and dimensions
+
+from the selected vector’s linked embedding configuration. For existing source
+
+vectors, confirm the original model during embedding setup. Vectors you supply
+
+in a request must match the selected vector’s dimensions.
+
+A request with your own query vector looks like this:
 
 curl -X POST " $CONTEXT_URL /search" \
 
@@ -338,6 +348,42 @@ curl -X POST " $CONTEXT_URL /search" \
 "limit":10
 
 }'
+
+For a Runtime text query, replace embedding with text :
+
+{
+
+"collection" : "support_docs" ,
+
+"vector_name" : "title_semantic" ,
+
+"text" : "How do I rotate a signing key?" ,
+
+"use_credits" : false ,
+
+"limit" : 10
+
+}
+
+Check query_embedding_generation in Runtime capabilities before using text
+
+input. Generating the query embedding uses the project’s retrieval allowance.
+
+Set use_credits to true to allow additional credit usage when project spending
+
+is enabled; the default is false . Queries with your own vectors use them directly.
+
+See automatic embeddings for setup and usage details.
+
+Include an Idempotency-Key header when retrying the same query so Polygres can
+
+reuse the generated embedding. Choose a key of 1 through 200 characters that
+
+contains at least one non-whitespace character. The key applies to embedding
+
+generation; each request searches the current data. Use a new key for a different
+
+query.
 
 Execute a typed query plan by placing one validated plan tree under plan :
 
@@ -365,6 +411,16 @@ curl -X POST " $CONTEXT_URL /query/execute" \
 
 }'
 
+A Runtime nearest plan branch accepts either vector or text . Each branch
+
+with text generates an embedding with its selected vector’s model when the plan
+
+runs, using retrieval allowance. Set use_credits on the
+
+execution request and send Idempotency-Key as a header. Keep the same key when
+
+retrying the same plan to reuse completed embeddings.
+
 Query plans support dense and sparse nearest search, full-text search,
 
 late-interaction search, recommendation, discovery, point lookup, branch
@@ -375,23 +431,35 @@ let one request express a complete retrieval strategy. The Python SDK supplies
 
 typed builders for each plan kind.
 
-Other retrieval bodies use these strict field sets:
+Use these fields for other retrieval requests:
 
 Route Accepted request fields
 
-/grouped-search collection , optional vector_name , embedding , group_by , optional group_limit , optional limit
+/grouped-search collection , optional vector_name , embedding or text , optional use_credits , group_by , optional group_limit , optional limit
 
 /recall-check collection , optional vector_name , embedding , optional filter , optional limit , optional minimum_recall
 
-/hybrid/text collection , optional vector_name , embedding , query , optional limit ; the collection must have a text column
+/hybrid/text collection , optional vector_name , query , optional embedding or text , optional use_credits , optional limit ; the collection must have a text column
 
-/hybrid/graph-first collection , optional vector_name , embedding , start , optional filter , optional limit , and graph traversal fields
+/hybrid/graph-first collection , optional vector_name , embedding or text , optional use_credits , start , optional filter , optional limit , and graph traversal fields
 
-/hybrid/vector-first collection , optional vector_name , embedding , optional filter , optional limit , optional context_limit , and graph traversal fields
+/hybrid/vector-first collection , optional vector_name , embedding or text , optional use_credits , optional filter , optional limit , optional context_limit , and graph traversal fields
 
-/hybrid/rank-fusion collection , optional vector_name , embedding , start , optional filter , optional limit , weights , candidate limits, and graph traversal fields
+/hybrid/rank-fusion collection , optional vector_name , embedding or text , optional use_credits , start , optional filter , optional limit , weights , candidate limits, and graph traversal fields
 
-/hybrid/joint collection , optional vector_name , embedding , optional query , optional starts , optional filter , weights , candidate limits, and graph traversal fields
+/hybrid/joint collection , optional vector_name , embedding or text , optional use_credits , optional query , optional starts , optional filter , weights , candidate limits, and graph traversal fields
+
+For /hybrid/text , send query to use the same wording for semantic and text
+
+search, or add embedding or text to choose a separate semantic input. On
+
+/hybrid/joint , use text for the semantic question and query for text search
+
+terms. Candidate search accepts text in place of embedding ; provide
+
+candidate_point_ids to choose which records to search. Recall checks and raw
+
+vector searches take vectors directly.
 
 Graph start contains schema , table , and id . Traversal fields are
 

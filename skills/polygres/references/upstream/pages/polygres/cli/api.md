@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/api
 title: Generic API routes | Polygres
-source_hash: c295c0f426b4bfe0e8135cb3cac869be912e726726c274c2c4aeea8cb9d2b7ba
+source_hash: 1ee4a1a07e8c3bd28871569f152d16c149ef9b5babfe2ef262716f91a8d33751
 discovered_from: https://docs.evokoa.com/polygres
 
 # Generic API routes | Polygres
@@ -169,7 +169,7 @@ their command-specific prompts and previews.
 
 Text queries and CLI versions
 
-With CLI 0.5.0, you can search Context collections by passing a question or
+With CLI 0.5.0 or newer, you can search Context collections by passing a question or
 
 phrase. Preview a text search with --dry-run :
 
@@ -189,8 +189,10 @@ polygres --project PROJECT context search articles \
 
 --timeout 130
 
-Existing vector requests work in CLI 0.4.1 and 0.5.0. To use text, including
+Text input requires CLI 0.5.0 or newer and a Runtime that supports query
 
-through api request , upgrade to 0.5.0
+embedding generation. If you use an earlier CLI version,
 
-and connect to a Runtime that supports query embedding generation.
+upgrade to 0.6.0 . Existing
+
+vector requests continue to work.

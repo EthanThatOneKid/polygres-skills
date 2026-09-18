@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/command-reference
 title: CLI command reference | Polygres
-source_hash: c71c67d7701281095086cc1196c7a636936fc04340bc12c1e1d3b47ef3aded65
+source_hash: 7752e31d8bcf63e5f962b0f9ac7df9c235e4eefdb1864f7389e09bb1b3ce9621
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI command reference | Polygres
@@ -25,7 +25,7 @@ Rows rows validate , rows insert , rows upsert , rows ignore
 
 Embedding setup and status embeddings sources , embeddings models , embeddings usage , embeddings list , embeddings get , embeddings preview
 
-Embedding generation embeddings create , embeddings update , embeddings remove , embeddings run , embeddings pause , embeddings resume , embeddings retry , embeddings reconcile
+Embedding generation embeddings create , embeddings update , embeddings remove , embeddings run , embeddings pause , embeddings resume , embeddings retry , embeddings reconcile , embeddings recover-oversized
 
 Embedding search setup embeddings context
 
@@ -171,7 +171,9 @@ See Context retrieval for examples.
 
 Embedding command options
 
-The embeddings group requires CLI 0.5.0 or newer. Select a project first or use
+Use CLI 0.6.0 for all commands and options below. The original embedding
+
+commands also work in CLI 0.5.0. Select a project first or use
 
 polygres --project PROJECT embeddings COMMAND .
 
@@ -179,7 +181,7 @@ Command What it does
 
 sources Find tables and text columns you can use for embeddings
 
-models List available embedding models and dimensions
+models List available models, supported dimensions, and input token limits
 
 usage Check your remaining allowances, spending, and token usage by model
 
@@ -191,7 +193,7 @@ preview --file CONFIG Check a JSON configuration and estimate usage before gener
 
 create --file CONFIG Set up a configuration and start generating embeddings; accepts --idempotency-key KEY
 
-update ID --file CHANGES Change name, mode, batch size, or credit opt-in; JSON must include expected_version
+update ID --file CHANGES Change the name, update mode, or permission to use credits; JSON must include expected_version
 
 remove ID Remove a configuration using --expected-version N ; choose either --keep-output or --delete-output
 
@@ -203,6 +205,8 @@ retry ID Retry work after resolving the issue shown in its status
 
 reconcile ID Check previous processing attempts and recover saved results
 
+recover-oversized ID Enable automatic chunking and retry rows that failed because their text was too long; use --preview to review first
+
 context ID Get the source details to use when setting up a Context search collection
 
 Use the configuration ID shown by embeddings list wherever a command takes
@@ -213,9 +217,19 @@ creation request, reuse its --idempotency-key so Polygres can recognize
 
 the request. Use a new key when the request changes.
 
-To use a different model, source, number of dimensions, or chunking setup, create
+For update and remove , read the current version from embeddings get ID
 
-a new configuration.
+and supply it as expected_version or --expected-version . This prevents an
+
+older request from overwriting newer changes. The recover-oversized command
+
+checks the version for you.
+
+To change the model, source, dimensions, or custom chunk settings, create a new
+
+configuration. To enable automatic chunking after rows fail because their text
+
+is too long, use recover-oversized on the existing configuration.
 
 Use context search with --text or an explicit query vector. Both support
 
@@ -226,3 +240,149 @@ text files, named vectors, credit usage, and retry options.
 See automatic embeddings for a complete setup
 
 example, processing options, and usage guidance.
+
+Automatic chunking and selective recovery (CLI 0.6.0)
+
+New generation configurations default to "chunking": {"mode": "automatic"} .
+
+Polygres checks the text in each row against the selected model’s token limit.
+
+Text that fits gets one embedding; longer text is split into chunks. The same
+
+setting applies to later changes to the text.
+
+Use "mode": "custom" with size_tokens and overlap_tokens to choose your own
+
+chunk size, or "mode": "off" to keep one embedding per row. See
+
+chunking settings
+
+for help choosing. Existing configurations keep their saved settings. Copying
+
+existing vectors defaults to chunking off.
+
+Retry rows whose text is too long
+
+Use this flow when generation has failed because text exceeds the model’s limit.
+
+It enables automatic chunking on the configuration and retries the failed rows
+
+that chunking can fix.
+
+First, find the configuration ID:
+
+polygres --project PROJECT embeddings list
+
+Replace PROJECT with your project ID and CONFIGURATION_ID with the returned
+
+configuration ID. Preview the affected rows:
+
+polygres --project PROJECT embeddings recover-oversized CONFIGURATION_ID --preview
+
+The preview shows how many rows can be retried, any rows chunking cannot fix,
+
+the model’s token limit, and sample chunk counts. It does not change settings
+
+or start generation.
+
+To apply the change, run the command without --preview and confirm the prompt:
+
+polygres --project PROJECT embeddings recover-oversized CONFIGURATION_ID
+
+After confirmation:
+
+Automatic chunking is enabled for future text changes.
+
+The failed rows shown as recoverable are queued for generation. Rows are
+
+checked again when you confirm, so the final count can change.
+
+Completed embeddings are kept. Requests already awaiting recovery or
+
+investigation are excluded from this retry.
+
+If the configuration is paused, it stays paused. Run
+
+polygres --project PROJECT embeddings resume CONFIGURATION_ID when ready.
+
+Use progress monitoring to check when the queued
+
+rows finish. If the preview finds no rows it can retry, the command exits without
+
+changing settings. Review the row limits
+
+for text that chunking cannot process. Configurations that copy existing vectors
+
+cannot use this recovery command.
+
+Use recovery in a script
+
+Add --yes to apply the change without a prompt. For JSON output, put --json
+
+before the command:
+
+polygres --json --project PROJECT embeddings recover-oversized CONFIGURATION_ID --yes
+
+If someone changes the configuration while you are reviewing it, interactive
+
+recovery asks you to review and confirm again. Scripts stop and report the
+
+conflict. If a request times out without confirming whether the change was
+
+applied, check configuration progress and run a new preview before trying again.
+
+Watch generation progress
+
+For a single progress check:
+
+polygres --project PROJECT embeddings get CONFIGURATION_ID --summary
+
+To keep checking until processing finishes:
+
+polygres --project PROJECT embeddings get CONFIGURATION_ID --watch --timeout 600
+
+This waits for up to 10 minutes. It checks both generation and pending updates to
+
+any connected Context collection. Generating embeddings does not create a Context
+
+collection; follow search setup
+
+if you have not created one.
+
+If processing is paused or needs attention, the command stops with an explanation.
+
+Resolve the issue, then run it again. A timeout or Ctrl-C stops watching and leaves
+
+server processing running. Watching does not resume paused work or retry failures.
+
+The --summary option is available on get , list , preview , create , run ,
+
+pause , resume , retry , and reconcile . Without --summary , these commands
+
+keep their existing JSON output. Global --json overrides --summary ; with
+
+--watch , it returns one final JSON result or error. Missing progress values are
+
+shown as not reported.
+
+Batching and compatibility
+
+Polygres groups text from rows in the same configuration into batches and runs up
+
+to four model requests at once per configuration. Polygres manages the batch
+
+sizes. Pausing stops new requests; requests already running can finish.
+
+retry tries failed work again using the current settings. It does not enable
+
+chunking. reconcile checks previous attempts for saved results. Follow the
+
+reported status when a request needs investigation.
+
+Existing commands, JSON output, and saved sign-in continue to work after upgrading.
+
+The CLI also accepts older chunking JSON using enabled , size_tokens , and
+
+overlap_tokens . Automatic chunking and recover-oversized need server support.
+
+If the CLI reports that a server upgrade is required, contact Polygres support.

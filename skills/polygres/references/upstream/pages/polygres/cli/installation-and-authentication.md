@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/installation-and-authentication
 title: CLI installation and authentication | Polygres
-source_hash: 7d6fcf8afc3ee383ab9bf956aab764c129eba5eb8e078c3b86d043d45795c0f6
+source_hash: 7fbe44083dc781ddab010d79ad06d24715663e8d71bf8ea83b13b74f981f5b76
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI installation and authentication | Polygres
@@ -11,7 +11,7 @@ The Polygres CLI requires Python 3.10 or newer. Install polygres-cli with pipx
 
 to give the CLI its own Python environment:
 
-pipx install "polygres-cli==0.5.0"
+pipx install "polygres-cli==0.6.0"
 
 polygres --version
 
@@ -31,7 +31,7 @@ polygres-cli and polygres-sdk packages. For a pipx installation:
 
 pipx uninstall polygres
 
-pipx install "polygres-cli==0.5.0"
+pipx install "polygres-cli==0.6.0"
 
 polygres --version
 
@@ -41,43 +41,43 @@ pip uninstall polygres
 
 pip install "polygres-sdk==0.5.0"
 
-pip install --force-reinstall "polygres-cli==0.5.0"
+pip install --force-reinstall "polygres-cli==0.6.0"
 
 polygres --version
 
-Check that polygres --version reports 0.5.0 . Your saved sign-in is preserved;
+Check that polygres --version reports 0.6.0 . Your saved sign-in is preserved;
 
 the CLI will prompt you to sign in again when your session needs renewal.
 
-Upgrade to 0.5.0
+Upgrade to 0.6.0
 
-CLI 0.5.0 lets you set up automatic embeddings and search with text through
+CLI 0.6.0 adds commands to retry rows whose text was too long and to watch
 
-existing Context commands. Upgrade your installation with:
+embedding progress. New configurations use automatic chunking by default.
 
-pipx install "polygres-cli==0.5.0" --force
+For a pipx installation:
+
+pipx install "polygres-cli==0.6.0" --force
 
 polygres --version
 
-polygres embeddings sources --help
+For an application virtual environment:
 
-polygres context search --help
+pip install --upgrade "polygres-cli==0.6.0"
 
-In an application virtual environment, use
+polygres --version
 
-pip install --upgrade "polygres-cli==0.5.0" instead. Your existing commands and
+Your existing commands, JSON output, and saved sign-in keep working. Existing
 
-saved sign-in continue to work after the upgrade. Earlier CLI versions keep
+embedding configurations keep their settings.
 
-supporting their existing commands and vector inputs.
+Next steps:
 
-To get started, choose a text column and a model, then preview the work before
+Set up embeddings .
 
-starting generation. Polygres then tracks changes to your text and processes
+Retry rows whose text was too long .
 
-them in your chosen automatic or manual mode. Follow the
-
-automatic embeddings guide for the full setup.
+Check and watch progress .
 
 Sign in
 

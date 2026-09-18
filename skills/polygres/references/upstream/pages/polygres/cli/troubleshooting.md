@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/troubleshooting
 title: CLI troubleshooting | Polygres
-source_hash: 39353dc4a531e0790004585baebf1469ed9dc29e569e0fe4cd86605470b87f89
+source_hash: bf52ee0fff4c5ac0d6bdfec4291906405a0cb7cb1158a6b03b1f2372f46a54eb
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI troubleshooting | Polygres
@@ -9,7 +9,7 @@ CLI troubleshooting
 
 Symptom Action
 
-You need the embedding commands Install CLI 0.5.0 with pipx install "polygres-cli==0.5.0" --force , or pip install --upgrade "polygres-cli==0.5.0" in your app virtual environment. Check the version with polygres --version . See upgrade guidance .
+You need the embedding commands Install CLI 0.6.0 with pipx install "polygres-cli==0.6.0" --force , or pip install --upgrade "polygres-cli==0.6.0" in your app virtual environment. Check the version with polygres --version . See upgrade guidance .
 
 Exit 3 or “Run polygres login ” Run polygres login , then confirm with polygres --json whoami .
 
@@ -41,13 +41,41 @@ A command returns MAINTENANCE_READ_ONLY or MAINTENANCE_FULL Stop immediate retri
 
 You need to delete a project Use the dashboard project lifecycle controls .
 
+Embedding generation and recovery
+
+Use CLI 0.6.0 and select a project first. Replace CONFIGURATION_ID with the ID
+
+from polygres embeddings list .
+
+Problem What to do
+
+Generation failed because a row’s text is too long Preview automatic chunking, then confirm the retry . This keeps completed embeddings and retries the failed rows chunking can fix.
+
+Chunking cannot fix some failed rows Check the row limits . Shorten the source text or split it across smaller rows. For custom chunking, reduce overlap if it produces too many chunks.
+
+A retry is queued but the configuration is paused Run polygres embeddings resume CONFIGURATION_ID when ready to continue. Enabling chunking does not resume a paused configuration.
+
+Embeddings are generated but search updates are pending Run polygres embeddings get CONFIGURATION_ID --watch --timeout 600 . This waits for generation and pending Context updates. Your Context collection must also be ready to search.
+
+Watching stopped because processing needs attention Run polygres embeddings get CONFIGURATION_ID --summary and resolve the reported issue. Then run the watch command again.
+
+Watching timed out Server processing continues. Check progress or run the watch command again to wait longer.
+
+A previous request is awaiting recovery or investigation Read its status for updates. Polygres checks for saved results; rows awaiting these checks are excluded from the chunking retry.
+
+The recovery command or option is unrecognized Check polygres --version and upgrade to 0.6.0 .
+
+The CLI reports that the server does not support automatic chunking or recovery Contact Polygres support with the error and request ID.
+
 Text queries
 
 Use these steps to check your text-query setup or retry a request:
 
 Task Action
 
-Use --text Check polygres --version and upgrade to CLI 0.5.0. Search with polygres context search COLLECTION --text "your question" .
+Use --text Requires CLI 0.5.0 or newer. Check polygres --version and upgrade if needed . Search with polygres context search COLLECTION --text "your question" .
+
+Search text is too long Check the search text limits . The text field accepts at most 131,072 characters, and the text must also fit the selected model’s token limit. Shorten the question or remove unnecessary pasted context, then try again.
 
 Choose the query input Choose one of --text , --text-file , --embedding-json , or --embedding-file . With --request , put the query fields in the JSON file.
 
@@ -59,9 +87,9 @@ Continue after reaching an allowance Run polygres embeddings usage to check usag
 
 Retry after a timeout Retry with the same --idempotency-key you supplied for the original query and, if needed, a longer --timeout . Generation may have completed while the CLI was waiting; keeping the same key lets Polygres reuse that work.
 
-Send text through api request Use CLI 0.5.0 for text input. CLI 0.4.1 accepts a query vector through embedding .
+Send text through api request Use CLI 0.5.0 or newer for text input. CLI 0.4.1 accepts a query vector through embedding .
 
-Check Runtime support Use CLI 0.5.0 with a Runtime that supports query embedding generation. Queries with your own vectors also remain available.
+Check Runtime support Use CLI 0.5.0 or newer with a Runtime that supports query embedding generation. Queries with your own vectors also remain available.
 
 See Context retrieval for input examples and
 

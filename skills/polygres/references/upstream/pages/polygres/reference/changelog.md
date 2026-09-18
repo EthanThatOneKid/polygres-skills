@@ -1,11 +1,77 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 96f9904fa1ead79521bfc4bb371102a49fd6aeae74b0489a811913a555114d10
+source_hash: 15120c2946295f6139dfd59493d2e5ec6e7df0c6d59a6488181e437b9055ca41
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
+
+2026-09-17
+
+Polygres Agent Skills 0.9.0
+
+Start with the Advisor: install one skill from GitHub to load relevant
+
+guidance from skills.polygres.com using an agent with web access.
+
+Read current guidance: the Advisor fetches the hosted catalog and linked
+
+references in new sessions, without reinstalling for guidance changes.
+
+Keep local resources when needed: the full package continues to provide
+
+five skills, scripts, and templates. Plugin marketplace installation also
+
+configures the Polygres MCP connection.
+
+Use a URL directly: give a web-capable agent the hosted catalog URL without
+
+installing a skill.
+
+See Polygres Agent Skills for
+
+installation options, tool requirements, updates, and removal.
+
+Automatic chunking and faster embedding generation
+
+Handle long text automatically. Automatic chunking is now the default when
+
+you set up new embedding generation. Polygres splits a row’s text into chunks
+
+when it exceeds the selected model’s input limit, including after text updates.
+
+Existing configurations keep their settings.
+
+For existing configurations without chunking: if long text previously
+
+failed to generate embeddings, select Review automatic chunking to enable
+
+it and retry those rows. Completed embeddings are kept.
+
+See automatic embeddings for setup and recovery.
+
+Polygres CLI 0.6.0
+
+Recover failed rows: embeddings recover-oversized previews the affected
+
+rows, enables automatic chunking after confirmation, and queues them for retry.
+
+Read progress more easily: add --summary to supported embedding commands
+
+to see generation counts and pending search updates.
+
+Wait for processing: use embeddings get CONFIGURATION_ID --watch to follow
+
+generation and search updates until they finish or need your attention.
+
+Upgrade to 0.6.0 . Existing
+
+commands, JSON output, and saved sign-in keep working. See the
+
+command reference
+
+for examples.
 
 2026-09-12
 

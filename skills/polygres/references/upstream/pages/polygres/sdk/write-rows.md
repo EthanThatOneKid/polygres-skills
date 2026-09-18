@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/write-rows
 title: Write rows with Python | Polygres
-source_hash: ae487be4405efadcd92e75e3d0e32967a84736e1c8de839ca06fa8bf4af7c863
+source_hash: 76c1e9bd25b994963031a6c9c19332c4722f646f1e583e166ed454496e71e838
 discovered_from: https://docs.evokoa.com/polygres
 
 # Write rows with Python | Polygres

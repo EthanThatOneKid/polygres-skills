@@ -10,413 +10,413 @@
       "url": "https://docs.evokoa.com/polygres",
       "title": "Polygres documentation | Polygres",
       "path": "polygres/index.md",
-      "sha256": "2ebb6fa572130598fe133ed2dbd3e6d1fa1c08fd77cb5ad376431991342fbdc5",
+      "sha256": "0e9752c1fe4f57a018134bfbe055b513c633f6c6db1e329b44f95b49d057c324",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/getting-started",
       "title": "Getting started | Polygres",
       "path": "polygres/getting-started.md",
-      "sha256": "057af98a182f7c8de06e140f6fe127374172412e9c6361480d7265595a401b4b",
+      "sha256": "88d68e01a129005aa0003c99ba3c4f3e3972c320d04e895e88bf2a427bac1513",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/getting-started/what-is-polygres",
       "title": "What is Polygres? | Polygres",
       "path": "polygres/getting-started/what-is-polygres.md",
-      "sha256": "7e8b45ac6efdef0c31da9c9312d39e2f98d818f2a5068a8a18ff064b7968cda4",
+      "sha256": "a73c976e062a6be66af226394699124df75a82f5afaec72b3b592cc5066b3ce0",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/getting-started/quickstart",
       "title": "Quickstart | Polygres",
       "path": "polygres/getting-started/quickstart.md",
-      "sha256": "8a64d164c0e47c55dfc3949d50e17d5de0bd8a455dbc1cf4075859e1efddb3d1",
+      "sha256": "d513b923b2980822815c08e9584a5194603c915bd0099759540137762262e9c8",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/getting-started/key-concepts",
       "title": "Key concepts | Polygres",
       "path": "polygres/getting-started/key-concepts.md",
-      "sha256": "cc6c0653f796efa9564b0289d3805f4fd2fe5f0de39574f817bd8029d9d3179a",
+      "sha256": "de160cf357af86a55a8edf73d12cc4de35edf60115c3ac44793ea0b532cc0776",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/getting-started/core-workflow",
       "title": "Core workflow | Polygres",
       "path": "polygres/getting-started/core-workflow.md",
-      "sha256": "1dcaa53648e620521e4df6c0789f3dac6d5c15663eb785c32c48d1c41302f4c2",
+      "sha256": "2ed7427c3d68391992120dd9e5f0ca3c2770e355a6523dff0cf1a546cbbf5231",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/getting-started/common-use-cases",
       "title": "Common use cases | Polygres",
       "path": "polygres/getting-started/common-use-cases.md",
-      "sha256": "5f8349995088224c65adbef47663312ecc4a5d02081409516e11c8f82456b7f4",
+      "sha256": "30274f8da7c098cb69299c79ae4e366b5a2455c3832eeb846423bcf023976226",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/platform",
       "title": "Platform guide | Polygres",
       "path": "polygres/platform.md",
-      "sha256": "d74facaf177a897c9f9c2ee815b6a755776ab5dd7d12f5daa9f7e252f6d1266b",
+      "sha256": "6da1a092f7bff25dc2d124df3979e808aefd756ca917b7a6dfa599f01e04de27",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/platform/automatic-embeddings",
       "title": "Automatic embeddings | Polygres",
       "path": "polygres/platform/automatic-embeddings.md",
-      "sha256": "303ba018a0869d4152513e1afd2cbaa9fc387b369e8c9f93c1a85bae6ea4f1ce",
+      "sha256": "853514b1d91e4a52a46a8647b19f42941d0984b60d7283b072ddf49db75c4945",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/platform/projects",
       "title": "Projects | Polygres",
       "path": "polygres/platform/projects.md",
-      "sha256": "26696c89f2ff8cbb9961a8e82acbfe81546f42418018ef423f7234618f4473f1",
+      "sha256": "63ecefdd480f61a26ec1b84489d4054d928e4c363681ec83e7ab0e9ce6ce7b29",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/platform/projects/free-and-paid-projects",
       "title": "Free and Paid projects | Polygres",
       "path": "polygres/platform/projects/free-and-paid-projects.md",
-      "sha256": "c349b785e63ad85656c5c66324488350d3db0a13f20457952a2309de54360155",
+      "sha256": "ebc1868b47959febc0b8214140a6730f61e274fd215b974d199ee0f369187933",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/platform/projects/sync-postgresql",
       "title": "Create a Synced PostgreSQL Project | Polygres",
       "path": "polygres/platform/projects/sync-postgresql.md",
-      "sha256": "154f7d300c85ab80fed266cadf6a87b449fd7ec0c6f944c855139f4e6ede0a35",
+      "sha256": "b2960076c52827e0714650536d4811686dc38f3550b1ec66a46b470ee7cdd11e",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/platform/projects/postgresql-source-setup",
       "title": "PostgreSQL Sync Setup Guides | Polygres",
       "path": "polygres/platform/projects/postgresql-source-setup.md",
-      "sha256": "280c9a81d654cbde8125f78629fc08a0a5c941d3642268f3d5e787aeb718d55a",
+      "sha256": "0fbfc169696927fcc0556ff629b481bdba0a8aa8bc6749b4c640480901d93ff8",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/platform/organizations",
       "title": "Organizations | Polygres",
       "path": "polygres/platform/organizations.md",
-      "sha256": "0d08fd8c6860dcdb97d272cd839d73f68920cb284145827dfdc99c40a42129ff",
+      "sha256": "8d6470d7126a7fb09343c9b0fc0617102337316634163c9caa926b5cfa3a5b6b",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/platform/billing",
       "title": "Billing and credits | Polygres",
       "path": "polygres/platform/billing.md",
-      "sha256": "0ebce362cad9d6c30aefa8c879c374cba59d8590bb2db9e4e1706523372343a2",
+      "sha256": "a6f7b5423516e88680f3c4bc1dd203dde5e1e4de27a6526a80188d33a026e52e",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/platform/load-and-manage-data",
       "title": "Load and manage data | Polygres",
       "path": "polygres/platform/load-and-manage-data.md",
-      "sha256": "256f32a8bffbcf84bdf8b1fa8c3a7126b3f0b3c71eb4b7e8254acbefddd5d70b",
+      "sha256": "5598d585d544c50b8937a939fef06e48f9967b99ae016356d901ee9471342d8c",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/platform/dashboard-api-database-access",
       "title": "Dashboard, API, and database access | Polygres",
       "path": "polygres/platform/dashboard-api-database-access.md",
-      "sha256": "267825a3996298118852ebf9f422a2a2b5da27db8c530149b4213aee2b8be5a3",
+      "sha256": "7a1a49c86faa8fe9516c3fac4b6991df7a4b0670d82147d490f2f2031750e6a8",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/platform/security-basics",
       "title": "Security basics | Polygres",
       "path": "polygres/platform/security-basics.md",
-      "sha256": "7f7be9b1fc65aa9a9aae1cf940d5ea9b9346a04d3a28cb5d5a129646ab73c34e",
+      "sha256": "0f4e55d8fd625c02be14f9134c523333bd930e426d573ec13b1e958007b73a86",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/platform/roles-and-permissions",
       "title": "Roles and permissions | Polygres",
       "path": "polygres/platform/roles-and-permissions.md",
-      "sha256": "2979c5be4a42512d3051682bd8fabb46a76b831acd0ed4a20f4b3a3d9f1b2413",
+      "sha256": "f2860635c3af3c7e4f24cbb142e9e58709142fe2a9d922840fed3dd13306f1c1",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli",
       "title": "Polygres CLI | Polygres",
       "path": "polygres/cli.md",
-      "sha256": "4670c2b7aa233e817e7cb45f5d0288e05ee931323b22b893a9279c240a48f566",
+      "sha256": "f9ae12190a926a7764f7c2f5db3ad35891469b5af824981c3e98f1483c5d203b",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/installation-and-authentication",
       "title": "CLI installation and authentication | Polygres",
       "path": "polygres/cli/installation-and-authentication.md",
-      "sha256": "7d6fcf8afc3ee383ab9bf956aab764c129eba5eb8e078c3b86d043d45795c0f6",
+      "sha256": "7fbe44083dc781ddab010d79ad06d24715663e8d71bf8ea83b13b74f981f5b76",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/projects",
       "title": "CLI projects | Polygres",
       "path": "polygres/cli/projects.md",
-      "sha256": "70322b4adc74ab2d38fca43b5ecb20b796e97a17461cbf7227e529bd8f5e05c9",
+      "sha256": "460d0bd05477de94003fd35bc51c89c54c73dcd46ecf84f948e6fa2dc6c19933",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/database-and-environment",
       "title": "CLI database and environment | Polygres",
       "path": "polygres/cli/database-and-environment.md",
-      "sha256": "248c29731607e7b8f9dd41c22bc92300a362a6fc8836e05b838d0a604a8da583",
+      "sha256": "98ff7a7b6e64e0d14237c05c2d7468415e59c74e1a398bdbd7c0545cd00e4a89",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/api-keys",
       "title": "CLI API keys | Polygres",
       "path": "polygres/cli/api-keys.md",
-      "sha256": "311a666d17e8647f78d0a3e0f0a3fdecba021e693d8ea91112c019b3d1a3c1c4",
+      "sha256": "c6309e57a93244a7375266497c586c0f7e12f9974caf1a1c3a8a54833a3efd6c",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/imports-and-migrations",
       "title": "CLI imports and migrations | Polygres",
       "path": "polygres/cli/imports-and-migrations.md",
-      "sha256": "6b15455b58ca21951d5e19e4ea9a642496371c0084e9abf90131b9d14f7a35c0",
+      "sha256": "50c0ee9db426d279c40bba7e312204cabd5be6d8f6a69b41539a27ac967b0eac",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/rows",
       "title": "Write rows | Polygres",
       "path": "polygres/cli/rows.md",
-      "sha256": "fb6e1598bd8dbdc24d062be7357c6db0615706d9598601b57d5c33c1bfbca2fa",
+      "sha256": "e8879b5747aa59408f2d3ac0a4c1300a28b43a775a6ec592537887042ea8416f",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/graph",
       "title": "CLI graph retrieval | Polygres",
       "path": "polygres/cli/graph.md",
-      "sha256": "f226f716644ebe665fd737aa20d182c610fb57e2408582e496693211fbe80d09",
+      "sha256": "5159dd666ac1d3e3c928a7cefa9904e4604fdb55349fb7db2ba68a653a310401",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/vector",
       "title": "CLI vector retrieval | Polygres",
       "path": "polygres/cli/vector.md",
-      "sha256": "3130fa5731eed3dbaabcc5f4905dcdbd69efc242c38357934d19a4d462c07a84",
+      "sha256": "91a308d3cbf17d92c5c025ee6d6f0141c7cc05a12dc118e0f5a635511e49f4b6",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/text",
       "title": "CLI text retrieval | Polygres",
       "path": "polygres/cli/text.md",
-      "sha256": "8df67d07f461d3b5190e38e839965490263adadc2944b2a8082653c66684a19b",
+      "sha256": "78481703fe123b93667167cd629e1f765fb1a344c92b63ccd9e8c212fb103593",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/context",
       "title": "CLI AI Search with pgContext | Polygres",
       "path": "polygres/cli/context.md",
-      "sha256": "98f9656a620430a73ad15f16951d8edcb055ed71a928987f425667a2c36845de",
+      "sha256": "59202ce92df66947ac0bb073b862a558f132f610ea2e67972960bc83d4eb3d48",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/api",
       "title": "Generic API routes | Polygres",
       "path": "polygres/cli/api.md",
-      "sha256": "c295c0f426b4bfe0e8135cb3cac869be912e726726c274c2c4aeea8cb9d2b7ba",
+      "sha256": "1ee4a1a07e8c3bd28871569f152d16c149ef9b5babfe2ef262716f91a8d33751",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/notices",
       "title": "CLI notices | Polygres",
       "path": "polygres/cli/notices.md",
-      "sha256": "8ba99c0fb1e06b3c6020514fe69ea5e0420802fbe685e5e8e0cf02d20cdacbfa",
+      "sha256": "e786b08b623cf2f3182bde789b6b63fd3a38a4706021e26c1f24c118528c3d27",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/automation-and-exit-codes",
       "title": "CLI automation and exit codes | Polygres",
       "path": "polygres/cli/automation-and-exit-codes.md",
-      "sha256": "a38ac69c027341acf41f0308931433dd377c9c5228c03cdcdc8306d3d185c4ba",
+      "sha256": "a0fb512c5a05153dcdb5cda28d8288db866646d649e79b334a96884ee93ea22b",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/command-reference",
       "title": "CLI command reference | Polygres",
       "path": "polygres/cli/command-reference.md",
-      "sha256": "c71c67d7701281095086cc1196c7a636936fc04340bc12c1e1d3b47ef3aded65",
+      "sha256": "7752e31d8bcf63e5f962b0f9ac7df9c235e4eefdb1864f7389e09bb1b3ce9621",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/cli/troubleshooting",
       "title": "CLI troubleshooting | Polygres",
       "path": "polygres/cli/troubleshooting.md",
-      "sha256": "39353dc4a531e0790004585baebf1469ed9dc29e569e0fe4cd86605470b87f89",
+      "sha256": "bf52ee0fff4c5ac0d6bdfec4291906405a0cb7cb1158a6b03b1f2372f46a54eb",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/mcp",
       "title": "Connect an MCP client | Polygres",
       "path": "polygres/mcp.md",
-      "sha256": "51a5fbc21d16f16a64b6af9cb0b358940891a9adfb627c8bf4e5b129a427a656",
+      "sha256": "fd36114c7cc62287b9cbc94dc755e3e0a2716edaa0fbda61314db20384c020b7",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/mcp/capabilities",
       "title": "MCP tools and capabilities | Polygres",
       "path": "polygres/mcp/capabilities.md",
-      "sha256": "1b1550e9f34808b05c207ac63ec5fea5d4cf5fb625996f13ffe6c397d7ef0cca",
+      "sha256": "54ae1df95df15dbcf01675a2bbb3235ea5612619cbbb994c7a855d30c7b12efd",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/mcp/confirm-actions",
       "title": "Review and confirm MCP actions | Polygres",
       "path": "polygres/mcp/confirm-actions.md",
-      "sha256": "4718fadb741a43247414d83f7868ee2e49d8754572a6ea50755b710dee2b286c",
+      "sha256": "e16a00e682e1677ea07e97777c9651bea9db62df41dc2467e9863f0edd719942",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/mcp/workflows",
       "title": "Common MCP workflows | Polygres",
       "path": "polygres/mcp/workflows.md",
-      "sha256": "e363f80f12ab4c0aa7f28c987d9f6c079a9feca2547697874b07c739abd187ea",
+      "sha256": "bf7bc1b65f0b0f4296e5ea3d123de148c5098b69c5b1e66ae6b193cc7ed5f431",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/mcp/errors-and-recovery",
       "title": "MCP errors and recovery | Polygres",
       "path": "polygres/mcp/errors-and-recovery.md",
-      "sha256": "d0077c12d3adcf03b76227bf3c6ac27627df2922fffe55000b9bc8a12297a7e3",
+      "sha256": "f22ef884dd37dee5a0357c170ea78e93ce3163b53373f4d6c2d38d592f553adb",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/agent-skills",
       "title": "Polygres Agent Skills | Polygres",
       "path": "polygres/agent-skills.md",
-      "sha256": "c62f2e86725f4e47d2825137cf89f81986b8da6be1e4bb5abffd1eb7bc57487a",
+      "sha256": "686f99b91bf0957713af6bc87e8d4dd79a20615229da8d4bbd360b681168467b",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/sdk",
       "title": "SDK guide | Polygres",
       "path": "polygres/sdk.md",
-      "sha256": "303f0ac4181525ca8e3f798b7022d059e0cbba7b926d517498cb246f82d46115",
+      "sha256": "71171fcab57f84134832ce869316f06ffe2042135cf09d6ebd73596a4bf88e12",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/sdk/python-sdk",
       "title": "Python SDK | Polygres",
       "path": "polygres/sdk/python-sdk.md",
-      "sha256": "ab0b844b63be25310fe35580f080d61835b8c643262efb67d2dab555def88296",
+      "sha256": "bcd68294860461d3f2fa26c4132b0ee54775ba82ab2ceb6dcc36c03c3e4cb611",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/sdk/write-rows",
       "title": "Write rows with Python | Polygres",
       "path": "polygres/sdk/write-rows.md",
-      "sha256": "ae487be4405efadcd92e75e3d0e32967a84736e1c8de839ca06fa8bf4af7c863",
+      "sha256": "76c1e9bd25b994963031a6c9c19332c4722f646f1e583e166ed454496e71e838",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/sdk/retrieval-integration-patterns",
       "title": "Retrieval integration patterns | Polygres",
       "path": "polygres/sdk/retrieval-integration-patterns.md",
-      "sha256": "d1142f027ddee6aff46d454248c0942cbc38cb9aab32a3cd5cc9418889210e40",
+      "sha256": "d6ad02fb25592cf69f19273da8b320928543132b35f3020db8a3f2930514ea5f",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/sdk/configure-retrieval",
       "title": "Dashboard retrieval setup | Polygres",
       "path": "polygres/sdk/configure-retrieval.md",
-      "sha256": "f426676ad3a83b1493ab1709caf143305bea87e85fa7ef1302782ab68de3bdcf",
+      "sha256": "ac21cf4d1cea41102aa417fa4d9f23108fb36a9865858ea5321986bfb5855bbc",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/sdk/connect-your-app",
       "title": "Dashboard connection setup | Polygres",
       "path": "polygres/sdk/connect-your-app.md",
-      "sha256": "fd4bbd7ef32918add1cf73c6155c4cb129cde93bc53dfe4ed4d0d9fa129dee50",
+      "sha256": "f4959f9407e763dbb25b10dfe593137aa5443257713fbf2035684ef9715043a9",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/sdk/connection-examples",
       "title": "Database client examples | Polygres",
       "path": "polygres/sdk/connection-examples.md",
-      "sha256": "aeefc5bb8fe42719bf4e61cfefb178647dcf88085ac29b3cb65499498f2cb570",
+      "sha256": "8765fa98a963397dacb597f81f8d214abeecae6f07dd0d480f450fc48775cce0",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/reference",
       "title": "Reference and troubleshooting | Polygres",
       "path": "polygres/reference.md",
-      "sha256": "79c6645da7ddb06d984d61fdb7c08bad858a8e0a9121d24d0ccd4e52942bf453",
+      "sha256": "c2b49592a160b2f285e49a91146aace9b937cb3deb3c48b38403e945eefcbd22",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/reference/changelog",
       "title": "Changelog | Polygres",
       "path": "polygres/reference/changelog.md",
-      "sha256": "96f9904fa1ead79521bfc4bb371102a49fd6aeae74b0489a811913a555114d10",
+      "sha256": "15120c2946295f6139dfd59493d2e5ec6e7df0c6d59a6488181e437b9055ca41",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/reference/limits",
       "title": "Limits | Polygres",
       "path": "polygres/reference/limits.md",
-      "sha256": "bfd36bc2d7723e7e205ccc89c087b310031a4deab67fa0c1e9f6dede1ce777f3",
+      "sha256": "928fe393b1660634ba6c249ce9ba2768ec3b6afb5f531faa90a05e17b33705b7",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/reference/handling-api-errors",
       "title": "Handle API errors | Polygres",
       "path": "polygres/reference/handling-api-errors.md",
-      "sha256": "8759c52bccd0db99b2253d82ae23fbb4040df6b796d6ccb200d1afc9e211ceb2",
+      "sha256": "8bf52afe09ffa1aa193dda53d0a279e79bfc07225b05be5b20d74d6f699bbe31",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/reference/error-codes",
       "title": "Error codes | Polygres",
       "path": "polygres/reference/error-codes.md",
-      "sha256": "833acb6534abc728d13911e9df0ae27a586906ab3d71960be27d3c4fc586c07b",
+      "sha256": "172c9760d9bf356819c0ba5545eb4e0fa7428863b1d9650f1f48e33764e4c629",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/reference/routes",
       "title": "Runtime routes | Polygres",
       "path": "polygres/reference/routes.md",
-      "sha256": "3eebadd970f522f40ac0e4454603365c47d4f59d753df1e60c8bc93a822d273c",
+      "sha256": "1f650f8a79faf1aef8713f198ab9485269d2f88f77313a94f791a9383127cdaa",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/reference/runtime-row-writes",
       "title": "Runtime Row Writes | Polygres",
       "path": "polygres/reference/runtime-row-writes.md",
-      "sha256": "81b0d4e1ef3ff8daebf1b7c8c2ddab0a2e6e3c4746178dbc00ff3c7ab3b6d328",
+      "sha256": "91aae45d7bac9a860c465f1860f148da9967dded38ae4b7a92d6469d8153a124",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/reference/graph-retrieval-api",
       "title": "Graph Retrieval API | Polygres",
       "path": "polygres/reference/graph-retrieval-api.md",
-      "sha256": "12f975f1076368348505b739f1f184da2d03b7a3b30fd7b7a8b1491a86aa98b0",
+      "sha256": "8b40e1a744fefed58121f2eaa06c6926324449fa6dc84ec612de2c863496f439",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/reference/text-search-api",
       "title": "Text Search API | Polygres",
       "path": "polygres/reference/text-search-api.md",
-      "sha256": "1cbeab427a5aefc02590875fc0640015475c9d94fd97856263e53290c01dc8f6",
+      "sha256": "942af119e925f9be332db91629f5e1b877765cb4faf1ad66771ff11783542f1b",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/reference/pgcontext-api",
       "title": "pgContext API | Polygres",
       "path": "polygres/reference/pgcontext-api.md",
-      "sha256": "4bb0d0e03648d43f90e63cbd26e6ddabc6af99a9fb566645bd4cc31857b97193",
+      "sha256": "9f1490a270aa7aa035dc0ecfc4cd6b0f988d82a6cabf10554a725c925ab5e193",
       "discovered_from": "https://docs.evokoa.com/polygres"
     },
     {
       "url": "https://docs.evokoa.com/polygres/reference/troubleshooting",
       "title": "Troubleshooting | Polygres",
       "path": "polygres/reference/troubleshooting.md",
-      "sha256": "9fac3264641eac82058f7062014df820620a4dafc61059eff1e885c1aa4e03b4",
+      "sha256": "fdf66107cab095c30e5fc68f8984ce6a73adbc938594c67301071698dfbb6c81",
       "discovered_from": "https://docs.evokoa.com/polygres"
     }
   ],

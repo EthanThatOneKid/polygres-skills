@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres
 title: Polygres documentation | Polygres
-source_hash: 2ebb6fa572130598fe133ed2dbd3e6d1fa1c08fd77cb5ad376431991342fbdc5
+source_hash: 0e9752c1fe4f57a018134bfbe055b513c633f6c6db1e329b44f95b49d057c324
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres documentation | Polygres
@@ -49,9 +49,9 @@ Deciding how your team and application should connect? See Dashboard, API, and d
 
 Working from a terminal? Use the Polygres CLI for project setup, imports, migrations, and retrieval configuration.
 
-Want a coding agent to recommend and build a setup from your own data? Start
+Want current Polygres guidance in your coding agent? Start with the Advisor,
 
-with Polygres Agent Skills .
+or install the full Polygres Agent Skills package for local workflows.
 
 Writing individual application records without opening a database connection?
 
@@ -75,7 +75,7 @@ Dashboard, API, and database access Organization plans, credit top-ups, payment 
 
 Billing and credits Terminal workflows for projects, credentials, imports, migrations, and retrieval setup.
 
-Polygres CLI Guided setup, data pipelines, application integration, and troubleshooting with a compatible coding agent.
+Polygres CLI Current guidance through the Advisor, or local skills for setup, data pipelines, application integration, and troubleshooting.
 
 Polygres Agent Skills The shortest complete setup path.
 

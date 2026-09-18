@@ -1,61 +1,79 @@
 source: https://docs.evokoa.com/polygres/agent-skills
 title: Polygres Agent Skills | Polygres
-source_hash: c62f2e86725f4e47d2825137cf89f81986b8da6be1e4bb5abffd1eb7bc57487a
+source_hash: 686f99b91bf0957713af6bc87e8d4dd79a20615229da8d4bbd360b681168467b
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres Agent Skills | Polygres
 
 Polygres Agent Skills
 
-Polygres Agent Skills help coding agents understand your data, use the Polygres
+Polygres Agent Skills help coding agents plan data pipelines, operate projects,
 
-MCP connection, recommend a useful setup, and build or operate it with you. The
+build applications, and diagnose problems. Start with the Advisor to load relevant
 
-plugin includes five skills:
+guidance from skills.polygres.com , or
 
-polygres-data-pipeline helps you bring data from files, databases, APIs, or
-
-conversations into Polygres and make it searchable.
-
-polygres-cli helps you sign in, create projects, import data, apply migrations,
-
-manage keys, and set up search through MCP and the CLI.
-
-polygres-sdk helps you answer questions from your data through MCP and add
-
-search to a Python application.
-
-polygres-retrieval-design inspects your project and compares search options
-
-to help you choose a setup.
-
-polygres-troubleshooting checks connections, projects, imports, and search
-
-to help you resolve issues.
-
-Install the CLI for terminal workflows or the SDK for Python applications, then
-
-add Polygres Agent Skills:
-
-pipx install "polygres-cli==0.5.0"
-
-python -m pip install "polygres-sdk==0.5.0"
-
-npx skills add Evokoa/polygres-skills
-
-With CLI 0.5.0 , you can generate embeddings and search with a question or
-
-phrase. Start with the embedding setup guide ,
-
-then try the search examples .
-
-Find the skills and installation details in
-
-Evokoa/polygres-skills .
+install the full skills package for local guidance, scripts, and templates.
 
 Choose an installation method
 
+Both installation options come from
+
+Evokoa/polygres-skills on GitHub.
+
+Option What you get Choose it when
+
+Advisor only (recommended) One lightweight skill that loads current hosted guidance for your task. Your agent has web access and you want guidance without installing all five skills.
+
+Full skills package Five local skills, helper scripts, and templates. Plugin marketplace installation also configures MCP. You want locally available guidance and execution resources.
+
+Advisor only (recommended)
+
+npx skills add Evokoa/polygres-skills/meta/polygres-advisor
+
+The Advisor fetches the current catalog and follows only the skill and reference
+
+links relevant to your request. Hosted guidance updates are available in new
+
+sessions without reinstalling it. Your agent needs web access to use this option.
+
+The Advisor does not install an MCP connection, CLI, SDK, scripts, or templates.
+
+You can ask for guidance immediately; inspecting or changing a Polygres project
+
+requires an appropriate connection or tool, described below.
+
+Project scope is the default. Add --global to make the Advisor available across
+
+your repositories.
+
+Without installation: pass the URL
+
+Give a web-capable agent the catalog URL with your request:
+
+Use https://skills.polygres.com/index.md to help me choose a retrieval approach
+
+for my application.
+
+Include the URL each time you want the agent to consult the hosted guidance.
+
+Full skills package
+
+Install the full package when you want all five skills and their resources
+
+available locally. Reading installed guidance does not require the hosted
+
+website; project operations still require the appropriate tools and connection.
+
 Compatible Agent Skills installers
+
+Install the full package from GitHub:
+
+npx skills add Evokoa/polygres-skills
+
+This installs skills and their resources, without configuring the plugin’s MCP
+
+connection. Use a plugin marketplace below to install both together.
 
 Install only the operational skill into the current project:
 
@@ -135,7 +153,85 @@ workflow yourself:
 
 /polygres:polygres-troubleshooting
 
+Hosted guidance and Advisor
+
+The Advisor navigates the current hosted catalog and checks its compatibility
+
+metadata against installed clients and available MCP tools. Hosted pages can
+
+change as guidance is published; they are not permanent copies of older versions.
+
+If the website cannot be reached, the Advisor can use compatible installed
+
+guidance when available and identify that fallback. Reading a hosted page does
+
+not download its scripts or templates. Install the full skills package when a
+
+workflow needs those local resources. Repository skill-activation restrictions
+
+and your authorization continue to apply.
+
+Connect tools for project operations
+
+For interactive project work, connect Polygres MCP through a plugin marketplace
+
+above or your project’s Connect → MCP setup instructions. Install the CLI for
+
+terminal workflows or the SDK for Python application code when needed:
+
+pipx install "polygres-cli==0.6.0"
+
+python -m pip install "polygres-sdk==0.5.0"
+
+The skills package’s compatibility record covers MCP catalog 1.0 , CLI 0.4.0
+
+through 0.6.0 , and SDK 0.4.0 through 0.5.0 . Use the installed client’s help
+
+and discovered service capabilities when choosing operations. Automatic chunking
+
+and oversized-recovery workflows require CLI 0.6.0 and a compatible service.
+
+For embeddings and text search, start with the
+
+embedding setup guide , then try the
+
+search examples .
+
+Choose a skill
+
+These five skills are installed with the full package. Their guidance is also
+
+available through the hosted catalog and Advisor:
+
+polygres-data-pipeline helps you bring data from files, databases, APIs, or
+
+conversations into Polygres and make it searchable.
+
+polygres-cli helps you sign in, create projects, import data, apply migrations,
+
+manage keys, and set up search through MCP and the CLI.
+
+polygres-sdk helps you answer questions from your data through MCP and add
+
+search to a Python application.
+
+polygres-retrieval-design inspects your project and compares search options
+
+to help you choose a setup.
+
+polygres-troubleshooting checks connections, projects, imports, and search
+
+to help you resolve issues.
+
 Ask in your own words
+
+With the Advisor, start with a guidance request:
+
+Use $polygres-advisor to help me choose a retrieval approach for my application.
+
+The operational examples below use the MCP connection, CLI, SDK, and local
+
+resources you have configured. Installing the Advisor alone does not supply them.
 
 Describe the result you want in your own words. The agent can select the skill,
 
@@ -208,6 +304,12 @@ The installed polygres --help output remains authoritative if the local CLI
 version differs from the skill examples.
 
 Set up a data pipeline from one prompt
+
+This workflow uses the full package’s local scripts and templates with the
+
+appropriate project connection. If you start through the Advisor, it will
+
+identify the required installed resources.
 
 You can start with a broad request such as “Look at my data and set up
 
@@ -453,9 +555,9 @@ read-only until you approve a separate repair workflow.
 
 Import CSV, TSV, JSON, and JSONL
 
-The CLI imports CSV. For TSV, JSON arrays, and JSONL or NDJSON, the skill can
+The CLI imports CSV. For TSV, JSON arrays, and JSONL or NDJSON, the installed
 
-run its bundled local converter to create a reviewed CSV before invoking
+CLI skill can run its bundled local converter to create a reviewed CSV before invoking
 
 polygres import csv .
 
@@ -479,7 +581,13 @@ export the source to CSV or JSONL before import.
 
 Update
 
-Update a skill installed with the generic installer:
+The Advisor fetches current hosted guidance in new sessions without an installed
+
+update. When the Advisor’s own instructions change, update the installed skill:
+
+npx skills update polygres-advisor
+
+Update the full package’s skills installed with the Agent Skills installer:
 
 npx skills update polygres-data-pipeline
 
@@ -507,7 +615,13 @@ Update the Claude Code marketplace and plugin:
 
 Uninstall
 
-Remove a global generic installation:
+Remove the Advisor from the current project:
+
+npx skills remove polygres-advisor
+
+Add --global if you installed it globally.
+
+Remove a global full-skills installation:
 
 npx skills remove --global polygres-data-pipeline
 

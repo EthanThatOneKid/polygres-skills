@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/mcp
 title: Connect an MCP client | Polygres
-source_hash: fd36114c7cc62287b9cbc94dc755e3e0a2716edaa0fbda61314db20384c020b7
+source_hash: f91f96abf4bf13e228f1319089398dfda6f2931ffdef810149fbc25b46905033
 discovered_from: https://docs.evokoa.com/polygres
 
 # Connect an MCP client | Polygres

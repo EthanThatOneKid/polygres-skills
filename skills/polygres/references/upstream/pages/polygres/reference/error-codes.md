@@ -1,13 +1,13 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: 172c9760d9bf356819c0ba5545eb4e0fa7428863b1d9650f1f48e33764e4c629
+source_hash: 21ec0baf54e1751a1bbb007caae04325640ebd14cefd3950592bb9cf7a7a85ae
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
 
 Error codes
 
-This page lists all 717 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
+This page lists all 721 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
 
 MCP tool errors also include recovery instructions and optional safe context. See MCP errors and recovery for tool-specific handling.
 
@@ -317,6 +317,8 @@ CONTEXT_LIMIT_EXCEEDED/context_exceeds_effective_limit 400 API response + Async 
 
 CONTEXT_LIMIT_EXCEEDED/context_exceeds_effective_graph_limit 400 API response + Async operation after_user_action Context request exceeds the effective graph limit.
 
+CONTEXT_LIMIT_EXCEEDED/context_hnsw_record_limit 400 API response + Async operation after_user_action The selected dimensions exceed the verified HNSW storage budget.
+
 CONTEXT_MEMORY_PRESSURE 409 API response + Async operation after_user_action Memory pressure.
 
 CONTEXT_MEMORY_PRESSURE/context_heavy_work_blocked_by_project 409 API response + Async operation after_user_action Context heavy work is blocked by project memory pressure.
@@ -513,6 +515,8 @@ EMBEDDING_CONFIGURATION_CONFLICT 409 API response + Async operation after_user_a
 
 EMBEDDING_CONFIGURATION_NOT_FOUND 404 API response + Async operation after_user_action The embedding configuration was not found.
 
+EMBEDDING_CONNECTION_CONFLICT 422 API response + Async operation after_user_action This connection ID or endpoint and credential binding is already registered. Select the existing connection or use a new binding.
+
 EMBEDDING_CREDIT_LIMIT_EXCEEDED 409 API response + Async operation after_user_action The project embedding credit limit has been reached.
 
 EMBEDDING_CREDIT_SPENDING_DISABLED 403 API response + Async operation after_user_action Organization credit spending is not enabled for this project. Ask an organization billing administrator to enable it.
@@ -520,6 +524,10 @@ EMBEDDING_CREDIT_SPENDING_DISABLED 403 API response + Async operation after_user
 EMBEDDING_INPUT_TOO_LONG 422 API response + Async operation after_user_action Embedding input exceeds a model, source-record, or chunk limit. Split large records or adjust chunk size and overlap.
 
 EMBEDDING_MODEL_INVALID 422 API response + Async operation after_user_action The embedding model configuration is invalid. Check its endpoint, tokenizer and supported dimensions.
+
+EMBEDDING_MODEL_IN_USE 409 API response + Async operation after_user_action This model has configuration or usage references and cannot be deleted. Retire it instead.
+
+EMBEDDING_MODEL_PROBE_REQUIRED 422 API response + Async operation after_user_action Run a successful source and query provider test for every configured dimension before activating this model.
 
 EMBEDDING_MODEL_UNAVAILABLE 409 API response + Async operation after_user_action This embedding model is unavailable. Select an enabled model or contact an administrator.
 
@@ -544,6 +552,8 @@ EMBEDDING_SERVICE_UNAVAILABLE 503 API response + Async operation after_user_acti
 EMBEDDING_SOURCE_CHANGED 409 API response + Async operation after_user_action The watched source changed or is unavailable. Reconcile the configuration before continuing.
 
 EMBEDDING_SOURCE_INVALID 422 API response + Async operation after_user_action The embedding source requires a text column and a stable, non-null unique row key.
+
+EMBEDDING_TOKENIZER_UNAVAILABLE 422 API response + Async operation after_user_action The tokenizer could not be loaded. Check its encoding name or direct HTTPS artifact URL and SHA-256 checksum.
 
 EMBEDDING_USAGE_CONFLICT 409 API response + Async operation after_user_action Embedding usage conflicts with a recorded request. Reconcile the operation before continuing.
 
@@ -697,7 +707,7 @@ INDEX_INVALID 400 API response + Async operation after_user_action Index invalid
 
 INDEX_NOT_READY 409 API response + Async operation after_user_action Index not ready.
 
-INTERNAL_ERROR 500 API response + Async operation never The authentication request failed. Please wait a while and try again. If it continues, contact support.
+INTERNAL_ERROR 500 API response + Async operation never The request failed unexpectedly. Please wait a while and try again. If it continues, contact support.
 
 INTERNAL_ERROR/unexpected_server_error_occurred 500 API response + Async operation never An unexpected server error occurred.
 

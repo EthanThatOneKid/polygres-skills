@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/configure-retrieval
 title: Dashboard retrieval setup | Polygres
-source_hash: ac21cf4d1cea41102aa417fa4d9f23108fb36a9865858ea5321986bfb5855bbc
+source_hash: 5d81a2d35400a272fe5641ce200cd1776eb91e55385d7bb008b0b4838fccfaa3
 discovered_from: https://docs.evokoa.com/polygres
 
 # Dashboard retrieval setup | Polygres

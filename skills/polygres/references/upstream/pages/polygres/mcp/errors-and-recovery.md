@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/mcp/errors-and-recovery
 title: MCP errors and recovery | Polygres
-source_hash: b158415c03492fa10e83f52c1804b71f0ee9158897fa4a8a38ddec06eb148f1a
+source_hash: 25010bed628b5ab78b97ce3275ff2e9e457ecef9283adc7b5129a0f6258f56e8
 discovered_from: https://docs.evokoa.com/polygres
 
 # MCP errors and recovery | Polygres
@@ -185,7 +185,7 @@ The requested document does not exist Call search_docs , then pass a returned do
 
 A generic operation action is unsupported Use get_operation or wait_for_operation to inspect the operation. Use a supported domain action only when its status permits it.
 
-An existing import cannot be retried Inspect the failure, correct the problem, and check for data already imported before starting a new dashboard import.
+An existing import cannot be retried Inspect the failure, correct the problem, and check for data already imported before starting a reviewed replacement import.
 
 A project is missing a required database access role Contact support with the project and request IDs. Changing tool arguments does not create the missing role.
 
@@ -201,7 +201,7 @@ Operation Follow progress Available recovery path
 
 AI Search get_operation , wait_for_operation , and Context status tools Use retry_operation for an eligible Context failure or cancel_operation for an eligible active operation.
 
-Import list_imports , get_import , get_operation , or wait_for_operation Use cancel_import or cancel_operation for an eligible active import. Start a reviewed replacement from the Import page when needed.
+Import list_imports , get_import , get_operation , or wait_for_operation Use cancel_import or cancel_operation for an eligible active import. Inspect the existing job before retrying a timed-out completion or start. Start a reviewed replacement through MCP or the Import page when needed.
 
 Graph get_graph_status , get_operation , or wait_for_operation Review the current graph status, then prepare the appropriate build or maintenance action.
 

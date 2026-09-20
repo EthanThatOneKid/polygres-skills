@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/mcp/confirm-actions
 title: Review and confirm MCP actions | Polygres
-source_hash: 474fc4f709247b482b48c4f42074d21726fc2ab02f4505fd102cf57921fd8193
+source_hash: 1ff1b70f97c604fc6ca68d15f6ad8da4fc2842448c640046ff8cd5d21cfd792a
 discovered_from: https://docs.evokoa.com/polygres
 
 # Review and confirm MCP actions | Polygres
@@ -51,7 +51,7 @@ Class Examples What the review highlights
 
 Write Create a collection, configure graph, retry synchronization Target and configuration
 
-Destructive Delete points, delete a collection, cancel an import, resnapshot sync Data or state affected
+Destructive Delete points, delete a collection, start or cancel an import, resnapshot sync Data or state affected
 
 Resource intensive Backfill Context points, build graph, run graph maintenance Expected work and project impact
 

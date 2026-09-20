@@ -1,13 +1,13 @@
 source: https://docs.evokoa.com/polygres/mcp/capabilities
 title: MCP tools and capabilities | Polygres
-source_hash: 7cf8d5d3efbf2fb9167bb90c9637048e9a6b83a55c27ff14cc26159cb91e09d7
+source_hash: 55766d5722030784224cd1ef847a4557f4096b59c2ff291c64c4aa357b02e1d3
 discovered_from: https://docs.evokoa.com/polygres
 
 # MCP tools and capabilities | Polygres
 
 MCP tools and capabilities
 
-Polygres MCP catalog 1.0 contains 102 tools. Your client shows the tools that
+Polygres MCP catalog 1.0 contains 117 tools. Your client shows the tools that
 
 match the connection settings, your current Polygres role, the project type,
 
@@ -105,19 +105,39 @@ application needs insert or ignore behavior. For a synchronized project, write
 
 the record to the source PostgreSQL database.
 
-Dashboard imports
+CSV imports
 
-Import tools follow CSV jobs started from the project’s Import page.
+MCP can prepare and start CSV imports for standard projects, and follow jobs
+
+started through MCP or the Dashboard.
+
+Upload tools: create_csv_upload_session returns a short-lived signed URL
+
+for one staged file. An agent with access to the file and an HTTP tool uploads
+
+the bytes directly to storage. complete_csv_upload_session validates the
+
+uploaded size and returns a bounded preview and proposed schema.
+
+Start tool: start_csv_import reviews the exact job, target, mode, columns,
+
+mapping, and parser settings before execution. Import start and replacement
+
+require action-bound destructive confirmation.
 
 View tools: list_imports and get_import .
 
-Change tool: cancel_import stops an eligible job after a destructive
+Cancel tool: cancel_import stops an eligible job after destructive review.
 
-action review.
+Upload, completion, start, and cancellation require import management access
 
-The Dashboard handles file selection, upload, preview, configuration, and job
+and are unavailable on read-only connections or synchronized projects. MCP
 
-start. MCP continues with status, progress, and cancellation.
+accepts metadata, not file bytes or local paths. Signed URLs are temporary
+
+credentials visible to the agent; do not publish them or include them in logs.
+
+The Dashboard remains available when the agent cannot access or upload the file.
 
 Synchronized projects
 
@@ -277,6 +297,94 @@ changes. Once embeddings are available, create a Context collection to use them
 
 for search.
 
+SQL
+
+Enable SQL to use execute_sql on standard projects. Synced projects do not
+
+support SQL access. Pass SQL in arguments.sql and optional $1 , $2 values
+
+in arguments.parameters . Installed Graph, Context, vector, and text functions
+
+are callable through the same tool.
+
+Read-only connections execute one statement through a restricted database role
+
+and a read-only transaction. Write-capable connections also support scripts,
+
+subject to the same SQL restrictions as the existing SQL API. SQL scopes grant
+
+broad database access independently of the Graph and Context feature toggles.
+
+Existing connections must approve mcp:sql:read and, for writes,
+
+mcp:sql:execute .
+
+Results are bounded and include truncation indicators. Only the final statement’s
+
+rows are returned. SQL errors and lost write responses must be inspected before
+
+retrying; execution is never automatically replayed. Some extension inspection
+
+functions perform internal writes and are unavailable in read-only mode,
+
+including graph.status() in the tested pgGraph 0.1.7 runtime.
+
+The tested pgContext 0.2.0-polygres.2 runtime also requires collection ownership
+
+for pgcontext.search() and pgcontext.scroll() . These work with write-capable
+
+SQL credentials but return permission errors for the SQL reader. Read-only SQL
+
+does not bypass extension ownership checks or silently use owner credentials.
+
+Text Search
+
+The Text Search feature configures standalone PostgreSQL full-text and
+
+fuzzy search. Its configurations are separate from Context collections.
+
+Discovery and inspection: discover_text_sources ,
+
+preflight_text_configuration , list_text_configurations ,
+
+get_text_configuration , and get_text_configuration_diagnostics .
+
+Configuration: create_text_configuration , update_text_configuration ,
+
+reindex_text_configuration , and delete_text_configuration .
+
+Retrieval: search_text_tsvector and search_text_fuzzy .
+
+Choose an existing tsvector column or generate one from selected text columns.
+
+Fuzzy search uses a text column and a trigram index. Preflight validates the
+
+source and previews generated-column and index effects without changing data.
+
+Configuration changes require action confirmation and an idempotency_key .
+
+They return durable operations; use get_operation or wait_for_operation
+
+with operation_kind: "text" . Reuse the key with identical arguments after a
+
+transport failure. Use retry_operation with a new key for an eligible failed
+
+operation. cancel_operation requests cancellation of an eligible job.
+
+Text-only connections include operation tools for their text jobs. View tools
+
+require mcp:text:read ; changes require mcp:text:manage . Existing connections
+
+need a newly approved Text Search scope before receiving these tools.
+
+Deleting a configuration removes its index and configuration record, preserving
+
+source rows and any generated tsvector column. search_full_text continues to
+
+execute Context query plans; use search_text_tsvector for a standalone text
+
+configuration.
+
 Graph retrieval
 
 Graph tools cover discovery, configuration, builds, bounded traversal, and
@@ -331,7 +439,7 @@ Use the CLI for migrations, Runtime key management, and interactive database wor
 
 Use the Python SDK for long-running application integrations.
 
-Use the Dashboard for project deletion, project pause and restore, import uploads, and source connection entry.
+Use the Dashboard for project deletion, project pause and restore, and source connection entry.
 
 Use existing pgvector application code for registered legacy vector configurations.
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/mcp
 title: Connect an MCP client | Polygres
-source_hash: f91f96abf4bf13e228f1319089398dfda6f2931ffdef810149fbc25b46905033
+source_hash: 35ff710f2cca00816f7bc73d4ea43a39e3623592e62af6a367399a6c07991852
 discovered_from: https://docs.evokoa.com/polygres
 
 # Connect an MCP client | Polygres
@@ -67,7 +67,7 @@ projects : project details, setup, capacity, and operations
 
 database : table discovery, row reads, validation, and one-row upsert
 
-imports : progress and cancellation for Dashboard imports
+imports : signed CSV uploads, reviewed import start, progress, and cancellation
 
 sync : synchronized-project setup and lifecycle controls
 

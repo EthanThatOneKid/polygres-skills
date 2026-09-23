@@ -1,13 +1,13 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: f9067dcaabdc1330265d761e2e086b5e41f9eb8797c704c77c54960faa7bcd0f
+source_hash: ef95712b28ae845c6c1c411068e4fbc09445f43b401aaa7231a45837fb08072a
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
 
 Error codes
 
-This page lists all 721 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
+This page lists all 729 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
 
 MCP tool errors also include recovery instructions and optional safe context. See MCP errors and recovery for tool-specific handling.
 
@@ -210,6 +210,8 @@ CONTEXT_CAPABILITY_UNAVAILABLE/context_actor_identity_unavailable 409 API respon
 CONTEXT_CAPABILITY_UNAVAILABLE/context_joint_lexical_retrieval_not_configured 409 API response + Async operation after_user_action Context Joint lexical retrieval is not configured.
 
 CONTEXT_CAPABILITY_UNAVAILABLE/project_s_context_runtime_schema_not 503 API response + Async operation after_user_action The project’s Context runtime schema is not ready.
+
+CONTEXT_CAPABILITY_UNAVAILABLE/context_metadata_not_ready 503 API response + Async operation after_user_action Context metadata is not ready. An administrator must reconcile this project’s Context metadata before retrying.
 
 CONTEXT_CAPABILITY_UNAVAILABLE/context_text_hybrid_not_configured 409 API response + Async operation after_user_action Context text hybrid is not configured.
 
@@ -801,6 +803,18 @@ POSTGRES_ANALYTICS_UNAVAILABLE 503 API response + Async operation after_delay Po
 
 PROFILE_NOT_FOUND 404 API response + Async operation after_user_action User profile was not found.
 
+PROJECT_EXPORT_EXPIRED 410 API response + Async operation never Project export has expired. Request a new export.
+
+PROJECT_EXPORT_FAILED 500 API response + Async operation after_delay Project export failed. Request a new export or contact support.
+
+PROJECT_EXPORT_NOT_FOUND 404 API response + Async operation never Project export not found.
+
+PROJECT_EXPORT_NOT_READY 409 API response + Async operation never Project export is not ready for download.
+
+PROJECT_EXPORT_NOT_SUPPORTED 409 API response + Async operation never Managed exports are available only for shared Nano or isolated Basic standard projects.
+
+PROJECT_EXPORT_UNAVAILABLE 503 API response + Async operation after_delay Managed export is currently unavailable for this project.
+
 PROVISIONING_FAILED 500 API response + Async operation after_delay Local runtime provisioning failed.
 
 PROVISIONING_FAILED/local_shared_runtime_pool_provisioning_failed 500 API response + Async operation after_delay Local shared runtime pool provisioning failed.
@@ -1097,9 +1111,15 @@ GRAPH_RELATIONSHIP_TYPE_NOT_FOUND 400 API response + Async operation after_user_
 
 GRAPH_SCHEMA_NOT_ALLOWED 400 API response + Async operation after_user_action Graph configuration cannot reference system schema tables.
 
+GRAPH_SOURCE_PRIVILEGE_REQUIRED 409 API response + Async operation after_user_action Graph requires source schema access, table read access, and permission to install synchronization triggers.
+
 GRAPH_STATUS_UNAVAILABLE 503 API response + Async operation after_delay Graph status is unavailable.
 
 GRAPH_TABLE_NOT_FOUND 400 API response + Async operation after_user_action Graph table not found.
+
+GRAPH_TABLE_NOT_FOUND/missing_source 400 API response + Async operation after_user_action A configured Graph source table no longer exists. Restore it, or remove it and its dependent relationships and filters from the Graph configuration, then rebuild.
+
+With context: Graph source table {schema}.{table} no longer exists. Restore the table, or remove it and its dependent relationships and filters from the Graph configuration, then rebuild.
 
 GRAPH_TENANT_AMBIGUOUS 400 API response after_user_action Graph tenant filters must resolve to one tenant value.
 
@@ -1731,6 +1751,12 @@ PROJECT_TIER_UNAVAILABLE 409 API response + Async operation after_user_action Pr
 
 PROJECT_TIER_UNAVAILABLE/project_tier_not_configured 409 API response + Async operation after_user_action Project tier is not configured.
 
+PROJECT_TIER_UNAVAILABLE/basic_worker_capacity_unavailable 409 API response + Async operation after_user_action No compatible capacity is available for this upgrade. No payment was taken. Try again later.
+
+PROJECT_TIER_UNAVAILABLE/basic_relocation_confirmation_required 409 API response + Async operation after_user_action This upgrade now requires moving your database and may take a few minutes. Review and confirm the upgrade again.
+
+PROJECT_TIER_UNAVAILABLE/basic_relocation_preflight_unavailable 409 API response + Async operation after_user_action Upgrade placement could not be verified. No payment was taken. Try again later.
+
 RUNTIME_DELETION_STILL_IN_PROGRESS 202 API response + Async operation after_delay Project deletion is still in progress. Polygres will continue checking the runtime.
 
 TIER_LIMIT_INVALID 500 API response + Async operation after_delay Tier project_limit must be a non-negative integer.
@@ -2178,6 +2204,8 @@ TEXT_CONFIGURATION_INVALID/tsvector_column_conflicts_with_setup 400 API response
 TEXT_CONFIGURATION_INVALID/tsvector_setup_only_valid_for_tsvector_search 400 API response + Async operation after_user_action TSVector setup is only valid for tsvector search.
 
 TEXT_CONFIGURATION_KIND_MISMATCH 400 API response + Async operation after_user_action Text configuration kind does not match endpoint.
+
+TEXT_CONFIGURATION_MIGRATION_REQUIRED 409 API response + Async operation after_user_action Text Search configuration requires a database migration. Contact your administrator.
 
 TEXT_CONFIGURATION_NOT_FOUND 404 API response + Async operation after_user_action Text configuration not found.
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/connection-examples
 title: Database client examples | Polygres
-source_hash: 07d8344c6df3f93d33f944a7dfb08145a8638e46bb903b1b65dea63805b24716
+source_hash: 62d4fd3b9df746fc231cfaa49ba249189a1c0ff481387bbb039313505e31136e
 discovered_from: https://docs.evokoa.com/polygres
 
 # Database client examples | Polygres
@@ -50,6 +50,12 @@ COPY , pg_dump , and restore operations,
 bulk ingestion and sustained background writes,
 
 tools that are incompatible with transaction pooling.
+
+For standard Nano and Basic projects, create database exports with the
+
+export API . Polygres prepares a PostgreSQL archive
+
+for you to download and restore using your usual tools.
 
 A service can use both: pooled for runtime queries and direct for migrations or maintenance. Prisma is a current exception: the public direct TLS endpoint is not production-safe for Prisma migration or CLI workflows.
 

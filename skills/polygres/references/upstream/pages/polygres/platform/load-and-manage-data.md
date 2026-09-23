@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/load-and-manage-data
 title: Load and manage data | Polygres
-source_hash: c0cf32e6eb604ec907226336ce620152eed175f6824f39bfbf636f5f66b0a8d0
+source_hash: 00f7cddb8c7590ca51b2cbde42281a0a7df81a2e4f5d94c233203b9062209641
 discovered_from: https://docs.evokoa.com/polygres
 
 # Load and manage data | Polygres
@@ -184,6 +184,16 @@ Start the import.
 Monitor the job until it reaches Succeeded or Failed .
 
 Polygres checks SQL imports against the dashboard’s SQL policy before execution. When a statement is blocked, remove or replace the unsupported operation rather than repeatedly resubmitting the same file.
+
+Export your database
+
+Use the export API to download your standard Nano or
+
+Basic project’s tables and data as a PostgreSQL archive. Your export includes
+
+custom schemas and is prepared in the background. Download it within 24 hours of
+
+requesting it, then restore it with pg_restore or the dashboard import tool.
 
 Restore a pg_dump file
 

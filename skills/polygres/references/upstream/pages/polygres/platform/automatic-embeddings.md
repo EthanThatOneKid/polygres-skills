@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/automatic-embeddings
 title: Automatic embeddings | Polygres
-source_hash: 4c18b77cdfa489003c7f93c18ab7e17daf8c7b5ab6fb342fdccf62749e474a82
+source_hash: a252896cc24fdd9f5cb5709f72eb4c6002fa3e657014a9ecd8ab993c57de460f
 discovered_from: https://docs.evokoa.com/polygres
 
 # Automatic embeddings | Polygres

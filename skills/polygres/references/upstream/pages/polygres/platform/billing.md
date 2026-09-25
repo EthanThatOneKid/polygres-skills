@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/billing
 title: Billing and credits | Polygres
-source_hash: c386be8681f5db7c6464e39cbcefffbf9f9ef7d261b729e89a28a13b22a7caaa
+source_hash: 5f91f865b772e7df32576f1c5e729c1de658cc2b9862eedd2b5ca9c58537095d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Billing and credits | Polygres

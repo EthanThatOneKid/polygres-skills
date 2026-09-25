@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/pgcontext-api
 title: pgContext API | Polygres
-source_hash: 8b4730509eb2beb7adc5196b44696e967c830171a13a9a2e02c9901a21c66a8b
+source_hash: 8ba7df3bcdfca5614d124e252bd57e96ceca2358484105a3b3efca800a248aed
 discovered_from: https://docs.evokoa.com/polygres
 
 # pgContext API | Polygres
@@ -860,3 +860,23 @@ default.
 Use diagnostics when serving is degraded or blocked.
 
 For an interactive workflow that generates idempotency keys and waits for operations, use the pgContext CLI guide .
+
+Use collection aliases for reads
+
+An alias gives your application a stable name for a collection. Supported
+
+collection reads and searches resolve aliases as well as their existing
+
+collection identifiers. For example, an alias named support_current can point
+
+to the collection your application searches:
+
+results = project.context.search( "support_current" , text = "Reset my password" )
+
+This example uses an existing alias and a collection configured for text-based
+
+semantic queries. Create and manage aliases with the collection alias API or SDK.
+
+For changes to collections, vectors, filters, or points, use the identifier
+
+required by that operation. Read alias support leaves those requirements intact.

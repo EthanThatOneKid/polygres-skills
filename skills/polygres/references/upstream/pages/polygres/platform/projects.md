@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects
 title: Projects | Polygres
-source_hash: dcbb05a3d6a563b7a6aacd1e9af0d9d797afb65a0bec16dd64f0b60b2cb1efc0
+source_hash: d59afdbf9752164efde2d12477a6c54d166448685c987b683c880dac64786dde
 discovered_from: https://docs.evokoa.com/polygres
 
 # Projects | Polygres
@@ -94,6 +94,16 @@ For an active hosted project, the Configuration card shows the selected
 Storage, Context, and Graph limits alongside current measured usage. Storage
 
 measurements refresh while the project page is active.
+
+Restore an archived project
+
+An archived project keeps its saved data while database access is paused. Open
+
+the project and select Restore project to return to your data and tools.
+
+See Project pausing for status
+
+messages, progress, and synced-project guidance.
 
 Recover from a provisioning failure
 

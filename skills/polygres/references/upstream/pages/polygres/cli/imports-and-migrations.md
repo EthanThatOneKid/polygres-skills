@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/imports-and-migrations
 title: CLI imports and migrations | Polygres
-source_hash: 6228826622e830de6dcd00d72968a220cff099d0c9d1e78e9f51daaf87c09d71
+source_hash: a89e4304a6b12d86193d3750f4a2782823085af6562cf4436d27b6f30bfa8609
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI imports and migrations | Polygres

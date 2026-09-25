@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/agent-skills
 title: Polygres Agent Skills | Polygres
-source_hash: b327343bbfabbfe8a30ade307dccd0903fb9b6fe3d02dc6c60a62716bfc62e13
+source_hash: 0fa1ddfe7d94efdc0a2df188f78fc2377a3e880fe568bd877b01b086295a4d39
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres Agent Skills | Polygres
@@ -179,9 +179,9 @@ above or your project’s Connect → MCP setup instructions. Install the CLI fo
 
 terminal workflows or the SDK for Python application code when needed:
 
-pipx install "polygres-cli==0.6.0"
+pipx install "polygres-cli==0.7.0"
 
-python -m pip install "polygres-sdk==0.5.0"
+python -m pip install "polygres-sdk==0.6.0"
 
 The skills package’s compatibility record covers MCP catalog 1.0 , CLI 0.4.0
 

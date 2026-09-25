@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/project-exports
 title: Project exports | Polygres
-source_hash: 64a90346ff92ff3daf1fbad24d654cffe1f23e324b88ba199f67db38807b2ba2
+source_hash: 5cbe6af4c30c81e1de0e75d61e4c8c909985689496aee38dd15f9ea2fdb6296d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Project exports | Polygres

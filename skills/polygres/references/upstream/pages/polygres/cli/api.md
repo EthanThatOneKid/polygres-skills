@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/api
 title: Generic API routes | Polygres
-source_hash: 526cc4cbaa9e6cf2fa49af75f87ea1867c1ab82792d1e7e4ba3aed2c7b16d5c8
+source_hash: 011cc5b0471cecfc021fe93ae6e5e44b5b7356e84d398fcd49c6ee3c74f13163
 discovered_from: https://docs.evokoa.com/polygres
 
 # Generic API routes | Polygres
@@ -193,6 +193,6 @@ Text input requires CLI 0.5.0 or newer and a Runtime that supports query
 
 embedding generation. If you use an earlier CLI version,
 
-upgrade to 0.6.0 . Existing
+upgrade to 0.7.0 . Existing
 
 vector requests continue to work.

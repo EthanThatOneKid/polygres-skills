@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/context
 title: CLI AI Search with pgContext | Polygres
-source_hash: d252e243c6b385334f508c20983d777cb4fea729ef8d9c18424ab78af2513405
+source_hash: 42012c534fc7123c35a31d9aafe2467fe861cae46008535a8fe4e57f6629dfe9
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI AI Search with pgContext | Polygres
@@ -11,7 +11,7 @@ AI Search is the collection-based retrieval product backed by pgContext Preview.
 
 Install the current CLI and confirm the version before using the Context namespace:
 
-pipx install "polygres-cli==0.6.0"
+pipx install "polygres-cli==0.7.0"
 
 polygres --version
 
@@ -531,7 +531,7 @@ Your existing vector queries continue to work, including through api request .
 
 Text input requires CLI 0.5.0 or newer. If you use an earlier version,
 
-upgrade to 0.6.0 .
+upgrade to 0.7.0 .
 
 Dense:
 

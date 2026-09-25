@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/automatic-embeddings
 title: Automatic embeddings | Polygres
-source_hash: a252896cc24fdd9f5cb5709f72eb4c6002fa3e657014a9ecd8ab993c57de460f
+source_hash: b422d6626e7dd0cc820cefc4c77d18ad0532a346fa56e6e6fc016d21d7600a4e
 discovered_from: https://docs.evokoa.com/polygres
 
 # Automatic embeddings | Polygres
@@ -438,3 +438,15 @@ retry failed rows from your terminal. It follows the same rules as dashboard
 recovery. See Retry rows whose text is too long
 
 for the preview and confirmation commands.
+
+Understand the Generated count
+
+Generated is the total number of successful row generations over time.
+
+Generating the same row again adds to this count. Updating or deleting source
+
+rows leaves the historical total unchanged.
+
+Use the current row and processing status to check today’s progress. The
+
+Generated total can be higher than the number of rows currently in your table.

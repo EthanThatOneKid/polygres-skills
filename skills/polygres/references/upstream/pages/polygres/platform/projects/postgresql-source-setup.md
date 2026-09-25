@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects/postgresql-source-setup
 title: PostgreSQL Sync Setup Guides | Polygres
-source_hash: 320cd3c43142852fc5cd69828d98411b64ad019bed91a7995efab0585bb6cff0
+source_hash: f86943e517dc13cef2329b4609d895e4a46be52b68f7a83239e502e6e4952c4b
 discovered_from: https://docs.evokoa.com/polygres
 
 # PostgreSQL Sync Setup Guides | Polygres

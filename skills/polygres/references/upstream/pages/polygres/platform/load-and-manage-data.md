@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/load-and-manage-data
 title: Load and manage data | Polygres
-source_hash: 00f7cddb8c7590ca51b2cbde42281a0a7df81a2e4f5d94c233203b9062209641
+source_hash: 0b33a372b53b47af100988a0ee221532b03abba7fd477257a4d554d328ae896a
 discovered_from: https://docs.evokoa.com/polygres
 
 # Load and manage data | Polygres
@@ -166,6 +166,14 @@ Choose Create new table , Append to existing , or Replace existing .
 Select the target schema and table name, then review or adjust column mapping. Replace existing empties the selected table before loading the new rows and requires destructive confirmation.
 
 Start the import and monitor it in Import history .
+
+Review the delimiter and header settings against the preview before importing.
+
+Quoted fields can contain line breaks; review these as one cell. If a row has a
+
+different number of fields from the expected columns, correct its delimiters or
+
+quoting in the source file and preview it again.
 
 Review inferred types before importing. An identifier with leading zeros, a mixed-format date column, or a mostly empty field can be inferred differently from what the application expects. For append mode, each source column must map to a compatible destination column.
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/mcp/workflows
 title: Common MCP workflows | Polygres
-source_hash: 2f350a8ea94b7765c62c08e881e9059b794a423c2163d4177b0a6c9d193becf9
+source_hash: b6ff5364ea2fac740e08c90f8a3acfeaa01810fdfa1b44fd05548293817ee491
 discovered_from: https://docs.evokoa.com/polygres
 
 # Common MCP workflows | Polygres

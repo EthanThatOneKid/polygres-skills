@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/installation-and-authentication
 title: CLI installation and authentication | Polygres
-source_hash: cb83f57eccd7960c6ea864ca0e7454f418c151e07ecdd3e4b39aad6675715ac1
+source_hash: 32e4bf35b324f424df912aa9fb704fab3e812ebbe89fccef20cf462ed2c12592
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI installation and authentication | Polygres
@@ -11,7 +11,7 @@ The Polygres CLI requires Python 3.10 or newer. Install polygres-cli with pipx
 
 to give the CLI its own Python environment:
 
-pipx install "polygres-cli==0.6.0"
+pipx install "polygres-cli==0.7.0"
 
 polygres --version
 
@@ -21,7 +21,7 @@ python -m venv .venv
 
 . .venv/bin/activate
 
-pip install "polygres-sdk==0.5.0"
+pip install "polygres-sdk==0.6.0"
 
 Package split migration
 
@@ -31,7 +31,7 @@ polygres-cli and polygres-sdk packages. For a pipx installation:
 
 pipx uninstall polygres
 
-pipx install "polygres-cli==0.6.0"
+pipx install "polygres-cli==0.7.0"
 
 polygres --version
 
@@ -39,37 +39,43 @@ For an application virtual environment that needs both tools:
 
 pip uninstall polygres
 
-pip install "polygres-sdk==0.5.0"
+pip install "polygres-sdk==0.6.0"
 
-pip install --force-reinstall "polygres-cli==0.6.0"
+pip install --force-reinstall "polygres-cli==0.7.0"
 
 polygres --version
 
-Check that polygres --version reports 0.6.0 . Your saved sign-in is preserved;
+Check that polygres --version reports 0.7.0 . Your saved sign-in is preserved;
 
 the CLI will prompt you to sign in again when your session needs renewal.
 
-Upgrade to 0.6.0
+Upgrade to 0.7.0
 
-CLI 0.6.0 adds commands to retry rows whose text was too long and to watch
+CLI 0.7.0 shows clear archive statuses and restoration guidance. It also
 
-embedding progress. New configurations use automatic chunking by default.
+updates error exit codes for archive, export, and embedding operations.
 
 For a pipx installation:
 
-pipx install "polygres-cli==0.6.0" --force
+pipx install "polygres-cli==0.7.0" --force
 
 polygres --version
 
 For an application virtual environment:
 
-pip install --upgrade "polygres-cli==0.6.0"
+pip install --upgrade "polygres-cli==0.7.0"
 
 polygres --version
 
-Your existing commands, JSON output, and saved sign-in keep working. Existing
+Existing command syntax and saved sign-in remain supported. Project status
 
-embedding configurations keep their settings.
+JSON now includes archive details. Review the
+
+exit-code changes
+
+if your scripts handle specific error codes. Existing embedding configurations
+
+keep their settings.
 
 Next steps:
 

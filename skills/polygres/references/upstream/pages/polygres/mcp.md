@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/mcp
 title: Connect an MCP client | Polygres
-source_hash: eb5db3de310af58ee59bcdb0863d332ffc59e48ed31f5449c7e371818ac4edb4
+source_hash: 565849118936f0e3c3e5d6cd344ee07d6038515d408a1854d98a623a608ad168
 discovered_from: https://docs.evokoa.com/polygres
 
 # Connect an MCP client | Polygres
@@ -120,3 +120,25 @@ https://mcp.polygres.com/mcp
 The connection builder adds your selected project, access level, and feature
 
 groups. Copy the generated address into the client setup shown on the page.
+
+Connect with Cursor or another client
+
+In Connect > MCP , choose Cursor for workspace setup instructions. Copy
+
+the generated configuration into .cursor/mcp.json , keeping your other MCP
+
+servers. Authenticate through Cursor’s MCP controls and enable Polygres for
+
+Agent. Ask it to read the selected project’s details to check the connection.
+
+Choose General for another client that supports Streamable HTTP MCP and
+
+browser authorization. Copy the full generated URL into that client’s MCP
+
+settings, including its project and access parameters. Complete browser sign-in,
+
+then request a simple project read to confirm access.
+
+If the client already has a Polygres connection, compare its URL with the one
+
+shown in the dashboard before replacing it.

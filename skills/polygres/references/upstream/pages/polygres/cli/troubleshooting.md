@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/troubleshooting
 title: CLI troubleshooting | Polygres
-source_hash: 903e864b494609e4fde226e9ee50976f314081cb79bd0340b861b0f7f0e133c1
+source_hash: bd52c884a6e71b930a1317cfa33a62204d75643961941a0fa4c08eada7e38a11
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI troubleshooting | Polygres
@@ -9,7 +9,7 @@ CLI troubleshooting
 
 Symptom Action
 
-You need the embedding commands Install CLI 0.6.0 with pipx install "polygres-cli==0.6.0" --force , or pip install --upgrade "polygres-cli==0.6.0" in your app virtual environment. Check the version with polygres --version . See upgrade guidance .
+You need the embedding commands Install CLI 0.7.0 with pipx install "polygres-cli==0.7.0" --force , or pip install --upgrade "polygres-cli==0.7.0" in your app virtual environment. Check the version with polygres --version . See upgrade guidance .
 
 Exit 3 or “Run polygres login ” Run polygres login , then confirm with polygres --json whoami .
 
@@ -43,7 +43,7 @@ You need to delete a project Use the dashboard project lifecycle controls .
 
 Embedding generation and recovery
 
-Use CLI 0.6.0 and select a project first. Replace CONFIGURATION_ID with the ID
+Use CLI 0.7.0 and select a project first. Replace CONFIGURATION_ID with the ID
 
 from polygres embeddings list .
 
@@ -63,7 +63,7 @@ Watching timed out Server processing continues. Check progress or run the watch 
 
 A previous request is awaiting recovery or investigation Read its status for updates. Polygres checks for saved results; rows awaiting these checks are excluded from the chunking retry.
 
-The recovery command or option is unrecognized Check polygres --version and upgrade to 0.6.0 .
+The recovery command or option is unrecognized Check polygres --version and upgrade to 0.7.0 .
 
 The CLI reports that the server does not support automatic chunking or recovery Contact Polygres support with the error and request ID.
 
@@ -124,3 +124,17 @@ contacting support. Preserve collection and operation UUIDs for pgContext
 workflows. See reference troubleshooting for
 
 dashboard and runtime guidance.
+
+A project is archived
+
+Open the project in the dashboard and select Restore project . While the
+
+status is Archiving or Restoring , follow its progress before retrying
+
+database requests. See restoration steps .
+
+CLI 0.7.0 adds these states to project list and status output. Older versions may
+
+still show the provisioning status, such as Ready; check the dashboard for the
+
+project’s archive state.

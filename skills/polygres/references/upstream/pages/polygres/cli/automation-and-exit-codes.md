@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/automation-and-exit-codes
 title: CLI automation and exit codes | Polygres
-source_hash: 17b22a2d1c97bb120309a43b193db4707d165e32b9fba56e21132ee580809453
+source_hash: 97b138892edf7c6ca77614bee15ff0f9066beac788279e174a88487d7bcbf1c6
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI automation and exit codes | Polygres

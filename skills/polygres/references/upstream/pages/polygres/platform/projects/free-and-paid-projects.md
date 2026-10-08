@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects/free-and-paid-projects
 title: Free and Paid projects | Polygres
-source_hash: a091546c00dc9553ba7b8bc3adc6ee4bad9b6124dbacd804d737e08536b12e5d
+source_hash: 909db3f73eeb3670a191eae727db51bcc59af5b8d24c930ab91d0617e6ba58a5
 discovered_from: https://docs.evokoa.com/polygres
 
 # Free and Paid projects | Polygres

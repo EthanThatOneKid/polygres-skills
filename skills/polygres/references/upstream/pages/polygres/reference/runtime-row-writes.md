@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/runtime-row-writes
 title: Runtime Row Writes | Polygres
-source_hash: f473c3e2022c084619a76383412427e21cea53a67e9cc7713ec44f2abadde8b3
+source_hash: 175f264eb578bf1acf12ac1768b060096c12393f3efdd633bbc1ae6865e77a8c
 discovered_from: https://docs.evokoa.com/polygres
 
 # Runtime Row Writes | Polygres

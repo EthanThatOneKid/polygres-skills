@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/mcp/errors-and-recovery
 title: MCP errors and recovery | Polygres
-source_hash: f766a2f26881e15416f56b5810ca461f8d12c85bb7a75115d6ff72fe8ad80c22
+source_hash: 3ee558c88b2f45bb1a580c437e765d738e37b4bfda3301b613647e6c52d42006
 discovered_from: https://docs.evokoa.com/polygres
 
 # MCP errors and recovery | Polygres

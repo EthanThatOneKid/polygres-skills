@@ -1,63 +1,11 @@
 source: https://docs.evokoa.com/polygres/reference/changelog
 title: Changelog | Polygres
-source_hash: 3f471e0a18e5d4e1b87ee9c9e6c208a15a3205609d5cecf789fdae1be2bfa94d
+source_hash: e4763f2402e64e8bc015eb96db844e5e196f669780a1d4b18a42c5985f8a8219
 discovered_from: https://docs.evokoa.com/polygres
 
 # Changelog | Polygres
 
 Changelog
-
-2026-09-24
-
-Restore archived projects
-
-Free Nano projects may be archived after a period of inactivity. Your data is
-
-saved while the project is archived.
-
-To use your project again, open it in the dashboard and select Restore
-
-project . Your data and search tools become available once restoration finishes.
-
-You can leave the page while it runs.
-
-Restore your project .
-
-CLI 0.7.0 and Python SDK 0.6.0
-
-The CLI and SDK now provide clear messages when a project is archived due to
-
-inactivity.
-
-Upgrade the CLI or
-
-upgrade the Python SDK .
-
-If your scripts or applications handle specific errors, check the
-
-CLI exit-code changes
-
-and SDK compatibility notes .
-
-Export your database
-
-Download a hosted Nano or Basic project’s tables and data as a PostgreSQL
-
-backup file. Keep a copy for your records or restore it to another PostgreSQL
-
-database. Exports are available through the API.
-
-Export your database .
-
-Connect Cursor to Polygres
-
-Your Cursor agent can work with your Polygres project through MCP. Open
-
-Connect > MCP , choose Cursor , and follow the setup instructions. You
-
-choose which project and features it can access, and whether it can make changes.
-
-Connect Cursor .
 
 2026-09-17
 

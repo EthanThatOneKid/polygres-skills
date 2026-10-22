@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/reference/handling-api-errors
 title: Handle API errors | Polygres
-source_hash: cbb814363e196aa20f812ca411e8d4cb9a5c33b5adb3807cee44ad1d252b5017
+source_hash: f47a9ed842bb1fbe4e0cbec90e263e0105e569b7ff13dea7ec6fc9fb0ea25ad8
 discovered_from: https://docs.evokoa.com/polygres
 
 # Handle API errors | Polygres
@@ -260,31 +260,3 @@ headers, full SQL containing sensitive values, uploaded file contents, or
 personal data. For a gateway-proxied request, preserve both X-Request-ID and
 
 X-Polygres-Upstream-Request-ID when present.
-
-Archived projects
-
-An updated Runtime returns HTTP 409 with PROJECT_ARCHIVED when an
-
-authenticated request targets a project whose archive state blocks access.
-
-The error details include archive_state :
-
-State Next step
-
-archiving Wait for archiving to finish.
-
-archived Restore the project from its dashboard page.
-
-restoring Wait for restoration to finish, then retry.
-
-Display the supplied message and use code and details.archive_state for
-
-application decisions. Retry after the project becomes available. See
-
-Project pausing .
-
-Earlier Runtime versions returned RUNTIME_PROJECT_NOT_FOUND with HTTP 404
-
-for archived projects. See SDK compatibility guidance
-
-when updating an application’s exception handling.

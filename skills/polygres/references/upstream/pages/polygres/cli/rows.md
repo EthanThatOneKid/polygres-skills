@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/rows
 title: Write rows | Polygres
-source_hash: a054debc8496570f5aa83e59db6047cac5375fc7840ed32f0b4eabcef0a7af2f
+source_hash: a900cbbfb7e744ffd4088b097accb938f99df0f86be3fa8631ff21d760d14a14
 discovered_from: https://docs.evokoa.com/polygres
 
 # Write rows | Polygres
@@ -25,7 +25,7 @@ Install or upgrade
 
 Row commands require CLI 0.3.0 or newer:
 
-pipx install "polygres-cli==0.7.0" --force
+pipx install "polygres-cli==0.6.0" --force
 
 polygres --version
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/platform/projects/sync-postgresql
 title: Create a Synced PostgreSQL Project | Polygres
-source_hash: 91f8401ba01fe09856a9dec9aa8c0c8b8520ff7516f854a104b05f77c7e07561
+source_hash: 8a5621c8f9eea0eccceb44eb849a3dc4063b8260c7186b259d1bdd01b0d2ddbb
 discovered_from: https://docs.evokoa.com/polygres
 
 # Create a Synced PostgreSQL Project | Polygres
@@ -392,17 +392,3 @@ See the
 PostgreSQL sync setup guides for
 
 standard PostgreSQL, Neon, Supabase, and PlanetScale instructions.
-
-Restore a synced project
-
-When a Free Nano synced project is archived, synchronization and retrieval are
-
-paused. Your source PostgreSQL database remains the source of truth.
-
-Restore the project from the dashboard .
-
-Polygres copies the source again and catches up with changes before bringing the
-
-project back online. Keep the source connection available and follow the
-
-synchronization progress before resuming retrieval.

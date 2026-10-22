@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/python-sdk
 title: Python SDK | Polygres
-source_hash: d75ca92797ddf95df51197b72b056edda36e91177c7476631fb58a8fc674d7c6
+source_hash: c7ec9bcc1cdd0906a81f7c711b30b41c1f031917cc5efa4d06d418c829c1960e
 discovered_from: https://docs.evokoa.com/polygres
 
 # Python SDK | Polygres
@@ -13,11 +13,11 @@ Installation
 
 Install the package via pip:
 
-pip install "polygres-sdk==0.6.0"
+pip install "polygres-sdk==0.5.0"
 
 To upgrade an existing environment:
 
-pip install --upgrade "polygres-sdk==0.6.0"
+pip install --upgrade "polygres-sdk==0.5.0"
 
 Quick Start
 
@@ -594,65 +594,3 @@ If your backend application needs to establish a pooled database connection
 credentials. See the Database Client Examples
 
 guide for Python setup instructions.
-
-Handle an archived project
-
-SDK 0.6.0 adds PolygresProjectArchivedError for requests to archived projects.
-
-With SDK 0.6.0 and an updated Runtime, catch the archive error to show the next
-
-step to your user:
-
-import os
-
-from polygres import Polygres, PolygresProjectArchivedError
-
-from polygres.errors import PolygresAPIError
-
-with Polygres(
-
-api_key = os.environ[ "POLYGRES_API_KEY" ],
-
-runtime_url = os.environ[ "POLYGRES_RUNTIME_URL" ],
-
-) as client:
-
-try :
-
-readiness = client.project().readiness()
-
-except PolygresProjectArchivedError as error:
-
-print ( str (error))
-
-print ( "Project state:" , error.details.get( "archive_state" ))
-
-except PolygresAPIError as error:
-
-print ( str (error))
-
-print ( "Request ID:" , error.request_id)
-
-Configure POLYGRES_API_KEY and POLYGRES_RUNTIME_URL as shown in Quick Start.
-
-For an archived project, restore it in the dashboard .
-
-For an archiving or restoring project, wait for the operation to finish before
-
-retrying. The SDK leaves restoration and subsequent requests under your control.
-
-Existing applications
-
-The new exception inherits from PolygresAPIError , so handlers for that base
-
-class continue to work. SDK 0.5.0 receives the updated Runtime’s HTTP 409
-
-PROJECT_ARCHIVED response as a generic PolygresAPIError ; check its code .
-
-Earlier Runtime versions returned HTTP 404 for archived projects, which maps
-
-to PolygresNotFoundError . If your application handles that exception alone,
-
-add archive handling and keep a PolygresAPIError fallback. An older Runtime
-
-continues to return the earlier response even with the new SDK.

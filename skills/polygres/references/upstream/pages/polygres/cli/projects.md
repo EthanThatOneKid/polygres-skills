@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli/projects
 title: CLI projects | Polygres
-source_hash: 544aaee203204871f410f0ac069629f8557a1a0813e6cb52287e67e938c4f8fc
+source_hash: 6c7d0cc1df7f8583b249a5227c9696b3c9cd9ff0c5ea90f05c1f0b41ab1cdd0e
 discovered_from: https://docs.evokoa.com/polygres
 
 # CLI projects | Polygres
@@ -276,37 +276,3 @@ continuously brings those changes into the synced project.
 Use the dashboard to update the selected tables and to access the sync actions
 
 currently available for the project.
-
-Archived project status
-
-CLI 0.7.0 shows the archive state alongside guidance for using the project again.
-
-polygres projects list
-
-polygres projects status
-
-polygres --json projects status
-
-The human-readable status shows Archiving , Archived , or Restoring ,
-
-with guidance for the next step. For an archived project, the guidance is:
-
-This project is archived. Restore it in the Polygres dashboard to resume database access.
-
-Open the dashboard to restore the project .
-
-A successful status check exits with code 0 , including for archived projects.
-
-Database commands blocked by PROJECT_ARCHIVED exit with code 8 in CLI 0.7.0.
-
-In JSON status output, project.archive_state describes the archive lifecycle.
-
-The existing project.status remains the provisioning status. Use
-
-archive_state when deciding whether the project is active. Status output also
-
-includes archived_at and the latest archive_operation when available.
-
-See CLI 0.7.0 exit-code changes
-
-if your scripts handle particular exit codes.

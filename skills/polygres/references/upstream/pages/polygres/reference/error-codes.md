@@ -1,13 +1,13 @@
 source: https://docs.evokoa.com/polygres/reference/error-codes
 title: Error codes | Polygres
-source_hash: 55a0b2623e894306b4e7a7f811fdcf91a12d2391f9a85200b52683bbb4b4a3bc
+source_hash: 92db91d4d8841714f3a1a315a4701f69a71dcab795c804cb6bf0ad4a2cddf95d
 discovered_from: https://docs.evokoa.com/polygres
 
 # Error codes | Polygres
 
 Error codes
 
-This page lists all 736 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
+This page lists all 729 public error codes that can appear in Polygres API responses and asynchronous operation results. Use it to look up an error’s exact message, HTTP status, and retry guidance.
 
 MCP tool errors also include recovery instructions and optional safe context. See MCP errors and recovery for tool-specific handling.
 
@@ -803,24 +803,6 @@ POSTGRES_ANALYTICS_UNAVAILABLE 503 API response + Async operation after_delay Po
 
 PROFILE_NOT_FOUND 404 API response + Async operation after_user_action User profile was not found.
 
-PROJECT_ARCHIVED 409 API response + Async operation after_user_action This project is archived or changing its archive state.
-
-PROJECT_ARCHIVED/archiving 409 API response + Async operation after_user_action This project is being archived. Database access is unavailable until it is restored.
-
-PROJECT_ARCHIVED/archived 409 API response + Async operation after_user_action This project is archived. Restore it in the Polygres dashboard to resume database access.
-
-PROJECT_ARCHIVED/restoring 409 API response + Async operation after_user_action This project is being restored. Wait for restoration to finish, then retry.
-
-PROJECT_ARCHIVE_CONFLICT 409 API response + Async operation after_delay Another project lifecycle operation is in progress or the project state does not allow this action.
-
-PROJECT_ARCHIVE_FAILED 503 API response + Async operation after_delay Project archival needs administrator attention. Your recoverable data has been retained.
-
-PROJECT_ARCHIVE_INTERRUPTED 503 API response + Async operation after_delay Project archival or restoration was interrupted and needs reconciliation.
-
-PROJECT_ARCHIVE_UNAVAILABLE 503 API response + Async operation after_delay Project archiving is not configured.
-
-PROJECT_ARCHIVE_UNSUPPORTED 409 API response + Async operation after_delay Project archiving is not available for this project type.
-
 PROJECT_EXPORT_EXPIRED 410 API response + Async operation never Project export has expired. Request a new export.
 
 PROJECT_EXPORT_FAILED 500 API response + Async operation after_delay Project export failed. Request a new export or contact support.
@@ -832,8 +814,6 @@ PROJECT_EXPORT_NOT_READY 409 API response + Async operation never Project export
 PROJECT_EXPORT_NOT_SUPPORTED 409 API response + Async operation never Managed exports are available only for shared Nano or isolated Basic standard projects.
 
 PROJECT_EXPORT_UNAVAILABLE 503 API response + Async operation after_delay Managed export is currently unavailable for this project.
-
-PROJECT_RESTORE_FAILED 503 API response + Async operation after_delay Project restoration needs administrator attention. The archive has been retained.
 
 PROVISIONING_FAILED 500 API response + Async operation after_delay Local runtime provisioning failed.
 

@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/sdk/write-rows
 title: Write rows with Python | Polygres
-source_hash: b174dfba61211898da852f8e263ce21d4731b1756029b3c1b0ca078b5eba9e25
+source_hash: 93776dcf633132708f5cc8be3bcd7b7d6f2779fa754b6ef61c2e378d3f9d4543
 discovered_from: https://docs.evokoa.com/polygres
 
 # Write rows with Python | Polygres
@@ -21,7 +21,7 @@ Install or upgrade
 
 The row-writing methods require SDK 0.3.0 or newer:
 
-pip install --upgrade "polygres-sdk==0.6.0"
+pip install --upgrade "polygres-sdk==0.5.0"
 
 Create the client with the Project API Key and Runtime API URL shown under
 

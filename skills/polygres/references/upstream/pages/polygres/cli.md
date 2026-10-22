@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/cli
 title: Polygres CLI | Polygres
-source_hash: ee0d86f9885d91170649d29c5d6c22cef9cec0641f58f341241b9bdd14e6ba8b
+source_hash: 606cb5e8fc8bde45082a1d71b507bdf007410b6bf976a13b55694a171d9928ae
 discovered_from: https://docs.evokoa.com/polygres
 
 # Polygres CLI | Polygres
@@ -35,7 +35,7 @@ creates a Runtime API key. Once the project is ready, projects use selects it
 
 for the following commands.
 
-pipx install "polygres-cli==0.7.0"
+pipx install "polygres-cli==0.6.0"
 
 polygres login
 

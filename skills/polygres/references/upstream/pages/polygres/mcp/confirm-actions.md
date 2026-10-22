@@ -1,6 +1,6 @@
 source: https://docs.evokoa.com/polygres/mcp/confirm-actions
 title: Review and confirm MCP actions | Polygres
-source_hash: 3be35126d767dff6b68c374c46a492829ee9e5dbbd94325ae8ed92bbd2513873
+source_hash: 0b36c9bc4b6b1b0eb9a6449ca58df676df72def4a209de4275cdd843fc857fcc
 discovered_from: https://docs.evokoa.com/polygres
 
 # Review and confirm MCP actions | Polygres
